@@ -1,4 +1,5 @@
- 
+ "use client"
+
 import { Chat } from "@/helpers/models/chat";
 import httpService from "@/helpers/services/httpService";
 import { WEBSITE_URL } from "@/helpers/services/urls";
@@ -19,6 +20,7 @@ function ChatBtn(props: Props) {
 
   const {
     bodyTextColor, 
+    mainBackgroundColor
   } = useCustomTheme(); 
 
   const router = useRouter();
@@ -47,6 +49,7 @@ function ChatBtn(props: Props) {
       disabled={chatCreationLoading}
       onClick={() => mutate()}
       color={bodyTextColor}
+      bgColor={mainBackgroundColor}
       loading={chatCreationLoading}
     >
       {/* {chatCreationLoading && <Spinner colorScheme="black" />} */}

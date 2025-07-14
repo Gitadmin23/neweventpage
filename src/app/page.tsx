@@ -1,10 +1,8 @@
-"use client"
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client" 
 import { Flex } from "@chakra-ui/react";
 import { GlassIcon } from "@/svg"; 
 import { EventLisiting, SelectEventOption } from "@/components/eventcomponents";
-import { useColorMode } from "@/components/ui/color-mode";
+// import { useColorMode } from "@/components/ui/color-mode";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie"
@@ -12,13 +10,13 @@ import Cookies from "js-cookie"
 export default function Home() {
 
 
-  const { colorMode, toggleColorMode } = useColorMode();
+  // const { colorMode, toggleColorMode } = useColorMode();
 
-  console.log(colorMode);
+  // console.log(colorMode);
 
-  useEffect(()=> {
-    toggleColorMode()
-  }, [])
+  // useEffect(()=> {
+  //   toggleColorMode()
+  // }, [])
   const router = useRouter();
   const { token } = router.query;
 
@@ -39,7 +37,7 @@ export default function Home() {
 
   return (
     <Flex w={"full"} px={["4", "4", "6"]} pt={["6", "6", "12", "12"]} pb={"12"} flexDir={"column"} overflowY={"auto"} >
-      <Flex w={"full"} alignItems={"center"} flexDirection={"column"} gap={"3"} >
+      {/* <Flex w={"full"} alignItems={"center"} flexDirection={"column"} gap={"3"} >
         <Flex fontSize={["20px", "20px", "56px"]} alignItems={"end"} display={["flex", "flex", "none"]} fontWeight={"700"} >what are you l<Flex mb={"1"} ><GlassIcon size='17' /></Flex>king for?</Flex>
         <Flex fontSize={["16px", "16px", "56px"]} alignItems={"end"} display={["none", "none", "flex"]} fontWeight={"700"} >what are you l<Flex mb={"3"} ><GlassIcon size='45' /></Flex>king for?</Flex>
         <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
@@ -48,7 +46,7 @@ export default function Home() {
       </Flex>
       <Flex w={"full"} >
         <EventLisiting />
-      </Flex>
+      </Flex> */}
     </Flex>
   );
 }

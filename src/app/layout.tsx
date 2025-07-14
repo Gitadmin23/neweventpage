@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./Provider"; 
-import { DashboardLayout } from "@/components/dashboardLayout";
+import { Providers } from "./Provider";  
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -22,10 +21,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ fontFamily: raleway.style.fontFamily }} >
-        <Providers>
-          <DashboardLayout>
-            {children}
-          </DashboardLayout>
+        <Providers> 
+            {children} 
         </Providers>
       </body>
     </html>

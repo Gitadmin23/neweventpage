@@ -1,5 +1,7 @@
+"use client"
 import { toaster } from "@/components/ui/toaster";
 import { ITag } from "@/helpers/models/pr";
+import { IPinned } from "@/helpers/models/product";
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -172,6 +174,34 @@ const usePr = () => {
         }
     });
 
+
+
+    const pinProduct = useMutation({
+        mutationFn: (data: {
+            pinnedItems: Array<IPinned>
+        }) => httpService.post(`/pin-item/create`, data),
+        onSuccess: () => { 
+
+            toaster.create({
+                title: "Pinned Successful", 
+                type: "success",
+                closable: true
+            }) 
+
+            query?.invalidateQueries({ queryKey: ["all-events-mesh"]})
+            setOpen(false)
+
+        },
+        onError: () => { 
+
+            toaster.create({
+                title: "Error occured", 
+                type: "error",
+                closable: true
+            })  
+        },
+    });
+
     return {
         createPr,
         tagServiceAndRental,
@@ -180,7 +210,8 @@ const usePr = () => {
         setOpen,
         deleteFundraising,
         updateUserEvent,
-        updateEvent
+        updateEvent,
+        pinProduct
     };
 }
 

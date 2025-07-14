@@ -1,3 +1,4 @@
+"use client"
 import { IEventType } from "@/helpers/models/event"
 import { textLimit } from "@/helpers/utils/textlimit"
 import useCustomTheme from "@/hooks/useTheme"

@@ -20,16 +20,14 @@ export default function EventCard(
     const router = useRouter()
 
     const { primaryColor, mainBackgroundColor } = useCustomTheme()
-
-
-    let token = localStorage.getItem("token")
+ 
 
     const clickHandler = () => {
-        if (token) {
-            router.push("/dashboard/event/details/" + event?.id);
-        } else {
-            router.push("/event/" + event?.id);
-        }
+        // if (token) {
+            router.push("/product/details/events/" + event?.id);
+        // } else {
+        //     router.push("/event/" + event?.id);
+        // }
     }
 
     return (

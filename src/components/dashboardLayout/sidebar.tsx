@@ -1,9 +1,11 @@
 "use client"
 import useCustomTheme from "@/hooks/useTheme";
 import { KisokIcon, NotificationIcon, SidebarEventIcon, SidebarHomeIcon, SidebarLogoutIcon, SidebarMessageIcon, SidebarSearchIcon, SidebarWalletIcon } from "@/svg/sidebarIcons";
-import { Flex, Box, Image } from "@chakra-ui/react";
-import { usePathname, useRouter } from "next/navigation"; 
+import { Flex, Box, Image, Switch } from "@chakra-ui/react";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
+import { CustomSwitch } from "../shared";
+import { useColorMode } from "../ui/color-mode";
 
 export default function SideBar() {
 
@@ -15,10 +17,11 @@ export default function SideBar() {
     }
 
     const router = useRouter()
-    const [open, setOpen] = useState(false)
+    // const [open, setOpen] = useState(false)
     const [activeBar, setActiveBar] = useState("")
     const { borderColor, mainBackgroundColor, secondaryBackgroundColor } = useCustomTheme()
     const userId = ""
+    const { colorMode, toggleColorMode } = useColorMode();
 
     const pathname = usePathname()
     const routes: IRoute[] = [
@@ -72,8 +75,7 @@ export default function SideBar() {
     }
 
     return (
-
-        <Flex w={"fit-content"} h={"screen"} display={["none", "none", "none", "flex", "flex"]} >
+        <Flex w={"fit-content"} h={"screen"} bgColor={mainBackgroundColor} display={["none", "none", "none", "flex", "flex"]} >
             <Flex w={"110px"} h={"screen"} gap={"4"} overflowY={"auto"} flexDir={"column"} py={"4"} alignItems={"center"} justifyContent={"space-between"} borderRightColor={borderColor} borderRightWidth={"1px"} >
                 <Box as='button' onClick={() => router?.push("/")} >
                     <Image alt='logo' src='/images/logo.png' w={"50px"} />
@@ -107,14 +109,22 @@ export default function SideBar() {
 
                     <Flex position={"relative"} onMouseOver={() => setActiveBar("darkmode")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
                         <Box>
-                            {/* <Switch isChecked={colorMode === 'dark'} size={'md'} onChange={() => toggleColorMode()} /> */}
+                            <Switch.Root 
+                                size={"lg"}
+                                checked={colorMode === 'dark'}
+                                onCheckedChange={() => toggleColorMode()}
+                            >
+                                <Switch.HiddenInput />
+                                <Switch.Control /> 
+                            </Switch.Root>
+                            {/* <CustomSwitch checked={colorMode === 'dark'} onChange={() => toggleColorMode()} /> */}
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
                     <Flex as={"button"} onClick={() => router?.push(`/dashboard/profile/${userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
-                        <Box>
-                            {/* <UserImage size={"36px"} border={"1px"} font={"16px"} data={data} image={user?.data?.imgMain?.value} /> */}
-                        </Box>
+                        {/* <Box>
+                            <UserImage size={"36px"} border={"1px"} font={"16px"} data={data} image={user?.data?.imgMain?.value} />
+                        </Box> */}
                         <ToolTip content={"profile"} />
                     </Flex>
 

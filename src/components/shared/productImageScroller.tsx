@@ -1,6 +1,6 @@
+"use client"
 import useCustomTheme from '@/hooks/useTheme'; 
-import { Flex, HStack, Image, Text } from '@chakra-ui/react';
-import moment from 'moment';
+import { Flex, HStack, Image, Text } from '@chakra-ui/react'; 
 import React from 'react' 
 import { useRouter } from 'next/navigation'; 
 import { IUser } from '@/helpers/models/user';

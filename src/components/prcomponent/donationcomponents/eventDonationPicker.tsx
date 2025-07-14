@@ -4,7 +4,7 @@ import React from 'react'
 import { textLimit } from '@/helpers/utils/textlimit'
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter'
 import { IMAGE_URL } from '@/helpers/services/urls'
-import { DonationGraph } from '../shared'
+import { CustomCheckbox, DonationGraph } from '../../shared'
 import { IDonationList } from '@/helpers/models/fundraising'
 
 export default function EventDonationPicker({ selectDonation, setSelectDonation, items }: { setSelectDonation: any, selectDonation: string, items: IDonationList}) {
@@ -28,7 +28,7 @@ export default function EventDonationPicker({ selectDonation, setSelectDonation,
                 </Flex>
                 <DonationGraph item={items} isPicked={true} />
             </Flex>
-            {/* <Checkbox isChecked={(items?.id === selectDonation) ? true : false} /> */}
+            <CustomCheckbox checked={items?.id === selectDonation} />
         </Flex>
     )
 }

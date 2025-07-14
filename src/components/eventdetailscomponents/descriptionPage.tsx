@@ -1,3 +1,4 @@
+"use client"
 import { textLimit } from '@/helpers/utils/textlimit'
 import useCustomTheme from '@/hooks/useTheme' 
 import { Flex, Text } from '@chakra-ui/react'

@@ -1,3 +1,4 @@
+"use client"
 
 import { Button, Flex } from '@chakra-ui/react'
 import { AxiosError, AxiosResponse } from 'axios'
@@ -196,7 +197,7 @@ function AddOrRemoveUserBtn(props: Props) {
                     ) : (
                         <>
                             {icon && (
-                                <Button loading={loading === user_index} as={"button"} _disabled={{ cursor: "none" }} onClick={clickHandler}>
+                                <Button loading={loading === user_index} as={"button"} bgColor={mainBackgroundColor} _disabled={{ cursor: "none" }} onClick={clickHandler}>
                                     <AddProfileIcon />
                                 </Button>
                             )}
