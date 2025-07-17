@@ -1,11 +1,12 @@
 "use client"
 import useCustomTheme from "@/hooks/useTheme";
 import { KisokIcon, NotificationIcon, SidebarEventIcon, SidebarHomeIcon, SidebarLogoutIcon, SidebarMessageIcon, SidebarSearchIcon, SidebarWalletIcon } from "@/svg/sidebarIcons";
-import { Flex, Box, Image, Switch } from "@chakra-ui/react";
+import { Flex, Box, Image, Switch, Spinner } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, useState } from "react";
-import { CustomSwitch } from "../shared";
+import { UserImage } from "../shared";
 import { useColorMode } from "../ui/color-mode";
+import useGetUser from "@/hooks/useGetUser";
 
 export default function SideBar() {
 
@@ -17,9 +18,11 @@ export default function SideBar() {
     }
 
     const router = useRouter()
-    // const [open, setOpen] = useState(false)
+
+    const { isLoading, user } = useGetUser()
+
     const [activeBar, setActiveBar] = useState("")
-    const { borderColor, mainBackgroundColor, secondaryBackgroundColor } = useCustomTheme()
+    const { borderColor, mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme()
     const userId = ""
     const { colorMode, toggleColorMode } = useColorMode();
 
@@ -66,7 +69,7 @@ export default function SideBar() {
         return (
             <>
                 {activeBar === content && (
-                    <Flex pos={"absolute"} justifyContent={"center"} alignItems={"center"} py={"1"} fontSize={"12px"} fontWeight={"medium"} rounded={"6px"} top={"45px"} w={"fit"} px={"2"} bgColor={secondaryBackgroundColor}  >
+                    <Flex pos={"absolute"} justifyContent={"center"} alignItems={"center"} py={"1"} fontSize={"12px"} fontWeight={"medium"} rounded={"6px"} bottom={"-13px"} w={"fit"} px={"2"} bgColor={secondaryBackgroundColor}  >
                         {content}
                     </Flex>
                 )}
@@ -109,22 +112,28 @@ export default function SideBar() {
 
                     <Flex position={"relative"} onMouseOver={() => setActiveBar("darkmode")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
                         <Box>
-                            <Switch.Root 
+                            <Switch.Root
                                 size={"lg"}
                                 checked={colorMode === 'dark'}
                                 onCheckedChange={() => toggleColorMode()}
                             >
                                 <Switch.HiddenInput />
-                                <Switch.Control /> 
+                                <Switch.Control />
                             </Switch.Root>
                             {/* <CustomSwitch checked={colorMode === 'dark'} onChange={() => toggleColorMode()} /> */}
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
-                    <Flex as={"button"} onClick={() => router?.push(`/dashboard/profile/${userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
-                        {/* <Box>
-                            <UserImage size={"36px"} border={"1px"} font={"16px"} data={data} image={user?.data?.imgMain?.value} />
-                        </Box> */}
+                    <Flex as={"button"} onClick={() => router?.push(`/dashboard/profile/${userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
+
+                        <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} > 
+                            {isLoading ? (
+                                <Spinner color={primaryColor} />
+                            ) : (
+                                <UserImage user={user} size="sm" />
+                            )}
+                        </Flex>
+
                         <ToolTip content={"profile"} />
                     </Flex>
 

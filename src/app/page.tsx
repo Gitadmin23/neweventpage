@@ -1,52 +1,15 @@
-"use client" 
+"use client"
 import { Flex } from "@chakra-ui/react";
-import { GlassIcon } from "@/svg"; 
-import { EventLisiting, SelectEventOption } from "@/components/eventcomponents";
-// import { useColorMode } from "@/components/ui/color-mode";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie"
+import { LoginSpinner } from "@/components/shared";
+import { Suspense } from "react";
 
 export default function Home() {
 
-
-  // const { colorMode, toggleColorMode } = useColorMode();
-
-  // console.log(colorMode);
-
-  // useEffect(()=> {
-  //   toggleColorMode()
-  // }, [])
-  const router = useRouter();
-  const { token } = router.query;
-
-  useEffect(() => {
-    if (typeof token === "string") {
-      // Store token in cookie
-      Cookies.set("chase_token", token, {
-        path: "/",
-        secure: true,
-        sameSite: "Lax",
-      });
-
-      // Optional: remove token from URL
-      window.history.replaceState(null, "", window.location.pathname);
-    }
-  }, [token]);
-  
-
   return (
-    <Flex w={"full"} px={["4", "4", "6"]} pt={["6", "6", "12", "12"]} pb={"12"} flexDir={"column"} overflowY={"auto"} >
-      {/* <Flex w={"full"} alignItems={"center"} flexDirection={"column"} gap={"3"} >
-        <Flex fontSize={["20px", "20px", "56px"]} alignItems={"end"} display={["flex", "flex", "none"]} fontWeight={"700"} >what are you l<Flex mb={"1"} ><GlassIcon size='17' /></Flex>king for?</Flex>
-        <Flex fontSize={["16px", "16px", "56px"]} alignItems={"end"} display={["none", "none", "flex"]} fontWeight={"700"} >what are you l<Flex mb={"3"} ><GlassIcon size='45' /></Flex>king for?</Flex>
-        <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
-          <SelectEventOption />
-        </Flex>
+    <Suspense>
+      <Flex w={"full"} h={"100vh"} bgColor={"white"} >
+        <LoginSpinner />
       </Flex>
-      <Flex w={"full"} >
-        <EventLisiting />
-      </Flex> */}
-    </Flex>
+    </Suspense>
   );
 }

@@ -1,6 +1,8 @@
+"use client"
 import useCustomTheme from '@/hooks/useTheme';
-import { Flex, Image, Spinner, Text } from '@chakra-ui/react' 
-import React from 'react'
+import { Flex, Image, Text } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Grid, MagnifyingGlass, RevolvingDot, ThreeDots } from 'react-loader-spinner';
 
 interface Props {
     loading: any,
@@ -23,42 +25,76 @@ function LoadingAnimation(props: Props) {
         length,
         refeching,
         fix_height,
-        color,
+        // color,
         customLoader,
         withimg,
         width,
-        bgColor
+        // bgColor
     } = props
 
     const {
         secondaryBackgroundColor,
-        mainBackgroundColor
-    } = useCustomTheme(); 
+        mainBackgroundColor,
+        primaryColor
+    } = useCustomTheme();
 
+    console.log(loading);
+    console.log(length);
+
+
+    const [isLoading, setLoading] = useState(true)
+    const [dataLength, setDataLength] = useState(0)
+
+    useEffect(() => {
+        // Set a 3-second timeout
+        if (!loading) {
+            const timeoutId = setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+            setDataLength(length)
+
+            // Cleanup: clear the timeout if the component unmounts or a new timer is set
+            return () => clearTimeout(timeoutId);
+        } else {
+            setLoading(loading)
+        }
+
+    }, [loading])
+    
     return (
         <>
-            {!loading && (
+            {(!isLoading || dataLength > 0) && (
                 <>
                     {children}
-                    {(!loading && refeching) && (
+                    {(isLoading && dataLength > 0) && (
                         <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"auto"} >
                             {/* {!customLoader && ( */}
                             <Flex width={"full"} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
-                                <Spinner size={["md", "sm"]} color={color ? color : 'black'} />
-                            </Flex> 
+                                {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
+                                <ThreeDots
+                                    visible={true}
+                                    height="80"
+                                    width="80"
+                                    color={primaryColor}
+                                    radius="9"
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClass=""
+                                />
+                            </Flex>
                         </Flex>
                     )}
                 </>
             )}
 
-            {(!loading && !refeching) && (
+            {(!isLoading && !refeching) && (
                 <>
-                    {(length === 0 && !withimg) && (
+                    {(dataLength === 0 && !withimg) && (
                         <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} fontSize={"20px"} py={"4"}  >
                             <Text>No Records Found</Text>
                         </Flex>
                     )}
-                    {(length === 0 && withimg) && (
+                    {(dataLength === 0 && withimg) && (
                         <Flex width={"full"} flexDir={"column"} bg={mainBackgroundColor} alignItems={"center"} py={"4"}  >
                             <Image src={"/images/folder.png"} alt="folder" width={"350px"} />
                             <Text>{`You don't have any record yet`}</Text>
@@ -66,11 +102,21 @@ function LoadingAnimation(props: Props) {
                     )}
                 </>
             )}
-            {loading && (
+            {(loading && dataLength === 0) && (
                 <Flex w={"full"} height={"auto"} >
                     {!customLoader && (
                         <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
-                            <Spinner size={["md", "sm"]} color={color ? color : 'black'} />
+                            {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
+                            <MagnifyingGlass
+                                visible={true}
+                                height="80"
+                                width="80"
+                                ariaLabel="magnifying-glass-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="magnifying-glass-wrapper"
+                                glassColor="#c0efff"
+                                color={primaryColor}
+                            />
                         </Flex>
                     )}
                     {customLoader}

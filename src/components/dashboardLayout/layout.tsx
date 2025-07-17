@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import useCustomTheme from "@/hooks/useTheme";
 import SideBar from "./sidebar";
 import Navbar from "./navbar";
+import { usePathname } from "next/navigation";
 
 interface IProps {
     children: React.ReactNode
@@ -15,13 +16,14 @@ export default function DashboardLayout(
 ) {
 
     const { mainBackgroundColor, headerTextColor } = useCustomTheme()
+    const pathname = usePathname()
 
     return (
         <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
             <SideBar />
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 <Navbar />
-                <Flex w={"full"} flex={"1"} pos={"absolute"} inset={"0px"} top={"76px"} >
+                <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} inset={"0px"} pb={pathname?.includes("create") ? "0px" : "6"} top={"76px"} >
                     {children}
                 </Flex>
             </Flex>

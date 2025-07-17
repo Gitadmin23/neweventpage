@@ -1,5 +1,5 @@
 "use client"
-import { Flex, Input, Text } from '@chakra-ui/react';
+import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 // import { useField } from 'formik';
 
@@ -16,7 +16,8 @@ interface IProps {
     iconback?: React.ReactNode
     setValue: (name: string, value: string) => void,
     errors?: any,
-    touched?: any
+    touched?: any,
+    textarea?: boolean
 }
 
 export default function FormInput(
@@ -33,7 +34,8 @@ export default function FormInput(
         iconback,
         setValue,
         errors,
-        touched
+        touched,
+        textarea
     }: IProps) {
 
     const changeHandler = (item: string) => {
@@ -51,33 +53,51 @@ export default function FormInput(
         <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} ml={"2"} >{label}</Text>
             <Flex flexDir={"column"} gap={"1"} >
-                <Flex pos={"relative"} h={height ?? "45px"} >
-                    {hasFrontIcon && (
-                        <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
-                            {icon}
-                        </Flex>
-                    )}
-                    {hasBackIcon && (
-                        <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
-                            {iconback}
-                        </Flex>
-                    )}
+                {!textarea && (
+                    <Flex pos={"relative"} h={height ?? "45px"} >
+                        {hasFrontIcon && (
+                            <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
+                                {icon}
+                            </Flex>
+                        )}
+                        {hasBackIcon && (
+                            <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
+                                {iconback}
+                            </Flex>
+                        )}
 
-                    <Input
-                        type={type ?? "text"}
+                        <Input
+                            type={type ?? "text"}
+                            value={newValue}
+                            onChange={(e) => changeHandler(e.target.value)}
+                            w={"full"}
+                            h={height ?? "45px"}
+                            px={"4"}
+                            outline={"none"}
+                            bgColor={"white"}
+                            borderRadius={"9999px"}
+                            border={"1px solid #EAEBED"}
+                            _placeholder={{ color: "gray.500" }}
+                            placeholder={placeholder}
+                        />
+                    </Flex>
+                )}
+                {textarea && (
+                    <Textarea 
                         value={newValue}
                         onChange={(e) => changeHandler(e.target.value)}
                         w={"full"}
-                        h={height ?? "45px"}
+                        h={height ?? "123px"}
                         px={"4"}
+                        py={"2"}
                         outline={"none"}
                         bgColor={"white"}
-                        borderRadius={"9999px"}
+                        borderRadius={"3xl"}
                         border={"1px solid #EAEBED"}
                         _placeholder={{ color: "gray.500" }}
                         placeholder={placeholder}
                     />
-                </Flex>
+                )}
                 {touched && (
                     <>
                         {(touched[name] && errors[name]) &&

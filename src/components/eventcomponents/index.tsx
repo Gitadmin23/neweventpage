@@ -1,6 +1,11 @@
 
 export { default as SelectEventOption } from "./selectEventOption" 
-export { default as EventCard } from "./eventCard"
+export { default as EventCard } from "./cards/eventCard"
+export { default as UserEventCard } from "./cards/userEventCard"
 export { default as InterestedUser } from "./interestedUser"
 export { default as EventLisiting } from "./eventLisiting"
+export { default as MyEvent } from "./myEvent"
+export { default as DraftEvent } from "./draftEvent"
+export { default as PastedEvent } from "./pastedEvent"
+export { default as SavedEvent } from "./savedEvent"
 export { default as EventPrice } from "./eventPrice"

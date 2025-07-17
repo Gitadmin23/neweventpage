@@ -5,7 +5,7 @@ import { IEventType } from "@/helpers/models/event";
 import { useMutation } from "@tanstack/react-query";
 import { URLS } from "@/helpers/services/urls";
 import httpService from "@/helpers/services/httpService";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { PaginatedResponse } from "@/helpers/models/PaginatedResponse";
 import { EventDetails } from ".";
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function Navbar() {
 
-    const { mainBackgroundColor, borderColor, primaryColor, headerTextColor } = useCustomTheme()
+    const { mainBackgroundColor, borderColor, headerTextColor } = useCustomTheme()
     const router = useRouter()
 
     return (

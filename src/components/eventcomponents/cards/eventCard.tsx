@@ -1,13 +1,14 @@
+"use client"
 import { IEventType } from "@/helpers/models/event";
 import useCustomTheme from "@/hooks/useTheme";
 import { Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { ProductImageScroller } from "../shared";
+import { ProductImageScroller } from "../../shared";
 import moment from "moment";
 import { LocationStrokeEx } from "@/svg";
 import { textLimit } from "@/helpers/utils/textlimit";
-import InterestedUsers from "./interestedUser";
-import EventPrice from "./eventPrice";
+import InterestedUsers from "../interestedUser";
+import EventPrice from "../eventPrice";
 
 export default function EventCard(
     {

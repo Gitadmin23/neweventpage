@@ -133,13 +133,13 @@ export interface IProduct {
     "outOfStock": boolean,
     "hasDiscount": boolean,
     "discountPrice": number,
-    "published": boolean, 
+    "published": boolean,
     color: Array<{
         label: string,
         color: string
     }>,
     size: Array<string>,
-    hasBought :  false;
+    hasBought: false;
     hasReviewed: false;
     rating: number
     "location": {
@@ -170,7 +170,7 @@ export interface IRental {
     "creator": IUser,
     "name": string,
     "description": string,
-    hasBought :  false;
+    hasBought: false;
     hasReviewed: false;
     "category": string,
     rating: number
@@ -194,11 +194,11 @@ export interface IRental {
     frequency: string
 }
 
-export interface ITag { 
+export interface ITag {
     "category": string,
     "description": string,
     "type": "RENTAL" | "SERVICE"
-} 
+}
 
 export interface IOrder {
     "id": string,
@@ -287,3 +287,85 @@ export interface IReview {
     "rating": number,
     "reviewType": string
 }
+
+export interface IBuisness {
+    id: string;
+    createdBy: IUser;
+    lastModifiedBy: IUser;
+    createdDate: number;
+    isDeleted: boolean;
+    status: string;
+    statusCode: number;
+    userID: string;
+    email: string;
+    phone: string;
+    businessName: string;
+    description: string;
+    address: string;
+    isOnline: boolean;
+    bannerImage: string;
+    website: string;
+    isRegistered: boolean;
+    CACDocument: string;
+    socialMediaHandles: Array<ISocialMediaHandles>;
+    openingHours: Array<{
+        "startTime": number,
+        "endTime": number,
+        "availabilityDayOfWeek": number
+    }>;
+}
+
+export interface ISocialMediaHandles {
+    details: string;
+    platform: string;
+    socialMediaHandle: string;
+}
+
+export interface IServiceCategory {
+    category: string;
+    id: string;
+}
+
+export type IService = {
+    id: string;
+    name: string;
+    vendor: IUser;
+    service: IServiceCategory;
+    price: number;
+    hasFixedPrice: boolean;
+    discount: number;
+    "openingHours": Array<{
+        "startTime": number,
+        "endTime": number,
+        "availabilityDayOfWeek": number
+    }>;
+    images: Array<string>;
+    description: string;
+    rating: number;
+    vendorID: string;
+    category: string;
+    email: string
+    hasBought: false;
+    hasReviewed: false;
+    address: string;
+    isOnline: boolean;
+    phone: string;
+    socialMediaHandles: Array<ISocialMediaHandles>;
+    createdDate: number;
+    totalBooking: number;
+    "location": {
+        "link": string,
+        "address": string,
+        "country": string,
+        "street": string,
+        "city": string,
+        "zipcode": string,
+        "state": string,
+        "locationDetails": string,
+        "latlng": string,
+        "placeIds": string,
+        "toBeAnnounced": boolean
+    },
+    "state": string,
+}
+

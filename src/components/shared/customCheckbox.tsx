@@ -1,8 +1,8 @@
 import { Checkbox } from "@chakra-ui/react"
 
-const CustomCheckbox = ({ label, checked } : { label?: string, checked: boolean }) => {
+const CustomCheckbox = ({ label, checked, onChange } : { label?: string, checked: boolean, onChange?: any }) => {
     return (
-        <Checkbox.Root checked={checked} onChange={(item)=> console.log(item?.target)}  >
+        <Checkbox.Root checked={checked} onChange={(item)=> onChange(item?.target)}  >
             <Checkbox.HiddenInput />
             <Checkbox.Control />
             {label && (

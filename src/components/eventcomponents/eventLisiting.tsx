@@ -1,15 +1,12 @@
 import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
 import { Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { LoadingAnimation } from "../shared";
-import EventCard from "./eventCard";
+import EventCard from "./cards/eventCard";
 
 export default function EventLisiting() {
 
     const { results, isLoading, ref } = useInfiniteScroller({ url: `/events/events`, limit: 20, filter: "id", name: "listofevent" })
-
-    console.log(results);
-
-
+ 
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >
             <LoadingAnimation loading={isLoading} length={results?.length} > 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import lodash from 'lodash'; 
+import lodash from 'lodash';
 import { cleanup } from '@/helpers/utils/cleanupObj';
 import httpService from '@/helpers/services/httpService';
 
@@ -31,7 +31,8 @@ function useInfiniteScroller(props: Props) {
 
   const [size, setSize] = React.useState(limit);
   const [hasNextPage, setHasNextPage] = React.useState(false);
-  const [results, setResults] = React.useState<any[]>([]);
+  // const [data, setData] = React.useState({} as any);
+  const [results, setResults] = React.useState([] as any);
   const intObserver = React.useRef<IntersectionObserver | null>(null);
 
   const getParamsDependencies = React.useMemo(() => {
@@ -75,6 +76,36 @@ function useInfiniteScroller(props: Props) {
     },
   });
 
+
+  // const { status, error, isFetching, isLoading, isError, refetch } = useQuery({
+  //   queryKey: ['todos'],
+  //   queryFn: async (): Promise<Array<string>> => {
+  //     const response = await httpService.get(url, {
+  //       params: {
+  //         size,
+  //         ...paramsObj,
+  //       },
+  //     })
+  //     return viewData(response)
+  //   },
+  // })
+
+  // const viewData = (response: any) => {
+
+  //   setData(response)
+  //   const dataContent = array ? response?.data : response?.data?.content;
+  //   const mergedData = size !== limit ? [...results, ...dataContent] : dataContent;
+  //   const uniqueData = lodash.uniqBy(mergedData, filter);
+  //   setResults(uniqueData);
+
+  //   const lastPageFlag = array ? response?.data?.length < size : response?.data?.last === false;
+  //   setHasNextPage(lastPageFlag);
+
+  //   window.scrollTo(0, window.innerHeight);
+
+  //   return response?.data?.content
+  // }
+
   const ref = React.useCallback(
     (node: HTMLElement | null) => {
       if (isLoading) return;
@@ -83,7 +114,7 @@ function useInfiniteScroller(props: Props) {
       intObserver.current = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting && hasNextPage) {
           setSize((prev) => prev + limit);
-          fetchData();
+          fetchData(); 
         }
       });
 
@@ -101,7 +132,7 @@ function useInfiniteScroller(props: Props) {
     isLoading,
     results,
     ref,
-    isError,
+    isError, 
     refetch: fetchData,
   };
 }

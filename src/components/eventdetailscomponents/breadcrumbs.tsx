@@ -21,7 +21,7 @@ export default function BreadCrumbs(
 
     return (
         <Flex gap={"1"} alignItems={"center"} pb={"3"} >
-            <Text role='button' onClick={clickHandler} fontSize={"14px"} color={primaryColor} fontWeight={"500"} >Back</Text>
+            <Text cursor={"pointer"} onClick={clickHandler} fontSize={"14px"} color={primaryColor} fontWeight={"500"} >Back</Text>
             <IoIosArrowForward />
             <Text fontSize={"14px"} fontWeight={"500"} >Event details</Text>
             <IoIosArrowForward />
