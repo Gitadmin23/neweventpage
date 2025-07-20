@@ -27,8 +27,8 @@ export default function UserEventCard(props: IEventType) {
     const { mainBackgroundColor, primaryColor, headerTextColor } = useCustomTheme()
 
     const clickHandler = () => {
-        if (pathname?.includes("draft")) {
-            router?.push(`/dashboard/event/edit_draft/${id}`)
+        if (type === "draft") {
+            router?.push(`/product/create/events/draft?id=${id}`)
         } else if (new Date(endDate) < (new Date())) {
             router.push("/product/details/events/" + id);
         } else {

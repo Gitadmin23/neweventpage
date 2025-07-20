@@ -20,12 +20,10 @@ export default function EditEvent() {
 
     const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen } = useEvent()
 
-    // console.log(formik.values);
-
     const { mutate: fetchData, isPending: isLoading } = useMutation({
-        mutationKey: ['all-events-details', id],
+        mutationKey: ['draft', id],
         mutationFn: () =>
-            httpService.get(URLS.All_EVENT + "?id=" + id),
+            httpService.get("/events/drafts" + "?id=" + id),
         onSuccess: (data: any) => {
             try {
                 const item: PaginatedResponse<any> = data.data;
@@ -49,7 +47,7 @@ export default function EditEvent() {
                     isPublic: item.content[0].isPublic,
                     currentPicUrl: item.content[0].currentPicUrl,
                     eventFunnelGroupID: item.content[0].eventFunnelGroupID,
-                    attendeesVisibility: data.data.attendeesVisibility,
+                    attendeesVisibility: item.content[0].attendeesVisibility,
                     startTime: item.content[0].startTime,
                     endTime: item.content[0].endTime,
                     startDate: item.content[0].startDate,

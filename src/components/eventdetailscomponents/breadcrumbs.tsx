@@ -3,7 +3,7 @@ import { IEventType } from "@/helpers/models/event"
 import { textLimit } from "@/helpers/utils/textlimit"
 import useCustomTheme from "@/hooks/useTheme"
 import { Flex, Text } from "@chakra-ui/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { IoIosArrowForward } from "react-icons/io"
 
 export default function BreadCrumbs(
@@ -15,8 +15,15 @@ export default function BreadCrumbs(
     const { back, push } = useRouter()
     const { primaryColor } = useCustomTheme()
 
+    const query = useSearchParams();
+    const edit = query?.get('edit');
+
     const clickHandler = () => {
-        back()
+        if(edit) { 
+            push("/product/events")
+        } else {
+            back()
+        }
     }
 
     return (

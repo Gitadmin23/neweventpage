@@ -47,10 +47,7 @@ export default function FormInput(
         // setNewValue(item)
     }
 
-    const [newValue, setNewValue] = useState("")
-
-    console.log(errors);
-    
+    const [newValue, setNewValue] = useState("") 
 
     useEffect(() => {
         if (value[name]) {

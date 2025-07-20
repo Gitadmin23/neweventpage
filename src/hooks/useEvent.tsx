@@ -167,7 +167,10 @@ const useEvent = () => {
             })
         },
         onSuccess: (data: AxiosResponse<any>) => {
-            // router.push(`${path}?type=info&id=${data?.data?.id}`)
+
+            console.log(data);
+            
+            router.push(`${path}?type=ticket&id=${data?.data?.id}`)
             setOpen(true)
         }
     });
@@ -270,7 +273,7 @@ const useEvent = () => {
             isPublic: true,
             currentPicUrl: "",
             eventFunnelGroupID: "",
-            attendeesVisibility: true,
+            attendeesVisibility: false,
             startTime: "",
             endTime: "",
             startDate: "",

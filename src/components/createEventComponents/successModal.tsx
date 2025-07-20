@@ -28,15 +28,17 @@ export default function SuccessModal(
     const id = query?.get('id');
 
     return (
-        <ModalLayout open={open} trigger={true} close={() => setOpen(true)} >
-            <Flex flexDir={"column"} alignItems={"center"} py={"8"} px={"14"} bg={mainBackgroundColor} >
+        <ModalLayout open={open} size="sm" trigger={true} close={() => setOpen(true)} >
+           <Flex w={"full"} justifyContent={"center"} >
+           <Flex maxW={"300px"} flexDir={"column"} alignItems={"center"} py={"8"} bg={mainBackgroundColor} >
                 <ThumbsUpIcon />
-                <Text fontSize={"22px"} color={headerTextColor} lineHeight={"26.4px"} textAlign={"center"} fontWeight={"500"} mt={"4"} >Event {pathname?.includes("edit") ? "Updated" : "Created"} Successfully</Text>
-                <Text fontSize={"14px"} color={bodyTextColor} maxW={"258px"} textAlign={"center"} mt={"2"} mb={"6"} lineHeight={"16.8px"} >Your event is now live. You may proceed to My Events to view it.</Text>
+                <Text fontSize={"22px"} color={headerTextColor} lineHeight={"26.4px"} textAlign={"center"} fontWeight={"700"} mt={"4"} >Event {pathname?.includes("edit") ? "Updated" : "Created"} Successfully</Text>
+                <Text fontSize={"14px"} color={bodyTextColor} fontWeight={"500"} maxW={"300px"} textAlign={"center"} mt={"2"} mb={"6"} lineHeight={"16.8px"} >Your event is now live. You may proceed to My Events to view it.</Text>
                 <CustomButton borderWidth={"0px"}
-                    onClick={() => router.push(`/dashboard/event/details/${id}?edit=true`)} 
+                    onClick={() => router.push(`/product/details/events/${id}?edit=true`)} 
                     color={"white"} text='Proceed to My Event' w={"full"} borderRadius={"999px"} />
             </Flex>
+           </Flex>
         </ModalLayout>
     )
 }

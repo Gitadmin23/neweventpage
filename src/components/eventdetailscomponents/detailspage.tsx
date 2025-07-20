@@ -18,6 +18,7 @@ import EventDonation from "./eventDonation";
 import ViewRequest from "./viewRequest";
 import { EventMap } from "../shared";
 import EventDate from "./eventDate";
+import ViewTicket from "./viewTicket";
 
 export default function DetailsPage(
     props : IEventType
@@ -39,11 +40,10 @@ export default function DetailsPage(
     const pathname = usePathname()
 
     return(
-        <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} pos={"relative"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
-            <BreadCrumbs {...props} />
-
+        <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
+            <BreadCrumbs {...props} /> 
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
-                <EventImage {...props} />
+                <EventImage data={props} />
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
                     <Text fontWeight={"700"} fontSize={["16px", "16px", "24px"]} >{capitalizeFLetter(eventName)}</Text>
                     <Flex w={"full"} flexDir={["column-reverse", "column-reverse", "column"]} gap={"2"} >
@@ -72,6 +72,7 @@ export default function DetailsPage(
                                         {(!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && (
                                             <GetEventTicket open={open} setOpen={setOpen} data={props} />
                                         )} */}
+                                        <ViewTicket data={props} />
                                     </Flex>
                                 )}
                                 {isAdmin && (
@@ -96,6 +97,7 @@ export default function DetailsPage(
                                         {(!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && (
                                             <GetEventTicket open={open} setOpen={setOpen} data={props} />
                                         )} */}
+                                        <ViewTicket data={props} />
                                     </Flex>
                                 )}
                                 {isAdmin && (

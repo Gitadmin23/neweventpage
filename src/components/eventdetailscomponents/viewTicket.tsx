@@ -91,11 +91,10 @@ export default function ViewTicket(
                     <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} my={"auto"} onClick={() => setOpen(true)} disable={((!data?.isBought)) ? true : (data?.isBought) ? false : true} text={`View Ticket${length > 1 ? `s x${length}` : ""}`} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
                 </Flex>
             )}
-            <ModalLayout size={"full"} title={""} open={open} close={() => setOpen(false)} >
-
+            <ModalLayout size={"cover"} title={""} trigger={true} open={open} close={() => setOpen(false)} > 
                 <LoadingAnimation loading={isLoading} >
-                    <Flex p={"4"} shadow={"lg"} position={"relative"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} px={"2"} gap={"2"} >
-                        <Flex bg={mainBackgroundColor} maxW={["750px"]} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
+                    <Flex mt={"66px"} p={"4"} shadow={"lg"} position={"relative"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
+                        <Flex bg={mainBackgroundColor} w={"full"} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
 
                             <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
                                 <IoClose size={"30px"} />
@@ -104,19 +103,18 @@ export default function ViewTicket(
                                 <Text fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} >Ticket Details</Text>
                             </Flex> 
                             <Box display={["none", "none", "block"]} >
-                                <CustomButton width={"fit-content"} backgroundColor={"#3EC259"} color={"#FFF"} borderRadius={"full"} onClick={() => reactToPrintFn()} text='Download Ticket' />
+                                <CustomButton width={"fit"} px={"3"} borderRadius={"full"} onClick={() => reactToPrintFn()} text='Download Ticket' />
                             </Box>
                         </Flex>
                         <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
                             <IoClose size={"25px"} />
                         </Box>
-                        <Box bg={mainBackgroundColor} display={["none", "none", "block"]} >
+                        <Box w={"full"} bg={mainBackgroundColor} display={["none", "none", "block"]} >
                             <Flex ref={contentRef} width={"full"} flexDirection={"column"} alignItems={"center"} gap={"4"} px={["4", "4", "0px"]} >
 
-                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any }, index: number) => {
-
+                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any }, index: number) => { 
                                     return (
-                                        <Flex key={index} maxW={["750px"]} w={["fit-content"]} flexDir={["row"]} rounded={"16px"} pb={"4"} p={["4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["center"]} justifyContent={"center"} gap={"4"} >
+                                        <Flex key={index} maxW={"750px"} w={"full"} flexDir={["row"]} rounded={"16px"} pb={"4"} p={["4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["center"]} justifyContent={"center"} gap={"4"} >
                                             <Flex w={["fit-content"]} gap={"4"} >
                                                 <EventImage width={["201px"]} height={["201px"]} data={datainfo?.event} />
                                             </Flex>

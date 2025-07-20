@@ -50,8 +50,8 @@ export default function SelectMapLocation(
             <Button onClick={() => setOpen(true)} w={"full"} minH={"45px"} color={headerTextColor} textAlign={"left"} display={"flex"} justifyContent={"start"} px={"3"} borderColor={borderColor} borderWidth={"1px"} bgColor={mainBackgroundColor} rounded={"full"} >
                 {value ?  textLimit(value, 20) : "Select Location"}
             </Button>
-            <ModalLayout size="lg" open={open} trigger={true} closeBtn={true} close={()=> setOpen(false)} >
-                <MapView setAddress={selectAddress} marker={marker} setMarker={selectLocation} view={true} zoom={15} latlng={latlng} height={'40vh'} />
+            <ModalLayout size="lg" title="Event Map" open={open} trigger={true} closeBtn={true} close={()=> setOpen(false)} >
+                <MapView setAddress={selectAddress} marker={marker} setMarker={selectLocation} zoom={15} latlng={latlng} height={'50vh'} />
             </ModalLayout>
         </Flex>
     )

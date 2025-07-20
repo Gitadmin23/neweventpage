@@ -11,14 +11,11 @@ export default function CreateEvent() {
 
     const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen } = useEvent()
 
-    console.log(formik.values);
-
-
     return (
         <Flex w={"full"} justifyContent={"center"} py={"8"} >
             <Flex maxW={"569px"} w={"full"} >
                 {!type && (
-                    <Theme formik={formik} isLoading={uploadImage.isPending || createDraft.isPending} />
+                    <Theme formik={formik} isLoading={uploadImage.isPending || createDraft.isPending || saveToDraft?.isPending} />
                 )}
                 {type === "info" && (
                     <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />

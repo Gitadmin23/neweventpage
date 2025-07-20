@@ -20,6 +20,7 @@ export default function Ticket(
     }
 ) {
 
+    console.log(formik.values);
     // const { formik, createEventFromDraft, uploadImage } = useEvent()
 
     const {
@@ -31,8 +32,8 @@ export default function Ticket(
     } = useCustomTheme()
 
     const [tab, setTab] = useState(false)
-    const query = useSearchParams(); 
-    const id = query?.get('id');
+    // const query = useSearchParams(); 
+    // const id = query?.get('id');
 
     const handleAddTicket = () => {
         formik.setFieldValue('productTypeData', [
@@ -80,7 +81,7 @@ export default function Ticket(
                     ticketPrice: null,
                     ticketType: '',
                     minTicketBuy: 1,
-                    maxTicketBuy: 1,
+                    maxTicketBuy: "1",
                 },
             ]);
             setTab(false)
@@ -127,8 +128,8 @@ export default function Ticket(
                 <CollaboratorBtn value={formik.values} setValue={formik.setFieldValue} btn={true} addCollaborator={true} />
             </Flex>
             <Flex justifyContent={"end"} py={"6"} gap={"3"} mt={"auto"} >
-                <CustomButton onClick={()=> router.back()} text={"Back"} backgroundColor={"white"} color={primaryColor} maxW={"250px"} borderRadius={"999px"} />
-                <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={"250px"} borderRadius={"999px"} />
+                <CustomButton onClick={()=> router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={"250px"} borderRadius={"999px"} />
+                <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={"250px"} borderRadius={"999px"} />
             </Flex>
         </Flex>
     )

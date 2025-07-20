@@ -46,7 +46,7 @@ function MapView(props: Props) {
   const containerStyle = {
     width: '100%',
     height: height ? height : '47vh',
-    borderRadius: "16px"
+    borderRadiusBottom: "16px"
   };
 
 
@@ -174,7 +174,7 @@ function MapView(props: Props) {
   } = useCustomTheme();
 
   return (
-    <Box width={"full"} h={height ? height : '47vh'} rounded={"24px"} position={"relative"} bgColor={mainBackgroundColor} >
+    <Box width={"full"} mt={"3"} h={height ? height : '47vh'} rounded={"24px"} position={"relative"} bgColor={mainBackgroundColor} >
       <LoadingAnimation loading={!isLoaded} >
         <GoogleMap
           mapContainerStyle={containerStyle}

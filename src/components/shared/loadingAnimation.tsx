@@ -98,7 +98,7 @@ function LoadingAnimation(props: Props) {
                     )}
                 </>
             )}
-            {(loading && dataLength === 0) && (
+            {(loading && !dataLength) && (
                 <Flex w={"full"} height={"auto"} >
                     {!customLoader && (
                         <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
