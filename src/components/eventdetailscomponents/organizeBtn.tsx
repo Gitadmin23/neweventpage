@@ -19,7 +19,8 @@ function OrganizeBtn(props: IEventType) {
 
     const {
         borderColor, 
-        mainBackgroundColor
+        mainBackgroundColor,
+        headerTextColor
     } = useCustomTheme()
 
     const [showScanner, setShowScanner] = React.useState(false);
@@ -33,7 +34,7 @@ function OrganizeBtn(props: IEventType) {
         if (props?.ticketBought) {
             setOpen(true)
         } else {
-            router.push("/dashboard/event/edit_event/" + props?.id)
+            router.push(`/product/create/events/edit?id=${props?.id}`)
         }
     }
 
@@ -49,18 +50,18 @@ function OrganizeBtn(props: IEventType) {
         <Box w={"full"} > 
             <Flex rounded={"12px"} bgColor={mainBackgroundColor} maxW={["350px"]} w={"full"} flexDir={"column"} borderWidth={"1px"} borderColor={borderColor} >
                 <Flex w={"full"} borderBottomWidth={"1px"} borderColor={borderColor} >
-                    <Button w={"full"} gap={"2"} h={"55px"} as={"button"} alignItems={"center"} justifyContent={"center"} borderRightWidth={"1px"} borderColor={borderColor} disabled={eventMemberRole === "COLLABORATOR" ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => router.push("/dashboard/settings/event-dashboard/" + props?.id)} >
+                    <Button w={"50%"} bgColor={mainBackgroundColor} color={headerTextColor} borderWidth={"0px"} roundedTopLeft={"12px"} roundedRight={"0px"} gap={"2"} h={"55px"} as={"button"} alignItems={"center"} justifyContent={"center"} borderRightWidth={"1px"} borderColor={borderColor} disabled={eventMemberRole === "COLLABORATOR" ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => router.push("/dashboard/settings/event-dashboard/" + props?.id)} >
                         <DashboardOrganizerIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Dashboard</Text>
                     </Button>
-                    <Button w={"full"} gap={"2"} h={"55px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails") || eventMemberRole === "COLLABORATOR" || (eventMemberRole === "ADMIN" && !isOrganizer)) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => clickHandler()} >
+                    <Button w={"50%"} bgColor={mainBackgroundColor} color={headerTextColor} borderWidth={"0px"} roundedTopRight={"12px"} gap={"2"} h={"55px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails") || eventMemberRole === "COLLABORATOR" || (eventMemberRole === "ADMIN" && !isOrganizer)) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => clickHandler()} >
                         <DashboardEditIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Edit Event</Text>
                     </Button> 
                 </Flex>
                 <Flex w={"full"} > 
                     <PrBtn data={props} /> 
-                    <Button w={"full"} gap={"2"} h={"55px"} display={["flex", "flex", "none"]} borderLeftWidth={"1px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails")) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => setShowScanner(true)} >
+                    <Button w={"50%"} gap={"2"} h={"55px"} display={["flex", "flex", "none"]} bgColor={mainBackgroundColor} color={headerTextColor} borderLeftWidth={"1px"} rounded={"0px"} roundedBottomRight={"12px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails")) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => setShowScanner(true)} >
                         <DashboardScannerIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Scan Ticket</Text>
                     </Button>

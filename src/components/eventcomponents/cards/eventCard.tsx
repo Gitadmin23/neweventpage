@@ -97,12 +97,12 @@ export default function EventCard(
                         </Flex>
                     </Flex>
                     <Flex flexDirection={"column"} alignItems={"start"}  >
-                        <Text fontSize={"12px"} fontWeight={"700"} >{textLimit(event?.eventName, 20)}</Text>
+                        <Text fontSize={"14px"} fontWeight={"700"} >{textLimit(event?.eventName, 20)}</Text>
                         <Flex display={["none", "none", "flex"]} w={"full"} gap={"1"} >
                             <Flex w={"fit-content"} mt={"2px"} >
                                 <LocationStrokeEx color={primaryColor} size='17px' />
                             </Flex>
-                            <Text color={primaryColor} textAlign={"left"} fontSize={"14px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 25)}</Text>
+                            <Text color={primaryColor} textAlign={"left"} fontSize={"12px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 25)}</Text>
                         </Flex>
                         <Flex display={["flex", "flex", "none"]} w={"full"} gap={"1"} >
                             <Flex w={"fit-content"} mt={"2px"} >

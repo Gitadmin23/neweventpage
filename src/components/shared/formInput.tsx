@@ -13,11 +13,13 @@ interface IProps {
     hasFrontIcon?: boolean;
     hasBackIcon?: boolean,
     icon?: React.ReactNode,
+    defaultData?: any;
     iconback?: React.ReactNode
     setValue: (name: string, value: string) => void,
-    errors?: any,
+    errors?: any | null | undefined,
     touched?: any,
-    textarea?: boolean
+    textarea?: boolean,
+    disabled?: boolean
 }
 
 export default function FormInput(
@@ -26,6 +28,7 @@ export default function FormInput(
         height,
         placeholder,
         value,
+        defaultData,
         label,
         type,
         hasFrontIcon,
@@ -35,23 +38,31 @@ export default function FormInput(
         setValue,
         errors,
         touched,
-        textarea
+        textarea,
+        disabled
     }: IProps) {
 
     const changeHandler = (item: string) => {
         setValue(name, item)
+        // setNewValue(item)
     }
 
     const [newValue, setNewValue] = useState("")
 
-    useEffect(() => {
-        setNewValue(value[name] ?? "")
-    }, [value[name]])
+    console.log(errors);
+    
 
+    useEffect(() => {
+        if (value[name]) {
+            setNewValue(value[name] ?? "")
+        } else {
+            setNewValue(defaultData)
+        }
+    }, [defaultData, value[name]])
 
     return (
         <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
-            <Text fontSize={"14px"} fontWeight={"medium"} ml={"2"} >{label}</Text>
+            <Text fontSize={"14px"} fontWeight={"medium"} >{label}</Text>
             <Flex flexDir={"column"} gap={"1"} >
                 {!textarea && (
                     <Flex pos={"relative"} h={height ?? "45px"} >
@@ -66,25 +77,57 @@ export default function FormInput(
                             </Flex>
                         )}
 
-                        <Input
-                            type={type ?? "text"}
-                            value={newValue}
-                            onChange={(e) => changeHandler(e.target.value)}
-                            w={"full"}
-                            h={height ?? "45px"}
-                            px={"4"}
-                            outline={"none"}
-                            bgColor={"white"}
-                            borderRadius={"9999px"}
-                            border={"1px solid #EAEBED"}
-                            _placeholder={{ color: "gray.500" }}
-                            placeholder={placeholder}
-                        />
+                        {type === "number" && (
+                            <Input
+                                value={newValue}
+                                disabled={disabled}
+                                onChange={(e) => {
+                                    const value = e.target.value;
+                                    if (/^\d*$/.test(value)) {
+                                        changeHandler(e.target.value)
+                                    }
+                                }}
+                                onKeyPress={(e) => {
+                                    if (!/[0-9]/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
+                                w={"full"}
+                                h={height ?? "45px"}
+                                px={"4"}
+                                outline={"none"}
+                                bgColor={"white"}
+                                borderRadius={"9999px"}
+                                border={"1px solid #EAEBED"}
+                                _placeholder={{ color: "gray.500" }}
+                                placeholder={placeholder}
+                            />
+                        )}
+
+                        {type !== "number" && (
+                            <Input
+                                type={type ?? "text"}
+                                disabled={disabled}
+                                value={newValue}
+                                onChange={(e) => changeHandler(e.target.value)}
+                                w={"full"}
+                                h={height ?? "45px"}
+                                px={"4"}
+                                outline={"none"}
+                                bgColor={"white"}
+                                borderRadius={"9999px"}
+                                border={"1px solid #EAEBED"}
+                                _placeholder={{ color: "gray.500" }}
+                                placeholder={placeholder}
+                            />
+
+                        )}
                     </Flex>
                 )}
                 {textarea && (
-                    <Textarea 
+                    <Textarea
                         value={newValue}
+                        disabled={disabled}
                         onChange={(e) => changeHandler(e.target.value)}
                         w={"full"}
                         h={height ?? "123px"}
@@ -98,16 +141,32 @@ export default function FormInput(
                         placeholder={placeholder}
                     />
                 )}
-                {touched && (
+                {!defaultData &&
                     <>
-                        {(touched[name] && errors[name]) &&
-                            <Flex>
-                                <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[name]}</Text>
-                            </Flex>
-                        }
+                        {touched && (
+                            <>
+                                {(touched[name] && errors[name]) &&
+                                    <Flex>
+                                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[name]}</Text>
+                                    </Flex>
+                                }
+                            </>
+                        )}
                     </>
-                )}
-                {/* {errors[name] && <p className=' text-sm text-error600 font-OpenRunde-Medium ' >{errors[name]?.message as string}</p>} */}
+                } 
+                {defaultData &&
+                    <>
+                        {touched && (
+                            <>
+                                {(touched && errors) &&
+                                    <Flex>
+                                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors}</Text>
+                                    </Flex>
+                                }
+                            </>
+                        )}
+                    </>
+                }
             </Flex>
         </Flex>
     )

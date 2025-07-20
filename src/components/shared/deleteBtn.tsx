@@ -1,8 +1,8 @@
-import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
+"use client"
+import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { usePathname } from 'next/navigation';
-import React, { useState } from 'react'
-import { IoIosClose, IoIosMore } from 'react-icons/io'; 
+import React, { useState } from 'react' 
 import { IoClose } from 'react-icons/io5'; 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDetails } from '@/helpers/store/useUserDetails';

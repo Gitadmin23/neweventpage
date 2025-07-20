@@ -54,6 +54,7 @@ function CustomButton({
       color={color}
       fontSize={fontSize}
       fontWeight={"semibold"}
+      cursor={"pointer"}
       // borderRadius={borderRadius}
       borderTopRadius={borderTopRadius ? borderTopRadius : borderRadius}
       borderBottomLeftRadius={borderBottomLeftRadius ? borderBottomLeftRadius : borderRadius}

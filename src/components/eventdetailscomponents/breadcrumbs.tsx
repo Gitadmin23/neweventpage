@@ -12,7 +12,7 @@ export default function BreadCrumbs(
     } : IEventType
 ) {
 
-    const { back  } = useRouter()
+    const { back, push } = useRouter()
     const { primaryColor } = useCustomTheme()
 
     const clickHandler = () => {

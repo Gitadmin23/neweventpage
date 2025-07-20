@@ -22,8 +22,7 @@ export default function SideBar() {
     const { isLoading, user } = useGetUser()
 
     const [activeBar, setActiveBar] = useState("")
-    const { borderColor, mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme()
-    const userId = ""
+    const { borderColor, mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme() 
     const { colorMode, toggleColorMode } = useColorMode();
 
     const pathname = usePathname()
@@ -124,7 +123,7 @@ export default function SideBar() {
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
-                    <Flex as={"button"} onClick={() => router?.push(`/dashboard/profile/${userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
+                    <Flex as={"button"} onClick={() => router?.push(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
 
                         <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} > 
                             {isLoading ? (

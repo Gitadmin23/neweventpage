@@ -50,7 +50,9 @@ function ChatBtn(props: Props) {
       onClick={() => mutate()}
       color={bodyTextColor}
       bgColor={mainBackgroundColor}
+      rounded={"full"}
       loading={chatCreationLoading}
+      w={"fit"}
     >
       {/* {chatCreationLoading && <Spinner colorScheme="black" />} */}
       <MessageIcon />

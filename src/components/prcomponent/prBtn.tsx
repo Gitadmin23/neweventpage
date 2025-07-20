@@ -206,7 +206,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
 
                 </Flex>
             )}
-            <ModalLayout open={open} size={"md"} >
+            <ModalLayout open={open} trigger={true} closeBtn={true} close={()=> setOpen(false)} size={"md"} >
                 <Flex flexDir={"column"} gap={"4"} w={"full"} px={"4"} mb={"4"} >
                     <Flex gap={"2"} alignItems={"center"} >
                         {tab && (
@@ -221,10 +221,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                             <Flex w={"full"} flexDirection={"column"} >
                                 <Flex w={"full"} justifyContent={"space-between"} borderBottomWidth={data?.isOrganizer ? "1px" : "0px"} h={"50px"} px={"3"} alignItems={"center"} >
                                     <Text fontSize={"14px"} >Request PR Service</Text>
-                                    <Flex gap={"2"} alignItems={"center"} >
-                                        {/* {data?.isOrganizer && (
-                                            <Switch isChecked={prCheck} onChange={(e) => setPrCheck(e.target.checked)} />
-                                        )} */}
+                                    <Flex gap={"2"} alignItems={"center"} > 
                                         {data?.affiliates?.length > 0 && (
                                             <CustomButton backgroundColor={"red"} disable={updateEvent?.isPending} isLoading={updateEvent?.isPending} onClick={() => updatePrPercent(true)} width={"80px"} height={"30px"} fontSize={"12px"} text={"Stop Pr"} rounded={"full"} />
                                         )}
@@ -245,16 +242,16 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                             </Flex>
                             {data?.isOrganizer && (
                                 <Flex flexDirection={"column"} >
-                                    <Flex w={"full"} onClick={() => { setTab(true), setIndex(1) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(1) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Add fundraising </Text>
                                     </Flex>
-                                    <Flex w={"full"} onClick={() => { setTab(true), setIndex(2) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(2) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Add kiosk</Text>
                                     </Flex>
-                                    <Flex w={"full"} onClick={() => { setTab(true), setIndex(3) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(3) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Request Service - Photographer, makeup Artist...</Text>
                                     </Flex>
-                                    <Flex w={"full"} onClick={() => { setTab(true), setIndex(4) }} as={"button"} justifyContent={"space-between"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(4) }} as={"button"} justifyContent={"space-between"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Rent an item(s)</Text>
                                     </Flex>
                                 </Flex>
@@ -264,16 +261,16 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                     {tab && (
                         <Flex w={"full"} gap={"4"} pos={"relative"} flexDir={"column"} >
                             <Flex p={"4px"} h={"45px"} rounded={"full"} w={"full"} bgColor={secondaryBackgroundColor} >
-                                <Flex w={"full"} as={"button"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 1 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(1)} >
+                                <Flex w={"full"} cursor={"pointer"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 1 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(1)} >
                                     My Fundraising
                                 </Flex>
-                                <Flex w={"full"} as={"button"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 2 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(2)} >
+                                <Flex w={"full"} cursor={"pointer"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 2 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(2)} >
                                     Add Kiosk
                                 </Flex>
-                                <Flex w={"full"} as={"button"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 4 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(4)} >
+                                <Flex w={"full"} cursor={"pointer"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 4 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(4)} >
                                     Services
                                 </Flex>
-                                <Flex w={"full"} as={"button"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 3 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(3)} >
+                                <Flex w={"full"} cursor={"pointer"} fontSize={"12px"} fontWeight={"500"} rounded={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} bgColor={index !== 3 ? "transparent" : mainBackgroundColor} onClick={() => setIndex(3)} >
                                     Rental
                                 </Flex>
                             </Flex>

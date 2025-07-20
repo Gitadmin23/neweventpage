@@ -30,9 +30,9 @@ export default function UserEventCard(props: IEventType) {
         if (pathname?.includes("draft")) {
             router?.push(`/dashboard/event/edit_draft/${id}`)
         } else if (new Date(endDate) < (new Date())) {
-            router?.push(`/dashboard/event/pastdetails/${id}`)
+            router.push("/product/details/events/" + id);
         } else {
-            router?.push(`/dashboard/event/details/${id}`)
+            router.push("/product/details/events/" + id);
         }
     }
 

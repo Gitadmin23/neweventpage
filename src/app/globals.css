@@ -50,3 +50,20 @@ a {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root {
+  font-size: 14px !important;
+  height: 45px !important;
+  border-radius: 9999px !important;
+  border-color: #ededed !important;
+}
+
+.css-vycme6-MuiPickersInputBase-root-MuiPickersOutlinedInput-root { 
+  border-color: #ededed !important;
+}
+ 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0;
+}

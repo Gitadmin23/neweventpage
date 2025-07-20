@@ -1,28 +1,29 @@
+"use client"
 import React, { useEffect } from 'react';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
-  // useJsApiLoader,
   DirectionsRenderer
 } from "@react-google-maps/api";
-// import { MdClose } from 'react-icons/md';
 import MapSearch from './mapSearch';
-// import UserLocation from './user_location';
 import { Box, Flex } from '@chakra-ui/react';
-import EventDirection from './mapDirection';
 import useCustomTheme from '@/hooks/useTheme';
 import LoadingAnimation from '../shared/loadingAnimation';
+import { CustomButton } from '../shared';
+import { useMapModal } from '@/helpers/store/useMapModal';
 // import { toaster } from '@/components/ui/toaster';
 
 interface Props {
-  close?: any,
   hidesearch?: boolean,
   height?: string,
   view?: boolean,
   latlng?: any,
   zoom?: number | undefined,
-  setMyLocat?: any
+  setMyLocat?: any,
+  marker?: any,
+  setMarker?: any,
+  setAddress?: any
 }
 
 
@@ -30,10 +31,13 @@ function MapView(props: Props) {
   const {
     hidesearch,
     height,
-    view,
     latlng,
     zoom,
-    setMyLocat
+    view,
+    setMyLocat,
+    marker,
+    setMarker,
+    setAddress
   } = props
 
 
@@ -42,8 +46,11 @@ function MapView(props: Props) {
   const containerStyle = {
     width: '100%',
     height: height ? height : '47vh',
-    borderRadius: "0px"
+    borderRadius: "16px"
   };
+
+
+  const { setOpen } = useMapModal((state) => state)
 
 
   const options = {
@@ -51,7 +58,6 @@ function MapView(props: Props) {
     zoomControl: zoom ? false : true,
   };
 
-  const [marker, setMarker] = React.useState({} as any)
   const [center, setCenter] = React.useState({} as any)
   const [myLocaton, setMyLocaton] = React.useState({} as any)
 
@@ -87,7 +93,7 @@ function MapView(props: Props) {
             let address = results[0].formatted_address
             let newState = results[0]?.address_components[results[0]?.address_components?.length - 1]?.types[0] === "country" ? results[0]?.address_components[results[0]?.address_components?.length - 2]?.long_name : results[0]?.address_components[results[0]?.address_components?.length - 3]?.long_name
 
-
+            setAddress(address)
           } else {
             console.error('Error fetching address:', status);
           }
@@ -168,7 +174,7 @@ function MapView(props: Props) {
   } = useCustomTheme();
 
   return (
-    <Box width={"full"} bgColor={mainBackgroundColor} >
+    <Box width={"full"} h={height ? height : '47vh'} rounded={"24px"} position={"relative"} bgColor={mainBackgroundColor} >
       <LoadingAnimation loading={!isLoaded} >
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -176,7 +182,6 @@ function MapView(props: Props) {
           options={options}
           zoom={zoom ? zoom : 14}
           onLoad={onMapLoad}
-
           // onUnmount={onUnmount}
           onClick={onMapClick}>
           {/* <UserLocation panTo={panTo}/>   */}
@@ -186,16 +191,16 @@ function MapView(props: Props) {
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
           )}
-          <Marker
-            position={{ lat: marker.lat, lng: marker.lng }}
-          />
+          {marker?.lat && (
+            <Marker
+              position={{ lat: marker.lat, lng: marker.lng }}
+            />
+          )}
         </GoogleMap>
       </LoadingAnimation>
       {!view && (
-        <Flex w={"full"} bgColor={mainBackgroundColor} justifyContent={hidesearch ? "between" : "end"} px={"4"} py={"2"} >
-          {(hidesearch && !directionsResponse) && (
-            <EventDirection latLng={latlng} myLocation={myLocaton} setResult={setDirectionsResponse} />
-          )}
+        <Flex w={"fit"} pos={"absolute"} bottom={"3"} right={"3"} >
+          <CustomButton borderRadius={"999px"} onClick={() => setOpen(false)} width={"80px"} height={"40px"} fontSize={"14px"} text={"Close"} />
         </Flex>
       )}
     </Box>

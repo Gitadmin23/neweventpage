@@ -11,7 +11,9 @@
   "dependencies": {
     "@chakra-ui/react": "^3.21.1",
     "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@iconify/react": "^6.0.0",
+    "@mui/x-date-pickers": "^8.8.0",
     "@react-google-maps/api": "^2.20.7",
     "@tailwindcss/postcss": "^4.1.11",
     "@tanstack/react-query": "^5.81.5",
@@ -19,6 +21,7 @@
     "@types/lodash": "^4.17.20",
     "@yudiel/react-qr-scanner": "^2.3.1",
     "axios": "^1.10.0",
+    "dayjs": "^1.11.13",
     "format-number": "^3.0.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.0",

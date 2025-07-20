@@ -15,8 +15,8 @@ export default function RootLayout({
     return (
         <Suspense>
             <DashboardLayout>
-                <Flex w={"full"} px={pathname?.includes("create") ? "0px" : ["4", "4", "6"]} pt={pathname?.includes("create") ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
-                    {!pathname?.includes("create") && (
+                <Flex w={"full"} px={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["4", "4", "6"]} pt={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
+                    {(!pathname?.includes("create") && !pathname?.includes("details")) && (
                         <ProductTab />
                     )}
                     {children}

@@ -40,7 +40,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const { pinProduct, open, setOpen } = usePr()
 
-    const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps) 
+    const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
     const { mutate: fetchData, isPending: isLoading } = useMutation({
         mutationKey: ['all-events-mesh', data?.id],
@@ -70,7 +70,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
         e.stopPropagation()
         setSelectProduct(item)
         setOpen(true)
-    } 
+    }
 
     return (
         <Flex position={"relative"} display={(eventData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
@@ -84,10 +84,10 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                     <Text fontSize={"12px"} fontWeight={"600"} onClick={() => push(`/dashboard/profile/${data?.createdBy?.userId}/kiosk`)} color={primaryColor} as={"button"} >See all</Text>
                 )}
             </Flex>
-            <Flex w={"full"} height={"180px"} />
+            <Flex w={"full"} height={"180px"} pos={"relative"} />
 
             <LoadingAnimation loading={isLoading} >
-                <Flex position={"absolute"} top={["9", "9", "12"]} maxW={"full"} overflowX={"auto"} className='hide-scrollbar' >
+                <Flex position={"absolute"} top={["14", "10", "12"]} maxW={"full"} overflowX={"auto"} className='hide-scrollbar' >
                     <Flex w={"fit-content"} gap={"2"} pos={"relative"} >
                         <PrBtn data={data} product={true} />
                         {eventData?.map((item, index) => {

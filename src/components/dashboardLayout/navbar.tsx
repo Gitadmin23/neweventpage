@@ -12,9 +12,9 @@ export default function Navbar() {
     return (
         <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['fixed', 'fixed', 'fixed', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"100"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >
             <Box w={"400px"} display={["none", "none", "none", "flex", "flex"]} >
-                <CustomInput placeholder="Search" name={""} value={""} setValue={function (name: string, value: string): void {
+                {/* <CustomInput placeholder="Search" name={""} value={""} setValue={function (name: string, value: string): void {
                     throw new Error("Function not implemented.");
-                }} />
+                }} /> */}
                 {/* <SearchBar fundraising={pathname?.includes("/donation")} change={pathname?.includes("/donation") ? true : false} /> */}
             </Box>
             {/* <Text display={["none", "none", "none", "flex", "flex"]} fontSize={"24px"} fontWeight={"700"} >Chasescroll  <span style={{ color: primaryColor, marginLeft: "2px" }} >Versax</span></Text>

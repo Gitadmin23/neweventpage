@@ -36,11 +36,7 @@ function LoadingAnimation(props: Props) {
         secondaryBackgroundColor,
         mainBackgroundColor,
         primaryColor
-    } = useCustomTheme();
-
-    console.log(loading);
-    console.log(length);
-
+    } = useCustomTheme(); 
 
     const [isLoading, setLoading] = useState(true)
     const [dataLength, setDataLength] = useState(0)
@@ -67,14 +63,14 @@ function LoadingAnimation(props: Props) {
                 <>
                     {children}
                     {(isLoading && dataLength > 0) && (
-                        <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"auto"} >
+                        <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"50px"} >
                             {/* {!customLoader && ( */}
-                            <Flex width={"full"} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
+                            <Flex width={"full"} justifyContent={"center"} height={"full"} fontSize={"20px"}  >
                                 {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
                                 <ThreeDots
                                     visible={true}
-                                    height="80"
-                                    width="80"
+                                    height="40"
+                                    width="40"
                                     color={primaryColor}
                                     radius="9"
                                     ariaLabel="three-dots-loading"

@@ -5,7 +5,7 @@ import { type } from "os";
 import { SelectEventOption } from "../eventcomponents";
 import { CustomButton } from "../shared";
 import useCustomTheme from "@/hooks/useTheme";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 
 export default function ProductTab() {
@@ -20,6 +20,7 @@ export default function ProductTab() {
     const pathname = usePathname()
     const query = useSearchParams();
     const type = query?.get('type');
+    const router = useRouter()
 
     const clickHandler = ( item: string ) => {}
 
@@ -73,6 +74,7 @@ export default function ProductTab() {
             </Flex>
             <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
                 <SelectEventOption />
+                <CustomButton onClick={()=> router.push("/product/create/events")} text={"Create Event"} width={"150px"} fontSize={"14px"} borderRadius={"full"} />
             </Flex>
         </Flex>
     )

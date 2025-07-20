@@ -9,7 +9,7 @@ import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import { IMAGE_URL } from '@/helpers/services/urls';
 import UserImage from './userImage';
 
-export default function ProductImageScroller({ images, userData, createdDate, height, rounded }: { images: Array<string>, userData?: IUser, createdDate?: string, height?: any, rounded?: string }) {
+export default function ProductImageScroller({ images, userData, createdDate, height, rounded, objectFit }: { images: Array<string>, userData?: IUser, createdDate?: string, height?: any, rounded?: string, objectFit?: string }) {
 
 
     const [activeImageIndex, setActiveImageIndex] = React.useState(0);
@@ -35,9 +35,9 @@ export default function ProductImageScroller({ images, userData, createdDate, he
         e.stopPropagation()
         push(`/dashboard/profile/${userData?.userId}`)
     }
-
+ 
     return (
-        <Flex cursor='pointer' w='full' h={height ? height : ["144px", "174px", "174px"]} bgColor={secondaryBackgroundColor} p={["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
+        <Flex cursor='pointer' w='full' h={height ? height : ["144px", "174px", "174px"]} bgColor={secondaryBackgroundColor} p={objectFit ? "0px" : ["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
             {createdDate && (
                 <Flex as={"button"} onClick={(e)=> clickHandler(e)}  position={"absolute"} zIndex={"10"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
                     <UserImage user={userData} size={"md"} />
@@ -63,7 +63,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
             )}
 
             {images?.length > 0 && (
-                <Image rounded={"8px"} cursor='pointer' src={images[activeImageIndex]?.startsWith('https://') ? images[activeImageIndex] : (IMAGE_URL as string) + images[activeImageIndex]} alt="bannerimage" h='full' objectFit={"contain"} />
+                <Image rounded={ rounded ?? "8px"} cursor='pointer' src={images[activeImageIndex]?.startsWith('https://') ? images[activeImageIndex] : (IMAGE_URL as string) + images[activeImageIndex]} alt="bannerimage" h='full' w={"full"} objectFit={objectFit ?? "contain"} />
             )}
             <Flex bgColor={"#000"} opacity={"10%"} pos={"absolute"} inset={"0px"} borderTopRadius={rounded ?? '10px'} />
         </Flex>

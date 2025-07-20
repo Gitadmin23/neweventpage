@@ -1,10 +1,11 @@
-import { Box } from '@chakra-ui/react'
-import React from 'react'  
+import { Box, Input, InputGroup } from '@chakra-ui/react'
+import React from 'react'
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
-} from "use-places-autocomplete"; 
-import useCustomTheme from '@/hooks/useTheme'; 
+} from "use-places-autocomplete";
+import useCustomTheme from '@/hooks/useTheme';
+import { IoSearchOutline } from 'react-icons/io5';
 
 interface Props {
     center: any,
@@ -94,15 +95,19 @@ function MapSearch(props: Props) {
 
     return (
         <Box w='full' mt={"4"} justifyContent={"center"} display={"flex"} >
-            <Box position={"relative"} bg={mainBackgroundColor} w={"70%"} zIndex={"20"} h={"45px"} rounded={"md"} >
+            <Box position={"relative"} bg={mainBackgroundColor} rounded={"full"} w={"70%"} zIndex={"20"} h={"45px"} >
 
-                <Box width={"full"} h={"45px"} position={"relative"} >
+                <Box width={"full"} h={"45px"} rounded={"full"} position={"relative"} >
                     {/* <InputGroup zIndex={"20"} position={"relative"} >
                         <InputLeftElement h={"45px"} pointerEvents='none'>
                             <IoSearchOutline size={"25px"} color='#5D70F9' />
                         </InputLeftElement>
                         <Input value={value} h={"45px"} onChange={handleInput} type='text' borderColor={"brand.chasescrollBlue"} focusBorderColor={'brand.chasescrollBlue'} bgColor={mainBackgroundColor} placeholder='Search your location' />
                     </InputGroup> */}
+
+                    <InputGroup startElement={<IoSearchOutline size={"25px"} style={{ marginLeft: "8px" }} color='#5D70F9' />}>
+                        <Input placeholder="Search your location" fontSize={"14px"} h={"45px"} rounded={"full"} onChange={handleInput} />
+                    </InputGroup>
                     {show && (
                         <Box width={"full"} bgColor={mainBackgroundColor} maxH={"250px"} overflowY={"auto"} zIndex={"20"} px={"4"} display={"flex"} flexDir={"column"} alignItems={"start"} py={"2"} rounded={"md"} position={"absolute"} mt={"2"} >
                             {/* <SearchComponent home={home} /> */}

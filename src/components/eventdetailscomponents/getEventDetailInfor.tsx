@@ -26,7 +26,7 @@ export default function GetEventDetailInfo(props: Props) {
     const query = useSearchParams();
     const type = query?.get('type');
 
-    const { mutate: fetchData, isPending: isLoading, isError } = useMutation({
+    const { mutate: fetchData, isPending: isLoading } = useMutation({
         mutationKey: ['all-events-details', event_index],
         mutationFn: () =>
             httpService.get(URLS.All_EVENT + "?id=" + event_index + `${type ? "&affiliate=PR" : ""}`),

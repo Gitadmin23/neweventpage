@@ -2,7 +2,7 @@
 
 import { Switch } from "@chakra-ui/react"
 
-const CustomSwitch = ({ checked, setChecked, label }: { checked?: boolean, setChecked?: any, label?: string }) => {
+const CustomSwitch = ({ checked, setChecked, label }: { checked?: boolean, setChecked: any, label?: string }) => {
     return (
         <Switch.Root checked={checked} onCheckedChange={({ checked }) => setChecked(checked)} >
             <Switch.HiddenInput />

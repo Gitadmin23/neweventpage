@@ -62,7 +62,7 @@ export default function EventCreator(props: IEventType) {
 
                 <Flex rounded={"64px"} display={["none", "none", createdBy?.userId !== user_index ? "flex" : "none"]} h={"47px"} bgColor={mainBackgroundColor} px={["3", "3", "5", "5"]} py={"12px"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
                     {createdBy?.userId !== user_index && (
-                        <Flex color={"#5465E0"} rounded={"32px"} justifyContent={"center"} alignItems={"center"} gap={["3", "3", "3", "3"]} py={"8px"} >
+                        <Flex color={"#5465E0"} rounded={"32px"} justifyContent={"center"} alignItems={"center"} gap={["1"]} px={"1px"} py={"8px"} >
                             <ChatBtn userId={createdBy?.userId ?? ""} />
                             <AddAndRemoveUser icon={true} name={(isFriend === "FRIEND_REQUEST_RECIEVED" || isFriend === "FRIEND_REQUEST_SENT" || isFriend === "CONNECTED" || isFriend === "CONNECTFriend") ? isFriend === "FRIEND_REQUEST_SENT" ? "Pending" : isFriend === "CONNECTFriend" ? "Disconnect" : "Disconnect" : "Connect"} setJoinStatus={setisFriend} user_index={createdBy?.userId} /> 
                         </Flex>
