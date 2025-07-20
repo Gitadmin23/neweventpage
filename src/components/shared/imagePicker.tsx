@@ -10,10 +10,12 @@ import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
 export default function ImagePicker(
     {
         preview = [],
-        single
+        single,
+        setValue
     }: {
         preview?: Array<string>,
-        single?: boolean
+        single?: boolean,
+        setValue: (name: string, value: any) => void,
     }
 ) {
 
@@ -28,13 +30,13 @@ export default function ImagePicker(
 
     const handleButtonClick = () => {
         fileInputRef.current?.click();
-    }; 
+    };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
-            const fileArray = Array.from(files); 
-            if(single){
+            const fileArray = Array.from(files);
+            if (single) {
                 setImage([...fileArray]);
             } else {
                 setImage([...image, ...fileArray]);
@@ -49,7 +51,7 @@ export default function ImagePicker(
 
     const removeImagePreview = (indexToRemove: number) => {
         const clone = preview.filter((_, index) => index !== indexToRemove)
-        setImage(clone);
+        setValue("picUrls", clone);
     };
 
     return (
@@ -73,31 +75,24 @@ export default function ImagePicker(
                     </Flex>
                 </Flex>
             )}
-            {preview?.length > 0 && (
+            {(image?.length > 0 || preview?.length > 0) && (
                 <Flex w={"fit"} gap={"3"} p={"4"} >
                     {preview.map((file, index) => (
-                        <Flex pos={"relative"} h={"full"} w={"180px"} >
+                        <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
                             <Image
                                 w={"full"}
                                 h={"full"}
                                 rounded={"2xl"}
-                                src={IMAGE_URL+file}
+                                src={IMAGE_URL + file}
                                 alt={`preview-${index}`}
                             />
-                            <Flex onClick={() => removeImage(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
+                            <Flex onClick={() => removeImagePreview(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
                                 <IoIosCloseCircle color='red' size={"25px"} />
                             </Flex>
                         </Flex>
                     ))}
-                    {/* <Flex onClick={handleButtonClick} cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} h={"full"} w={"180px"} justifyContent={"center"} alignItems={"center"} rounded={"2xl"} >
-                        <IoMdAdd size={"50px"} />
-                    </Flex> */}
-                </Flex>
-            )}
-            {image?.length > 0 && (
-                <Flex w={"fit"} gap={"3"} p={"4"} >
                     {image.map((file, index) => (
-                        <Flex pos={"relative"} h={"full"} w={"180px"} >
+                        <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
                             <Image
                                 w={"full"}
                                 h={"full"}
