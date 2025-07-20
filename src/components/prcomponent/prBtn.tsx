@@ -140,14 +140,11 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
         })
     }
 
-
-    const changeHandler = (item: string) => {
-
+    const changeHandler = (item: string) => { 
         if (item?.toString()?.length <= 2) {
             setPercentage(item)
         }
-    }
-
+    } 
 
     return (
         <>

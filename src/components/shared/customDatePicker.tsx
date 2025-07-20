@@ -40,7 +40,7 @@ export default function CustomDatePicker(
                         className=" text-primary "
                         minDate={name[0] === "startDate" ? dayjs() : dayjs(start)}
                         defaultValue={dayjs(value)}
-                        format="ddd, MM/DD/YYYY hh:mm a"
+                        format="MM/DD/YYYY hh:mm a"
                         onChange={(item) => changeHandler(item)}
                         slotProps={{ 
                             openPickerIcon: { fontSize: "small" },

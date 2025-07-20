@@ -1,6 +1,6 @@
 "use client"
 import { Flex, Text } from "@chakra-ui/react";
-import SelectLocationType from "./information/selectLocationType"; 
+import SelectLocationType from "./information/selectLocationType";
 import { CustomButton, CustomInput } from "../shared";
 import SelectMapLocation from "./information/selectMapLocation";
 import CustomEventSwitch from "./theme/customEventSwitch";
@@ -12,7 +12,7 @@ export default function Information(
     {
         formik,
         isLoading
-    } : {
+    }: {
         isLoading: boolean;
         formik: any
     }
@@ -22,26 +22,26 @@ export default function Information(
         primaryColor
     } = useCustomTheme()
 
-    const query = useSearchParams(); 
+    const query = useSearchParams();
     const id = query?.get('id');
 
-    const router = useRouter() 
+    const router = useRouter()
 
     const clickHandler = () => {
 
-        if(!formik.values.location.toBeAnnounced && !formik.values.location.locationDetails && !formik.values.location.link ){
+        if (!formik.values.location.toBeAnnounced && !formik.values.location.locationDetails && !formik.values.location.link) {
             toaster.create({
                 title: `Add Image`,
                 type: "error",
                 closable: true
-            }) 
+            })
         } else {
             formik.handleSubmit()
-        } 
+        }
     }
 
     console.log(formik.values);
-    
+
 
     return (
         <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} >
@@ -61,14 +61,17 @@ export default function Information(
             )}
             <CustomInput defaultData={formik.values?.location?.address} name={"location.address"} textarea={true} errors={formik?.errors?.location?.address} touched={formik?.touched?.location?.address} setValue={formik.setFieldValue} label="Event Address" value={formik.values} />
 
-            <CustomEventSwitch title="Do you wish to accept PR requests for your event?" setValue={formik.setFieldValue} value={formik.values.affiliates[0].affiliateType === "pr" ? true : false} name="affiliates[0].affiliateType" />
-
-            {formik.values.affiliates[0].affiliateType === "pr" && (
-                <CustomInput type="number" name={"affiliates[0].percent"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Add Percentage" value={formik.values} />
+            <CustomEventSwitch title="Do you wish to accept PR requests for your event?" setValue={formik.setFieldValue} value={formik.values.affiliates ? formik.values.affiliates[0].affiliateType === "pr" ? true : false : false} name="affiliates[0].affiliateType" />
+            {formik.values.affiliates && (
+                <> 
+                    {formik.values.affiliates[0].affiliateType === "pr" && (
+                        <CustomInput type="number" name={"affiliates[0].percent"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Add Percentage" value={formik.values} />
+                    )}
+                </>
             )}
 
             <Flex justifyContent={"end"} py={"6"} gap={"3"} mt={"auto"} >
-                <CustomButton onClick={()=> router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={"250px"} borderRadius={"999px"} />
+                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={"250px"} borderRadius={"999px"} />
                 <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={"250px"} borderRadius={"999px"} />
             </Flex>
         </Flex>
