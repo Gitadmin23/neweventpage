@@ -36,9 +36,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
     const [selectDonation, setSelectDonation] = useState("")
     const [selectDonationInitial, setSelectDonationInitial] = useState("")
     const param = useParams();
-    const id = param?.slug
-
-    console.log(id);
+    const id = param?.slug 
 
     const { createPr, tagServiceAndRental, createFundraising, open, setOpen, updateEvent, pinProduct } = usePr()
 

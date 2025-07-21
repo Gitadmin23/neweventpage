@@ -31,7 +31,7 @@ export default function Information(
 
         if (!formik.values.location.toBeAnnounced && !formik.values.location.locationDetails && !formik.values.location.link) {
             toaster.create({
-                title: `Add Image`,
+                title: `Add Location`,
                 type: "error",
                 closable: true
             })

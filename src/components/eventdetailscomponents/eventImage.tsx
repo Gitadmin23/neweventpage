@@ -17,10 +17,7 @@ export default function EventImage(
 ) {
 
     const { borderColor, secondaryBackgroundColor } = useCustomTheme()
-
-    console.log(data?.picUrls);
-    
-
+ 
     return (
         <Flex w={width ?? "full"} flexDir={"column"} gap={"4"} >
             <Flex borderWidth={"1px"} borderColor={borderColor} position={"relative"} w={"full"} h={height ?? ["340px", "340px", "520px"]} pos={"relative"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} px={"1"} py={["1", "1", "3"]} >

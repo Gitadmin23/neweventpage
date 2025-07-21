@@ -1,6 +1,7 @@
 "use client"
 import useCustomTheme from '@/hooks/useTheme';
-import { Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import { keyframes } from '@emotion/react';
 import React, { useEffect, useState } from 'react'
 import { Grid, MagnifyingGlass, RevolvingDot, ThreeDots } from 'react-loader-spinner';
 
@@ -36,7 +37,7 @@ function LoadingAnimation(props: Props) {
         secondaryBackgroundColor,
         mainBackgroundColor,
         primaryColor
-    } = useCustomTheme(); 
+    } = useCustomTheme();
 
     const [isLoading, setLoading] = useState(true)
     const [dataLength, setDataLength] = useState(0)
@@ -56,11 +57,16 @@ function LoadingAnimation(props: Props) {
         }
 
     }, [loading])
-    
+
+    const rotate = keyframes`
+from { transform: rotate(0deg); }
+to { transform: rotate(360deg); }
+`;
+
     return (
-        <>
+        <Flex w={"full"} h={fix_height ? "full" : "fit-content"} >
             {(!isLoading || dataLength > 0) && (
-                <>
+                <Flex w={"full"} h={"full"} flexDir={"column"} >
                     {children}
                     {(isLoading && dataLength > 0) && (
                         <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"50px"} >
@@ -80,7 +86,7 @@ function LoadingAnimation(props: Props) {
                             </Flex>
                         </Flex>
                     )}
-                </>
+                </Flex>
             )}
 
             {(!isLoading && !refeching) && (
@@ -101,24 +107,20 @@ function LoadingAnimation(props: Props) {
             {(loading && !dataLength) && (
                 <Flex w={"full"} height={"auto"} >
                     {!customLoader && (
-                        <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
+                        <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={"8"}  >
                             {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
-                            <MagnifyingGlass
-                                visible={true}
-                                height="80"
-                                width="80"
-                                ariaLabel="magnifying-glass-loading"
-                                wrapperStyle={{}}
-                                wrapperClass="magnifying-glass-wrapper"
-                                glassColor="#c0efff"
-                                color={primaryColor}
-                            />
+                            <Box
+                                w={"50px"}
+                                h={"50px"}
+                                animation={`${rotate} 2s linear infinite`} >
+                                <Image alt='logo' src='/images/logo.png' w={"50px"} />
+                            </Box>
                         </Flex>
                     )}
                     {customLoader}
                 </Flex>
             )}
-        </>
+        </Flex>
     )
 }
 

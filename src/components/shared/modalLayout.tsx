@@ -30,7 +30,7 @@ export default function ModalLayout({
     return (
         <>
             {!trigger && (
-                <Dialog.Root placement={placement ?? "center"}  size={size ?? "md"} >
+                <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} >
                     <Dialog.Trigger >
                         {button}
                     </Dialog.Trigger>
@@ -38,16 +38,16 @@ export default function ModalLayout({
                     <Dialog.Positioner >
                         <Dialog.Content mt={"10"}>
                             <Dialog.CloseTrigger />
-                            <Dialog.Header >
-                                <Flex px={"3"} >
+                            {title || closeBtn && ( 
+                                <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
                                     <Dialog.Title >{title}</Dialog.Title>
                                     {closeBtn && (
                                         <Dialog.CloseTrigger asChild>
                                             <CloseButton size="sm" />
                                         </Dialog.CloseTrigger>
                                     )}
-                                </Flex>
-                            </Dialog.Header>
+                                </Dialog.Header>
+                            )}
                             <Flex w={"full"} h={"full"} >
                                 {children}
                             </Flex>
@@ -63,20 +63,23 @@ export default function ModalLayout({
                 <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner>
-                        <Dialog.Content>
-                            <Dialog.CloseTrigger />
-                            <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
-                                <Dialog.Title >{title}</Dialog.Title>
-                                {closeBtn && (
-                                    <Dialog.CloseTrigger asChild>
-                                        <CloseButton size="sm" />
-                                    </Dialog.CloseTrigger>
-                                )}
-                            </Dialog.Header>
-                            <Flex w={"full"} h={"full"} >
-                                {children}
-                            </Flex>
-                            <Dialog.Body />
+                        <Dialog.Content zIndex={1500} pos={"fixed"} >
+                            <Dialog.CloseTrigger /> 
+                            {title || closeBtn && ( 
+                                <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
+                                    <Dialog.Title >{title}</Dialog.Title>
+                                    {closeBtn && (
+                                        <Dialog.CloseTrigger asChild>
+                                            <CloseButton size="sm" />
+                                        </Dialog.CloseTrigger>
+                                    )}
+                                </Dialog.Header>
+                            )}
+                            <Dialog.Body >
+                                <Flex w={"full"} h={"full"} >
+                                    {children}
+                                </Flex>
+                            </Dialog.Body>
                             <Dialog.Footer>
                                 {footer}
                             </Dialog.Footer>

@@ -1,9 +1,9 @@
 
-export const formatNumberWithK = (number: any,  prefix = "₦",  symbol?: boolean) =>{
+export const formatNumberWithK = (number: any,symbol?: boolean, prefix = "₦") =>{
     if(number === 0 || !number) {
         return "0"
     } else {
-        return (symbol && (prefix ?? "₦"))+(number > 999 ? `${Math.trunc(number / 1000)}k` : number)
+        return (symbol ? (prefix) : "")+(number > 999 ? `${Math.trunc(number / 1000)}k` : number)
     }
 }
 

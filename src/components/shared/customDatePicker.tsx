@@ -38,7 +38,7 @@ export default function CustomDatePicker(
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                         className=" text-primary "
-                        minDate={name[0] === "startDate" ? dayjs() : dayjs(start)}
+                        minDate={start ? dayjs(start) : dayjs()}
                         defaultValue={dayjs(value)}
                         format="MM/DD/YYYY hh:mm a"
                         onChange={(item) => changeHandler(item)}

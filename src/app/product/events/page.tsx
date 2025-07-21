@@ -11,7 +11,7 @@ export default function EventPage() {
     const type = query?.get('type');
 
     return ( 
-        <Flex w={"full"} >
+        <Flex w={"full"} pos={"relative"} >
             {!type && (
                 <EventLisiting />
             )}

@@ -12,11 +12,14 @@ import { CustomButton, LoadingAnimation } from '@/components/shared';
 import { IMAGE_URL } from '@/helpers/services/urls';
 import { textLimit } from '@/helpers/utils/textlimit';
 import { numberFormatNaire } from '@/helpers/utils/formatNumberWithK';
+import useGetUser from '@/hooks/useGetUser';
+import { useDetails } from '@/helpers/store/useUserDetails';
  
 
 export default function ListProduct({ setOpen, selectProduct, setSelectProduct, data, setTab }: { setOpen?: any, selectProduct: Array<IPinned>, setSelectProduct: any, data?: IEventType, length: any, setTab?: any }) {
 
-    const userId = localStorage.getItem('user_id') + "";
+    
+    const { userId } = useDetails()
 
     const { primaryColor } = useCustomTheme()
     const router = useRouter()
@@ -74,7 +77,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
                                 <Flex ref={ref} as={"button"} key={index} onClick={() => selectProductHandler(item?.id)} w={"full"} borderWidth={"1px"} alignItems={"center"} borderColor={"#EBEDF0"} gap={"2"} p={"4"} rounded={"16px"} >
                                     <Flex width={"fit-content"} >
                                         <Flex w={"79px"} h={["79px"]} bgColor={"gray"} rounded={"8px"} >
-                                            <Image alt='prod' src={IMAGE_URL + item?.images[0]} rounded={"8px"} />
+                                            <Image alt='prod' w={"full"} h={"full"} src={IMAGE_URL + item?.images[0]} rounded={"8px"} />
                                         </Flex>
                                     </Flex>
                                     <Flex flexDir={"column"} gap={"2px"} >

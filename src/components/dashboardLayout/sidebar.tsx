@@ -41,7 +41,7 @@ export default function SideBar() {
             text: 'Explore'
         },
         {
-            route: '/dashboard/product',
+            route: '/product/events',
             icon: <KisokIcon color={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? true : false} />,
             text: 'Versax'
         },
@@ -69,9 +69,7 @@ export default function SideBar() {
 
     const clickHandler = () => {
         window.location.href = `${LANDINGPAGE_URL}/logout`; 
-    }
-
-    console.log(`${LANDINGPAGE_URL}/logout`);
+    } 
 
     const ToolTip = ({ content }: { content: string }) => {
         return (

@@ -14,6 +14,9 @@ import { IMAGE_URL } from '@/helpers/services/urls'
 import PrBtn from '../prcomponent/prBtn'
 import httpService from '@/helpers/services/httpService'
 import { useMutation } from '@tanstack/react-query'
+import { fetchSecureData } from '@/helpers/services/api'
+import { useFetchData } from '@/hooks/useFetchData'
+import { IPagination } from '@/helpers/models/pagination'
 
 interface IProps {
     "id": string,
@@ -36,25 +39,52 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const { push } = useRouter()
 
-    const [eventData, setEventData] = useState<Array<IProps>>([])
+    const [newData, setNewData] = useState([] as any)
 
     const { pinProduct, open, setOpen } = usePr()
 
     const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
-    const { mutate: fetchData, isPending: isLoading } = useMutation({
-        mutationKey: ['all-events-mesh', data?.id],
-        mutationFn: () =>
-            httpService.get(`/pin-item/search`),
-        onSuccess: (data: any) => {
-            setEventData(data?.data)
-            // setMeshSize(data?.data?.length)
-        },
-    });
+    // const { mutate: fetchData, isPending: isLoading } = useMutation({
+    //     mutationKey: ['all-events-mesh', data?.id],
+    //     mutationFn: () =>
+    //         httpService.get(`/pin-item/search`, {
+    //             params : {
+    //                 typeId: data?.id
+    //             }
+    //         }),
+    //     onSuccess: (data: any) => {
+    //         setEventData(data?.data)
+    //         // setMeshSize(data?.data?.length)
+    //     },
+    // });
 
-    useEffect(() => {
-        fetchData();
-    }, [])
+    // useEffect(() => {
+    //     fetchData();
+    // }, [])
+
+    // const { data } = useFetchData<{
+    //     data: {
+    //         data: IProps
+    //     }
+    // }>(`/pin-item/search`,
+    //     {
+    //         typeId: data?.id
+    //     })
+
+    // `/pin-item/search`, "all-events-mesh", {
+    //     page: page,
+    //     size: show ? 6 : size
+    // }
+
+    const { data: eventData, isLoading } = useFetchData<Array<IProps>>({name: "all-events-mesh", endpoint: `/pin-item/search`, id: data?.id, params: {
+        typeId: data?.id
+    }});
+
+    useEffect(()=> {
+        setNewData(eventData)
+    }, [isLoading])
+
 
     const removeHandler = (item: string) => {
         let obj: Array<IPinned> = [{
@@ -73,7 +103,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
     }
 
     return (
-        <Flex position={"relative"} display={(eventData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
+        <Flex position={"relative"} display={(newData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
             <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
                 {data?.isOrganizer ? (
                     <Text fontWeight={"500"} >Add  Product to enable your Audience connect to your event</Text>

@@ -20,8 +20,7 @@ export default function GetEventDetailInfo(props: Props) {
     } = props
 
     // const userId = "";
-    const [data, setData] = useState<IEventType | any>();
-    const [show, setShow] = useState(false);
+    const [data, setData] = useState<IEventType | any>(); 
     // const pathname = usePathname()
     const query = useSearchParams();
     const type = query?.get('type');
@@ -45,7 +44,7 @@ export default function GetEventDetailInfo(props: Props) {
     }, [])
 
     return (
-        <LoadingAnimation loading={isLoading} >
+        <LoadingAnimation fix_height={true} loading={isLoading} >
             <EventDetails {...data} />
         </LoadingAnimation>
     )
