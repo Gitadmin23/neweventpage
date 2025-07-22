@@ -43,7 +43,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
     // const toast = useToast()
 
     const clickHander = () => {
-        createPr?.mutate({
+        createPr.mutate({
             eventID: data?.id,
             affiliateType: data?.affiliates[0]?.affiliateType,
             percent: data?.affiliates[0]?.percent

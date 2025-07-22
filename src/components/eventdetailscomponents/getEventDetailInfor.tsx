@@ -23,26 +23,22 @@ export default function GetEventDetailInfo(props: Props) {
     } = props
 
     // const userId = "";
-    const [data, setData] = useState<IEventType | any>();
-    // const pathname = usePathname()
+    // const [data, setData] = useState<IEventType | any>();
     const query = useSearchParams();
     const type = query?.get('type'); 
 
-    const { data: eventData, isLoading } = useFetchData<PaginatedResponse<IEventType>>({name: "all-events-details", endpoint: URLS.All_EVENT, id: event_index, params: {
+    const { data: eventData, isLoading } = useFetchData<PaginatedResponse<IEventType>>({name: "eventsdetails", endpoint: URLS.All_EVENT, id: event_index, params: {
         id: event_index,
         affiliate: type ? "PR" : ""
     }});
 
-    useEffect(()=> { 
-            setData(eventData?.content[0]) 
-    }, [isLoading])
-
-    console.log(data);
-    
+    // useEffect(()=> { 
+    //     setData(eventData?.content[0]) 
+    // }, [isLoading]) 
 
     return (
         <LoadingAnimation fix_height={true} loading={isLoading} >
-            <EventDetails {...data} />
+            <EventDetails {...eventData?.content[0]} />
         </LoadingAnimation>  
     )
 }

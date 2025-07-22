@@ -6,7 +6,7 @@ import { IoClose } from 'react-icons/io5'
 import { IPinned, IProduct } from '@/helpers/models/product'
 import { IEventType } from '@/helpers/models/event'
 import usePr from '@/hooks/usePr'
-import { LoadingAnimation, ModalLayout } from '../shared'
+import { CustomButton, LoadingAnimation, ModalLayout } from '../shared'
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter'
 import { formatNumber } from '@/helpers/utils/numberFormat'
 import { textLimit } from '@/helpers/utils/textlimit'
@@ -140,13 +140,13 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                                 </Flex>
                             )
                         })}
-                        <ModalLayout open={open} close={() => setOpen(false)} size={"xs"} >
-                            <Flex width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={"3"} >
-                                <Image alt='delete' src='/assets/images/deleteaccount.svg' />
+                        <ModalLayout open={open} trigger={true} close={() => setOpen(false)} size={"xs"} >
+                            <Flex width='100%' flexDir={"column"} justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={"3"} >
+                                <Image alt='delete' src='/images/deleteaccount.svg' />
                                 <Text fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Remove Product </Text>
                                 <Text textAlign={'center'} fontSize={'14px'} >Are you sure you want to remove <span style={{ fontWeight: "bold" }} >{capitalizeFLetter(selectProduct?.returnProductDto?.name)}</span>, this action cannot be undone.</Text>
-                                <Button disabled={pinProduct.isPending} onClick={() => removeHandler(selectProduct?.returnProductDto?.id)} loading={pinProduct.isPending} fontSize={"14px"} width='100%' height='42px' bg='red' color="white" variant='solid'>Remove</Button>
-                                <Button onClick={() => setOpen(false)} width='100%' height='42px' borderWidth={'0px'} color="grey">Cancel</Button>
+                                <CustomButton borderRadius={"full"} disabled={pinProduct.isPending} onClick={() => removeHandler(selectProduct?.returnProductDto?.id)} isLoading={pinProduct.isPending} fontSize={"14px"} width='100%' height='42px' backgroundColor='red' color="white" variant='solid' text={"Remove"} />
+                                <CustomButton borderRadius={"full"} onClick={() => setOpen(false)} width='100%' height='42px' borderWidth={'1px'} borderColor={primaryColor} color={primaryColor} backgroundColor={"white"} text={"Cancel"} />
                             </Flex>
                         </ModalLayout>
                     </Flex>

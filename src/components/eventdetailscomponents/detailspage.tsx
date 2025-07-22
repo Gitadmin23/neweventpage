@@ -22,7 +22,7 @@ import ViewTicket from "./viewTicket";
 import SelectTicketBtn from "./selectTicketBtn";
 
 export default function DetailsPage(
-    props: IEventType
+    props: IEventType | any
 ) {
 
     const {
