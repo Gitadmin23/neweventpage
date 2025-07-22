@@ -3,7 +3,6 @@ import { Raleway } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./Provider";  
 import { Toaster } from "@/components/ui/toaster";
-import { Suspense } from "react";
 
 const raleway = Raleway({
   variable: "--font-raleway",
@@ -23,13 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ fontFamily: raleway.style.fontFamily }} >
-
-    {/* <Suspense> */}
         <Providers> 
           {children}  
           <Toaster />
         </Providers>
-        {/* </Suspense> */}
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
-// "use client"
-import { DashboardLayout } from "@/components/dashboardLayout";
+import { DashboardLayout, ProductTab } from "@/components/dashboardLayout";
 import { Suspense } from "react";
 
-export default function RootLayout({
+export const dynamic = "force-dynamic";
+
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
@@ -11,7 +12,11 @@ export default function RootLayout({
     return (
         <Suspense>
             <DashboardLayout>
-                {children}
+                <Suspense>
+                    <ProductTab>
+                        {children}
+                    </ProductTab>
+                </Suspense>
             </DashboardLayout>
         </Suspense>
     );

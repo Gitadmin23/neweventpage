@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react'
-import { ButtonProps, Button as ChakraButton, Box } from '@chakra-ui/react' 
-import useCustomTheme from '@/hooks/useTheme';
+import { ButtonProps, Button as ChakraButton, Box } from '@chakra-ui/react'  
 
 interface IProps {
   type?: 'button' | 'submit';
@@ -40,8 +39,6 @@ function CustomButton({
   disable = false,
   ...rest
 }: IProps & ButtonProps) { 
-  
-  const { primaryColor } = useCustomTheme()
 
   return (
     <ChakraButton
@@ -63,7 +60,7 @@ function CustomButton({
       loading={isLoading}
       shadow={shadow}
       variant={variant}
-      bgColor={backgroundColor ? backgroundColor : primaryColor}
+      bgColor={backgroundColor ? backgroundColor : "#5D70F9"}
       _hover={{
         backgroundColor: backgroundColor
       }} 

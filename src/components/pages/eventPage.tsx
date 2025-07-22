@@ -2,7 +2,6 @@
 import { DraftEvent, EventLisiting, MyEvent, PastedEvent, SavedEvent, } from "@/components/eventcomponents";
 import { Flex } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
- 
 
 export default function EventPage() {
 

@@ -3,7 +3,7 @@ import useCustomTheme from "@/hooks/useTheme";
 import { KisokIcon, NotificationIcon, SidebarEventIcon, SidebarHomeIcon, SidebarLogoutIcon, SidebarMessageIcon, SidebarSearchIcon, SidebarWalletIcon } from "@/svg/sidebarIcons";
 import { Flex, Box, Image, Switch, Spinner, Text, Button } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactNode, Suspense, useState } from "react";
 import { ModalLayout, UserImage } from "../shared";
 import { Warning2 } from 'iconsax-react';
 import { useColorMode } from "../ui/color-mode";
@@ -23,9 +23,9 @@ export default function SideBar() {
 
     const { isLoading, user } = useGetUser()
 
-    const [ open, setOpen ] = useState(false)
+    const [open, setOpen] = useState(false)
     const [activeBar, setActiveBar] = useState("")
-    const { borderColor, mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme() 
+    const { borderColor, mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme()
     const { colorMode, toggleColorMode } = useColorMode();
 
     const pathname = usePathname()
@@ -68,8 +68,8 @@ export default function SideBar() {
     ];
 
     const clickHandler = () => {
-        window.location.href = `${LANDINGPAGE_URL}/logout`; 
-    } 
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
+    }
 
     const ToolTip = ({ content }: { content: string }) => {
         return (
@@ -90,7 +90,6 @@ export default function SideBar() {
                     <Image alt='logo' src='/images/logo.png' w={"50px"} />
                 </Box>
                 <Flex flexDir={"column"} alignItems={"center"} gap={"3"} >
-
                     {routes?.map((item, index) => (
                         <Flex cursor={"pointer"} key={index}>
                             {item?.text !== "Notification" && (
@@ -111,7 +110,6 @@ export default function SideBar() {
                             )}
                         </Flex>
                     ))}
-
                 </Flex>
 
                 <Flex flexDir={"column"} alignItems={"center"} >
@@ -130,20 +128,18 @@ export default function SideBar() {
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
-                    <Flex cursor={"pointer"} onClick={() => router?.push(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
-
-                        <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} > 
-                            {isLoading ? (
-                                <Spinner color={primaryColor} />
-                            ) : (
-                                <UserImage user={user} size="sm" />
-                            )}
-                        </Flex>
-
+                    <Flex cursor={"pointer"} onClick={() => router?.push(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} > 
+                            <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
+                                {isLoading ? (
+                                    <Spinner color={primaryColor} />
+                                ) : (
+                                    <UserImage user={user} size="sm" />
+                                )}
+                            </Flex> 
                         <ToolTip content={"profile"} />
                     </Flex>
 
-                    <Flex cursor={"pointer"} onClick={()=> setOpen(true)} position={"relative"} onMouseOver={() => setActiveBar("logout")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
+                    <Flex cursor={"pointer"} onClick={() => setOpen(true)} position={"relative"} onMouseOver={() => setActiveBar("logout")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
                         <Box>
                             <SidebarLogoutIcon />
                         </Box>
@@ -151,15 +147,13 @@ export default function SideBar() {
                     </Flex>
                 </Flex>
             </Flex>
-
-            {/* <PageLoader show={!data?.email} /> */}
-            <ModalLayout size={"xs"} trigger={true} open={open} close={()=> setOpen(false)} >
+            <ModalLayout size={"xs"} trigger={true} open={open} close={() => setOpen(false)} >
                 <Flex
                     width={"100%"}
                     height={"100%"}
                     justifyContent={"center"}
                     gap={6}
-                    rounded={"lg"} 
+                    rounded={"lg"}
                     flexDirection={"column"}
                     bgColor={mainBackgroundColor}
                     p={"6"}
@@ -190,7 +184,7 @@ export default function SideBar() {
                             bg={"white"}
                             rounded={"full"}
                             height={"45px"}
-                            color={primaryColor} 
+                            color={primaryColor}
                             onClick={() => setOpen(false)}
                         >
                             Cancel

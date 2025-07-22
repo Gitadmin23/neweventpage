@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { LoginSpinner } from "@/components/shared";
-import { Suspense } from "react";
+import { Suspense } from "react"; 
 
 export default function Home() {
 
@@ -9,6 +9,6 @@ export default function Home() {
       <Flex w={"full"} h={"100vh"} bgColor={"white"} >
         <LoginSpinner />
       </Flex>
-    </Suspense>
+    </Suspense>  
   );
 }

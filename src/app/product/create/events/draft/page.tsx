@@ -1,10 +1,7 @@
-import { DraftEventPage } from "@/components/pages";
-import { Suspense } from "react";
+import { DraftEventPage } from "@/components/pages"; 
 
 export default function EditEvent() {
-    return (
-        <Suspense fallback={<>Loading...</>}>
-            <DraftEventPage />
-        </Suspense>
+    return ( 
+        <DraftEventPage />  
     )
 }
