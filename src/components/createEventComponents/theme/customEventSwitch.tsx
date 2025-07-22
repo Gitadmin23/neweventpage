@@ -45,7 +45,7 @@ export default function CustomEventSwitch(
             {label && (
                 <Text fontSize={"14px"} fontWeight={"medium"} >{label}</Text>
             )}
-            <Flex w={"full"} h={"45px"} rounded={"32px"} bgColor={secondaryBackgroundColor} px={"3"} justifyContent={"space-between"} alignItems={"center"}  >
+            <Flex w={"full"} h={"45px"} rounded={"32px"} gap={"2"} py={"1"} bgColor={secondaryBackgroundColor} px={"3"} justifyContent={"space-between"} alignItems={"center"}  >
                 <Text fontSize={"14px"} >{title ?? "Show"}</Text>
                 <CustomSwitch checked={value} setChecked={clickHandler} />
             </Flex>

@@ -8,6 +8,9 @@ import httpService from "@/helpers/services/httpService";
 import { useSearchParams } from "next/navigation";
 import { PaginatedResponse } from "@/helpers/models/PaginatedResponse";
 import { EventDetails } from ".";
+import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
+import { useFetchData } from "@/hooks/useFetchData";
+import { Flex } from "@chakra-ui/react";
 
 interface Props {
     event_index: any,
@@ -20,32 +23,26 @@ export default function GetEventDetailInfo(props: Props) {
     } = props
 
     // const userId = "";
-    const [data, setData] = useState<IEventType | any>(); 
+    const [data, setData] = useState<IEventType | any>();
     // const pathname = usePathname()
     const query = useSearchParams();
-    const type = query?.get('type');
+    const type = query?.get('type'); 
 
-    const { mutate: fetchData, isPending: isLoading } = useMutation({
-        mutationKey: ['all-events-details', event_index],
-        mutationFn: () =>
-            httpService.get(URLS.All_EVENT + "?id=" + event_index + `${type ? "&affiliate=PR" : ""}`),
-        onSuccess: (data: any) => {
-            try {
-                const item: PaginatedResponse<IEventType> = data.data;
-                setData(item.content[0]);
-            } catch (e) {
-                console.error('Error in onSuccess handler:', e);
-            }
-        },
-    });
+    const { data: eventData, isLoading } = useFetchData<PaginatedResponse<IEventType>>({name: "all-events-details", endpoint: URLS.All_EVENT, id: event_index, params: {
+        id: event_index,
+        affiliate: type ? "PR" : ""
+    }});
 
-    useEffect(() => {
-        fetchData();
-    }, [])
+    useEffect(()=> { 
+            setData(eventData?.content[0]) 
+    }, [isLoading])
+
+    console.log(data);
+    
 
     return (
         <LoadingAnimation fix_height={true} loading={isLoading} >
             <EventDetails {...data} />
-        </LoadingAnimation>
+        </LoadingAnimation>  
     )
 }

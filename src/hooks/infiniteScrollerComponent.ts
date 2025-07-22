@@ -36,13 +36,13 @@ function useInfiniteScroller(props: Props) {
   const intObserver = React.useRef<IntersectionObserver | null>(null);
 
   const getParamsDependencies = React.useMemo(() => {
-    const cleanedParams = cleanup(paramsObj);
+    const cleanedParams = cleanup({...paramsObj, search: search});
     return Object.keys(cleanedParams).length ? Object.values(cleanedParams) : [];
   }, [paramsObj]);
 
   const queryKey = React.useMemo(
-    () => (name ? [name, url, search, ...getParamsDependencies] : [url, ...getParamsDependencies]),
-    [name, url, search, getParamsDependencies]
+    () => (name ? [name, url, ...getParamsDependencies] : [url, ...getParamsDependencies]),
+    [name, url, getParamsDependencies ?? null]
   );
 
   // const queryClient = useQueryClient();

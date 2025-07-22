@@ -50,7 +50,7 @@ function CustomButton({
       disabled={isLoading || disable}
       loadingText='Loading'
       width={width}
-      height={height}
+      height={height ?? "45px"}
       color={color}
       fontSize={fontSize}
       fontWeight={"semibold"}

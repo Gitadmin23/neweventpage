@@ -30,7 +30,7 @@ export default function SelectEventOption() {
         }
     ]
 
-    const { borderColor, secondaryBackgroundColor, headerTextColor, mainBackgroundColor } = useCustomTheme()
+    const { borderColor, secondaryBackgroundColor, headerTextColor, mainBackgroundColor, primaryColor } = useCustomTheme()
 
 
     const router = useRouter();
@@ -40,8 +40,8 @@ export default function SelectEventOption() {
     return (
         <Menu.Root >
             <Menu.Trigger cursor={"pointer"} asChild>
-                <Flex gap={"3"} borderWidth={"1px"} borderColor={borderColor} rounded={"full"} fontSize={"14px"} h={"45px"} px={"3"} fontWeight={"semibold"} alignItems={"center"} >
-                    <Text fontWeight={"semibold"} >{type === "saved_event" ? "Saved Events" : type === "past_event" ? "Past Events" : type === "my_event" ? "My Events" : type === "draft" ? "Draft" : "All Events"}</Text> <IoChevronDown color={headerTextColor} />
+                <Flex gap={"3"} borderWidth={"1px"} bgColor={"#F2F4FF"} borderColor={borderColor} rounded={"full"} fontSize={"14px"} h={"45px"} px={"4"} fontWeight={"semibold"} alignItems={"center"} >
+                    <Text fontWeight={"semibold"} color={primaryColor} >{type === "saved_event" ? "Saved Events" : type === "past_event" ? "Past Events" : type === "my_event" ? "My Events" : type === "draft" ? "Draft" : "All Events"}</Text> <IoChevronDown color={primaryColor} />
                 </Flex>
             </Menu.Trigger>
             <Portal >

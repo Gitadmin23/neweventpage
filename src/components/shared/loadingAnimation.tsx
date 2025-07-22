@@ -64,7 +64,7 @@ to { transform: rotate(360deg); }
 `;
 
     return (
-        <Flex w={"full"} h={fix_height ? "full" : "fit-content"} >
+        <Flex flexDir={"column"} w={"full"} h={fix_height ? "full" : "fit-content"} >
             {(!isLoading || dataLength > 0) && (
                 <Flex w={"full"} h={"full"} flexDir={"column"} >
                     {children}

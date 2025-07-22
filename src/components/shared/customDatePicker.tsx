@@ -3,7 +3,8 @@ import { DateTimePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { Flex, Text } from "@chakra-ui/react"; 
+import { Flex, Text } from "@chakra-ui/react";
+import { toaster } from '../ui/toaster';
 
 interface IProps {
     name: Array<string>;
@@ -26,13 +27,40 @@ export default function CustomDatePicker(
         setValue
     }: IProps) {
 
-    const changeHandler = (item: any) => { 
-        setValue(name[0], Date.parse(new Date(item).toJSON()))
-        setValue(name[1], Date.parse(new Date(item).toJSON()))
+    const changeHandler = (item: any) => {
+        if (start) {
+            if (new Date(item) < new Date(start)) {
+                toaster.create({
+                    title: "Please enter a valid end date",
+                    type: "error",
+                    closable: true
+                })
+
+                setValue(name[0], null)
+                setValue(name[1], null)
+            } else {
+                setValue(name[0], Date.parse(new Date(item).toJSON()))
+                setValue(name[1], Date.parse(new Date(item).toJSON()))
+            }
+        } else {
+            if (name[0] === "startDate") {
+                setValue(name[0], Date.parse(new Date(item).toJSON()))
+                setValue(name[1], Date.parse(new Date(item).toJSON()))
+                setValue(name[2], null)
+                setValue(name[3], null)
+            } else {
+                setValue(name[0], Date.parse(new Date(item).toJSON()))
+                setValue(name[1], Date.parse(new Date(item).toJSON()))
+            }
+        }
     }
- 
+
+    console.log(value);
+    console.log(name[0]);
+
+
     return (
-        <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
+        <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label}</Text>
             <Flex flexDir={"column"} gap={"1"} rounded={"full"} >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -42,12 +70,15 @@ export default function CustomDatePicker(
                         defaultValue={dayjs(value)}
                         format="MM/DD/YYYY hh:mm a"
                         onChange={(item) => changeHandler(item)}
-                        slotProps={{ 
+                        slotProps={{
                             openPickerIcon: { fontSize: "small" },
                             textField: {
                                 focused: false,
-                            }
-                        }}
+                            },  
+                            popper: {
+                                disablePortal: true,
+                              }
+                        }} 
                     />
                 </LocalizationProvider>
                 {touched && (

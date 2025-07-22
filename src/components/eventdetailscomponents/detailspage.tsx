@@ -22,8 +22,8 @@ import ViewTicket from "./viewTicket";
 import SelectTicketBtn from "./selectTicketBtn";
 
 export default function DetailsPage(
-    props : IEventType
-){
+    props: IEventType
+) {
 
     const {
         isOrganizer,
@@ -40,11 +40,16 @@ export default function DetailsPage(
 
     const pathname = usePathname()
 
-    return(
+    return (
         <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
-            <BreadCrumbs {...props} /> 
+            <BreadCrumbs {...props} />
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
-                <EventImage data={props} />
+                <Flex flexDir={"column"} w={"full"} gap={"4"} >
+                    <EventImage data={props} />
+                    <Flex w={"full"} h={"full"} alignItems={"center"} display={["none", "none", "flex"]} >
+                        <EventLocation showLink={true} data={props} />
+                    </Flex>
+                </Flex>
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
                     <Text fontWeight={"700"} fontSize={["16px", "16px", "24px"]} >{capitalizeFLetter(eventName)}</Text>
                     <Flex w={"full"} flexDir={["column-reverse", "column-reverse", "column"]} gap={"2"} >
@@ -66,10 +71,10 @@ export default function DetailsPage(
                             </Flex>
                             <Flex display={["flex", "flex", "none"]} maxW={["full", "full", "full", "430px", "430px"]} flexDir={"column"} gap={"2"} w={"full"} >
                                 {((eventMemberRole !== "COLLABORATOR") && !isOrganizer && eventMemberRole !== "ADMIN") && (
-                                    <Flex bg={mainBackgroundColor} zIndex={"50"} pos={["relative"]} bottom={"0px"} w={"full"} flexDir={"column"} rounded={"16px"} gap={"3"} p={"3"} borderWidth={(pathname?.includes("past") && !isOrganizer) ? "0px" : "1px"} borderColor={"#DEDEDE"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} > 
+                                    <Flex bg={mainBackgroundColor} zIndex={"50"} pos={["relative"]} bottom={"0px"} w={"full"} flexDir={"column"} rounded={"16px"} gap={"3"} p={"3"} borderWidth={(pathname?.includes("past") && !isOrganizer) ? "0px" : "1px"} borderColor={"#DEDEDE"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
                                         {((!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && !pathname?.includes("past")) && (
                                             <SelectTicketBtn {...props} />
-                                        )} 
+                                        )}
                                         <ViewTicket data={props} />
                                     </Flex>
                                 )}
@@ -91,7 +96,7 @@ export default function DetailsPage(
                                     <Flex bg={mainBackgroundColor} zIndex={"50"} pos={["relative"]} bottom={"0px"} w={"full"} flexDir={"column"} rounded={"16px"} gap={"3"} p={"5"} borderWidth={(pathname?.includes("past") && !isOrganizer) ? "0px" : "1px"} borderColor={"#DEDEDE"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
                                         {((!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && !pathname?.includes("past")) && (
                                             <SelectTicketBtn {...props} />
-                                        )} 
+                                        )}
                                         <ViewTicket data={props} />
                                     </Flex>
                                 )}
@@ -114,8 +119,8 @@ export default function DetailsPage(
 
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
-                    <EventLocation showLink={true} data={props} />
-                    <Flex w={"full"} maxW={"500px"} gap={"2"} flexDir={["column", "column", "column", "column","row"]} > 
+                    {/* <EventLocation showLink={true} data={props} /> */}
+                    <Flex w={"full"} maxW={"500px"} gap={"2"} flexDir={["column", "column", "column", "column", "row"]} >
                         <Flex w={"full"} display={["flex", "flex", "none"]} >
                             <EventMesh data={props} />
                         </Flex>
@@ -140,7 +145,7 @@ export default function DetailsPage(
                     <EventMesh data={props} />
                     <Flex w={"full"} h={"8"} />
                 </Flex>
-            </Flex> 
+            </Flex>
         </Flex>
     )
 }

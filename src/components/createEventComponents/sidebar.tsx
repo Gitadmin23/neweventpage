@@ -1,7 +1,7 @@
 "use client"
 import useCustomTheme from "@/hooks/useTheme";
 import { Flex, Text } from "@chakra-ui/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IoArrowBack } from "react-icons/io5";
 
 export default function Sidebar() {
@@ -15,18 +15,19 @@ export default function Sidebar() {
 
     const query = useSearchParams();
     const type = query?.get('type');
+    const pathname = usePathname()
 
     const router = useRouter()
 
     return (
-        <Flex bgColor={secondaryBackgroundColor} flexDir={"column"} p={5} w={"344px"}  >
-            <Flex w={"full"} gap={"3"} alignItems={"center"} >
-                <Flex onClick={()=> router.back()} cursor={"pointer"}  >
+        <Flex bgColor={[mainBackgroundColor, mainBackgroundColor ,secondaryBackgroundColor]} flexDir={"column"} p={5} w={["full", "full", "344px"]}  >
+            <Flex w={"full"} gap={"3"} pb={["2", "2" , "0px"]} position={"relative"} justifyContent={"center"} alignItems={"center"} >
+                <Flex onClick={()=> router.back()} pos={"absolute"} insetX={"auto"} left={"0px"}  cursor={"pointer"}  >
                     <IoArrowBack size={"25px"} />
                 </Flex>
-                <Text>Create Event</Text>
+                <Text textAlign={"center"} fontWeight={"600"} >{pathname?.includes("draft") ? "Draft" : pathname?.includes("edit") ? "Edit" : "Create"} Event</Text>
             </Flex>
-            <Flex w={"full"} flexDir={"column"} gap={"4"} mt={"6"} >
+            <Flex  display={["none", "none", "flex"]} w={"full"} flexDir={"column"} gap={"4"} mt={"6"} >
                 <Flex w={"full"} flexDir={"column"} gap={"2"} rounded={"lg"} bgColor={mainBackgroundColor} p={"3"}  >
                     <Flex gap={"2"} alignItems={"center"} >
                         <Flex w={"20px"} h={"20px"} borderWidth={"1.5px"} p={"4px"} borderColor={primaryColor} rounded={"full"} >
@@ -61,6 +62,11 @@ export default function Sidebar() {
                     <Text fontWeight={"600"} fontSize={"14px"} >Effortlessly Invite Attendees with Ticket Generation</Text>
                     <Text fontSize={"12px"} >Streamline Attendance with Seamless Ticket Generation and Invitations</Text>
                 </Flex>
+            </Flex>
+            <Flex w={"full"} fontSize={"14px"} fontWeight={"600"} px={"2"} display={["flex", "flex", "none"]} borderWidth={"1px"} h={"61px"} justifyContent={"space-between"} alignItems={"center"} >
+                <Text color={primaryColor} >Theme</Text>
+                <Text color={!type ? headerTextColor : primaryColor} >Information</Text>
+                <Text color={type !== "ticket" ? headerTextColor : primaryColor} >Ticket</Text>
             </Flex>
         </Flex>
     )

@@ -20,7 +20,7 @@ export default function DashboardLayout(
     const { mainBackgroundColor, headerTextColor } = useCustomTheme()
     const pathname = usePathname()
     const param = useParams();
-    
+
     const id = param?.slug ?? param?.id;
     const { configPaystack, setPaystackConfig, message, amount, setAmount } = usePaystackStore((state) => state);
 
@@ -28,9 +28,13 @@ export default function DashboardLayout(
         <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
             <SideBar />
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
-                <Navbar />
-                <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} inset={"0px"} pb={pathname?.includes("create") ? "0px" : "6"} top={"76px"} >
-                    {children}
+                {(!pathname?.includes("create") && !pathname?.includes("details")) && (
+                    <Navbar />
+                )}
+                <Flex w={"full"} pos={"relative"} h={"full"} >
+                    <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} inset={"0px"} >
+                        {children}
+                    </Flex>
                 </Flex>
             </Flex>
 

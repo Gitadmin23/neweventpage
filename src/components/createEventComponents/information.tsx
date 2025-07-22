@@ -44,9 +44,9 @@ export default function Information(
 
 
     return (
-        <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} >
+        <Flex w={"full"} h={"full"} flexDir={"column"} px={"4"} gap={"4"} >
             <Flex w={"full"} flexDir={"column"} >
-                <Text fontSize={"20px"} fontWeight={"semibold"} >Tell us where this event will be hosting</Text>
+                <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Tell us where this event will be hosting</Text>
                 <Text fontSize={"14px"} mb={"2"} >This section highlights details that should attract attendees to your event</Text>
             </Flex>
             <CustomEventSwitch title="To Be Announced" setValue={formik.setFieldValue} value={formik.values.location.toBeAnnounced} name="location.toBeAnnounced" />
@@ -70,9 +70,9 @@ export default function Information(
                 </>
             )}
 
-            <Flex justifyContent={"end"} py={"6"} gap={"3"} mt={"auto"} >
-                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={"250px"} borderRadius={"999px"} />
-                <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={"250px"} borderRadius={"999px"} />
+            <Flex justifyContent={"end"} flexDir={["column", "column", "row"]} py={"6"} gap={"3"} mt={"auto"} >
+                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+                <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
             </Flex>
         </Flex>
     )

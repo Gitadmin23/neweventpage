@@ -2,7 +2,7 @@
 import { GlassIcon, NewEventIcon, ServiceIcon, RentalIcon, StoreIcon, NewDonationIcon } from "@/svg";
 import { Flex, Text } from "@chakra-ui/react";
 import { type } from "os";
-import { SelectEventOption } from "../eventcomponents";
+import { SelectEventOption, SelectEventType } from "../eventcomponents";
 import { CustomButton } from "../shared";
 import useCustomTheme from "@/hooks/useTheme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -73,6 +73,9 @@ export default function ProductTab() {
                 </Flex>
             </Flex>
             <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
+                {!type && (
+                    <SelectEventType />
+                )}
                 <SelectEventOption />
                 <CustomButton onClick={()=> router.push("/product/create/events")} text={"Create Event"} width={"150px"} fontSize={"14px"} borderRadius={"full"} />
             </Flex>

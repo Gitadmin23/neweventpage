@@ -65,7 +65,7 @@ export default function EarlyBirdBtn(
                 }
             </Flex>
             <ModalLayout open={open} size="sm" trigger={true} close={() => setOpen(false)} closeBtn={true} >
-                <Flex w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
+                <Flex pos={"relative"} w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
                     <Flex flexDir={"column"} gap={"2"} >
                         <Text fontSize={"22px"} fontWeight={"600"} >Early Bird Ticket</Text>
                         <Text>Enter the ticket information</Text>
@@ -78,8 +78,8 @@ export default function EarlyBirdBtn(
                         <NumberPicker value={value?.productTypeData[0]?.maxTicketBuy} name={`maxTicketBuy`} setValue={setValue} />
                     </Flex>
                     <Flex gap={"4"} flexDir={"column"} w={"full"} >
-                        <CustomDatePicker label="Start *" name={["startDate", "startTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />
-                        <CustomDatePicker label="End *" start={value?.productTypeData[0]?.startDate} name={["endDate", "endTime"]} value={value?.productTypeData[0]?.endDate} setValue={setValue} />
+                        <CustomDatePicker label="Start *" name={["productTypeData[0].startDate", "productTypeData[0].startTime", "productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />
+                        <CustomDatePicker label="End *" start={value?.productTypeData[0]?.startDate} name={["productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.endDate} setValue={setValue} />
                     </Flex>
                     <Flex w={"full"} justifyContent={"end"} >
                         <CustomButton onClick={() => setOpen(false)} text={"Close"} px={"6"} width={"fit-content"} borderRadius={"999px"} />

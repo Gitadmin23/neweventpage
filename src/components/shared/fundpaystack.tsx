@@ -1,10 +1,11 @@
+"use client"
 import httpService from '@/helpers/services/httpService';
 import usePaystackStore from '@/helpers/store/usePaystack';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import useCustomTheme from '@/hooks/useTheme';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react' 
+import React, { useState } from 'react'
 import { usePaystackPayment } from "react-paystack";
 import ModalLayout from './modalLayout';
 import LoadingAnimation from './loadingAnimation';
@@ -38,48 +39,33 @@ function Fundpaystack(props: Props) {
 
     const {
         bodyTextColor,
-        primaryColor,
-        secondaryBackgroundColor, 
+        primaryColor, 
         headerTextColor
-    } = useCustomTheme(); 
+    } = useCustomTheme();
 
-    const queryClient = useQueryClient()
-
-    const [open, setOpen] = useState(false)
-
-
-    const [loading, setLoading] = useState(true)
-
-    const initializePayment: any = usePaystackPayment(config);
-    // const toast = useToast()
-    // const { setAmount } = useSettingsStore((state) => state);
+    const queryClient = useQueryClient() 
+    const [open, setOpen] = useState(false) 
+    const initializePayment: any = usePaystackPayment(config); 
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 
     const { push } = useRouter()
 
-    const { setMessage } = usePaystackStore((state) => state); 
+    const { setMessage } = usePaystackStore((state) => state);
 
     const { userId } = useDetails()
-
-    console.log(amount);
-    
-
-    // const [orderCode, setOrderCode] = React.useStates("")
+ 
     // mutations 
     const payStackFundMutation = useMutation({
         mutationFn: (data: any) => httpService.get(`/payments/api/wallet/verifyFundWalletWeb?transactionID=${data}`),
         onSuccess: (data) => {
-            // queryClient.invalidateQueries(['EventInfo'+id]) 
-
-
+            
             toaster.create({
-                title: "Payment verified", 
+                title: "Payment verified",
                 type: "success",
                 closable: true
-            }) 
-            queryClient.invalidateQueries({ queryKey:['get-wallet-balanceNGN']})
-            setLoading(false)
-            setOpen(false) 
+            })
+            queryClient.invalidateQueries({ queryKey: ['get-wallet-balanceNGN'] }) 
+            setOpen(true)
             setConfig({
                 email: "",
                 amount: 0,
@@ -87,45 +73,15 @@ function Fundpaystack(props: Props) {
                 publicKey: PAYSTACK_KEY,
             })
 
-            if(message?.donation) {
-                donateEmail?.mutate({
-                    userID: userId,
-                    fundRaiserID: id,
-                    amount: Number(amount)
-                })
-                setAm(0)
-            }
-        },
-        onError: () => { 
-            
-            toaster.create({
-                title: "Error Occurred", 
-                type: "error",
-                closable: true
-            })
-        },
-    });
+            queryClient.invalidateQueries({ queryKey: ['event_ticket'] })
+            queryClient.invalidateQueries({ queryKey: ['all-events-details'] })
+            queryClient.invalidateQueries({ queryKey: ['order'] })
+            queryClient.invalidateQueries({ queryKey: ['donationlist'] })
+            queryClient.invalidateQueries({ queryKey: ['donationlistmy'] })
+            queryClient.invalidateQueries({ queryKey: ['all-donation'] })
+            queryClient.invalidateQueries({ queryKey: ['getDonationsingleList'] }) 
 
-    const payStackMutation = useMutation({
-        mutationFn: (data: any) => httpService.post(`/payments/verifyWebPaystackTx?orderCode=${data}`),
-        onSuccess: (data: any) => { 
-            toaster.create({
-                title: "Payment verified", 
-                type: "success",
-                closable: true
-            }) 
-
-            queryClient.invalidateQueries({queryKey: ['event_ticket']})
-            queryClient.invalidateQueries({queryKey: ['all-events-details']})
-            queryClient.invalidateQueries({queryKey: ['order']})
-            queryClient.invalidateQueries({queryKey: ['donationlist']})
-            queryClient.invalidateQueries({queryKey: ['donationlistmy']})
-            queryClient.invalidateQueries({queryKey: ['all-donation']})
-            queryClient.invalidateQueries({queryKey: ['getDonationsingleList']})
-            setLoading(false)
-
-
-            if(message?.donation) {
+            if (message?.donation) {
                 donateEmail?.mutate({
                     userID: userId,
                     fundRaiserID: id,
@@ -135,9 +91,45 @@ function Fundpaystack(props: Props) {
             }
         },
         onError: () => {
-            
+
             toaster.create({
-                title: "Error Occurred", 
+                title: "Error Occurred",
+                type: "error",
+                closable: true
+            })
+        },
+    });
+
+    const payStackMutation = useMutation({
+        mutationFn: (data: any) => httpService.post(`/payments/verifyWebPaystackTx?orderCode=${data}`),
+        onSuccess: (data: any) => {
+            toaster.create({
+                title: "Payment verified",
+                type: "success",
+                closable: true
+            })
+
+            queryClient.invalidateQueries({ queryKey: ['event_ticket'] })
+            queryClient.invalidateQueries({ queryKey: ['all-events-details'] })
+            queryClient.invalidateQueries({ queryKey: ['order'] })
+            queryClient.invalidateQueries({ queryKey: ['donationlist'] })
+            queryClient.invalidateQueries({ queryKey: ['donationlistmy'] })
+            queryClient.invalidateQueries({ queryKey: ['all-donation'] })
+            queryClient.invalidateQueries({ queryKey: ['getDonationsingleList'] }) 
+
+            if (message?.donation) {
+                donateEmail?.mutate({
+                    userID: userId,
+                    fundRaiserID: id,
+                    amount: Number(amount)
+                })
+                setAm(0)
+            }
+        },
+        onError: () => {
+
+            toaster.create({
+                title: "Error Occurred",
                 type: "error",
                 closable: true
             })
@@ -150,10 +142,10 @@ function Fundpaystack(props: Props) {
             "fundRaiserID": string,
             "amount": number
         }) => httpService.post(`/donation/create-donation`, data),
-        onSuccess: (data: any) => {  
+        onSuccess: (data: any) => {
 
             console.log(data);
-            
+
         },
         onError: () => {
             // toast({
@@ -168,8 +160,7 @@ function Fundpaystack(props: Props) {
     });
 
     const onSuccess = (reference: any) => {
-        setOpen(true)
-        setLoading(true)
+        setOpen(true) 
         if (fund) {
             payStackFundMutation.mutate(reference?.reference)
         } else {
@@ -189,7 +180,7 @@ function Fundpaystack(props: Props) {
     }
 
     React.useEffect(() => {
-        if (config?.reference?.length !== 0) {
+        if (config?.reference) {
             initializePayment(onSuccess, onClose)
         }
     }, [config?.reference])
@@ -200,7 +191,7 @@ function Fundpaystack(props: Props) {
     const clickHandler = () => {
         if (message?.product) {
             push(`/dashboard/kisok/details-order/${id}`)
-        } else if (message?.event) { 
+        } else if (message?.event) {
             setShowModal(true)
         }
         setOpen(false)
@@ -215,25 +206,21 @@ function Fundpaystack(props: Props) {
     }
 
     const closeHandler = () => {
-        if (message?.product) {
-            setOpen(true)
-        } else {
-            setOpen(false)
-            setMessage({
-                donation: false,
-                product: false,
-                rental: false,
-                service: false,
-                booking: false,
-                event: false
-            })
-        }
+        setOpen(false)
+        setMessage({
+            donation: false,
+            product: false,
+            rental: false,
+            service: false,
+            booking: false,
+            event: false
+        })
     }
 
     return (
         <>
-            <ModalLayout open={open} close={closeHandler} closeBtn={true} >
-                <LoadingAnimation loading={loading} >
+            <ModalLayout size="sm" open={open} close={closeHandler} trigger={true} closeBtn={true} >
+                <LoadingAnimation loading={payStackFundMutation?.isPending} >
                     <Flex flexDir={"column"} alignItems={"center"} py={"8"} px={"14"} >
                         <SuccessIcon />
                         <Text fontSize={["18px", "20px", "24px"]} color={headerTextColor} lineHeight={"44.8px"} fontWeight={"600"} mt={"4"} >{message?.service ? "Booking Successful" : message?.rental ? "Rental Purchase Successful" : message?.product ? "Product Purchase Successful" : message?.donation ? "Donated Successful" : message?.event ? "Ticket Purchase Successful" : "Transaction Successful"}</Text>

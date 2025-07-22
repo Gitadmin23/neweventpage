@@ -17,6 +17,27 @@ import { CustomButton, ModalLayout, LoadingAnimation, UserImage } from "../share
 import { useColorMode } from "../ui/color-mode";
 import EventImage from "./eventImage";
 import { useReactToPrint } from "react-to-print";
+import { IUser } from "@/helpers/models/user";
+
+
+interface IProps {
+    "id": string,
+    "createdDate": number,
+    "lastModifiedBy": IUser,
+    "createdBy": IUser,
+    "lastModifiedDate": number,
+    "isDeleted": boolean,
+    "event": IEventType,
+    "expirationDate": any,
+    "sale": any,
+    "ticketType": string,
+    "boughtPrice": number,
+    "price": number,
+    "barcodeImage": string,
+    "ticketUsed": number,
+    "index": number,
+    "scanTimeStamp": any
+}
 
 export default function ViewTicket(
     {
@@ -42,7 +63,7 @@ export default function ViewTicket(
 
     const contentRef = useRef<HTMLDivElement>(null);
     const [datainfo, setTicketDetails] = useState({} as any)
-    const [dataMultiple, setDataMultiple] = useState([] as any)
+    const [dataMultiple, setDataMultiple] = useState<Array<IProps>>([])
     const [length, setTicketLenght] = useState("" as any)
 
     const { userId: user_index } = useDetails((state) => state);
@@ -57,6 +78,8 @@ export default function ViewTicket(
             setTicketLenght(data?.data?.content?.length)
             setTicketDetails(data?.data?.content[0]);
             setDataMultiple(data?.data?.content)
+            console.log(data?.data?.content);
+            
         },
     });
 
@@ -95,7 +118,7 @@ export default function ViewTicket(
                     <Flex p={"4"} position={"relative"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
                         <Flex bg={mainBackgroundColor} w={"full"} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
 
-                            <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
+                            <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} cursor={"pointer"} >
                                 <IoClose size={"25px"} />
                             </Box>
                             <Flex pos={"absolute"} display={["none", "none", "flex"]} w={"full"} justifyContent={"center"} >
@@ -105,13 +128,13 @@ export default function ViewTicket(
                                 <CustomButton width={"fit"} px={"3"} borderRadius={"full"} onClick={() => reactToPrintFn()} text='Download Ticket' />
                             </Box>
                         </Flex>
-                        <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
+                        <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={() => setOpen(false)} cursor={"pointer"} >
                             <IoClose size={"25px"} />
                         </Box>
                         <Box w={"full"} bg={mainBackgroundColor} h={"full"} display={["none", "none", "block"]} >
                             <Flex ref={contentRef} width={"full"} h={"full"} overflowY={"auto"} flexDirection={"column"}  gap={"4"} px={["4", "4", "0px"]} >
                                 <Flex w={"full"} h={"fit-content"} flexDir={"column"} justifyContent={"center"} alignItems={"center"} gap={"4"} > 
-                                    {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any }, index: number) => {
+                                    {dataMultiple?.map((item, index: number) => {
                                         return (
                                             <Flex key={index} maxW={"750px"} w={"full"} flexDir={["row"]} rounded={"16px"} pb={"4"} p={["4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["center"]} justifyContent={"center"} gap={"4"} >
                                                 <Flex w={["fit-content"]} gap={"4"} >
@@ -140,8 +163,8 @@ export default function ViewTicket(
                                                     <Flex gap={"4"} >
 
                                                         <Flex flexDirection={"column"} >
-                                                            <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Order ID</Text>
-                                                            <Text color={bodyTextColor} fontSize={"10.26px"} lineHeight={"13.68px"}  >{textLimit(item?.id, 7)}</Text>
+                                                            <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket Type</Text>
+                                                            <Text color={bodyTextColor} fontWeight={"semibold"} fontSize={"10.26px"} lineHeight={"13.68px"}  >{item.ticketType}</Text>
                                                         </Flex>
                                                         <Flex flexDirection={"column"} >
                                                             <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket fee</Text>
@@ -157,7 +180,7 @@ export default function ViewTicket(
                                                     <Flex gap={"4"} fontSize={"xs"} >
 
                                                         <UserImage size={"lg"} user={datainfo?.createdBy} />
-                                                        <Flex flexDirection={"column"} gap={"2"} >
+                                                        <Flex flexDirection={"column"} >
                                                             <Text fontWeight={"bold"} color={headerTextColor} >Name</Text>
                                                             <Text color={bodyTextColor} >{datainfo?.createdBy?.firstName + " " + datainfo?.createdBy?.lastName}</Text>
                                                         </Flex>
@@ -194,14 +217,14 @@ export default function ViewTicket(
 
                         <Flex ref={ref} position={"relative"} width={"full"} display={["flex", "flex", "none"]} className="hide-scrollbar" flexDirection={"row"} overflowX={"auto"} alignItems={"center"} gap={"4"} px={["1", "1", "0px"]} >
                             <Flex width={"full"} gap={"6"} >
-                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any }, index: number) => {
+                                {dataMultiple?.map((item, index: number) => {
                                     return (
                                         <Flex key={index} w={["full", "full", "750px"]} flexDir={["column", "column", "row"]} rounded={"16px"} pb={"4"} pt={["4"]} p={["0px", "0px", "4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["start", "start", "center"]} justifyContent={"center"} >
                                             <Flex width={"full"} justifyContent={"space-between"} pos={"relative"} px={"4"} pt={"4"} >
                                                 <Flex pos={"absolute"} width={"full"} pr={"6"} justifyContent={"center"} >
                                                     <Text fontSize={"16px"} fontWeight={"bold"} textAlign={"center"} >Ticket Details</Text>
                                                 </Flex>
-                                                <Box ml={"auto"} as='button' pos={"relative"} zIndex={"10"} onClick={() => reactToPrintFn()} display={["block", "block", "none"]}>
+                                                <Box ml={"auto"} cursor={"pointer"} pos={"relative"} zIndex={"10"} onClick={() => reactToPrintFn()} display={["block", "block", "none"]}>
                                                     <DownloadTwoIcon />
                                                 </Box>
                                             </Flex>
@@ -223,7 +246,7 @@ export default function ViewTicket(
                                                 <Flex gap={"4"} display={["flex", "flex", "none"]} fontSize={"xs"} >
 
                                                     <UserImage size={"lg"} user={datainfo?.createdBy} />
-                                                    <Flex flexDirection={"column"} gap={"2"} >
+                                                    <Flex flexDirection={"column"} >
                                                         <Text fontWeight={"bold"} color={"brand.chasescrollBlue"} >Name</Text>
                                                         <Text color={bodyTextColor} >{datainfo?.createdBy?.firstName + " " + datainfo?.createdBy?.lastName}</Text>
                                                     </Flex>
@@ -239,8 +262,8 @@ export default function ViewTicket(
                                                 <Flex gap={"4"} >
 
                                                     <Flex flexDirection={"column"} >
-                                                        <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Order ID</Text>
-                                                        <Text color={bodyTextColor} fontSize={"10.26px"} lineHeight={"13.68px"}  >{textLimit(item?.id, 7)}</Text>
+                                                        <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket Type</Text>
+                                                        <Text color={bodyTextColor} fontSize={"10.26px"} lineHeight={"13.68px"}  >{item.ticketType}</Text>
                                                     </Flex>
                                                     <Flex flexDirection={"column"} >
                                                         <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket fee</Text>

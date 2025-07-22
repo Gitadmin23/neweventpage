@@ -1,9 +1,9 @@
 "use client"
+import { CustomSelect } from "@/components/shared";
 import httpService from "@/helpers/services/httpService";
 import { Flex, Text } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import CustomSelect from "./customSelect";
+import { useEffect, useState } from "react"; 
 
 export default function EventCategory(
     {

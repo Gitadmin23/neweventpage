@@ -1,4 +1,4 @@
-import { GetEventDetailInfor } from '@/components/eventdetailscomponents';
+import { GetEventDetailInfo } from '@/components/eventdetailscomponents';
 import { IMAGE_URL } from '@/helpers/services/urls';
 import type { Metadata } from 'next'
 // import { URLS } from "@/services/urls"
@@ -48,6 +48,6 @@ export default async function EventDetailsPage(props: Props) {
   const params = await props.params;
 
   return (
-    <GetEventDetailInfor event_index={params.slug} />
+    <GetEventDetailInfo event_index={params.slug} />
   )
 }

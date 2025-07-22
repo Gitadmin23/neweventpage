@@ -2,10 +2,16 @@ import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
 import { Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { LoadingAnimation } from "../shared";
 import EventCard from "./cards/eventCard";
+import { useSearchParams } from "next/navigation";
 
 export default function EventLisiting() {
 
-    const { results, isLoading, ref } = useInfiniteScroller({ url: `/events/events`, limit: 20, filter: "id", name: "listofevent" })
+    const query = useSearchParams();
+    const category = query?.get('category');
+
+    const { results, isLoading, ref } = useInfiniteScroller({ url: `/events/events`, limit: 20, filter: "id", name: "listofevent", paramsObj: {
+        eventType: category
+    }})
  
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >
