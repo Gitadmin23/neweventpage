@@ -31,7 +31,7 @@ const usePr = () => {
                 closable: true
             })
 
-            query.invalidateQueries({ queryKey: ["eventsdetails"]})
+            query.invalidateQueries({ queryKey: ["all-events-details"]})
             setOpen(false)
 
         },
@@ -162,8 +162,8 @@ const usePr = () => {
 
         },
         onSuccess: (message: AxiosResponse<any>) => {
-            
-            query.invalidateQueries({ queryKey: ["eventsdetails"]})
+
+            query.invalidateQueries({ queryKey: ["all-events-details"]})
 
             toaster.create({
                 title: "Event Role Updated", 

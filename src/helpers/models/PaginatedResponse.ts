@@ -4,7 +4,7 @@ export type PaginatedResponse<T> = {
     last: boolean;
     number: number,
     size: number,
-    totalElements: number,
+    totalElements: number | any,
     totalPages: number,
     content: Array<T>;
 } 

@@ -12,6 +12,7 @@ import usePaystackStore from "@/helpers/store/usePaystack";
 import { useMutation } from "@tanstack/react-query";
 import httpService from "@/helpers/services/httpService";
 import { toaster } from "../ui/toaster";
+import usePayStack from "@/hooks/usePayStack";
 
 interface ITicket {
     "ticketType": string,
@@ -31,8 +32,10 @@ export default function SelectTicketBtn(
 ) {
 
 
-    const { setShowModal, showModal } = useModalStore((state) => state);
+    // const { setShowModal, showModal } = useModalStore((state) => state);
     // const [open, setOpen] = useState(false)
+
+    const { payForTicket, setOpen, open } = usePayStack()
 
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 
@@ -51,13 +54,11 @@ export default function SelectTicketBtn(
     }
 
     const checkTicketTotal = () => {
-
         let totalNumber = 0
 
         productTypeData.map((item) => {
             totalNumber = Number(item.totalNumberOfTickets) + totalNumber
         })
-
         return totalNumber
     }
 
@@ -124,30 +125,30 @@ export default function SelectTicketBtn(
 
     useEffect(() => {
         setSelectTicketType([] as any)
-    }, [showModal])
+    }, [open])
 
-    const payForTicket = useMutation({
-        mutationFn: (data: any) => httpService.post("/events/create-multi-ticket", data),
-        onSuccess: (data: any) => {
+    // const payForTicket = useMutation({
+    //     mutationFn: (data: any) => httpService.post("/events/create-multi-ticket", data),
+    //     onSuccess: (data: any) => {
 
-            setPaystackConfig({
-                publicKey: PAYSTACK_KEY,
-                email: data?.data?.content?.email,
-                amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-                reference: data?.data?.content?.orderCode
-            });
-            setShowModal(false)
-        },
-        onError: () => { 
-            toaster.create({
-                title: "Error Creating Ticket",
-                type: "error",
-                closable: true
-            })
+    //         setPaystackConfig({
+    //             publicKey: PAYSTACK_KEY,
+    //             email: data?.data?.content?.email,
+    //             amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    //             reference: data?.data?.content?.orderCode
+    //         });
+    //         setShowModal(false)
+    //     },
+    //     onError: () => { 
+    //         toaster.create({
+    //             title: "Error Creating Ticket",
+    //             type: "error",
+    //             closable: true
+    //         })
 
-            setMessage({ ...message, event: true })
-        },
-    });
+    //         setMessage({ ...message, event: true })
+    //     },
+    // });
 
     const submitHandler = React.useCallback(() => {
         payForTicket.mutate(
@@ -161,9 +162,9 @@ export default function SelectTicketBtn(
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Text fontWeight={"500"} >See ticket available for this event</Text>
-            <CustomButton onClick={() => setShowModal(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
+            <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
 
-            <ModalLayout size="xl" closeBtn={true} open={showModal} close={() => setShowModal(false)} trigger={true} >
+            <ModalLayout size="xl" closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
                 <Flex w={"full"} h={"70vh"} justifyContent={"center"} alignItems={"center"} >
                     <Flex p={"5"} h={"full"} borderWidth={"1px"} rounded={"2xl"} gap={"4"} w={"full"} maxW={"1032px"} >
                         <Flex flexDir={"column"} alignItems={"center"} gap={"7"} px={"3"} w={"full"} >

@@ -45,6 +45,8 @@ function Fundpaystack(props: Props) {
 
     const queryClient = useQueryClient() 
     const [open, setOpen] = useState(false) 
+    const [hasInitialized, setHasInitialized] = useState(false);
+
     const initializePayment: any = usePaystackPayment(config); 
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 
@@ -160,12 +162,15 @@ function Fundpaystack(props: Props) {
     });
 
     const onSuccess = (reference: any) => {
-        setOpen(true) 
-        if (fund) {
-            payStackFundMutation.mutate(reference?.reference)
-        } else {
-            payStackMutation.mutate(reference?.reference)
-        }
+
+        console.log("success");
+        
+        // setOpen(true) 
+        // if (fund) {
+        //     payStackFundMutation.mutate(reference?.reference)
+        // } else {
+            // payStackMutation.mutate(reference?.reference)
+        // }
     };
 
 
@@ -177,13 +182,23 @@ function Fundpaystack(props: Props) {
             reference: "",
             publicKey: PAYSTACK_KEY,
         })
+
+        console.log("ended");
+        
     }
 
     React.useEffect(() => {
-        if (config?.reference) {
-            initializePayment(onSuccess, onClose)
+        if (
+          config?.reference &&
+          config?.email &&
+          config?.amount &&
+          config?.publicKey&&
+          !hasInitialized
+        ) {
+          initializePayment(onSuccess, onClose);
+          setHasInitialized(true)
         }
-    }, [config?.reference])
+      }, [config]);
 
     // const { setModalTab } = useStripeStore((state: any) => state);
     const { setShowModal } = useModalStore((state) => state);

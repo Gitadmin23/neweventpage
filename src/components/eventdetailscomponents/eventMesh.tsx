@@ -45,38 +45,6 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
-    // const { mutate: fetchData, isPending: isLoading } = useMutation({
-    //     mutationKey: ['all-events-mesh', data?.id],
-    //     mutationFn: () =>
-    //         httpService.get(`/pin-item/search`, {
-    //             params : {
-    //                 typeId: data?.id
-    //             }
-    //         }),
-    //     onSuccess: (data: any) => {
-    //         setEventData(data?.data)
-    //         // setMeshSize(data?.data?.length)
-    //     },
-    // });
-
-    // useEffect(() => {
-    //     fetchData();
-    // }, [])
-
-    // const { data } = useFetchData<{
-    //     data: {
-    //         data: IProps
-    //     }
-    // }>(`/pin-item/search`,
-    //     {
-    //         typeId: data?.id
-    //     })
-
-    // `/pin-item/search`, "all-events-mesh", {
-    //     page: page,
-    //     size: show ? 6 : size
-    // }
-
     const { data: eventData, isLoading } = useFetchData<Array<IProps>>({name: "all-events-mesh", endpoint: `/pin-item/search`, id: data?.id, params: {
         typeId: data?.id
     }});
