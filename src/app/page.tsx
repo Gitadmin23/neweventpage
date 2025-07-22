@@ -1,4 +1,3 @@
-"use client"
 import { Flex } from "@chakra-ui/react";
 import { LoginSpinner } from "@/components/shared";
 import { Suspense } from "react";
@@ -6,7 +5,7 @@ import { Suspense } from "react";
 export default function Home() {
 
   return (
-    <Suspense>
+    <Suspense fallback={<>Loading...</>}>
       <Flex w={"full"} h={"100vh"} bgColor={"white"} >
         <LoginSpinner />
       </Flex>

@@ -3,7 +3,8 @@ import { Flex } from "@chakra-ui/react";
 import useCustomTheme from "@/hooks/useTheme";
 import SideBar from "./sidebar";
 import Navbar from "./navbar";
-import { usePathname } from "next/navigation"; 
+import { usePathname } from "next/navigation";
+import ProductTab from "./productTab";
 
 interface IProps {
     children: React.ReactNode
@@ -26,12 +27,16 @@ export default function DashboardLayout(
                     <Navbar />
                 )}
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} inset={"0px"} >
-                        {children}
+                    <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} top={["76px", "76px", "76px", "0px", "0px"]} inset={"0px"} >
+                        <Flex w={"full"} px={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["4", "4", "6"]} pt={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
+                            {(!pathname?.includes("create") && !pathname?.includes("details")) && (
+                                <ProductTab />
+                            )}
+                            {children}
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex>
-
         </Flex>
     )
 }

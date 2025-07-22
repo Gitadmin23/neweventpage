@@ -1,6 +1,6 @@
 "use client"
 import { Flex } from "@chakra-ui/react";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import Cookies from "js-cookie" 
 import useCustomTheme from "@/hooks/useTheme";
@@ -10,32 +10,32 @@ import { MutatingDots } from 'react-loader-spinner'
 export default function LogInSpinner() {
 
 
-    const query = useSearchParams();
-    const token = query?.get('token');
+    // const query = useSearchParams();
+    // const token = query?.get('token');
 
-    const router = useRouter()
+    // const router = useRouter()
     const { primaryColor, } = useCustomTheme()
 
-    useEffect(() => {
-        if (typeof token === "string") {
-            // Store token in cookie
-            Cookies.set("chase_token", token, {
-                path: "/",
-                secure: true,
-                sameSite: "Lax",
-            });
+    // useEffect(() => {
+    //     if (typeof token === "string") {
+    //         // Store token in cookie
+    //         Cookies.set("chase_token", token, {
+    //             path: "/",
+    //             secure: true,
+    //             sameSite: "Lax",
+    //         });
 
-            const timer = setTimeout(() => {
-                router.replace("/product/events")
-            }, 2000);
+    //         const timer = setTimeout(() => {
+    //             router.replace("/product/events")
+    //         }, 2000);
 
-            return () => clearTimeout(timer);
+    //         return () => clearTimeout(timer);
 
-            // Optional: remove token from URL
-            // window.history.replaceState(null, "/", window.location.pathname);
+    //         // Optional: remove token from URL
+    //         // window.history.replaceState(null, "/", window.location.pathname);
 
-        }
-    }, [token]);
+    //     }
+    // }, [token]);
 
     return (
         <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >

@@ -1,5 +1,6 @@
 import { CreateEventSidebar } from "@/components/createEventComponents";
 import { Flex } from "@chakra-ui/react";
+import { Suspense } from "react";
 
 
 export default function RootLayout({
@@ -9,10 +10,12 @@ export default function RootLayout({
 }>) {
 
     return (
-        <Flex w={"full"} flexDir={["column", "column", "row"]} h={"full"} >
-            <Flex w={["full", "full", "fit"]} >
-                <CreateEventSidebar />
-            </Flex>
+        <Flex w={"full"} flexDir={["column", "column", "row"]} h={"full"} > 
+            <Suspense fallback={<>Loading...</>}>
+                <Flex w={["full", "full", "fit"]} >
+                    <CreateEventSidebar />
+                </Flex>
+            </Suspense>
             <Flex w={"full"} pos={"relative"} h={"full"} >
                 <Flex w={"full"} flex={"1"} pos={["absolute"]} overflowY={"auto"} inset={"0px"} >
                     {children}
