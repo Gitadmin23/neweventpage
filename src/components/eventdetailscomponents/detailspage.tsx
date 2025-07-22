@@ -16,7 +16,7 @@ import EventLocation from "./eventLocation";
 import EventMesh from "./eventMesh";
 import EventDonation from "./eventDonation";
 import ViewRequest from "./viewRequest";
-import { EventMap } from "../shared";
+import { EventMap, ProductImageScroller } from "../shared";
 import EventDate from "./eventDate";
 import ViewTicket from "./viewTicket";
 import SelectTicketBtn from "./selectTicketBtn";
@@ -45,8 +45,8 @@ export default function DetailsPage(
             <BreadCrumbs {...props} />
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
                 <Flex flexDir={"column"} w={"full"} gap={"4"} >
-                    <EventImage data={props} />
-                    <Flex w={"full"} h={"full"} alignItems={"center"} display={["none", "none", "flex"]} >
+                    <ProductImageScroller rounded={"8px"} height={["340px", "340px", "520px"]} images={props.picUrls.length > 0 ? props.picUrls : [props.currentPicUrl]} />
+                    <Flex w={"full"} alignItems={"center"} my={"auto"} display={["none", "none", "flex"]} >
                         <EventLocation showLink={true} data={props} />
                     </Flex>
                 </Flex>

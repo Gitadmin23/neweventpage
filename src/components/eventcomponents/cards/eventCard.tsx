@@ -34,7 +34,7 @@ export default function EventCard(
     return (
         <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} onClick={() => clickHandler()} borderWidth={"1px"} rounded={"10px"} w={"full"} >
             <Flex w={"full"} pos={"relative"} >
-                <ProductImageScroller images={[event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
+                <ProductImageScroller images={event.picUrls.length > 0 ? event.picUrls : [event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
                 {/* <Flex w={"40px"} pos={"absolute"} display={["none", "none", "flex"]} bottom={"4"} right={"4"} h={"40px"} rounded={"full"} bgColor={mainBackgroundColor} justifyContent={"center"} alignItems={"center"} > */}
                 {/* <ShareEvent
                         data={event}

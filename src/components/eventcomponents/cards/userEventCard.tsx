@@ -41,7 +41,7 @@ export default function UserEventCard(props: IEventType) {
             {(type !== "past_event") && (
                 <DeleteBtn id={props?.id} name={props?.eventName + " Event"} isEvent={pathname?.includes("draft") ? false : true} draft={pathname?.includes("draft") ? true : false} isOrganizer={props?.isOrganizer} />
             )}
-            <ProductImageScroller images={[props?.currentPicUrl]} rounded='16px' createdDate={moment(props?.createdDate)?.fromNow()} userData={props?.createdBy} />
+            <ProductImageScroller images={props.picUrls.length > 0 ? props.picUrls : [props?.currentPicUrl]} rounded='16px' createdDate={moment(props?.createdDate)?.fromNow()} userData={props?.createdBy} />
             <Flex w={"full"} flexDir={"column"} px={"2"} >
                 <Flex w={"full"} alignItems={"center"} gap={"2"} py={"2"} >
                     {props?.startDate && (
