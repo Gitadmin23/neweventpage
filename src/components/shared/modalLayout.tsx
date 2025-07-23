@@ -1,5 +1,5 @@
+"use client"
 import { CloseButton, Dialog, Flex } from "@chakra-ui/react";
-import { Suspense } from "react";
 
 interface IProps {
     children: React.ReactNode;
@@ -28,8 +28,8 @@ export default function ModalLayout({
 }: IProps) {
 
     return (
-        <Suspense>
-            {/* {!trigger && (
+        <>
+            {!trigger && (
                 <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} >
                     <Dialog.Trigger >
                         {button}
@@ -58,8 +58,8 @@ export default function ModalLayout({
                         </Dialog.Content>
                     </Dialog.Positioner>
                 </Dialog.Root>
-            )} */}
-            {/* {trigger && (
+            )}
+            {trigger && (
                 <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner>
@@ -86,7 +86,7 @@ export default function ModalLayout({
                         </Dialog.Content>
                     </Dialog.Positioner>
                 </Dialog.Root>
-            )} */}
-        </Suspense>
+            )}
+        </>
     )
 }

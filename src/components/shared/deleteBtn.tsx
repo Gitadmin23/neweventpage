@@ -10,6 +10,8 @@ import ModalLayout from './modalLayout';
 import httpService from '@/helpers/services/httpService';
 import { URLS } from '@/helpers/services/urls';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
+import CustomButton from './customButton';
+import useCustomTheme from '@/hooks/useTheme';
 
 interface Props {
     isOrganizer: boolean,
@@ -40,6 +42,10 @@ function DeleteBtn(props: Props) {
     // const toast = useToast()
     const queryClient = useQueryClient()
     const { userId: user_index } = useDetails((state) => state); 
+
+    const {
+        primaryColor
+    } = useCustomTheme()
 
     // detete event
     const deleteEvent = useMutation({
@@ -110,13 +116,13 @@ function DeleteBtn(props: Props) {
                     <IoClose size={"14px"} />
                 </Flex>
             )}
-            <ModalLayout open={open} close={()=> setOpen(false)} size={"xs"} >
-                <Flex flexDirection={"row"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>
-                    <Image alt='delete' src='/assets/images/deleteaccount.svg' />
+            <ModalLayout open={open} trigger={true} close={()=> setOpen(false)} size={"xs"} >
+                <Flex flexDirection={"row"} flexDir={"column"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>
+                    <Image alt='delete' src='/images/deleteaccount.svg' />
                     <Text fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Delete {pathname?.includes("mydonation") ? "Fundraising" : isServices ? "Business" : isProduct ? "Product" : isRental ? "Rental" : "Event"}</Text>
                     <Text textAlign={'center'} fontSize={'14px'} >Are you sure you want to delete <span style={{ fontWeight: "bold" }} >{capitalizeFLetter(name)}</span>, this action cannot be undone.</Text>
-                    <Button disabled={deleteEvent.isPending} onClick={handleDelete} loading={deleteEvent.isPending} fontSize={"14px"} width='100%' height='42px' bg='red' color="white" variant='solid'>Delete</Button>
-                    <Button onClick={() => setOpen(false)} width='100%' height='42px' borderWidth={'0px'} color="grey">Cancel</Button>
+                    <CustomButton borderRadius={"999px"} disabled={deleteEvent.isPending} onClick={handleDelete} isLoading={deleteEvent.isPending} fontSize={"14px"} width='100%' height='42px' backgroundColor='red' color="white" text={"Delete"} />
+                    <CustomButton borderRadius={"999px"} onClick={() => setOpen(false)} backgroundColor={"white"} width='100%' height='42px' borderWidth={'1px'} color={primaryColor} borderColor={primaryColor} text={"Cancel"} />
                 </Flex>
             </ModalLayout>
 
