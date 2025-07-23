@@ -7,13 +7,12 @@ import { useDetails } from "@/helpers/store/useUserDetails";
 export default function SavedEvent() {
 
 
-    const { userId: user_index } = useDetails((state) => state);
-
-    const { results, isLoading, ref } = useInfiniteScroller({ url: `/events/get-saved-events?typeID=${user_index}`, limit: 20, filter: "id", name: "myevent" })
+    const { userId: user_index } = useDetails((state) => state); 
+    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/get-saved-events?typeID=${user_index}`, limit: 20, filter: "id", name: "myevent" })
  
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >
-            <LoadingAnimation loading={isLoading} length={results?.length} > 
+            <LoadingAnimation loading={isLoading} length={results?.length} refeching={isRefetching} > 
                 <Grid width={["full", "full", "full", "full", "full"]} templateColumns={['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']} gap={["2", "2", "4"]}>
                     {results?.map((event: any, i: number) => {
                         if (results.length === i + 1) {

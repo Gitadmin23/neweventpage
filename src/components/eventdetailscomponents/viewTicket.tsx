@@ -1,17 +1,15 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { IoClose } from "react-icons/io5";
 import QRCode from "react-qr-code";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import useCustomTheme from "@/hooks/useTheme";
-import { IEventType } from "@/helpers/models/event";
-import httpService from "@/helpers/services/httpService";
+import { IEventType } from "@/helpers/models/event"; 
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
 import { textLimit } from "@/helpers/utils/textlimit";
-import { DownloadTwoIcon } from "@/svg";
-import { useMutation } from "@tanstack/react-query";
+import { DownloadTwoIcon } from "@/svg"; 
 import { EventPrice } from "../eventcomponents";
 import { CustomButton, ModalLayout, LoadingAnimation, UserImage } from "../shared";
 import { useColorMode } from "../ui/color-mode";
@@ -47,8 +45,7 @@ export default function ViewTicket(
     }: {
         data: IEventType
     }) {
-
-    // const { ticketType, setTicketType } = useModalStore((state) => state);
+ 
     const [open, setOpen] = useState(false)
 
     const {
@@ -59,14 +56,9 @@ export default function ViewTicket(
         ticketBackgroundColor,
         headerTextColor
     } = useCustomTheme();
-    const { colorMode } = useColorMode();
+    const { colorMode } = useColorMode(); 
 
-    // const toast = useToast()
-
-    const contentRef = useRef<HTMLDivElement>(null);
-    // const [eventData?.content[0], setTicketDetails] = useState({} as any)
-    // const [eventData, setDataMultiple] = useState<Array<IProps>>([])
-    // const [length, setTicketLenght] = useState("" as any)
+    const contentRef = useRef<HTMLDivElement>(null); 
 
     const { userId: user_index } = useDetails((state) => state);
 
@@ -74,7 +66,7 @@ export default function ViewTicket(
 
 
     const { data: eventData, isLoading } = useFetchData<PaginatedResponse<IProps | any>>({
-        name: "all-events-details", endpoint: "/events/get-users-tickets", id: data?.id, params: {
+        name: "event-ticket", endpoint: "/events/get-users-tickets", id: data?.id, params: {
             userID: user_index,
             eventID: data?.id
         }

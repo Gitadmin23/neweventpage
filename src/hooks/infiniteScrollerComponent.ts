@@ -1,9 +1,7 @@
-import React from 'react';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
+import React, { useEffect, useMemo, useState, useRef, useCallback } from 'react';
+import { useFetchData } from './useFetchData';
 import lodash from 'lodash';
 import { cleanup } from '@/helpers/utils/cleanupObj';
-import httpService from '@/helpers/services/httpService';
 
 interface Props {
   url: string;
@@ -25,115 +23,114 @@ function useInfiniteScroller(props: Props) {
     array,
     name,
     search,
-    refetchInterval,
     paramsObj = {},
   } = props;
 
-  const [size, setSize] = React.useState(limit);
-  const [hasNextPage, setHasNextPage] = React.useState(false);
-  // const [data, setData] = React.useState({} as any);
-  const [results, setResults] = React.useState([] as any);
-  const intObserver = React.useRef<IntersectionObserver | null>(null);
+  const [size, setSize] = useState(limit);
+  const [inView, setInView] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [refecthing, setRefecthing] = useState(false);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [results, setResults] = useState<any[]>([]);
 
-  const getParamsDependencies = React.useMemo(() => {
-    const cleanedParams = cleanup({...paramsObj, search: search});
-    return Object.keys(cleanedParams).length ? Object.values(cleanedParams) : [];
-  }, [paramsObj]);
+  const intObserver = useRef<IntersectionObserver | null>(null);
 
-  const queryKey = React.useMemo(
-    () => (name ? [name, url, ...getParamsDependencies] : [url, ...getParamsDependencies]),
-    [name, url, getParamsDependencies ?? null]
+  const cleanedParams = useMemo(() => cleanup({ ...paramsObj, search }), [paramsObj, search]);
+
+  const queryKey = useMemo(
+    () => (name ? [name, url, cleanedParams, size+""] : [url, cleanedParams, size+""]),
+    [name, url, cleanedParams, size]
   );
 
-  // const queryClient = useQueryClient();
-
-  const { mutate: fetchData, isPending: isLoading, data, isError } = useMutation({
-    mutationKey: queryKey,
-    mutationFn: () =>
-      httpService.get(url, {
-        params: {
-          size,
-          ...paramsObj,
-        },
-      }),
-    onError: (error: AxiosError) => {
-      console.error('Error fetching data:', error);
-    },
-    onSuccess: (response: any) => {
-      try {
-        const dataContent = array ? response?.data : response?.data?.content;
-        const mergedData = size !== limit ? [...results, ...dataContent] : dataContent;
-        const uniqueData = lodash.uniqBy(mergedData, filter);
-        setResults(uniqueData);
-
-        const lastPageFlag = array ? response?.data?.length < size : response?.data?.last === false;
-        setHasNextPage(lastPageFlag);
-
-        window.scrollTo(0, window.innerHeight);
-      } catch (e) {
-        console.error('Error in onSuccess handler:', e);
-      }
+  const { data, isLoading, isError, refetch } = useFetchData<any>({
+    queryKey,
+    endpoint: url,
+    params: {
+      size,
+      ...cleanedParams,
     },
   });
 
+  const ref = useCallback((node: HTMLElement | null) => {
+    if (isLoading) return;
 
-  // const { status, error, isFetching, isLoading, isError, refetch } = useQuery({
-  //   queryKey: ['todos'],
-  //   queryFn: async (): Promise<Array<string>> => {
-  //     const response = await httpService.get(url, {
-  //       params: {
-  //         size,
-  //         ...paramsObj,
-  //       },
-  //     })
-  //     return viewData(response)
-  //   },
-  // })
+    console.log(hasNextPage);
 
-  // const viewData = (response: any) => {
 
-  //   setData(response)
-  //   const dataContent = array ? response?.data : response?.data?.content;
-  //   const mergedData = size !== limit ? [...results, ...dataContent] : dataContent;
-  //   const uniqueData = lodash.uniqBy(mergedData, filter);
-  //   setResults(uniqueData);
+    if (intObserver.current) intObserver.current.disconnect();
 
-  //   const lastPageFlag = array ? response?.data?.length < size : response?.data?.last === false;
-  //   setHasNextPage(lastPageFlag);
+    intObserver.current = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && hasNextPage) {
+        setInView(true);
+      } else {
+        setInView(false);
+      }
+    });
 
-  //   window.scrollTo(0, window.innerHeight);
+    if (node) intObserver.current.observe(node);
+  }, [isLoading, hasNextPage]);
 
-  //   return response?.data?.content
-  // }
+  useEffect(() => {
+    if (inView && hasNextPage) {
 
-  const ref = React.useCallback(
-    (node: HTMLElement | null) => {
-      if (isLoading) return;
-      if (intObserver.current) intObserver.current.disconnect();
+      console.log("working");
 
-      intObserver.current = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && hasNextPage) {
-          setSize((prev) => prev + limit);
-          fetchData(); 
-        }
-      });
 
-      if (node) intObserver.current.observe(node);
-    },
-    [isLoading, hasNextPage, limit, fetchData]
-  );
+      setSize(prev => prev + limit);
+      refetch()
+    }
+  }, [inView, hasNextPage, limit]);
 
-  React.useEffect(() => {
-    fetchData();
-  }, [url, size, search, ...getParamsDependencies]);
+  useEffect(() => {
+
+    console.log(size);
+
+
+    const dataContent = array ? data : data?.content || [];
+
+    if (dataContent?.length > 0) {
+      const mergedData = size !== limit ? [...results, ...dataContent] : dataContent;
+
+      const uniqueData = lodash.uniqBy(mergedData, filter);
+      setResults(uniqueData);
+
+      const noMoreData = array
+        ? data?.length < size
+        : data?.last !== true;
+
+      setHasNextPage(noMoreData);
+
+      // Optional: Scroll on load
+      if (size === limit) {
+        window.scrollTo(0, 0);
+      }
+    }
+  }, [data, size, filter, array]);
+
+  useEffect(()=> {
+    if(results.length === 0 && isLoading){
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+  }, [isLoading])
+
+  useEffect(()=> {
+    if(results.length > 0 && isLoading){
+      setRefecthing(true)
+    } else {
+      setRefecthing(false)
+    }
+  }, [isLoading])
 
   return {
     data,
-    isLoading,
+    isLoading: loading,
     results,
     ref,
-    isError, 
-    refetch: fetchData,
+    isError,
+    isRefetching: refecthing,
+    refetch,
   };
 }
 

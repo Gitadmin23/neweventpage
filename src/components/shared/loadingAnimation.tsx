@@ -65,10 +65,10 @@ to { transform: rotate(360deg); }
 
     return (
         <Flex flexDir={"column"} w={"full"} h={fix_height ? "full" : "fit-content"} >
-            {(!isLoading || dataLength > 0) && (
+            {(!isLoading) && (
                 <Flex w={"full"} h={"full"} flexDir={"column"} >
                     {children}
-                    {(isLoading && dataLength > 0) && (
+                    {(refeching) && (
                         <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"50px"} >
                             {/* {!customLoader && ( */}
                             <Flex width={"full"} justifyContent={"center"} height={"full"} fontSize={"20px"}  >
@@ -91,7 +91,7 @@ to { transform: rotate(360deg); }
 
             {(!isLoading && !refeching) && (
                 <>
-                    {(dataLength === 0 && !withimg) && (
+                    {(refeching && !withimg) && (
                         <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} fontSize={"20px"} py={"4"}  >
                             <Text>No Records Found</Text>
                         </Flex>

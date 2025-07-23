@@ -82,16 +82,10 @@ function DeleteBtn(props: Props) {
                 // });
             }
 
-            queryClient.refetchQueries({ queryKey: [URLS.GET_DRAFT + "?createdBy=" + user_index]})
-            queryClient.refetchQueries({ queryKey: ["/events/drafts"]})
-            queryClient.refetchQueries({ queryKey: ["donationlist"]})
-            queryClient.refetchQueries({ queryKey: ["mybusinessservice"]})
-            queryClient.refetchQueries({ queryKey: ["getMyProduct"]})
-            queryClient.refetchQueries({ queryKey: ["getMyrental"]})
-            queryClient.refetchQueries({ queryKey: ["donationlistmy"]})
+            queryClient.refetchQueries({ queryKey: ["myevent"]}) 
             
 
-            queryClient.refetchQueries({ queryKey: [URLS.JOINED_EVENT + user_index]})
+            // queryClient.refetchQueries({ queryKey: [URLS.JOINED_EVENT + user_index]})
             setOpen(false)
         }
     });

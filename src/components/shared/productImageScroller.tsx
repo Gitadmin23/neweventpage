@@ -34,10 +34,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
     const clickHandler =(e: any)=> {
         e.stopPropagation()
         push(`/dashboard/profile/${userData?.userId}`)
-    }
-
-    console.log(height);
-    
+    } 
  
     return (
         <Flex cursor='pointer' w='full' h={"fit-content"} bgColor={secondaryBackgroundColor} p={objectFit ? "0px" : ["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
