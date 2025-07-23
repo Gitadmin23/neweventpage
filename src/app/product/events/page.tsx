@@ -1,13 +1,8 @@
-import { EventPage } from "@/components/pages";
-import { Suspense } from "react";
+import { EventPage } from "@/components/pages"; 
 
 export default async function Page() {
 
-    return (
-        <> 
-            {/* <Suspense fallback={<>Loading...</>}>
-                <EventPage />
-            </Suspense> */}
-        </>
+    return ( 
+        <EventPage />  
     )
 }
