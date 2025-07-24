@@ -53,15 +53,11 @@ export default function CustomDatePicker(
                 setValue(name[1], Date.parse(new Date(item).toJSON()))
             }
         }
-    }
-
-    console.log(value);
-    console.log(name[0]);
-
+    } 
 
     return (
         <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
-            <Text fontSize={"14px"} fontWeight={"medium"} >{label}</Text>
+            <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} gap={"1"} rounded={"full"} >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker

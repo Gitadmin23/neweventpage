@@ -1,10 +1,11 @@
 "use client"
 import { GlassIcon, NewEventIcon, ServiceIcon, RentalIcon, StoreIcon, NewDonationIcon } from "@/svg";
-import { Flex, Text } from "@chakra-ui/react"; 
+import { Flex, Text } from "@chakra-ui/react";
 import { SelectEventOption, SelectEventType } from "../eventcomponents";
 import { CustomButton } from "../shared";
 import useCustomTheme from "@/hooks/useTheme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { SelectDonationOption } from "../fundraisingComponents";
 
 
 export default function ProductTab(
@@ -25,9 +26,15 @@ export default function ProductTab(
     const type = query?.get('type');
     const router = useRouter()
 
-    const clickHandler = (item: string) => { }
+    const clickHandler = (item: string) => {
+        if (item === "donation") {
+            router.push("/product/fundraising")
+        } else if(item === "event") {
+            router.push("/product/events")
+        }
+    }
 
-    return ( 
+    return (
         <Flex w={"full"} px={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["4", "4", "6"]} pt={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
             <Flex w={"full"} display={(!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"} alignItems={"center"} flexDirection={"column"} gap={"3"} >
                 <Flex fontSize={["20px", "20px", "56px"]} alignItems={"end"} display={["flex", "flex", "none"]} fontWeight={"700"} >what are you l<Flex mb={"1"} ><GlassIcon size='17' /></Flex>king for?</Flex>
@@ -76,13 +83,21 @@ export default function ProductTab(
                         } height={["30px", "38px", "48px"]} px={"2"} fontSize={"sm"} backgroundColor={pathname?.includes("/product/fundraising") ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname?.includes("/product/fundraising") ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} width={["80px", "107px", "175px"]} />
                     </Flex>
                 </Flex>
-                <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
-                    {!type && (
-                        <SelectEventType />
-                    )}
-                    <SelectEventOption />
-                    <CustomButton onClick={() => router.push("/product/create/events")} text={"Create Event"} width={"150px"} fontSize={"14px"} borderRadius={"full"} />
-                </Flex>
+                {pathname.includes("event") && (
+                    <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >
+                        {!type && (
+                            <SelectEventType />
+                        )}
+                        <SelectEventOption />
+                        <CustomButton onClick={() => router.push("/product/create/events")} text={"Create Event"} width={"150px"} fontSize={"14px"} borderRadius={"full"} />
+                    </Flex>
+                )} 
+                {pathname.includes("fundraising") && (
+                    <Flex pt={["6", "6", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} > 
+                        <SelectDonationOption />
+                        <CustomButton onClick={() => router.push("/product/create/fundraising")} text={"Create Fundraising"} width={"150px"} fontSize={"14px"} borderRadius={"full"} />
+                    </Flex>
+                )}
             </Flex>
             {children}
         </Flex>

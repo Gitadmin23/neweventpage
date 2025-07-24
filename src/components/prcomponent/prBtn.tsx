@@ -166,7 +166,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                 </Flex>
             )}
 
-            {(!data?.isOrganizer && data?.affiliates?.length > 0 && data?.affiliates[0]?.percent) && (
+            {(!data?.isOrganizer && data?.affiliates?.length > 0 && data?.affiliates[0]?.percent && !product) && (
                 <Flex flexDirection={"column"} gap={"1"} w={(data.eventMemberRole === "ADMIN" || data.eventMemberRole === "COLLABORATOR") ? "full" : "fit-content"}  >
                     {data.eventMemberRole !== "ADMIN" && data.eventMemberRole !== "COLLABORATOR" && (
                         <Text fontSize={["14px", "14px", "16px"]} fontWeight={"600"} >Apply to be a PR</Text>

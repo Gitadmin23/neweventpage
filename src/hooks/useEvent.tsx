@@ -70,7 +70,7 @@ const useEvent = () => {
     const [open, setOpen] = useState(false)
 
 
-    const path = "/product/create/events"+(pathname?.includes("edit") ? "/edit" : pathname?.includes("draft") ? "/draft" : "")
+    const path = "/product/create/events"+(pathname?.includes("edit") ? "/edit" :  "/draft" )
 
     // Upload Image
     const uploadImage = useMutation({
@@ -87,9 +87,8 @@ const useEvent = () => {
                 closable: true
             })
         },
-        onSuccess: (data: any) => {
-
-            setImage([])
+        onSuccess: (data: any) => { 
+            
             const fileArray = Object.values(data?.data);
 
             let newObjTheme: any = { ...formik.values, picUrls: [...fileArray], currentPicUrl: fileArray[0] }
@@ -232,29 +231,29 @@ const useEvent = () => {
         },
         onSuccess: (data: AxiosResponse<any>) => {
 
-            formik.setValues({
-                picUrls: data?.data.picUrls,
-                eventType: data?.data.eventType,
-                eventName: data?.data.eventName,
-                eventDescription: data?.data.eventDescription,
-                isPublic: data?.data.isPublic,
-                currentPicUrl: data?.data.currentPicUrl,
-                eventFunnelGroupID: data?.data.eventFunnelGroupID,
-                attendeesVisibility: data.data.attendeesVisibility,
-                startTime: data?.data.startTime,
-                endTime: data?.data.endTime,
-                startDate: data?.data.startDate,
-                endDate: data?.data.endDate,
-                locationType: data?.data.locationType,
-                currency: data?.data.currency,
-                location: data?.data.location,
-                productTypeData: data?.data.productTypeData,
-                affiliates: data?.data.affiliates,
-                collaborators: [],
-                admins: [],
-            })
-
             router.push(`${path}?type=info&id=${data?.data?.id}`)
+
+            // formik.setValues({
+            //     picUrls: data?.data.picUrls,
+            //     eventType: data?.data.eventType,
+            //     eventName: data?.data.eventName,
+            //     eventDescription: data?.data.eventDescription,
+            //     isPublic: data?.data.isPublic,
+            //     currentPicUrl: data?.data.currentPicUrl,
+            //     eventFunnelGroupID: data?.data.eventFunnelGroupID,
+            //     attendeesVisibility: data.data.attendeesVisibility,
+            //     startTime: data?.data.startTime,
+            //     endTime: data?.data.endTime,
+            //     startDate: data?.data.startDate,
+            //     endDate: data?.data.endDate,
+            //     locationType: data?.data.locationType,
+            //     currency: data?.data.currency,
+            //     location: data?.data.location,
+            //     productTypeData: data?.data.productTypeData,
+            //     affiliates: data?.data.affiliates,
+            //     collaborators: [],
+            //     admins: [],
+            // })
 
             toaster.create({
                 title: `Event Saved`,

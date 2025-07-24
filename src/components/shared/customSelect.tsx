@@ -63,7 +63,7 @@ export default function CustomSelect(
             <Select.Root w={"full"} value={valueData} collection={collection} variant={variant ?? "outline"} size={size ?? "md"} bgColor={mainBackgroundColor} onValueChange={(value) => changeHandler(value)} >
                 <Select.HiddenSelect />
                 {label && (
-                    <Select.Label fontSize={"14px"} >{label}</Select.Label>
+                    <Select.Label fontSize={"14px"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Select.Label>
                 )}
                 <Select.Control >
                     <Select.Trigger px={"3"} rounded={"full"}  >

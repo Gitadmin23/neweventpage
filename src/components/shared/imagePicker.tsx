@@ -4,7 +4,7 @@ import { useImage } from '@/helpers/store/useImagePicker';
 import useCustomTheme from '@/hooks/useTheme';
 import { GallaryIcon } from '@/svg';
 import { Flex, Image, Text } from '@chakra-ui/react';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
 
 export default function ImagePicker(
@@ -31,6 +31,10 @@ export default function ImagePicker(
     const handleButtonClick = () => {
         fileInputRef.current?.click();
     };
+
+    useEffect(()=> {
+        setImage([])
+    }, [])
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;

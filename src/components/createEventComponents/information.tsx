@@ -5,7 +5,7 @@ import { CustomButton, CustomInput } from "../shared";
 import SelectMapLocation from "./information/selectMapLocation";
 import CustomEventSwitch from "./theme/customEventSwitch";
 import useCustomTheme from "@/hooks/useTheme";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toaster } from "../ui/toaster";
 
 export default function Information(
@@ -25,6 +25,8 @@ export default function Information(
     const query = useSearchParams();
     const id = query?.get('id');
 
+    const pathname = usePathname()
+
     const router = useRouter()
 
     const clickHandler = () => {
@@ -38,9 +40,7 @@ export default function Information(
         } else {
             formik.handleSubmit()
         }
-    }
-
-    console.log(formik.values);
+    } 
 
 
     return (
@@ -71,7 +71,7 @@ export default function Information(
             )}
 
             <Flex justifyContent={"end"} flexDir={["column", "column", "row"]} py={"6"} gap={"3"} mt={"auto"} >
-                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+                <CustomButton onClick={() => router.push("/product/create/events"+(pathname?.includes("edit") ? `/edit?id=${id}` :  `/draft?id=${id}` ))} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
                 <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
             </Flex>
         </Flex>

@@ -44,7 +44,7 @@ export default function FormInput(
 
     const changeHandler = (item: string) => {
         setValue(name, item)
-        // setNewValue(item)
+        // setNewValue(item)?
     }
 
     const [newValue, setNewValue] = useState("") 
@@ -59,7 +59,7 @@ export default function FormInput(
 
     return (
         <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
-            <Text fontSize={"14px"} fontWeight={"medium"} >{label}</Text>
+            <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "18px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} gap={"1"} >
                 {!textarea && (
                     <Flex pos={"relative"} h={height ?? "45px"} >

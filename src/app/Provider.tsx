@@ -1,5 +1,5 @@
 "use client"
-import { Provider } from '@/components/ui/provider';
+import { Provider } from '@/components/ui/provider'; 
 import { QueryClientProvider } from '@tanstack/react-query';
 import { QueryClient } from '@tanstack/react-query'; 
 
@@ -16,7 +16,7 @@ export function Providers({
   return (
       <QueryClientProvider client={queryClient}>
         <Provider> 
-          {children}
+          {children} 
         </Provider>
       </QueryClientProvider> 
   )

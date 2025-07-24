@@ -145,12 +145,12 @@ Chasescroll is not liable for any misuse of funds, fraudulent campaigns, or loss
     return (
         (<Flex  >
             {refund && (
-                <Text onClick={() => setOpen(true)} as={"button"} textDecor={"underline"} fontWeight={"bold"} fontSize={"12px"} color={primaryColor} >Fundraising Terms And Conditions</Text>
+                <Text onClick={() => setOpen(true)} cursor={"pointer"} textDecor={"underline"} fontWeight={"bold"} fontSize={"12px"} color={primaryColor} >Fundraising Terms And Conditions</Text>
             )}
             {!refund && (
-                <Text onClick={() => setOpen(true)} as={"button"} textDecor={"underline"} fontWeight={"bold"} fontSize={"12px"} color={primaryColor} >Fundraising Terms And Conditions</Text>
+                <Text onClick={() => setOpen(true)} cursor={"pointer"} textDecor={"underline"} fontWeight={"bold"} fontSize={"12px"} color={primaryColor} >Fundraising Terms And Conditions</Text>
             )}
-            <ModalLayout size={"full"} open={open} close={()=> setOpen(false)} >
+            <ModalLayout size={"full"} open={open} trigger={true} close={()=> setOpen(false)} >
                 <Box width={"full"} h={["100vh", "100vh", "full"]} bg={mainBackgroundColor} px={["0px", "8", "8"]} pt={"3"} pb={"4"} >
                     <Box display={"flex"} fontWeight={"medium"} flexDirection={"column"} fontSize={"sm"} px={"3"} py={"5"} >
 

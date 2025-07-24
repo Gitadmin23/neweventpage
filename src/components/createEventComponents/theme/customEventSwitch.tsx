@@ -23,9 +23,7 @@ export default function CustomEventSwitch(
 ) {
 
     const { secondaryBackgroundColor } = useCustomTheme()
-
-    console.log(value); 
-
+ 
     const clickHandler = (item: any) => {
         if(name === "affiliates[0].affiliateType") {
             

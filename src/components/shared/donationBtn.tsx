@@ -1,17 +1,15 @@
 "use client"
-import { Box, Button, Flex, Input, Text } from '@chakra-ui/react'
+import { Box, Flex, Input, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import useCustomTheme from '@/hooks/useTheme';
 import { IDonationList } from '@/helpers/models/fundraising';
-import httpService from '@/helpers/services/httpService';
 import { textLimit } from '@/helpers/utils/textlimit';
-import { useMutation } from '@tanstack/react-query';
 import { EventImage } from '../eventdetailscomponents';
 import CustomButton from './customButton';
 import ModalLayout from './modalLayout';
-import usePaystackStore from '@/helpers/store/usePaystack';
 import DonationTermAndCondition from './donationTermAndCondition';
+import usePayStack from '@/hooks/usePayStack';
 
 export default function DonationBtn(props: {
     item: IDonationList,
@@ -30,7 +28,7 @@ export default function DonationBtn(props: {
 
     const [value, setValue] = useState("")
 
-    let token = localStorage.getItem("token")
+    // let token = localStorage.getItem("token")
 
     const {
         primaryColor,
@@ -47,75 +45,64 @@ export default function DonationBtn(props: {
         "NGN 50000",
     ]
 
-    // const toast = useToast()
-    const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
-
     const userId = localStorage.getItem('user_id') + "";
 
-    const router = useRouter()
+    // const router = useRouter()
 
-    const { setDataID, setPaystackConfig, setMessage, message, setAmount } = usePaystackStore((state) => state);
+    // const { setDataID, setPaystackConfig, setMessage, message, setAmount } = usePaystackStore((state) => state);
 
-
-    const payForTicket = useMutation({
-        mutationFn: (data: {
-            seller: string,
-            price: number,
-            currency: string,
-            orderType: "DONATION",
-            typeID: string
-        }) => httpService.post(`/payments/createCustomOrder`, data),
-        onSuccess: (data: any) => {
-            setPaystackConfig({
-                publicKey: PAYSTACK_KEY,
-                email: data?.data?.content?.email,
-                amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-                reference: data?.data?.content?.orderCode
-            });
-
-            setMessage({ ...message, donation: true })
-            setOpen(false)
-            setValue("")
+    const { payForDonation } = usePayStack()
 
 
-        },
-        onError: () => {
-            // console.log(error);
-            // toast({
-            //     title: 'Error',
-            //     description: "Error occured",
-            //     status: 'error',
-            //     isClosable: true,
-            //     duration: 5000,
-            //     position: 'top-right',
-            // });
-        },
-    });
+    // const payForTicket = useMutation({
+    //     mutationFn: (data: {
+    //         seller: string,
+    //         price: number,
+    //         currency: string,
+    //         orderType: "DONATION",
+    //         typeID: string
+    //     }) => httpService.post(`/payments/createCustomOrder`, data),
+    //     onSuccess: (data: any) => {
+    //         // setPaystackConfig({
+    //         //     publicKey: PAYSTACK_KEY,
+    //         //     email: data?.data?.content?.email,
+    //         //     amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    //         //     reference: data?.data?.content?.orderCode
+    //         // });
+
+    //         // setMessage({ ...message, donation: true })
+    //         // setOpen(false)
+    //         // setValue("")
+    //     },
+    //     onError: () => {
+    //         // console.log(error);
+    //         // toast({
+    //         //     title: 'Error',
+    //         //     description: "Error occured",
+    //         //     status: 'error',
+    //         //     isClosable: true,
+    //         //     duration: 5000,
+    //         //     position: 'top-right',
+    //         // });
+    //     },
+    // });
 
 
     const clickHandler = () => {
-        payForTicket.mutate({
+        payForDonation.mutate({
             seller: user?.userId,
             price: Number(value),
             currency: "NGN",
             orderType: "DONATION",
             typeID: item?.id
         })
-        setAmount(Number(value))
-
-        setDataID(item?.id)
-
     }
 
 
 
     const openHandler = (e: any) => {
-        if (token) {
-            e.stopPropagation()
-            setOpen(true)
-        } else {
-            router?.push("/auth")
-        }
+        e.stopPropagation()
+        setOpen(true)
     }
 
     return (
@@ -132,8 +119,8 @@ export default function DonationBtn(props: {
                 </Box>
             }
 
-            <ModalLayout open={open} close={() => setOpen(false)} >
-                <Flex flexDir={"column"} bg={mainBackgroundColor} gap={"5"} px={"4"} >
+            <ModalLayout open={open} size='sm' closeBtn={true} trigger={true} close={() => setOpen(false)} >
+                <Flex w={"full"} flexDir={"column"} bg={mainBackgroundColor} rounded={"md"} gap={"5"} px={"4"} >
                     <Flex alignItems={"center"} rounded={"16px"} px={"8px"} pt={"12px"} >
                         <Box w={"fit-content"} >
                             <Flex width={"153px"} height={"127px"} >
@@ -161,9 +148,7 @@ export default function DonationBtn(props: {
                                 ₦
                             </Flex>
                         </Flex>
-                        <Button loading={payForTicket?.isPending} onClick={() => clickHandler()} disabled={value ? false : true} w={"full"} h={"50px"} rounded={"32px"} color={"white"} fontWeight={"600"} bgColor={"brand.chasescrollBlue"} _hover={{ backgroundColor: "brand.chasescrollBlue" }} >
-                            Donate
-                        </Button>
+                        <CustomButton onClick={clickHandler} text="Donate" loading={payForDonation.isPending} borderRadius={"999px"} />
                         <Flex w={"full"} justifyContent={"center"} >
                             <DonationTermAndCondition refund={true} />
                         </Flex>

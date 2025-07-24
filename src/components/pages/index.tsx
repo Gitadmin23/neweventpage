@@ -1,6 +1,7 @@
 
 
-export { default as EditEventPage } from "../pages/editEventPage"
-export { default as CreateEventPage } from "../pages/createEventPage"
-export { default as DraftEventPage } from "../pages/draftEventPage"
-export { default as EventPage } from "../pages/eventPage"
+export { default as EditEventPage } from "./editEventPage"
+export { default as CreateEventPage } from "./createEventPage"
+export { default as DraftEventPage } from "./draftEventPage"
+export { default as EventPage } from "./eventPage"
+export { default as FundraisingPage } from "./fundraisingPage"

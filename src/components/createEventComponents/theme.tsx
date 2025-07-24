@@ -22,12 +22,13 @@ export default function Theme(
     const { image } = useImage((state) => state)
 
     const clickHandler = () => {
-        if (image?.length === 0 && formik.values.picUrls === 0) {
+        if (image?.length === 0 && formik.values?.picUrls.length === 0) {
             toaster.create({
                 title: `Add Image`,
                 type: "error",
                 closable: true
             }) 
+ 
         } else {
             formik.handleSubmit()
         }
@@ -38,7 +39,7 @@ export default function Theme(
             <Flex w={"full"} flexDir={"column"} >
                 <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Add image and Videos</Text>
                 <Text fontSize={"14px"} mb={"2"} >Add clear images that show your event information with a good background</Text>
-                <ImagePicker setValue={formik.setFieldValue} preview={formik?.values.picUrls} />
+                <ImagePicker setValue={formik.setFieldValue} />
             </Flex>
             <Flex w={"full"} flexDir={"column"} >
                 <Text fontSize={"20px"} fontWeight={"semibold"} >Basic Event Details</Text>

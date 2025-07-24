@@ -47,7 +47,7 @@ function LoadingAnimation(props: Props) {
         if (!loading) {
             const timeoutId = setTimeout(() => {
                 setLoading(false);
-            }, 1000);
+            }, 500);
             setDataLength(length)
 
             // Cleanup: clear the timeout if the component unmounts or a new timer is set
@@ -57,6 +57,10 @@ function LoadingAnimation(props: Props) {
         }
 
     }, [loading])
+
+
+    console.log(dataLength);
+    
 
     const rotate = keyframes`
 from { transform: rotate(0deg); }
@@ -91,12 +95,12 @@ to { transform: rotate(360deg); }
 
             {(!isLoading && !refeching) && (
                 <>
-                    {(refeching && !withimg) && (
+                    {/* {(refeching && !withimg) && (
                         <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} fontSize={"20px"} py={"4"}  >
                             <Text>No Records Found</Text>
                         </Flex>
-                    )}
-                    {(dataLength === 0 && withimg) && (
+                    )} */}
+                    {(length === 0) && (
                         <Flex width={"full"} flexDir={"column"} bg={mainBackgroundColor} alignItems={"center"} py={"4"}  >
                             <Image src={"/images/folder.png"} alt="folder" width={"350px"} />
                             <Text>{`You don't have any record yet`}</Text>
