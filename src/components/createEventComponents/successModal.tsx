@@ -30,7 +30,7 @@ export default function SuccessModal(
     return (
         <ModalLayout open={open} size="sm" trigger={true} close={() => setOpen(true)} >
            <Flex w={"full"} justifyContent={"center"} >
-           <Flex maxW={"300px"} flexDir={"column"} alignItems={"center"} py={"8"} bg={mainBackgroundColor} >
+           <Flex maxW={"300px"} flexDir={"column"} alignItems={"center"} py={"8"}>
                 <ThumbsUpIcon />
                 <Text fontSize={"22px"} color={headerTextColor} lineHeight={"26.4px"} textAlign={"center"} fontWeight={"700"} mt={"4"} >Event {pathname?.includes("edit") ? "Updated" : "Created"} Successfully</Text>
                 <Text fontSize={"14px"} color={bodyTextColor} fontWeight={"500"} maxW={"300px"} textAlign={"center"} mt={"2"} mb={"6"} lineHeight={"16.8px"} >Your event is now live. You may proceed to My Events to view it.</Text>

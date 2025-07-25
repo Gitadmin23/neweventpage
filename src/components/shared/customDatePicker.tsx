@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { Flex, Text } from "@chakra-ui/react";
 import { toaster } from '../ui/toaster';
+import useCustomTheme from '@/hooks/useTheme';
 
 interface IProps {
     name: Array<string>;
@@ -26,6 +27,10 @@ export default function CustomDatePicker(
         errors,
         setValue
     }: IProps) {
+
+    const {
+        headerTextColor
+    } = useCustomTheme()
 
     const changeHandler = (item: any) => {
         if (start) {
@@ -53,28 +58,28 @@ export default function CustomDatePicker(
                 setValue(name[1], Date.parse(new Date(item).toJSON()))
             }
         }
-    } 
+    }
 
     return (
         <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
-            <Flex flexDir={"column"} gap={"1"} rounded={"full"} >
+            <Flex flexDir={"column"} color={headerTextColor} gap={"1"} rounded={"full"} >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker
-                        className=" text-primary "
+                    <DateTimePicker 
                         minDate={start ? dayjs(start) : dayjs()}
                         defaultValue={dayjs(value)}
                         format="MM/DD/YYYY hh:mm a"
                         onChange={(item) => changeHandler(item)}
                         slotProps={{
-                            openPickerIcon: { fontSize: "small" },
+                            openPickerIcon: { fontSize: "small"},
                             textField: {
                                 focused: false,
-                            },  
+                                style: {color: "white", backgroundColor: "white", borderRadius: "999px"}
+                            },
                             popper: {
-                                disablePortal: true,
-                              }
-                        }} 
+                                disablePortal: true, 
+                            }
+                        }}
                     />
                 </LocalizationProvider>
                 {touched && (

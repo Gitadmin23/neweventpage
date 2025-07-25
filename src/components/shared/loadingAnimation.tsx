@@ -56,11 +56,7 @@ function LoadingAnimation(props: Props) {
             setLoading(loading)
         }
 
-    }, [loading])
-
-
-    console.log(dataLength);
-    
+    }, [loading]) 
 
     const rotate = keyframes`
 from { transform: rotate(0deg); }

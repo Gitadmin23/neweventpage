@@ -10,7 +10,7 @@ export default function FundraisingPage() {
     const type = query?.get('type');
 
     return (
-        <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} flexDirection={"column"} >
+        <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["5", "5", "8"]} flexDirection={"column"} >
             {!type && (
                 <AllDonationList />
             )}

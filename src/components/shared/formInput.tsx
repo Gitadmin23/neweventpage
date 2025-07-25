@@ -1,4 +1,5 @@
 "use client"
+import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 // import { useField } from 'formik';
@@ -49,6 +50,10 @@ export default function FormInput(
 
     const [newValue, setNewValue] = useState("") 
 
+    const {
+        mainBackgroundColor
+    } = useCustomTheme()
+
     useEffect(() => {
         if (value[name]) {
             setNewValue(value[name] ?? "")
@@ -96,6 +101,7 @@ export default function FormInput(
                                 bgColor={"white"}
                                 borderRadius={"9999px"}
                                 border={"1px solid #EAEBED"}
+                                backgroundColor={mainBackgroundColor}
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />
@@ -114,6 +120,7 @@ export default function FormInput(
                                 bgColor={"white"}
                                 borderRadius={"9999px"}
                                 border={"1px solid #EAEBED"}
+                                backgroundColor={mainBackgroundColor}
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />
@@ -134,6 +141,7 @@ export default function FormInput(
                         bgColor={"white"}
                         borderRadius={"3xl"}
                         border={"1px solid #EAEBED"}
+                        backgroundColor={mainBackgroundColor}
                         _placeholder={{ color: "gray.500" }}
                         placeholder={placeholder}
                     />

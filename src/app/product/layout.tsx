@@ -1,5 +1,4 @@
-import { DashboardLayout, ProductTab } from "@/components/dashboardLayout";
-import { Suspense } from "react";
+import { DashboardLayout, ProductTab } from "@/components/dashboardLayout"; 
 
 export const dynamic = "force-dynamic";
 
@@ -10,14 +9,10 @@ export default function RootLayout({
 }>) {
 
     return (
-        <Suspense>
-            <DashboardLayout>
-                <Suspense>
-                    <ProductTab>
-                        {children}
-                    </ProductTab>
-                </Suspense>
-            </DashboardLayout>
-        </Suspense>
+        <DashboardLayout>
+            <ProductTab>
+                {children}
+            </ProductTab>
+        </DashboardLayout>
     );
 }

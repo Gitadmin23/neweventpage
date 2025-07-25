@@ -5,6 +5,7 @@ import SideBar from "./sidebar";
 import Navbar from "./navbar";
 import { usePathname } from "next/navigation";
 import { Suspense } from "react";
+import BottomBar from "./bottomBar";
 
 interface IProps {
     children: React.ReactNode
@@ -24,16 +25,19 @@ export default function DashboardLayout(
             <Suspense>
                 <SideBar />
             </Suspense>
-            <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
-                <Suspense>
+            <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >  
+                <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "none" : "flex"]} >
                     {(!pathname?.includes("create") && !pathname?.includes("details")) && (
                         <Navbar />
-                    )}
-                </Suspense>
+                    )} 
+                </Flex>
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} flex={"1"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} top={["76px", "76px", "76px", "0px", "0px"]} inset={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={["70px", "70px", "70px", "0px", "0px"]} top={["76px", "76px", "76px", "0px", "0px"]} inset={"0px"} >
                         {children}
                     </Flex>
+                </Flex>
+                <Flex w={"full"} h={"fit-content"} > 
+                    <BottomBar />
                 </Flex>
             </Flex>
         </Flex>

@@ -1,16 +1,11 @@
 "use client"
-import { useEffect, useState } from "react";
 import { LoadingAnimation } from "../shared"
-import { IEventType } from "@/helpers/models/event";
-import { useMutation } from "@tanstack/react-query";
-import { URLS } from "@/helpers/services/urls";
-import httpService from "@/helpers/services/httpService";
+import { IEventType } from "@/helpers/models/event"; 
+import { URLS } from "@/helpers/services/urls"; 
 import { useSearchParams } from "next/navigation";
 import { PaginatedResponse } from "@/helpers/models/PaginatedResponse";
-import { EventDetails } from ".";
-import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
-import { useFetchData } from "@/hooks/useFetchData";
-import { Flex } from "@chakra-ui/react";
+import { EventDetails } from "."; 
+import { useFetchData } from "@/hooks/useFetchData"; 
 
 interface Props {
     event_index: any,
@@ -22,7 +17,6 @@ export default function GetEventDetailInfo(props: Props) {
         event_index,
     } = props
  
-    // const pathname = usePathname()
     const query = useSearchParams();
     const type = query?.get('type'); 
 

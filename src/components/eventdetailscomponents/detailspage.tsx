@@ -1,9 +1,7 @@
 "use client"
 import { IEventType } from "@/helpers/models/event";
 import { Flex, Text } from "@chakra-ui/react";
-import BreadCrumbs from "./breadcrumbs";
-import EventImage from "./eventImage";
-import DescriptionPage from "./descriptionPage";
+import BreadCrumbs from "./breadcrumbs"; 
 import EventCreator from "./eventCreator";
 import InterestedUsers from "../eventcomponents/interestedUser";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
@@ -16,7 +14,7 @@ import EventLocation from "./eventLocation";
 import EventMesh from "./eventMesh";
 import EventDonation from "./eventDonation";
 import ViewRequest from "./viewRequest";
-import { EventMap, ProductImageScroller } from "../shared";
+import { DescriptionCard, EventMap, ProductImageScroller } from "../shared";
 import EventDate from "./eventDate";
 import ViewTicket from "./viewTicket";
 import SelectTicketBtn from "./selectTicketBtn";
@@ -53,7 +51,7 @@ export default function DetailsPage(
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
                     <Text fontWeight={"700"} fontSize={["16px", "16px", "24px"]} >{capitalizeFLetter(eventName)}</Text>
                     <Flex w={"full"} flexDir={["column-reverse", "column-reverse", "column"]} gap={"2"} >
-                        <DescriptionPage limit={200} label='Event Details' description={eventDescription} />
+                        <DescriptionCard limit={200} label='Event Details' description={eventDescription} />
                         <Flex flexDir={isAdmin ? "column" : "row"} gap={"2"} w={"full"} >
                             <Flex w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={["start", "start", "center"]} flexDir={["column", "column", "row"]} justifyContent={["start", "start", "space-between"]} gap={"3"} >
                                 <Flex gap={"3"} w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={[isAdmin ? "center" : "start", isAdmin ? "center" : "start", "center"]} flexDir={[isAdmin ? "row" : "column", isAdmin ? "row" : "column", "row"]} justifyContent={[isAdmin ? "space-between" : "start", isAdmin ? "space-between" : "start", "space-between"]}  >

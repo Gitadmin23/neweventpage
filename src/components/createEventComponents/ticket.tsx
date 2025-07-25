@@ -132,7 +132,7 @@ export default function Ticket(
                 <CollaboratorBtn value={formik.values} setValue={formik.setFieldValue} btn={true} addCollaborator={true} />
             </Flex>
             <Flex justifyContent={"end"} py={"6"} flexDir={["column", "column", "row"]}  gap={"3"} mt={"auto"} >
-                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={mainBackgroundColor} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
                 <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
             </Flex>
         </Flex>

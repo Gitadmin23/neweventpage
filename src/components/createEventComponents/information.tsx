@@ -19,7 +19,8 @@ export default function Information(
 ) {
 
     const {
-        primaryColor
+        primaryColor,
+        mainBackgroundColor
     } = useCustomTheme()
 
     const query = useSearchParams();
@@ -71,7 +72,7 @@ export default function Information(
             )}
 
             <Flex justifyContent={"end"} flexDir={["column", "column", "row"]} py={"6"} gap={"3"} mt={"auto"} >
-                <CustomButton onClick={() => router.push("/product/create/events"+(pathname?.includes("edit") ? `/edit?id=${id}` :  `/draft?id=${id}` ))} text={"Back"} borderColor={primaryColor} backgroundColor={"white"} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+                <CustomButton onClick={() => router.push("/product/create/events"+(pathname?.includes("edit") ? `/edit?id=${id}` :  `/draft?id=${id}` ))} text={"Back"} borderColor={primaryColor} backgroundColor={mainBackgroundColor} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
                 <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Save and continue"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
             </Flex>
         </Flex>

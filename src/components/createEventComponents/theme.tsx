@@ -39,7 +39,7 @@ export default function Theme(
             <Flex w={"full"} flexDir={"column"} >
                 <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Add image and Videos</Text>
                 <Text fontSize={"14px"} mb={"2"} >Add clear images that show your event information with a good background</Text>
-                <ImagePicker setValue={formik.setFieldValue} />
+                <ImagePicker preview={formik?.values?.picUrls} setValue={formik.setFieldValue} />
             </Flex>
             <Flex w={"full"} flexDir={"column"} >
                 <Text fontSize={"20px"} fontWeight={"semibold"} >Basic Event Details</Text>

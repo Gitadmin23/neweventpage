@@ -1,3 +1,4 @@
+"use client"
 import { fetchSecureData, fetchUnsecureData } from "@/helpers/services/api";
 import { useQuery } from "@tanstack/react-query"; 
 

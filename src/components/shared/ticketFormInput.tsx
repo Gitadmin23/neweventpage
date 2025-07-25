@@ -1,4 +1,5 @@
 "use client"
+import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 // import { useField } from 'formik';
@@ -49,6 +50,10 @@ export default function TicketFormInput(
         // setNewValue(item)
     }
 
+    const {
+        mainBackgroundColor
+    } = useCustomTheme()
+
     const [newValue, setNewValue] = useState("") 
 
     useEffect(() => {
@@ -98,6 +103,7 @@ export default function TicketFormInput(
                                 bgColor={"white"}
                                 borderRadius={"9999px"}
                                 border={"1px solid #EAEBED"}
+                                backgroundColor={mainBackgroundColor}
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />
@@ -116,6 +122,7 @@ export default function TicketFormInput(
                                 bgColor={"white"}
                                 borderRadius={"9999px"}
                                 border={"1px solid #EAEBED"}
+                                backgroundColor={mainBackgroundColor}
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />

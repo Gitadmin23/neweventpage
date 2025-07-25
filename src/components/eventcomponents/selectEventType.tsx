@@ -45,7 +45,7 @@ export default function SelectEventOption() {
     return (
         <Menu.Root >
             <Menu.Trigger cursor={"pointer"} asChild>
-                <Flex gap={"3"} borderWidth={"1px"} bgColor={"#F2F4FF"} borderColor={borderColor} rounded={"full"} fontSize={"14px"} h={"45px"} px={"4"} fontWeight={"semibold"} alignItems={"center"} >
+                <Flex gap={"3"} borderWidth={"1px"} bgColor={"#F2F4FF"} borderColor={borderColor} rounded={"full"} height={["40px", "40px", "45px"]} fontSize={["12px", "12px","14px"]} px={["3", "3", "4"]} fontWeight={"semibold"} alignItems={"center"} >
                     <Text fontWeight={"semibold"} color={primaryColor} >{type ? type.charAt(0).toUpperCase() + type.slice(1).split("_").join(" ") : "Select Event Catagory"}</Text> <IoChevronDown color={primaryColor} />
                 </Flex>
             </Menu.Trigger>

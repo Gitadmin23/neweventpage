@@ -19,7 +19,7 @@ export default function AllDonationList() {
 
     return (
         <LoadingAnimation loading={loadingList} refeching={refetchingList} length={results?.length} >
-            <Grid w={"full"} templateColumns={['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']} gap={["2", "2", "3"]} >
+            <Grid w={"full"} templateColumns={['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)', 'repeat(3, 1fr)', 'repeat(4, 1fr)']} gap={["1", "1", "3"]} >
                 {results?.filter((item: IDonationGroup) => item?.fundRaisers?.length > 0 && item?.fundRaisers[0]?.visibility === "PUBLIC")?.map((item: IDonationGroup, index: number) => {
                     if (results?.filter((item: IDonationGroup) => item?.fundRaisers?.length > 0 && item?.fundRaisers[0]?.visibility === "PUBLIC")?.length === index + 1) {
                         return (
