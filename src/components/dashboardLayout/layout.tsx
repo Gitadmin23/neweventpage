@@ -25,18 +25,16 @@ export default function DashboardLayout(
             <Suspense>
                 <SideBar />
             </Suspense>
-            <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >  
-                <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "none" : "flex"]} >
-                    {(!pathname?.includes("create") && !pathname?.includes("details")) && (
-                        <Navbar />
-                    )} 
+            <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
+                <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} >
+                    <Navbar />
                 </Flex>
                 <Flex w={"full"} pos={"relative"} h={"full"} >
                     <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={["70px", "70px", "70px", "0px", "0px"]} top={["76px", "76px", "76px", "0px", "0px"]} inset={"0px"} >
                         {children}
                     </Flex>
                 </Flex>
-                <Flex w={"full"} h={"fit-content"} > 
+                <Flex w={"full"} h={"fit-content"} >
                     <BottomBar />
                 </Flex>
             </Flex>
