@@ -81,7 +81,7 @@ export default function FormInput(
 
                         {type === "number" && (
                             <Input
-                                value={newValue}
+                                value={newValue ?? ""}
                                 disabled={disabled}
                                 onChange={(e) => {
                                     const value = e.target.value;

@@ -1,7 +1,6 @@
 "use client"
 import { Box, Flex, Input, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState } from 'react' 
 import useCustomTheme from '@/hooks/useTheme';
 import { IDonationList } from '@/helpers/models/fundraising';
 import { textLimit } from '@/helpers/utils/textlimit';
@@ -9,7 +8,8 @@ import { EventImage } from '../eventdetailscomponents';
 import CustomButton from './customButton';
 import ModalLayout from './modalLayout';
 import DonationTermAndCondition from './donationTermAndCondition';
-import usePayStack from '@/hooks/usePayStack';
+import usePayStack from '@/hooks/usePayStack'; 
+import { useDetails } from '@/helpers/store/useUserDetails';
 
 export default function DonationBtn(props: {
     item: IDonationList,
@@ -24,11 +24,8 @@ export default function DonationBtn(props: {
         event
     } = props
 
-    const [open, setOpen] = useState(false)
-
-    const [value, setValue] = useState("")
-
-    // let token = localStorage.getItem("token")
+    const [open, setOpen] = useState(false) 
+    const [value, setValue] = useState("") 
 
     const {
         primaryColor,
@@ -45,48 +42,9 @@ export default function DonationBtn(props: {
         "NGN 50000",
     ]
 
-    const userId = localStorage.getItem('user_id') + "";
-
-    // const router = useRouter()
-
-    // const { setDataID, setPaystackConfig, setMessage, message, setAmount } = usePaystackStore((state) => state);
-
-    const { payForDonation } = usePayStack()
-
-
-    // const payForTicket = useMutation({
-    //     mutationFn: (data: {
-    //         seller: string,
-    //         price: number,
-    //         currency: string,
-    //         orderType: "DONATION",
-    //         typeID: string
-    //     }) => httpService.post(`/payments/createCustomOrder`, data),
-    //     onSuccess: (data: any) => {
-    //         // setPaystackConfig({
-    //         //     publicKey: PAYSTACK_KEY,
-    //         //     email: data?.data?.content?.email,
-    //         //     amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    //         //     reference: data?.data?.content?.orderCode
-    //         // });
-
-    //         // setMessage({ ...message, donation: true })
-    //         // setOpen(false)
-    //         // setValue("")
-    //     },
-    //     onError: () => {
-    //         // console.log(error);
-    //         // toast({
-    //         //     title: 'Error',
-    //         //     description: "Error occured",
-    //         //     status: 'error',
-    //         //     isClosable: true,
-    //         //     duration: 5000,
-    //         //     position: 'top-right',
-    //         // });
-    //     },
-    // });
-
+    const { userId } = useDetails((state)=> state)
+ 
+    const { payForDonation } = usePayStack() 
 
     const clickHandler = () => {
         payForDonation.mutate({
@@ -96,9 +54,8 @@ export default function DonationBtn(props: {
             orderType: "DONATION",
             typeID: item?.id
         })
-    }
-
-
+        setOpen(false)
+    } 
 
     const openHandler = (e: any) => {
         e.stopPropagation()

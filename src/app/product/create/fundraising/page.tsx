@@ -1,9 +1,7 @@
-import { Flex } from "@chakra-ui/react";
+import { FundraisingForm } from "@/components/createFundraisingComponents"; 
 
 export default function Page() {
     return(
-        <Flex>
-            
-        </Flex>
+        <FundraisingForm />
     )
 }

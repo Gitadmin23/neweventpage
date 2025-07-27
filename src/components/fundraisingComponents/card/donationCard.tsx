@@ -31,21 +31,16 @@ export default function DonationCard(
     const { userId } = useDetails((state) => state)
 
     const clickHander = (index: string) => {
-        router?.push("/product/details/fundraising" + index)
+        router?.push("/product/details/fundraising/" + index)
     }
 
     return ( 
-        <Flex as={"button"} flexDir={"column"} pos={"relative"} bgColor={mainBackgroundColor} onClick={() => clickHander(item?.id)} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
+        <Flex  flexDir={"column"} pos={"relative"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
             {(item?.user?.userId === userId && item?.total === 0) && (
                 <DeleteBtn donation={true} id={item?.id} isOrganizer={item?.user?.userId === userId} name={item?.name} />
             )}
-            <Flex w={"full"} h={"fit-content"} pos={"relative"} >
+            <Flex onClick={() => clickHander(item?.id)} cursor={"pointer"} w={"full"} h={"fit-content"} pos={"relative"} >
                 <ProductImageScroller images={[item?.bannerImage]} createdDate={moment(item?.createdDate)?.fromNow()} userData={item?.createdBy} />
-                {/* {!pasted && (
-                    <Flex w={"8"} zIndex={"40"} justifyContent={"center"} alignItems={"center"} h={"8"} bgColor={mainBackgroundColor} rounded={"full"} pos={"absolute"} bottom={"3"} right={"3"} >
-                        <ShareEvent newbtn={true} showText={false} data={item} id={item?.id} type="DONATION" eventName={textLimit(item?.name, 17)} />
-                    </Flex>
-                )} */}
             </Flex>
             <Flex w={"full"} flexDir={"column"} px={["2", "2", "3"]} pt={["2", "2", "3"]} gap={"2"} pb={["2", "2", userId !== item?.createdBy?.userId && !pasted ? "0px" : "3"]} >
                 <Flex w={"full"} >

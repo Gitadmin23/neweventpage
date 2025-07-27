@@ -5,6 +5,8 @@ import {
     Checkbox,
     Flex,
     Heading,
+    Input,
+    InputGroup,
     Spinner,
     Text,
     VStack,
@@ -36,7 +38,7 @@ type IProps = {
     update?: boolean,
     data?: IEventType,
     collaborate?: boolean,
-    addCollaborator?: boolean, 
+    addCollaborator?: boolean,
     value: {
         admins: Array<any>,
         collaborators: Array<any>
@@ -564,23 +566,23 @@ export default function CollaboratorBtn(props: IProps) {
 
             let userData: Array<IUser> = []
 
-            let admin: any = results?.admins
-            let collaborator: any = results?.collaborators
+            let admin: any = results[0]?.admins
+            let collaborator: any = results[0]?.collaborators
 
 
             if (admin?.length > 0 && collaborator?.length > 0) {
                 userData = users.filter((obj1: IUser) =>
-                    results?.admins.every((obj2: IUser) => obj1?.userId !== obj2?.userId) &&
-                    results?.collaborators.every((obj2: IUser) => obj1?.userId !== obj2?.userId)
+                    results[0]?.admins.every((obj2: IUser) => obj1?.userId !== obj2?.userId) &&
+                    results[0]?.collaborators.every((obj2: IUser) => obj1?.userId !== obj2?.userId)
                 );
 
             } else if (admin?.length > 0 && collaborator?.length <= 0) {
                 userData = users.filter((obj1: IUser) =>
-                    results?.admins.every((obj2: IUser) => obj1?.userId !== obj2?.userId && obj1?.firstName !== obj2?.firstName)
+                    results[0]?.admins.every((obj2: IUser) => obj1?.userId !== obj2?.userId && obj1?.firstName !== obj2?.firstName)
                 );
             } else {
                 userData = users.filter((obj1: IUser) =>
-                    results?.collaborators.every((obj2: IUser) => obj1?.userId !== obj2?.userId)
+                    results[0]?.collaborators.every((obj2: IUser) => obj1?.userId !== obj2?.userId)
                 );
             }
 
@@ -640,16 +642,17 @@ export default function CollaboratorBtn(props: IProps) {
                                 <Button onClick={() => changeTabHandler(false)} _hover={{ backgroundColor: !tab ? "white" : "transparent" }} borderBottom={!tab ? "1px solid #5465E0" : ""} width={"full"} bgColor={!tab ? "white" : "transparent"} h={"36px"} color={"#5465E0"} fontWeight={"medium"} fontSize={"sm"} >Network</Button>
                                 <Button onClick={() => changeTabHandler(true)} _hover={{ backgroundColor: tab ? "white" : "transparent" }} borderBottom={tab ? "1px solid #5465E0" : ""} width={"full"} bgColor={tab ? "white" : "transparent"} h={"36px"} color={"#5465E0"} fontWeight={"medium"} fontSize={"sm"} >Collaborators</Button>
                             </Flex>
-                        )}
-                        {/* <InputGroup width={["full", "full", "full"]} zIndex={"20"} position={"relative"} >
-                        <InputLeftElement pointerEvents='none'>
-                            <IoSearchOutline size={"25px"} color='#B6B6B6' />
-                        </InputLeftElement>
-                        <Input width={["full", "full", "full"]} value={search} onChange={(e) => setSearch(e.target.value)} type='text' borderColor={borderColor} rounded={"12px"} focusBorderColor={'brand.chasescrollBlue'} bgColor={mainBackgroundColor} placeholder='Search for users' />
-                    </InputGroup> */}
+                        )} 
+                        <InputGroup startElement={
+                            <Flex pl={"3"} >
+                                <IoSearchOutline size={"20px"} />
+                            </Flex>
+                        }>
+                            <Input value={search} onChange={(e) => setSearch(e.target.value)} type="search" h={"45px"} rounded={"full"} bgColor={mainBackgroundColor} placeholder='Search for users' />
+                        </InputGroup>
                     </Flex>
                     {addCollaborator && (
-                        <LoadingAnimation loading={isLoading}  length={results.length} >
+                        <LoadingAnimation loading={isLoading} length={results.length} >
                             <Flex flexDir={"column"} gap={"4"} maxH={btn ? "50vh" : "50vh"} pb={"4"} px={"5"} overflowY={"auto"} >
                                 <>
                                     {results?.map((item: IUser, index: number) => {
@@ -692,7 +695,7 @@ export default function CollaboratorBtn(props: IProps) {
                                                         </Box>
                                                     )
                                                 }
-                                            })} 
+                                            })}
                                         </>
                                     </Flex>
                                 </LoadingAnimation>

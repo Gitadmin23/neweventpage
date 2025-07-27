@@ -23,7 +23,8 @@ export default function FundraisingDetails(
     const {
         mainBackgroundColor,
         borderColor,
-        primaryColor
+        primaryColor,
+        headerTextColor
     } = useCustomTheme()
 
     const { userId } = useDetails()
@@ -91,15 +92,15 @@ export default function FundraisingDetails(
                                     <Flex insetX={"3"} mt={["0px", "0px", "0px", "0px"]} bottom={["14", "14", "0px", "0px", "0px"]} pos={["fixed", "fixed", "relative", "relative"]} w={["auto", "auto", "full", "fit-content"]} zIndex={"50"} flexDir={"column"} gap={"4"} pb={"6"} px={["0px", "0px", "6", "6"]} >
                                         <Flex bgColor={mainBackgroundColor} w={["full", "full", "full", "450px"]} minW={["200px", "200px", "200px", "200px"]} maxW={["full", "full", "450px", "full"]} borderWidth={"1px"} borderColor={borderColor} rounded={"full"} flexDir={"column"} overflowX={"hidden"} gap={"3"} px={["3", "3", "5", "5"]} h={"90px"} justifyContent={"center"} >
                                             <Flex width={["full"]} justifyContent={"space-between"} alignItems={"center"} gap={"3"}    >
-                                                <Button bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} as={"button"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
+                                                <Button color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} as={"button"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
                                                     <DashboardOrganizerIcon />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Dashboard</Text>
                                                 </Button>
-                                                <Button disabled={item?.isCollaborator || item?.total > 0 || !isDateInPast(item?.endDate)} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} role='button' as={"button"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
+                                                <Button color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} disabled={item?.isCollaborator || item?.total > 0 || !isDateInPast(item?.endDate)} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} role='button' as={"button"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
                                                     <DashboardEditIcon />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Edit</Text>
                                                 </Button>
-                                                <Button disabled={item?.isCollaborator} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} as={"button"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
+                                                <Button color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} disabled={item?.isCollaborator} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} as={"button"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
                                                     <WalletIcon color='#5D70F9' />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Cash Out</Text>
                                                 </Button>

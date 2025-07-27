@@ -11,9 +11,25 @@ export const validationSchemaTheme = Yup.object().shape({
   endDate: Yup.string().required("End date is required"),
 });
 
+
+export const validationSchemaFundraising = Yup.object().shape({
+  data: Yup.array().of(
+    Yup.object().shape({
+      visibility: Yup.string()
+        .oneOf(['PUBLIC', 'PRIVATE'], 'Visibility must be PUBLIC or PRIVATE')
+        .required('Visibility is required'), 
+      name: Yup.string().required('Fundraising name is required'), 
+      description: Yup.string().required('Fundraising description is required'),
+      goal: Yup.string().required('Fundraising goal is required'),
+      purpose: Yup.string().required('Fundraising purpose is required'),
+      endDate: Yup.string().required('End date is required'), 
+    })
+  ).required('Data array is required'),
+});
+
 export const validationSchemaCommunity = Yup.object().shape({
   name: Yup.string().required("Community name is required"),
-  description: Yup.string().required("Community description is required"), 
+  description: Yup.string().required("Community description is required"),
 });
 
 export const validationSchemaTicket = Yup.object().shape({
@@ -22,7 +38,7 @@ export const validationSchemaTicket = Yup.object().shape({
       Yup.object().shape({
         totalNumberOfTickets: Yup.number()
           .typeError("Total tickets must be a number")
-          .required("Total number of tickets is required"), 
+          .required("Total number of tickets is required"),
         ticketPrice: Yup.number()
           .typeError("Ticket price must be a number")
           .required("Ticket price is required")

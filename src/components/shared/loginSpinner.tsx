@@ -40,8 +40,7 @@ export default function LogInSpinner() {
 
     return (
         <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >
-            <Flex w={"full"} h={"40vh"} justifyContent={"center"} alignItems={"center"} >
-                {/* <Spinner size={"lg"} color={primaryColor} /> */}
+            <Flex w={"full"} h={"40vh"} justifyContent={"center"} alignItems={"center"} > 
                 <MutatingDots
                     visible={true}
                     height="100"

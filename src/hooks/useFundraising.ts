@@ -1,0 +1,199 @@
+"use client"
+import { toaster } from "@/components/ui/toaster";
+import { IDonation } from "@/helpers/models/fundraising";
+import httpService from "@/helpers/services/httpService";
+import { URLS } from "@/helpers/services/urls";
+import { useImage } from "@/helpers/store/useImagePicker";
+import { useDetails } from "@/helpers/store/useUserDetails";
+import { validationSchemaFundraising, validationSchemaTheme, validationSchemaTicket } from "@/helpers/validation/event";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError, AxiosResponse } from "axios";
+import { useFormik } from "formik";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+const useFundraising = () => {
+
+
+    const { userId } = useDetails((state) => state);
+    const { image, setImage } = useImage((state) => state);
+
+    const router = useRouter()
+
+    const pathname = usePathname()
+    const query = useSearchParams();
+    const type = query?.get('type');
+    const id = query?.get('id');
+    const [open, setOpen] = useState(false)
+
+
+    // const path = "/product/create/events" + (pathname?.includes("edit") ? "/edit" : "/draft")
+
+    // Upload Image
+    const uploadImage = useMutation({
+        mutationFn: (data: any) => httpService.post(URLS.UPLOAD_IMAGE_ARRAY + "/" + userId, data,
+            {
+                headers: {
+                    'Content-Type': "multipart/form-data",
+                }
+            }),
+        onError: (error: AxiosError<any, any>) => {
+            toaster.create({
+                title: error?.response?.data?.message,
+                type: "error",
+                closable: true
+            })
+        },
+        onSuccess: (data: any) => {
+
+            const fileArray = Object.values(data?.data);
+
+            let clone = [...formik.values.data]
+
+            clone.map((item, index) => {
+                clone[index] = {...item,  bannerImage: fileArray[index]+""}
+            })
+
+            // let newObj: any = { ...formik.values.data[0], bannerImage: fileArray[0]} 
+
+            console.log(clone);
+            
+
+            // if (!pathname?.includes("edit")) {
+            //     createFundraisingGroup.mutate(clone[0])
+            // } else {
+            //     updateFundraising?.mutate(clone[0])
+            // }
+        }
+    });
+
+
+    // Edit Event
+    const updateFundraising = useMutation({
+        mutationFn: (data: any) => httpService.put(`/fund-raiser/edit/${id}`, data),
+        onError: (error: AxiosError<any, any>) => {
+            toaster.create({
+                title: error?.response?.data?.message,
+                type: "error",
+                closable: true
+            })
+        },
+        onSuccess: (data: AxiosResponse<any>) => {
+
+            // router.push("/dashboard/product") 
+
+            toaster.create({
+                title: "Event has been updated successfully",
+                type: "success",
+                closable: true
+            })
+
+            setOpen(true)
+        }
+    });
+
+    // Create Donation 
+    const createFundraising = useMutation({
+        mutationFn: (data: any) => httpService.post("/fund-raiser/create", data),
+        onError: (error: AxiosError<any, any>) => {
+
+            toaster.create({
+                title: error?.response?.data?.message,
+                type: "error",
+                closable: true
+            })
+        },
+        onSuccess: (data: AxiosResponse<any>) => { 
+
+            setOpen(true)
+            
+            console.log(data);
+            
+            toaster.create({
+                title: `Fundraising Created`,
+                type: "success",
+                closable: true
+            })
+            
+        }
+    });
+
+    // Create Donation Group 
+    const createFundraisingGroup = useMutation({
+        mutationFn: (data: any) => httpService.post("/fund-raiser/create", data),
+        onError: (error: AxiosError<any, any>) => {
+
+            toaster.create({
+                title: error?.response?.data?.message,
+                type: "error",
+                closable: true
+            })
+        },
+        onSuccess: (data: AxiosResponse<any>) => { 
+
+            setOpen(true)
+            
+            console.log(data);
+            
+            toaster.create({
+                title: `Fundraising Created`,
+                type: "success",
+                closable: true
+            })
+            
+        }
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            data: [
+                {
+                    "visibility": "PUBLIC",
+                    creatorID: userId,
+                    name: "",
+                    bannerImage: "",
+                    description: "",
+                    endDate: "",
+                    goal: "",
+                    purpose: "",
+                    collaborators: []
+                }
+            ]
+        },
+        validationSchema: validationSchemaFundraising,
+        onSubmit: (data: {
+            data: Array<IDonation>
+        }) => { 
+            
+            if (pathname?.includes("edit")) {
+                if (image.length > 0) {
+                    const fd = new FormData();
+                    image.forEach((file) => {
+                        fd.append("files[]", file);
+                    });
+                    uploadImage?.mutate(fd)
+                } else {
+                    updateFundraising.mutate(data)
+                }
+            } else if (image.length > 0 && !id) {
+                const fd = new FormData();
+                image.forEach((file) => {
+                    fd.append("files[]", file);
+                });
+                uploadImage?.mutate(fd)
+            }
+            // createFundraising.mutate(data)
+        },
+    });
+
+    return {
+        formik,
+        uploadImage,
+        createFundraising,
+        updateFundraising,
+        open,
+        setOpen
+    };
+}
+
+export default useFundraising

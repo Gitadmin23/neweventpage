@@ -18,9 +18,9 @@ interface Props {
 
 function UsersDonation(props: Props) {
     const {
-        event, 
+        event,
         donationDetail
-    } = props 
+    } = props
 
     const { data, isLoading } = useFetchData<any>({
         name: "donation-user", endpoint: `/payments/orders`, params: {
@@ -32,7 +32,7 @@ function UsersDonation(props: Props) {
     });
 
     console.log(data);
-    
+
 
 
 
@@ -46,7 +46,7 @@ function UsersDonation(props: Props) {
                     </Flex>
                 )}
 
-                <Flex alignItems={"center"} >
+                <AvatarGroup gap="0" spaceX="-3" size="lg">
                     {data?.content?.map((item: {
                         buyer: IUser
                     }, index: number) => {
@@ -61,7 +61,7 @@ function UsersDonation(props: Props) {
                             <Avatar.Fallback>{"+" + formatNumberWithK(event?.memberCount - 3)}</Avatar.Fallback>
                         </Avatar.Root>
                     }
-                </Flex>
+                </AvatarGroup>
             </Flex>
         </LoadingAnimation>
     )

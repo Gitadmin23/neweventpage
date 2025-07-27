@@ -114,7 +114,7 @@ export default function EventCard(
                 </Flex>
             </Flex>
 
-            <Flex borderTopWidth={"1px"} w={"full"} mt={["1", "2", "2"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
+            <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
                 {event?.attendeesVisibility && (
                     <InterestedUsers 
                         event={event} 

@@ -37,16 +37,16 @@ export default function Ticket(
     // const id = query?.get('id');
 
     const handleAddTicket = () => {
-        formik.setFieldValue('productTypeData', [
-            ...formik.values.productTypeData,
-            {
-                totalNumberOfTickets: '',
-                ticketPrice: '',
-                ticketType: '',
-                minTicketBuy: 1,
-                maxTicketBuy: 1,
-            },
-        ]);
+
+        let clone = [...formik.values.productTypeData, {
+            totalNumberOfTickets: '',
+            ticketPrice: '',
+            ticketType: '',
+            minTicketBuy: 1,
+            maxTicketBuy: 1,
+        }]
+        
+        formik.setFieldValue('productTypeData', clone);
     };
 
     const handleRemoveTicket = (index: number) => {

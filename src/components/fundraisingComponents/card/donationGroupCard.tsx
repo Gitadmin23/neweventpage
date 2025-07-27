@@ -29,23 +29,20 @@ export default function DonationGroupCard(
 
     const { userId } = useDetails((state) => state)
 
-    const clickHander = (item: IDonationGroup, index: string) => {
-        if (item?.fundRaisers?.length > 1) {
-            router?.push("/product/details/fundraising/group/" + index)
-        } else {
-            router?.push("/product/details/fundraising" + item?.fundRaisers[0]?.id)
-        }
+    const clickHandler = (item: IDonationGroup, index: string) => {
+        // if (item?.fundRaisers?.length > 1) {
+        //     router?.push("/product/details/fundraising/group/" + index)
+        // } else {
+            router?.push("/product/details/fundraising/" + item?.fundRaisers[0]?.id)
+        // }
     } 
 
 return (
-    <Flex cursor={"pointer"} flexDir={"column"} bgColor={mainBackgroundColor} onClick={() => clickHander(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
-        <Flex w={"full"} h={"fit-content"} pos={"relative"} >
+    <Flex flexDir={"column"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
+        <Flex onClick={() => clickHandler(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} cursor={"pointer"} w={"full"} h={"fit-content"} pos={"relative"} >
             <ProductImageScroller images={[item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.bannerImage]} createdDate={moment(item?.createdDate)?.fromNow()} userData={item?.user} />
-            {/* <Flex w={"8"} zIndex={"40"} justifyContent={"center"} alignItems={"center"} h={"8"} bgColor={mainBackgroundColor} rounded={"full"} pos={"absolute"} bottom={"3"} right={"3"} >
-                    <ShareEvent newbtn={true} showText={false} data={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]} id={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id} type="DONATION" eventName={textLimit(item?.name, 17)} />
-                </Flex> */}
         </Flex>
-        <Flex w={"full"} flexDir={"column"} px={["2", "2", "3"]} pt={["2", "2", "3"]} gap={"2"} pb={["2", "2", userId !== item?.user?.userId ? "0px" : "3"]} >
+        <Flex onClick={() => clickHandler(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} cursor={"pointer"} w={"full"} flexDir={"column"} px={["2", "2", "3"]} pt={["2", "2", "3"]} gap={"2"} pb={["2", "2", userId !== item?.user?.userId ? "0px" : "3"]} >
             <Flex w={"full"} >
                 <Flex w={"full"} alignItems={"start"} flexDir={"column"} >
                     <Text fontSize={"12px"} color={bodyTextColor} >Fundraising Title</Text>

@@ -54,7 +54,7 @@ export default function TicketFormInput(
         mainBackgroundColor
     } = useCustomTheme()
 
-    const [newValue, setNewValue] = useState("") 
+    const [newValue, setNewValue] = useState("")
 
     useEffect(() => {
         if (value[name]) {
@@ -83,7 +83,7 @@ export default function TicketFormInput(
 
                         {type === "number" && (
                             <Input
-                                value={newValue}
+                                value={newValue ?? ""}
                                 disabled={disabled}
                                 onChange={(e) => {
                                     const value = e.target.value;
@@ -148,13 +148,14 @@ export default function TicketFormInput(
                     />
                 )}
                 <>
-                    {(errors) &&
+                    {Array.isArray(errors) && errors[index]?.[name] && (
                         <Flex>
-                            {errors.length > index && (
-                                <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[index][name]}</Text>
-                            )}
+                            <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"}>
+                                {errors[index][name]}
+                            </Text>
                         </Flex>
-                    }
+                    )}
+
                 </>
             </Flex>
         </Flex>

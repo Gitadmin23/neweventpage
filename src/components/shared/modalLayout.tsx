@@ -66,10 +66,10 @@ export default function ModalLayout({
                         <Dialog.Content >
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
-                                <Dialog.Header pt={"4"} pl={"4"} textAlign={"center"} >
+                                <Dialog.Header pl={"4"} textAlign={"center"} >
                                     <Dialog.Title >{title}</Dialog.Title>
                                     {closeBtn && (
-                                        <Dialog.CloseTrigger asChild>
+                                        <Dialog.CloseTrigger zIndex={"30"} asChild>
                                             <CloseButton size="sm" />
                                         </Dialog.CloseTrigger>
                                     )}

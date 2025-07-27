@@ -30,7 +30,7 @@ export default function DashboardLayout(
                     <Navbar />
                 </Flex>
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={["70px", "70px", "70px", "0px", "0px"]} top={["76px", "76px", "76px", "0px", "0px"]} inset={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={[ "0px", "0px"]} top={["0px", "0px"]} inset={"0px"} >
                         {children}
                     </Flex>
                 </Flex>

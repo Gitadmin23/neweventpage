@@ -13,6 +13,8 @@ import { useMutation } from "@tanstack/react-query";
 import httpService from "@/helpers/services/httpService";
 import { toaster } from "../ui/toaster";
 import usePayStack from "@/hooks/usePayStack";
+import { IoCartOutline } from "react-icons/io5";
+import { ShoppingCart } from "iconsax-react";
 
 interface ITicket {
     "ticketType": string,
@@ -125,30 +127,7 @@ export default function SelectTicketBtn(
 
     useEffect(() => {
         setSelectTicketType([] as any)
-    }, [open])
-
-    // const payForTicket = useMutation({
-    //     mutationFn: (data: any) => httpService.post("/events/create-multi-ticket", data),
-    //     onSuccess: (data: any) => {
-
-    //         setPaystackConfig({
-    //             publicKey: PAYSTACK_KEY,
-    //             email: data?.data?.content?.email,
-    //             amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    //             reference: data?.data?.content?.orderCode
-    //         });
-    //         setShowModal(false)
-    //     },
-    //     onError: () => { 
-    //         toaster.create({
-    //             title: "Error Creating Ticket",
-    //             type: "error",
-    //             closable: true
-    //         })
-
-    //         setMessage({ ...message, event: true })
-    //     },
-    // });
+    }, [open]) 
 
     const submitHandler = React.useCallback(() => {
         payForTicket.mutate(
@@ -219,7 +198,7 @@ export default function SelectTicketBtn(
                                 <Text fontWeight={"600"} fontSize={"18px"} >{checkTicketTotal()}</Text>
                                 <Text>Ticket Available for this Event</Text>
                             </Flex>
-                            {selectTicketType.length > 0 && (
+                            {selectTicketType.length > 0 ? (
                                 <Flex h={"full"} px={"3"} pb={"4"} textAlign={"left"} flexDir={"column"} gap={"4"} >
                                     <Text fontWeight={"500"} fontSize={"18px"} >Order summary</Text>
                                     {selectTicketType?.map((item, index) => {
@@ -234,6 +213,10 @@ export default function SelectTicketBtn(
                                         <Text fontSize={"lg"} fontWeight={"600"} >Total</Text>
                                         <Text fontSize={"lg"} fontWeight={"600"} >{numberFormatNaire(checkSelectedTicketTotal())}</Text>
                                     </Flex>
+                                </Flex>
+                            ) : (
+                                <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >
+                                    <ShoppingCart size={"60px"} color="gray" opacity={"50%"} />
                                 </Flex>
                             )}
                         </Flex>

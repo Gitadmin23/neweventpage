@@ -98,9 +98,11 @@ export default function ListDonation({ item, length, setOpen }: { setSelectDonat
                     })}
                 </Flex>
             </LoadingAnimation>
-            <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
-                <CustomButton onClick={clickHander} isLoading={createFundraising?.isPending} text={"Add"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
-            </Flex>
+            {results?.length > 0 && (
+                <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
+                    <CustomButton onClick={clickHander} isLoading={createFundraising?.isPending} text={"Add"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
+                </Flex>
+            )}
         </Flex>
     )
 }

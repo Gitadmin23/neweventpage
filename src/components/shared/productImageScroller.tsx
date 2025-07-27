@@ -26,7 +26,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
                     }
                     return prev + 1;
                 });
-            }, 8000);
+            }, 3000);
             return () => clearInterval(interval);
         }
     }, []) 

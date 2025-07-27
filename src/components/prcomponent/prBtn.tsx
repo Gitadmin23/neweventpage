@@ -203,7 +203,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
             )}
             <ModalLayout open={open} trigger={true} closeBtn={true} close={()=> setOpen(false)} size={"md"} >
                 <Flex flexDir={"column"} gap={"4"} w={"full"} px={"4"} mb={"4"} >
-                    <Flex gap={"2"} alignItems={"center"} >
+                    <Flex gap={"2"} alignItems={"center"} pt={"4"} >
                         {tab && (
                             <Flex as={"button"} onClick={() => setTab(false)} >
                                 <IoIosArrowBack size={"20px"} />
