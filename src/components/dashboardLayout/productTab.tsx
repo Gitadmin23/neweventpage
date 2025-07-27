@@ -6,7 +6,8 @@ import { CustomButton } from "../shared";
 import useCustomTheme from "@/hooks/useTheme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SelectDonationOption } from "../fundraisingComponents";
-
+import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
+import Cookies from "js-cookie"
 
 export default function ProductTab(
     {
@@ -24,13 +25,19 @@ export default function ProductTab(
     const pathname = usePathname()
     const query = useSearchParams();
     const type = query?.get('type');
-    const router = useRouter()
+    const router = useRouter() 
 
+    const token = Cookies.get("chase_token")
+    
     const clickHandler = (item: string) => {
         if (item === "donation") {
             router.push("/product/fundraising")
         } else if (item === "event") {
             router.push("/product/events")
+        } else {
+
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk?type=${item}&token=${token}`;
+            // /dashboard/product/kiosk?type=service
         }
     }
 

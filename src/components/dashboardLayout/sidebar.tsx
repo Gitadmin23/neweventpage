@@ -8,7 +8,8 @@ import { ModalLayout, UserImage } from "../shared";
 import { Warning2 } from 'iconsax-react';
 import { useColorMode } from "../ui/color-mode";
 import useGetUser from "@/hooks/useGetUser";
-import { LANDINGPAGE_URL } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
+import Cookies from "js-cookie"
 
 export default function SideBar() {
 
@@ -71,6 +72,17 @@ export default function SideBar() {
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
+    const token = Cookies.get("chase_token")
+    
+    const routeHandler = (item: string) => { 
+        
+            if(item === "/product/events") {
+                router.push("/product/events")
+            } else {
+                window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
+            }
+    }
+
     const ToolTip = ({ content }: { content: string }) => {
         return (
             <>
@@ -93,7 +105,7 @@ export default function SideBar() {
                     {routes?.map((item, index) => (
                         <Flex cursor={"pointer"} key={index}>
                             {item?.text !== "Notification" && (
-                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} pos={"relative"} cursor={"pointer"} onClick={() => router?.push(item?.route)} key={index} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
+                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} pos={"relative"} cursor={"pointer"} onClick={() => routeHandler(item?.route)} key={index} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
                                     <Box>
                                         {item?.icon}
                                     </Box>
@@ -128,7 +140,7 @@ export default function SideBar() {
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
-                    <Flex cursor={"pointer"} onClick={() => router?.push(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} > 
+                    <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} > 
                             <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
                                 {isLoading ? (
                                     <Spinner color={primaryColor} />
