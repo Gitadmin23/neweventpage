@@ -76,9 +76,9 @@ export default function Scanner({
 
     return (
         <>
-            <ModalLayout trigger={true} open={isOpen} close={() => onClose(false)} size="full" >
+            <ModalLayout trigger={true} open={isOpen} closeBtn={true} close={() => onClose(false)} size="full" >
                 {!isPending && !scanned && (
-                    <Box width={'300px'} height={'300px'} bg={'black'}>
+                    <Box width={'full'} height={'100vh'} justifyContent={"center"} alignItems={"center"} px={"4"} bg={'black'}>
                         <Box width={'100%'} height={'100%'}> 
                             <QrcodeScanner
                                 onScan={(result) => handleScanner(result)}

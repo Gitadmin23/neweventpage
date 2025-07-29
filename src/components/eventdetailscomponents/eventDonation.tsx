@@ -80,7 +80,7 @@ export default function EventDonation({ checkbox, item }: { checkbox?: boolean, 
     }
 
     const clickHandler = (item: any) => {
-        router?.push("/dashboard/donation/" + item)
+        router?.push("/product/details/fundraising/" + item)
     }
 
 
@@ -90,18 +90,18 @@ export default function EventDonation({ checkbox, item }: { checkbox?: boolean, 
                 <Flex flexDir={"column"} w={"full"} gap={"2"} display={(data[0]?.fundRaiser?.name || item?.isOrganizer) ? "flex" : "none"} >
                     <Text fontSize={"14px"} fontWeight={"500"} >{item?.isOrganizer ? "Get Support for your Event" : "Fundraising available"}</Text>
                     {(data[0]?.fundRaiser?.name) && (
-                        <Flex onClick={() => clickHandler(data[0]?.fundRaiser?.id)} bgColor={mainBackgroundColor} pos={"relative"} role="button" display={data[0]?.fundRaiser?.name ? "flex" : "none"} flexDir={["row"]} w={"full"} rounded={"8px"} gap={["2", "2", "2"]} borderWidth={"1px"} borderColor={borderColor} px={["2", "2", "3"]} h={["auto", "auto", "130px"]} py={"2"} alignItems={"center"} >
+                        <Flex bgColor={mainBackgroundColor} pos={"relative"} role="button" display={data[0]?.fundRaiser?.name ? "flex" : "none"} flexDir={["row"]} w={"full"} rounded={"8px"} gap={["2", "2", "2"]} borderWidth={"1px"} borderColor={borderColor} px={["2", "2", "3"]} h={["auto", "auto", "130px"]} py={"2"} alignItems={"center"} >
                             {item?.isOrganizer && (
                                 <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"-14px"} right={"-8px"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
                                     <IoClose size={"14px"} />
                                 </Flex>
                             )}
-                            <Flex w={"fit-content"} >
+                            <Flex  onClick={() => clickHandler(data[0]?.fundRaiser?.id)} w={"fit-content"} >
                                 <Flex w={["80px", "80px", "150px"]} height={["80px", "80px", "100px"]} bgColor={secondaryBackgroundColor} rounded={"8px"} borderWidth={"1px"} borderColor={borderColor} >
                                     <Image rounded={"8px"} objectFit="cover" alt={data[0]?.fundRaiser?.name} width={"full"} height={["80px", "80px", "100px"]} src={IMAGE_URL + data[0]?.fundRaiser?.bannerImage} />
                                 </Flex>
                             </Flex>
-                            <Flex w={"full"} flexDir={"column"} gap={2} pr={"3"} >
+                            <Flex  onClick={() => clickHandler(data[0]?.fundRaiser?.id)} w={"full"} flexDir={"column"} gap={2} pr={"3"} >
                                 <Flex w={"full"} justifyContent={"space-between"} gap={"3"} alignItems={"center"} >
                                     <Flex flexDir={"column"} >
                                         <Text fontSize={["10px", "10px", "12px"]} color={bodyTextColor} >Fundraising</Text>

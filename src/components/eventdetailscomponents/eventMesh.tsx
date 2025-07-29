@@ -10,13 +10,10 @@ import { CustomButton, LoadingAnimation, ModalLayout } from '../shared'
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter'
 import { formatNumber } from '@/helpers/utils/numberFormat'
 import { textLimit } from '@/helpers/utils/textlimit'
-import { IMAGE_URL } from '@/helpers/services/urls'
+import { DASHBOARDPAGE_URL, IMAGE_URL } from '@/helpers/services/urls'
 import PrBtn from '../prcomponent/prBtn'
-import httpService from '@/helpers/services/httpService'
-import { useMutation } from '@tanstack/react-query'
-import { fetchSecureData } from '@/helpers/services/api'
-import { useFetchData } from '@/hooks/useFetchData'
-import { IPagination } from '@/helpers/models/pagination'
+import Cookies from "js-cookie"
+import { useFetchData } from '@/hooks/useFetchData' 
 
 interface IProps {
     "id": string,
@@ -42,6 +39,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
     const [newData, setNewData] = useState([] as any)
 
     const { pinProduct, open, setOpen } = usePr()
+    const token = Cookies.get("chase_token")
 
     const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
@@ -70,6 +68,17 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
         setOpen(true)
     }
 
+
+    const routeHandler = (item?: string) => {
+
+        if(item) {
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${item}?token=${token}`;
+        } else {
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${data?.createdBy?.userId}/kiosk?token=${token}`;
+        }
+        
+    } 
+
     return (
         <Flex position={"relative"} display={(newData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
             <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
@@ -79,7 +88,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                     <Text fontSize={["14px", "14px", "20px"]} fontWeight={"bold"} >Shop the ${data?.eventName} kiosk</Text>
                 )}
                 {!data?.isOrganizer && (
-                    <Text fontSize={"12px"} fontWeight={"600"} onClick={() => push(`/dashboard/profile/${data?.createdBy?.userId}/kiosk`)} color={primaryColor} as={"button"} >See all</Text>
+                    <Text fontSize={"12px"} fontWeight={"600"} onClick={() => routeHandler()} color={primaryColor} as={"button"} >See all</Text>
                 )}
             </Flex>
             <Flex w={"full"} height={"180px"} pos={"relative"} />
@@ -90,7 +99,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                         <PrBtn data={data} product={true} />
                         {eventData?.map((item, index) => {
                             return (
-                                <Flex pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => push(`/dashboard/kisok/details/${item?.returnProductDto?.id}`)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+                                <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
 
                                     {data?.isOrganizer && (
                                         <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >

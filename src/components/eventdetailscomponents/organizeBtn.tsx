@@ -74,15 +74,15 @@ function OrganizeBtn(props: IEventType) {
                     </Button>
                 </Flex>
             </Flex>
-            <ModalLayout open={open} trigger={true} >
+            <ModalLayout open={open} size="sm" trigger={true} >
                 <Box px={"4"} pt={"5"} pb={"5"} >
                     <Flex color={"brand.chasescrollRed"} width={"full"} pb={"4"} justifyContent={"center"} >
                         <FiAlertCircle size={"60px"} />
                     </Flex>
                     <Text fontWeight={"medium"} textAlign={"center"} >{`You can only edit the DATE, TIME, LOCATION and INCREASE NUMBER OF AVAILABLE TICKETS for this event. You already have existing attendees for this event.`}</Text>
-                    <Flex w={"full"} gap={"4"} mt={"6"} >
-                        <CustomButton onClick={() => setOpen(false)} backgroundColor={"brand.chasescrollRed"} width={"full"} text='Cancel' />
-                        <CustomButton onClick={() => router.push("/dashboard/event/edit_event_data/" + props?.id)} text='Continue' width={"full"} />
+                    <Flex w={"full"} gap={"4"} mt={"6"} justifyContent={"center"} >
+                        <CustomButton onClick={() => setOpen(false)} backgroundColor={"red"} width={"45%"} text='Cancel' />
+                        <CustomButton onClick={() => router.push(`/product/create/events/edit?id=${props?.id}`)} text='Continue' width={"45%"} />
                     </Flex>
                 </Box>
             </ModalLayout>

@@ -110,7 +110,8 @@ const usePayStack = () => {
             queryClient.invalidateQueries({ queryKey: ['donationlist']})  
             queryClient.invalidateQueries({ queryKey: ['mydonationlist']})  
             queryClient.invalidateQueries({ queryKey: ["event-ticket"]}) 
-
+            queryClient.invalidateQueries({ queryKey: ["all-donation"]}) 
+            
             toaster.create({
                 title: "Payment verified",
                 type: "success",

@@ -81,7 +81,7 @@ export default function DonationBtn(props: {
                     <Flex alignItems={"center"} rounded={"16px"} px={"8px"} pt={"12px"} >
                         <Box w={"fit-content"} >
                             <Flex width={"153px"} height={"127px"} >
-                                <EventImage data={item} />
+                                <EventImage data={item} height={"full"} />
                             </Flex>
                         </Box>
                         <Flex height={"fit-content"} ml={"3"} flexDir={"column"} gap={"2px"} >
