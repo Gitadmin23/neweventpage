@@ -10,6 +10,7 @@ import { useColorMode } from "../ui/color-mode";
 import useGetUser from "@/hooks/useGetUser";
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
+import useNotificationHook from "@/hooks/useNotificationHook";
 
 export default function SideBar() {
 
@@ -23,6 +24,7 @@ export default function SideBar() {
     const router = useRouter()
 
     const { isLoading, user } = useGetUser()
+    const { count } = useNotificationHook()
 
     const [open, setOpen] = useState(false)
     const [activeBar, setActiveBar] = useState("")
@@ -57,7 +59,7 @@ export default function SideBar() {
             text: 'Community'
         },
         {
-            route: '',
+            route: '/dashboard/notification',
             icon: <NotificationIcon color={pathname === "/dashboard/notification" ? true : false} />,
             text: 'Notification'
         },
@@ -113,11 +115,16 @@ export default function SideBar() {
                                 </Flex>
                             )}
                             {item?.text === "Notification" && (
-                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} cursor={"pointer"} key={index} w={"75px"} h={"56px"} position={"relative"} justifyContent={"center"} alignItems={"center"} >
+                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} onClick={() => routeHandler(item?.route)} cursor={"pointer"} key={index} w={"75px"} h={"56px"} position={"relative"} justifyContent={"center"} alignItems={"center"} >
                                     <Box>
                                         {item?.icon}
                                     </Box>
                                     <ToolTip content={item?.text} />
+                                    {count && (
+                                        <Flex w={"5"} h={"5"} rounded={"full"} bg={primaryColor} color={"white"} justifyContent={"center"} position={"absolute"} top={"1"} right={"2"} alignItems={"center"} fontWeight={"semibold"} fontSize={"12px"}  >
+                                            {count}
+                                        </Flex>
+                                    )}
                                 </Flex>
                             )}
                         </Flex>

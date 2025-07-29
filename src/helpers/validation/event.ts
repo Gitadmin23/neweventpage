@@ -14,10 +14,7 @@ export const validationSchemaTheme = Yup.object().shape({
 
 export const validationSchemaFundraising = Yup.object().shape({
   data: Yup.array().of(
-    Yup.object().shape({
-      visibility: Yup.string()
-        .oneOf(['PUBLIC', 'PRIVATE'], 'Visibility must be PUBLIC or PRIVATE')
-        .required('Visibility is required'), 
+    Yup.object().shape({ 
       name: Yup.string().required('Fundraising name is required'), 
       description: Yup.string().required('Fundraising description is required'),
       goal: Yup.string().required('Fundraising goal is required'),

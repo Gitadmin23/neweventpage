@@ -10,20 +10,12 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
 
-
-    const { colorMode } = useColorMode();
-
-    const {
-        mainBackgroundColor,
-        secondaryBackgroundColor
-    } = useCustomTheme()
-
     return (
-        <Flex width={"full"} pt={"74px"} h={["100vh", "100vh", "100vh", "100vh", "100vh"]} display={["flex"]} flexDir={["column", "column", "column", "row"]}  >
+        <Flex width={"full"} pos={"relative"} h={["auto", "auto", "auto", "100vh", "100vh"]} overflowX={"hidden"} overflowY={["auto", "auto", "auto", "hidden", "hidden"]} display={["flex"]} flexDir={["column", "column", "column", "row"]}  >
             <FundraisingHeader />
-            <Flex  borderWidth={"1px"} w={"full"} p={["0px", "0px", "0px", "3"]} h={"full"}  >
-                <Flex rounded={["0px", "0px", "0px", "2xl"]} w={"full"} h={"auto"} overflowY={"auto"} >
-                    <Box  rounded={["0px", "0px", "0px", "2xl"]} w={"full"} px={"3"} h={"fit-content"} >
+            <Flex borderWidth={["0px", "0px", "0px", "1px", "1px"]} w={"full"} p={["0px", "0px", "0px", "0px"]} h={"full"}  >
+                <Flex rounded={["0px", "0px", "0px", "2xl"]} w={"full"} h={["full", "full", "full", "auto", "auto"]} overflowY={["none", "none", "none", "auto", "auto"]}  >
+                    <Box  rounded={["0px", "0px", "0px", "2xl"]} w={"full"} px={"3"} h={"full"} >
                         {children}
                     </Box>
                 </Flex>

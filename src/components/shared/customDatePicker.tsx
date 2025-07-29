@@ -14,7 +14,8 @@ interface IProps {
     setValue: (name: string, value: any) => void,
     errors?: any,
     touched?: any,
-    label?: string
+    label?: string,
+    index?: number
 }
 
 export default function CustomDatePicker(
@@ -25,7 +26,8 @@ export default function CustomDatePicker(
         start,
         touched,
         errors,
-        setValue
+        setValue,
+        index = 0
     }: IProps) {
 
     const {
@@ -54,8 +56,11 @@ export default function CustomDatePicker(
                 setValue(name[2], null)
                 setValue(name[3], null)
             } else {
-                setValue(name[0], Date.parse(new Date(item).toJSON()))
-                setValue(name[1], Date.parse(new Date(item).toJSON()))
+                console.log("here");
+
+                name.map((itemname) => {
+                    setValue(itemname, Date.parse(new Date(item).toJSON()))
+                })
             }
         }
     }
@@ -65,19 +70,19 @@ export default function CustomDatePicker(
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} color={headerTextColor} gap={"1"} rounded={"full"} >
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateTimePicker 
+                    <DateTimePicker
                         minDate={start ? dayjs(start) : dayjs()}
                         defaultValue={dayjs(value)}
                         format="MM/DD/YYYY hh:mm a"
                         onChange={(item) => changeHandler(item)}
                         slotProps={{
-                            openPickerIcon: { fontSize: "small"},
+                            openPickerIcon: { fontSize: "small" },
                             textField: {
                                 focused: false,
-                                style: {color: "white", backgroundColor: "white", borderRadius: "999px"}
+                                style: { color: "white", backgroundColor: "white", borderRadius: "999px" }
                             },
                             popper: {
-                                disablePortal: true, 
+                                disablePortal: true,
                             }
                         }}
                     />
@@ -89,6 +94,15 @@ export default function CustomDatePicker(
                                 <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[name[0]]}</Text>
                             </Flex>
                         }
+                    </>
+                )}
+                {errors && (
+                    <>
+                        {errors[index]?.endDate && (
+                            <Flex>
+                                <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[index]?.endDate}</Text>
+                            </Flex>
+                        )}
                     </>
                 )}
             </Flex>

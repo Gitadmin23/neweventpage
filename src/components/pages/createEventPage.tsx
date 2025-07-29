@@ -1,8 +1,10 @@
 "use client"
 import { Information, SuccessModal, Theme, Ticket } from "@/components/createEventComponents"; 
+import { useImage } from "@/helpers/store/useImagePicker";
 import useEvent from "@/hooks/useEvent";
 import { Flex } from "@chakra-ui/react";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function CreateEventPage() {
 

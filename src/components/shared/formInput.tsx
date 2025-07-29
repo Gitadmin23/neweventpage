@@ -10,6 +10,7 @@ interface IProps {
     placeholder?: string;
     value?: any;
     label?: string;
+    index?: number;
     type?: React.HTMLInputTypeAttribute,
     hasFrontIcon?: boolean;
     hasBackIcon?: boolean,
@@ -28,7 +29,7 @@ export default function FormInput(
         name,
         height,
         placeholder,
-        value,
+        value, 
         defaultData,
         label,
         type,
@@ -52,7 +53,7 @@ export default function FormInput(
 
     const {
         mainBackgroundColor
-    } = useCustomTheme()
+    } = useCustomTheme() 
 
     useEffect(() => {
         if (value[name]) {
@@ -61,6 +62,7 @@ export default function FormInput(
             setNewValue(defaultData)
         }
     }, [defaultData, value[name]])
+ 
 
     return (
         <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
@@ -145,6 +147,14 @@ export default function FormInput(
                         _placeholder={{ color: "gray.500" }}
                         placeholder={placeholder}
                     />
+                )} 
+
+                {(Array.isArray(errors)) && (
+                    <Flex>
+                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >
+                            {errors[name.replace("data", "") as any]}
+                        </Text>
+                    </Flex>
                 )}
                 {!defaultData &&
                     <>

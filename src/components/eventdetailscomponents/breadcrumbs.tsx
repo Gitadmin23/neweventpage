@@ -22,7 +22,11 @@ export default function BreadCrumbs(
 
     const clickHandler = () => {
         if(edit) { 
-            push("/product/events")
+            if(name) {
+                push("/product/fundraising")
+            } else {
+                push("/product/events")
+            }
         } else {
             back()
         }
@@ -32,7 +36,7 @@ export default function BreadCrumbs(
         <Flex gap={"1"} alignItems={"center"} pb={"3"} >
             <Text cursor={"pointer"} onClick={clickHandler} fontSize={"14px"} color={primaryColor} fontWeight={"500"} >Back</Text>
             <IoIosArrowForward />
-            <Text fontSize={"14px"} fontWeight={"500"} >Event details</Text>
+            <Text fontSize={"14px"} fontWeight={"500"} >{name ? "Fundraising" : "Event"} details</Text>
             <IoIosArrowForward />
             <Text fontSize={"14px"} fontWeight={"500"} >{textLimit(name ? name : eventName, 20)}</Text>
         </Flex>

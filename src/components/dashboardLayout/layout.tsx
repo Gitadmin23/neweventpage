@@ -4,8 +4,9 @@ import useCustomTheme from "@/hooks/useTheme";
 import SideBar from "./sidebar";
 import Navbar from "./navbar";
 import { usePathname } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import BottomBar from "./bottomBar";
+import { useImage } from "@/helpers/store/useImagePicker";
 
 interface IProps {
     children: React.ReactNode
@@ -20,6 +21,12 @@ export default function DashboardLayout(
     const { mainBackgroundColor, headerTextColor } = useCustomTheme()
     const pathname = usePathname()
 
+    const { setImage } = useImage((state: any) => state)
+
+    useEffect(() => {
+        setImage([])
+    }, [pathname])
+
     return (
         <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
             <Suspense>
@@ -30,7 +37,7 @@ export default function DashboardLayout(
                     <Navbar />
                 </Flex>
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={[ "0px", "0px"]} top={["0px", "0px"]} inset={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} bgColor={mainBackgroundColor} overflowY={"auto"} bottom={["0px", "0px"]} top={["0px", "0px"]} inset={"0px"} >
                         {children}
                     </Flex>
                 </Flex>

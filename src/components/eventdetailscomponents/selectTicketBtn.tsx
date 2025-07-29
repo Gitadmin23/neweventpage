@@ -1,45 +1,30 @@
-import { Flex, IconButton, Image, Text } from "@chakra-ui/react";
+import { Flex, IconButton, Text } from "@chakra-ui/react";
 import { CustomButton, ModalLayout, ProductImageScroller } from "../shared";
 import React, { useEffect, useState } from "react";
-import { IEventType, IProductTypeData } from "@/helpers/models/event";
-import { IMAGE_URL, URLS } from "@/helpers/services/urls";
+import { IEventType, IProductTypeData } from "@/helpers/models/event"; 
 import { dateFormat } from "@/helpers/utils/dateFormat";
-import { formatNumberWithK, numberFormat, numberFormatNaire } from "@/helpers/utils/formatNumberWithK";
-import { LuMinus, LuPlus } from "react-icons/lu";
-import useCustomTheme from "@/hooks/useTheme";
-import useModalStore from "@/helpers/store/useModalSwitch";
-import usePaystackStore from "@/helpers/store/usePaystack";
-import { useMutation } from "@tanstack/react-query";
-import httpService from "@/helpers/services/httpService";
-import { toaster } from "../ui/toaster";
-import usePayStack from "@/hooks/usePayStack";
-import { IoCartOutline } from "react-icons/io5";
+import { formatNumberWithK, numberFormatNaire } from "@/helpers/utils/formatNumberWithK";
+import useCustomTheme from "@/hooks/useTheme"; 
+import usePaystackStore from "@/helpers/store/usePaystack"; 
+import usePayStack from "@/hooks/usePayStack"; 
 import { ShoppingCart } from "iconsax-react";
 
 interface ITicket {
     "ticketType": string,
     "numberOfTickets": number
 }
-
-
+ 
 export default function SelectTicketBtn(
     {
         picUrls,
         eventName,
         startDate,
         productTypeData,
-        id,
-        affiliateID
+        id
     }: IEventType
-) {
+) { 
 
-
-    // const { setShowModal, showModal } = useModalStore((state) => state);
-    // const [open, setOpen] = useState(false)
-
-    const { payForTicket, setOpen, open } = usePayStack()
-
-    const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
+    const { payForTicket, setOpen, open } = usePayStack() 
 
     const {
         secondaryBackgroundColor,

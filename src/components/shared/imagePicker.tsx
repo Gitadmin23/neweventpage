@@ -2,8 +2,8 @@
 import { IMAGE_URL } from '@/helpers/services/urls';
 import { useImage } from '@/helpers/store/useImagePicker';
 import useCustomTheme from '@/hooks/useTheme';
-import { GallaryIcon } from '@/svg';
-import { Flex, Image, Text } from '@chakra-ui/react';
+import { GallaryIcon, PictureIcon } from '@/svg';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
 
@@ -11,10 +11,12 @@ export default function ImagePicker(
     {
         preview = [],
         single,
+        index: imageIndex = 0,
         setValue
     }: {
         preview?: Array<string>,
         single?: boolean,
+        index?: number,
         setValue: (name: string, value: any) => void,
     }
 ) {
@@ -32,10 +34,6 @@ export default function ImagePicker(
         fileInputRef.current?.click();
     };
 
-    useEffect(()=> {
-        setImage([])
-    }, [])
-
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files) {
@@ -48,6 +46,20 @@ export default function ImagePicker(
         }
     };
 
+
+
+    const handleSingleImage = (e: any) => {
+
+        const selected = e.target.files[0];
+
+        const TYPES = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
+        if (selected && TYPES.includes(selected.type)) {
+            const clone = [...image]
+            clone[imageIndex ? imageIndex : 0] = selected
+            setImage(clone)
+        }
+    }
+
     const removeImage = (indexToRemove: number) => {
         const clone = image.filter((_, index) => index !== indexToRemove)
         setImage(clone);
@@ -59,61 +71,122 @@ export default function ImagePicker(
     };
 
     return (
-        <Flex w={"full"} rounded={"12px"} borderStyle={"dashed"} borderWidth={"1px"} overflowX={"auto"} bgColor={secondaryBackgroundColor} h={"200px"} >
-            <input
-                type="file"
-                multiple={single ? false : true}
-                accept="image/*"
-                onChange={handleImageChange}
-                ref={fileInputRef}
-                style={{ display: 'none' }}
-            />
-            {(image?.length === 0 && preview?.length === 0) && (
-                <Flex onClick={handleButtonClick} cursor={"pointer"} textAlign={"center"} gap={"3"} flexDir={"column"} w={"full"} justifyContent={"center"} alignItems={"center"} h={"full"} >
-                    <GallaryIcon size='35px' />
-                    <Flex flexDir={"column"} gap={"1"} maxW={"176px"} >
-                        <Text fontSize={"13px"} fontWeight={"medium"} >Drag pictures here to upload</Text>
-                        <Text fontSize={"8px"} >You can add up to 6 picture</Text>
-                        <Text fontSize={"8px"} >File Format: JPG, JPEG, PNG and picture shouldn’t be more than 2 MB </Text>
-                        <Text fontWeight={"bold"} textDecor={"underline"} color={primaryColor} fontSize={"10px"} >Upload from your device</Text>
+        <>
+            {!single && (
+                <Flex w={"full"} rounded={"12px"} borderStyle={"dashed"} borderWidth={"1px"} overflowX={"auto"} bgColor={secondaryBackgroundColor} h={"200px"} >
+                    <input
+                        type="file"
+                        multiple={single ? false : true}
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        ref={fileInputRef}
+                        style={{ display: 'none' }}
+                    />
+                    {(image?.length === 0 && preview?.length === 0) && (
+                        <Flex onClick={handleButtonClick} cursor={"pointer"} textAlign={"center"} gap={"3"} flexDir={"column"} w={"full"} justifyContent={"center"} alignItems={"center"} h={"full"} >
+                            <GallaryIcon size='35px' />
+                            <Flex flexDir={"column"} gap={"1"} maxW={"176px"} >
+                                <Text fontSize={"13px"} fontWeight={"medium"} >Drag pictures here to upload</Text>
+                                <Text fontSize={"8px"} >You can add up to 6 picture</Text>
+                                <Text fontSize={"8px"} >File Format: JPG, JPEG, PNG and picture shouldn’t be more than 2 MB </Text>
+                                <Text fontWeight={"bold"} textDecor={"underline"} color={primaryColor} fontSize={"10px"} >Upload from your device</Text>
+                            </Flex>
+                        </Flex>
+                    )}
+                    {(image?.length > 0 || preview?.length > 0) && (
+                        <Flex w={"fit"} gap={"3"} p={"4"} >
+                            {preview.map((file, index) => (
+                                <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
+                                    <Image
+                                        w={"full"}
+                                        h={"full"}
+                                        rounded={"2xl"}
+                                        src={IMAGE_URL + file}
+                                        alt={`preview-${index}`}
+                                    />
+                                    <Flex onClick={() => removeImagePreview(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
+                                        <IoIosCloseCircle color='red' size={"25px"} />
+                                    </Flex>
+                                </Flex>
+                            ))}
+                            {image.map((file, index) => (
+                                <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
+                                    <Image
+                                        w={"full"}
+                                        h={"full"}
+                                        rounded={"2xl"}
+                                        src={URL.createObjectURL(file)}
+                                        alt={`preview-${index}`}
+                                    />
+                                    <Flex onClick={() => removeImage(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
+                                        <IoIosCloseCircle color='red' size={"25px"} />
+                                    </Flex>
+                                </Flex>
+                            ))}
+                            <Flex onClick={handleButtonClick} cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} h={"full"} w={"180px"} justifyContent={"center"} alignItems={"center"} rounded={"2xl"} >
+                                <IoMdAdd size={"50px"} />
+                            </Flex>
+                        </Flex>
+                    )}
+                </Flex>
+            )}
+            {single && ( 
+                <Flex width={"full"} flexDirection={"column"} gap={"4"} alignItems={"center"} >
+                    <Flex as={"button"} width={["full", "361px"]} height={"228px"} border={"1px dashed #D0D4EB"} roundedBottom={"32px"} roundedTopLeft={"32px"} justifyContent={"center"} alignItems={"center"} >
+                        {(!image[imageIndex] && preview?.length === 0) && (
+                            <label role='button' style={{ width: "100%", display: "grid", height: "100%", placeItems: "center", gap: "16px" }} >
+                                <Box width={"full"} >
+                                    <Text fontSize={"sm"} >Click to upload image</Text>
+                                    <Flex justifyContent={"center"} mt={"3"} gap={"2"} >
+                                        <PictureIcon />
+                                    </Flex>
+                                </Box>
+                                <input
+                                    type="file"
+                                    id="image"
+                                    accept="image/*"
+                                    style={{ display: "none" }}
+                                    onChange={handleSingleImage}
+                                />
+                            </label>
+                        )}
+                        {(image[imageIndex] || preview?.length > 0) && (
+                            <label role='button' style={{ width: "100%", display: "grid", height: "228px", placeItems: "center", gap: "16px" }} >
+                                
+                                    {image[imageIndex] ? (
+                                    <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={URL.createObjectURL(image[imageIndex])} />
+                                    ) : (
+
+                                    <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={IMAGE_URL + preview[0]} />
+                                    )}
+                            
+                                {/* {(!image[imageIndex]) &&
+                                    <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={IMAGE_URL + data[index]?.bannerImage} />} */}
+                                <input
+                                    type="file"
+                                    id="image"
+                                    style={{ display: "none" }}
+                                    onChange={handleImageChange}
+                                />
+                            </label>
+                        )}
+                    </Flex>
+                    <Flex fontSize={"xs"} textAlign={"center"} color={"brand.chasescrollGray"} justifyContent={"space-between"} width={"full"} >
+                        <Box>
+                            <Text>Image size:</Text>
+                            <Text>2160 x 1080px</Text>
+                        </Box>
+                        <Box>
+                            <Text>Max. file size:</Text>
+                            <Text>800KB</Text>
+                        </Box>
+                        <Box>
+                            <Text>Image type:</Text>
+                            <Text>JPEG/PNG</Text>
+                        </Box>
                     </Flex>
                 </Flex>
             )}
-            {(image?.length > 0 || preview?.length > 0) && (
-                <Flex w={"fit"} gap={"3"} p={"4"} >
-                    {preview.map((file, index) => (
-                        <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
-                            <Image
-                                w={"full"}
-                                h={"full"}
-                                rounded={"2xl"}
-                                src={IMAGE_URL + file}
-                                alt={`preview-${index}`}
-                            />
-                            <Flex onClick={() => removeImagePreview(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
-                                <IoIosCloseCircle color='red' size={"25px"} />
-                            </Flex>
-                        </Flex>
-                    ))}
-                    {image.map((file, index) => (
-                        <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
-                            <Image
-                                w={"full"}
-                                h={"full"}
-                                rounded={"2xl"}
-                                src={URL.createObjectURL(file)}
-                                alt={`preview-${index}`}
-                            />
-                            <Flex onClick={() => removeImage(index)} cursor={"pointer"} pos={"absolute"} rounded={"full"} bgColor={mainBackgroundColor} zIndex={"20"} top={"-2"} right={"-2"} >
-                                <IoIosCloseCircle color='red' size={"25px"} />
-                            </Flex>
-                        </Flex>
-                    ))}
-                    <Flex onClick={handleButtonClick} cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} h={"full"} w={"180px"} justifyContent={"center"} alignItems={"center"} rounded={"2xl"} >
-                        <IoMdAdd size={"50px"} />
-                    </Flex>
-                </Flex>
-            )}
-        </Flex>
+        </>
     );
 }; 

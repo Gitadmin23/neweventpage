@@ -15,7 +15,8 @@ interface IProps {
     hasBackIcon?: boolean,
     icon?: React.ReactNode,
     defaultData?: any;
-    iconback?: React.ReactNode
+    iconback?: React.ReactNode;
+    notticket?: boolean;
     setValue: (name: string, value: string) => void,
     errors?: any | null | undefined,
     touched?: any,
@@ -35,6 +36,7 @@ export default function TicketFormInput(
         type,
         hasFrontIcon,
         hasBackIcon,
+        notticket,
         icon,
         iconback,
         setValue,
@@ -46,7 +48,11 @@ export default function TicketFormInput(
     }: IProps) {
 
     const changeHandler = (item: string) => {
-        setValue(`productTypeData[${index}].${name}`, item)
+        if(!notticket){
+            setValue(`productTypeData[${index}].${name}`, item)
+        } else { 
+            setValue(`data[${index}].${name}`, item)
+        }
         // setNewValue(item)
     }
 
@@ -83,7 +89,7 @@ export default function TicketFormInput(
 
                         {type === "number" && (
                             <Input
-                                value={newValue ?? ""}
+                                value={newValue}
                                 disabled={disabled}
                                 onChange={(e) => {
                                     const value = e.target.value;

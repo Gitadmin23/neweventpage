@@ -21,8 +21,7 @@ const useFundraising = () => {
     const router = useRouter()
 
     const pathname = usePathname()
-    const query = useSearchParams();
-    const type = query?.get('type');
+    const query = useSearchParams(); 
     const id = query?.get('id');
     const [open, setOpen] = useState(false)
 
@@ -54,16 +53,16 @@ const useFundraising = () => {
                 clone[index] = {...item,  bannerImage: fileArray[index]+""}
             })
 
-            // let newObj: any = { ...formik.values.data[0], bannerImage: fileArray[0]} 
+            let newGroup = {creatorID: formik.values.data[0]?.creatorID,name: formik.values.data[0]?.name,bannerImage: fileArray[0],description: formik.values.data[0].description, expirationDate: Number(formik.values.data[0].endDate)}
 
-            console.log(clone);
-            
+            formik.setFieldValue("data", clone)
+ 
 
-            // if (!pathname?.includes("edit")) {
-            //     createFundraisingGroup.mutate(clone[0])
-            // } else {
-            //     updateFundraising?.mutate(clone[0])
-            // }
+            if (!pathname?.includes("edit")) {
+                createFundraisingGroup.mutate(newGroup)
+            } else {
+                updateFundraising?.mutate(clone[0])
+            }
         }
     });
 
@@ -105,9 +104,7 @@ const useFundraising = () => {
         },
         onSuccess: (data: AxiosResponse<any>) => { 
 
-            setOpen(true)
-            
-            console.log(data);
+            setOpen(true) 
             
             toaster.create({
                 title: `Fundraising Created`,
@@ -120,7 +117,7 @@ const useFundraising = () => {
 
     // Create Donation Group 
     const createFundraisingGroup = useMutation({
-        mutationFn: (data: any) => httpService.post("/fund-raiser/create", data),
+        mutationFn: (data: any) => httpService.post("/fund-raiser-group/create", data),
         onError: (error: AxiosError<any, any>) => {
 
             toaster.create({
@@ -129,18 +126,9 @@ const useFundraising = () => {
                 closable: true
             })
         },
-        onSuccess: (data: AxiosResponse<any>) => { 
+        onSuccess: (data: AxiosResponse<any>) => {  
 
-            setOpen(true)
-            
-            console.log(data);
-            
-            toaster.create({
-                title: `Fundraising Created`,
-                type: "success",
-                closable: true
-            })
-            
+            createFundraising.mutate({ items: formik.values.data }) 
         }
     });
 
@@ -173,7 +161,7 @@ const useFundraising = () => {
                     });
                     uploadImage?.mutate(fd)
                 } else {
-                    updateFundraising.mutate(data)
+                    updateFundraising.mutate(data.data[0])
                 }
             } else if (image.length > 0 && !id) {
                 const fd = new FormData();
@@ -181,8 +169,7 @@ const useFundraising = () => {
                     fd.append("files[]", file);
                 });
                 uploadImage?.mutate(fd)
-            }
-            // createFundraising.mutate(data)
+            } 
         },
     });
 
@@ -190,6 +177,7 @@ const useFundraising = () => {
         formik,
         uploadImage,
         createFundraising,
+        createFundraisingGroup,
         updateFundraising,
         open,
         setOpen
