@@ -16,9 +16,7 @@ const useFundraising = () => {
 
 
     const { userId } = useDetails((state) => state);
-    const { image, setImage } = useImage((state) => state);
-
-    const router = useRouter()
+    const { image, setImage } = useImage((state) => state); 
 
     const pathname = usePathname()
     const query = useSearchParams(); 
@@ -50,10 +48,10 @@ const useFundraising = () => {
             let clone = [...formik.values.data]
 
             clone.map((item, index) => {
-                clone[index] = {...item,  bannerImage: fileArray[index]+""}
+                clone[index] = {...item,  bannerImage: fileArray[index]+"", creatorID: userId }
             })
 
-            let newGroup = {creatorID: formik.values.data[0]?.creatorID,name: formik.values.data[0]?.name,bannerImage: fileArray[0],description: formik.values.data[0].description, expirationDate: Number(formik.values.data[0].endDate)}
+            let newGroup = {creatorID: formik.values.data[0]?.creatorID, name: formik.values.data[0]?.name,bannerImage: fileArray[0],description: formik.values.data[0].description, expirationDate: Number(formik.values.data[0].endDate)}
 
             formik.setFieldValue("data", clone)
  
