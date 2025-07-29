@@ -11,6 +11,7 @@ interface IProps {
     name: Array<string>;
     value: string;
     start?: string
+    end?: string;
     setValue: (name: string, value: any) => void,
     errors?: any,
     touched?: any,
@@ -26,6 +27,7 @@ export default function CustomDatePicker(
         start,
         touched,
         errors,
+        end,
         setValue,
         index = 0
     }: IProps) {
@@ -45,6 +47,28 @@ export default function CustomDatePicker(
 
                 setValue(name[0], null)
                 setValue(name[1], null)
+            } else if (end) {
+                if (new Date(item) > new Date(end)) {
+                    toaster.create({
+                        title: "Please ticket date can not be greater than event endDate",
+                        type: "error",
+                        closable: true
+                    })
+                } else {
+                    setValue(name[0], Date.parse(new Date(item).toJSON()))
+                    setValue(name[1], Date.parse(new Date(item).toJSON()))
+                }
+            } else {
+                setValue(name[0], Date.parse(new Date(item).toJSON()))
+                setValue(name[1], Date.parse(new Date(item).toJSON()))
+            }
+        } if (end) {
+            if (new Date(item) > new Date(end)) {
+                toaster.create({
+                    title: "Please ticket date can not be greater than event endDate",
+                    type: "error",
+                    closable: true
+                })
             } else {
                 setValue(name[0], Date.parse(new Date(item).toJSON()))
                 setValue(name[1], Date.parse(new Date(item).toJSON()))

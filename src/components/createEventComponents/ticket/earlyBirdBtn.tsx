@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IoLogoTwitter } from "react-icons/io5";
 import { PiTrashSimpleDuotone } from "react-icons/pi";
 import NumberPicker from "./numberPicker";
+import { toaster } from "@/components/ui/toaster";
 
 export default function EarlyBirdBtn(
     {
@@ -44,12 +45,45 @@ export default function EarlyBirdBtn(
         clone?.shift()
 
         setValue("productTypeData", clone)
+        setOpen(false)
     }
 
     const {
         primaryColor,
         mainBackgroundColor
     } = useCustomTheme()
+
+    const closeHandler = () => {
+        if(value?.productTypeData[0]?.ticketType === "Early Bird") {
+            if(!value?.productTypeData[0]?.ticketPrice) { 
+                toaster.create({
+                    title: "Add Ticket Price",
+                    type: "error",
+                    closable: true
+                })
+            } else if(!value?.productTypeData[0]?.totalNumberOfTickets){
+                toaster.create({
+                    title: "Add Total Number Of Ticket",
+                    type: "error",
+                    closable: true
+                })
+            } else if(!value?.productTypeData[0]?.startDate){
+                toaster.create({
+                    title: "Add Ticket Start Date",
+                    type: "error",
+                    closable: true
+                })
+            } else if(!value?.productTypeData[0]?.endDate){
+                toaster.create({
+                    title: "Add Ticket End Date",
+                    type: "error",
+                    closable: true
+                })
+            } else {
+                setOpen(false)
+            }
+        }
+    }
 
     return (
         <Flex>
@@ -64,7 +98,7 @@ export default function EarlyBirdBtn(
                     </Flex>
                 }
             </Flex>
-            <ModalLayout open={open} size="sm" trigger={true} close={() => setOpen(false)} closeBtn={true} >
+            <ModalLayout open={open} size="sm" trigger={true} close={removeHandler} closeBtn={true} >
                 <Flex pos={"relative"} w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
                     <Flex flexDir={"column"} gap={"2"} >
                         <Text fontSize={"22px"} fontWeight={"600"} >Early Bird Ticket</Text>
@@ -78,11 +112,11 @@ export default function EarlyBirdBtn(
                         <NumberPicker value={value?.productTypeData[0]?.maxTicketBuy} name={`maxTicketBuy`} setValue={setValue} />
                     </Flex>
                     <Flex gap={"4"} flexDir={"column"} w={"full"} >
-                        <CustomDatePicker label="Start *" name={["productTypeData[0].startDate", "productTypeData[0].startTime", "productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />
-                        <CustomDatePicker label="End *" start={value?.productTypeData[0]?.startDate} name={["productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.endDate} setValue={setValue} />
+                        <CustomDatePicker label="Start *" end={value?.endDate} name={["productTypeData[0].startDate", "productTypeData[0].startTime", "productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />
+                        <CustomDatePicker label="End *" start={value?.productTypeData[0]?.startDate}  end={value?.endDate} name={["productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.endDate} setValue={setValue} />
                     </Flex>
                     <Flex w={"full"} justifyContent={"end"} >
-                        <CustomButton onClick={() => setOpen(false)} text={"Close"} px={"6"} width={"fit-content"} borderRadius={"999px"} />
+                        <CustomButton onClick={closeHandler} text={"Done"} px={"6"} width={"fit-content"} borderRadius={"999px"} />
                     </Flex>
                 </Flex>
             </ModalLayout>

@@ -12,6 +12,8 @@ import { isDateInPast } from "@/helpers/utils/isPast";
 import DonationPayment from "./donationPayment";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
 import { useRouter } from "next/navigation";
+import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
+import Cookies from "js-cookie"
 
 export default function FundraisingDetails(
     {
@@ -29,7 +31,17 @@ export default function FundraisingDetails(
     } = useCustomTheme()
 
     const { userId } = useDetails()
-    const router = useRouter()
+    const router = useRouter() 
+
+    const token = Cookies.get("chase_token")
+
+    const routeHandler = (type: "dashboard" | "wallet") => {
+        if(type === "dashboard") {
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${item?.id}/donate?token=${token}`;
+        } else {
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}`;
+        }
+    } 
 
 
     return (
@@ -61,7 +73,7 @@ export default function FundraisingDetails(
                                 {((userId === item?.createdBy?.userId) || item?.isCollaborator) ? (
                                     <Flex bgColor={mainBackgroundColor} borderWidth={"1px"} borderColor={borderColor} rounded={"full"} w={"full"} flexDir={"column"} overflowX={"hidden"} gap={"3"} px={["3", "3", "5", "5"]} h={"fit-content"} justifyContent={"center"} >
                                         <Flex py={"3"} width={["full"]} justifyContent={"space-between"} alignItems={"center"} gap={"3"}    >
-                                            <Button color={headerTextColor} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
+                                            <Button onClick={()=> routeHandler("dashboard")} color={headerTextColor} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
                                                 <DashboardOrganizerIcon />
                                                 <Text fontSize={"12px"} fontWeight={"500"} >Dashboard</Text>
                                             </Button>
@@ -69,7 +81,7 @@ export default function FundraisingDetails(
                                                 <DashboardEditIcon />
                                                 <Text fontSize={"12px"} fontWeight={"500"} >Edit</Text>
                                             </Button>
-                                            <Button disabled={item?.isCollaborator} color={headerTextColor} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} cursor={"pointer"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
+                                            <Button  onClick={()=> routeHandler("wallet")} disabled={item?.isCollaborator} color={headerTextColor} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} cursor={"pointer"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
                                                 <WalletIcon color='#5D70F9' />
                                                 <Text fontSize={"12px"} fontWeight={"500"} >Cash Out</Text>
                                             </Button>
@@ -94,15 +106,15 @@ export default function FundraisingDetails(
                                     <Flex insetX={"3"} mt={["0px", "0px", "0px", "0px"]} bottom={["14", "14", "0px", "0px", "0px"]} pos={["fixed", "fixed", "relative", "relative"]} w={["auto", "auto", "full", "fit-content"]} zIndex={"50"} flexDir={"column"} gap={"4"} pb={"6"} px={["0px", "0px", "6", "6"]} >
                                         <Flex bgColor={mainBackgroundColor} w={["full", "full", "full", "450px"]} minW={["200px", "200px", "200px", "200px"]} maxW={["full", "full", "450px", "full"]} borderWidth={"1px"} borderColor={borderColor} rounded={"full"} flexDir={"column"} overflowX={"hidden"} gap={"3"} px={["3", "3", "5", "5"]} h={"90px"} justifyContent={"center"} >
                                             <Flex width={["full"]} justifyContent={"space-between"} alignItems={"center"} gap={"3"}    >
-                                                <Button color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
+                                                <Button onClick={()=> routeHandler("dashboard")} color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} height={"full"} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"} >
                                                     <DashboardOrganizerIcon />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Dashboard</Text>
                                                 </Button>
-                                                <Button  onClick={()=> router.push(`/product/create/fundraising/edit?id=${item?.id}`)} color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} disabled={item?.isCollaborator || item?.total > 0 || !isDateInPast(item?.endDate)} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} role='button' cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
+                                                <Button  onClick={()=> router.push(`/product/create/fundraising/edit?id=${item?.id}`)} color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} height={"full"} disabled={item?.isCollaborator || item?.total > 0 || !isDateInPast(item?.endDate)} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} role='button' cursor={"pointer"} gap={"4px"} flexDir={"column"} alignItems={"center"} justifyContent={"center"}>
                                                     <DashboardEditIcon />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Edit</Text>
                                                 </Button>
-                                                <Button color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} shadow={"md"} height={"full"} disabled={item?.isCollaborator} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} cursor={"pointer"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
+                                                <Button  onClick={()=> routeHandler("wallet")} color={headerTextColor} borderWidth={"1px"} borderColor={borderColor} height={"full"} disabled={item?.isCollaborator} bgColor={mainBackgroundColor} w={"80px"} py={"2"} rounded={"2xl"} cursor={"pointer"} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} gap={"4px"} flexDir={"column"} alignItems={"center"} >
                                                     <WalletIcon color='#5D70F9' />
                                                     <Text fontSize={"12px"} fontWeight={"500"} >Cash Out</Text>
                                                 </Button>

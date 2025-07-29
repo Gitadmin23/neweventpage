@@ -1,29 +1,33 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation' 
+import { usePathname, useRouter } from 'next/navigation'
 import { FiAlertCircle } from "react-icons/fi";
-import useCustomTheme from "@/hooks/useTheme";  
+import useCustomTheme from "@/hooks/useTheme";
 import { DashboardEditIcon, DashboardOrganizerIcon, DashboardScannerIcon } from '@/svg';
 import PrBtn from '../prcomponent/prBtn';
 import { CustomButton, ModalLayout } from '../shared';
-import { IEventType } from '@/helpers/models/event'; 
+import { IEventType } from '@/helpers/models/event';
 import Scanner from './scanner';
+import { DASHBOARDPAGE_URL } from '@/helpers/services/urls';
+import Cookies from "js-cookie"
 
 function OrganizeBtn(props: IEventType) {
     const {
         isOrganizer,
-        eventMemberRole, 
+        eventMemberRole,
         startDate,
-        endDate
+        endDate,
+        id
     } = props
 
     const {
-        borderColor, 
+        borderColor,
         mainBackgroundColor,
         headerTextColor
     } = useCustomTheme()
 
     const [showScanner, setShowScanner] = React.useState(false);
+    const token = Cookies.get("chase_token")
 
     const router = useRouter()
     const [listOfClicks, setListOfClicks] = useState(0)
@@ -40,27 +44,30 @@ function OrganizeBtn(props: IEventType) {
 
     useEffect(() => {
         props?.productTypeData?.map((item: any) => {
-            let count = item?.clickThroughCount + listOfClicks 
+            let count = item?.clickThroughCount + listOfClicks
             setListOfClicks(count)
         })
-    }, []) 
+    }, [])
 
+    const routeHandler = () => {
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${id}?token=${token}`;
+    } 
 
     return (
-        <Box w={"full"} > 
+        <Box w={"full"} >
             <Flex rounded={"12px"} bgColor={mainBackgroundColor} maxW={["350px"]} w={"full"} flexDir={"column"} borderWidth={"1px"} borderColor={borderColor} >
                 <Flex w={"full"} borderBottomWidth={"1px"} borderColor={borderColor} >
-                    <Button w={"50%"} bgColor={mainBackgroundColor} color={headerTextColor} borderWidth={"0px"} roundedTopLeft={"12px"} roundedRight={"0px"} gap={"2"} h={"55px"} as={"button"} alignItems={"center"} justifyContent={"center"} borderRightWidth={"1px"} borderColor={borderColor} disabled={eventMemberRole === "COLLABORATOR" ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => router.push("/dashboard/settings/event-dashboard/" + props?.id)} >
+                    <Button w={"50%"} bgColor={mainBackgroundColor} color={headerTextColor} borderWidth={"0px"} roundedTopLeft={"12px"} roundedRight={"0px"} gap={"2"} h={"55px"} as={"button"} alignItems={"center"} justifyContent={"center"} borderRightWidth={"1px"} borderColor={borderColor} disabled={eventMemberRole === "COLLABORATOR" ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={routeHandler} >
                         <DashboardOrganizerIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Dashboard</Text>
                     </Button>
                     <Button w={"50%"} bgColor={mainBackgroundColor} color={headerTextColor} borderWidth={"0px"} roundedTopRight={"12px"} gap={"2"} h={"55px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails") || eventMemberRole === "COLLABORATOR" || (eventMemberRole === "ADMIN" && !isOrganizer)) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => clickHandler()} >
                         <DashboardEditIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Edit Event</Text>
-                    </Button> 
+                    </Button>
                 </Flex>
-                <Flex w={"full"} > 
-                    <PrBtn data={props} /> 
+                <Flex w={"full"} >
+                    <PrBtn data={props} />
                     <Button w={"50%"} gap={"2"} h={"55px"} display={["flex", "flex", "none"]} bgColor={mainBackgroundColor} color={headerTextColor} borderLeftWidth={"1px"} rounded={"0px"} roundedBottomRight={"12px"} alignItems={"center"} justifyContent={"center"} as={"button"} disabled={(pathname?.includes("pastdetails")) ? true : false} _disabled={{ opacity: "0.4", cursor: "not-allowed" }} onClick={() => setShowScanner(true)} >
                         <DashboardScannerIcon />
                         <Text fontSize={"14px"} fontWeight={"500"} >Scan Ticket</Text>

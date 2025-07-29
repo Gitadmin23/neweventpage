@@ -1,5 +1,4 @@
-"use client"
-import useEvent from "@/hooks/useEvent";
+"use client" 
 import { Flex, Text } from "@chakra-ui/react";
 import { CustomButton, CustomInput, TicketFormInput } from "../shared";
 import NumberPicker from "./ticket/numberPicker";
