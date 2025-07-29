@@ -1,19 +1,20 @@
-import { Flex, IconButton, Text } from "@chakra-ui/react";
+import { Badge, Flex, IconButton, Text } from "@chakra-ui/react";
 import { CustomButton, ModalLayout, ProductImageScroller } from "../shared";
 import React, { useEffect, useState } from "react";
-import { IEventType, IProductTypeData } from "@/helpers/models/event"; 
+import { IEventType, IProductTypeData } from "@/helpers/models/event";
 import { dateFormat } from "@/helpers/utils/dateFormat";
 import { formatNumberWithK, numberFormatNaire } from "@/helpers/utils/formatNumberWithK";
-import useCustomTheme from "@/hooks/useTheme"; 
-import usePaystackStore from "@/helpers/store/usePaystack"; 
-import usePayStack from "@/hooks/usePayStack"; 
+import useCustomTheme from "@/hooks/useTheme";
+import usePaystackStore from "@/helpers/store/usePaystack";
+import usePayStack from "@/hooks/usePayStack";
 import { ShoppingCart } from "iconsax-react";
+import { toaster } from "../ui/toaster";
 
 interface ITicket {
     "ticketType": string,
     "numberOfTickets": number
 }
- 
+
 export default function SelectTicketBtn(
     {
         picUrls,
@@ -22,9 +23,9 @@ export default function SelectTicketBtn(
         productTypeData,
         id
     }: IEventType
-) { 
+) {
 
-    const { payForTicket, setOpen, open } = usePayStack() 
+    const { payForTicket, setOpen, open } = usePayStack()
 
     const {
         secondaryBackgroundColor,
@@ -51,16 +52,16 @@ export default function SelectTicketBtn(
 
 
 
-    const checkSelectedTicketTotal = () => {
+    // const checkSelectedTicketTotal = () => {
 
-        let totalNumber = 0
+    //     let totalNumber = 0
 
-        selectTicketType.map((item) => { 
-            totalNumber =( Number(productTypeData[checkType(item.ticketType)]?.ticketPrice) * item.numberOfTickets) + totalNumber
-        })
+    //     selectTicketType.map((item) => {
+    //         totalNumber = (Number(productTypeData[checkType(item.ticketType)]?.ticketPrice) * item.numberOfTickets) + totalNumber
+    //     })
 
-        return totalNumber
-    }
+    //     return totalNumber
+    // }
 
     const clickHandler = ({ item, type }: { item: IProductTypeData, type: "increase" | "reduce" }) => {
 
@@ -72,9 +73,20 @@ export default function SelectTicketBtn(
         if (selectTicketType?.length > 0) {
             if (index > -1) {
                 if (type === "increase") {
-                    clone[index] = {
-                        ticketType: item.ticketType,
-                        numberOfTickets: clone[index].numberOfTickets + 1
+                    if (Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) > 0) {
+
+                        if (clone[index].numberOfTickets >= Number(item?.maxTicketBuy)) {
+                            toaster.create({
+                                title: `Maximum ticket is ${item?.maxTicketBuy}`,
+                                type: "error",
+                                closable: true,
+                            });
+                        } else {
+                            clone[index] = {
+                                ticketType: item.ticketType,
+                                numberOfTickets: clone[index].numberOfTickets + 1
+                            }
+                        }
                     }
                 } else {
                     if (clone[index].numberOfTickets - 1 === 0) {
@@ -112,7 +124,7 @@ export default function SelectTicketBtn(
 
     useEffect(() => {
         setSelectTicketType([] as any)
-    }, [open]) 
+    }, [open])
 
     const submitHandler = React.useCallback(() => {
         payForTicket.mutate(
@@ -136,39 +148,48 @@ export default function SelectTicketBtn(
                                 <Text fontWeight={"700"} fontSize={"25px"} >{eventName}</Text>
                                 <Text fontSize={"14px"} >{dateFormat(startDate)}</Text>
                             </Flex>
-                            <Flex flexDir={"column"} w={"full"} gap={"3"} >
-                                {productTypeData?.map((item, index) => {
-                                    return (
-                                        <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
-                                            <Flex flexDir={"column"} gap={"2"} >
-                                                <Text fontWeight={"semibold"} >{item.ticketType} {formatNumberWithK(item?.ticketPrice, false)}</Text>
-                                                {item.ticketType === "Early Bird" && (
-                                                    <Flex bgColor={"#FFEDDF"} h={"21px"} color={"#FF0000"} rounded={"full"} px={"4"} >
-                                                        Sales ends on {dateFormat(item.endDate)}
-                                                    </Flex>
-                                                )}
-                                            </Flex>
-                                            <Flex gap={"3"} alignItems={"center"} >
-                                                <IconButton onClick={() => clickHandler({
-                                                    item: item,
-                                                    type: "reduce"
-                                                })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
-                                                    {/* <LuMinus /> */}
-                                                    <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
-                                                </IconButton>
-                                                {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                <IconButton onClick={() => clickHandler({
-                                                    item: item,
-                                                    type: "increase"
-                                                })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
-                                                    {/* <LuPlus /> */}
+                            <Flex flexDir={"column"} h={"full"} w={"full"} overflowY={"auto"} pr={"4"} >
+                                <Flex flexDir={"column"} h={"auto"} gap={"3"} >
+                                    {productTypeData?.map((item, index) => {
+                                        return (
+                                            <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
+                                                <Flex flexDir={"column"} gap={"2"} >
+                                                    <Text fontWeight={"semibold"} >{item.ticketType} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                    {item.ticketType === "Early Bird" ? (
+                                                        <Flex bgColor={"#FFEDDF"} h={"21px"} color={"#FF0000"} rounded={"full"} px={"4"} >
+                                                            Sales ends on {dateFormat(item.endDate)}
+                                                        </Flex>
+                                                    ) : (
+                                                        // <Flex bgColor={"#FFEDDF"} h={"21px"} color={primaryColor} rounded={"full"} px={"4"} >
+                                                        //     Available Ticket {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                        // </Flex>
+                                                        <Badge colorPalette={"blue"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                            Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                        </Badge>
+                                                    )}
+                                                </Flex>
+                                                <Flex gap={"3"} alignItems={"center"} >
+                                                    <IconButton onClick={() => clickHandler({
+                                                        item: item,
+                                                        type: "reduce"
+                                                    })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
+                                                        {/* <LuMinus /> */}
+                                                        <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
+                                                    </IconButton>
+                                                    {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
+                                                    <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold)} onClick={() => clickHandler({
+                                                        item: item,
+                                                        type: "increase"
+                                                    })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
+                                                        {/* <LuPlus /> */}
 
-                                                    <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
-                                                </IconButton>
+                                                        <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
+                                                    </IconButton>
+                                                </Flex>
                                             </Flex>
-                                        </Flex>
-                                    )
-                                })}
+                                        )
+                                    })}
+                                </Flex>
                             </Flex>
                             <Text fontWeight={"medium"} mr={"auto"} >Powered by <span style={{ color: primaryColor, fontStyle: "italic" }} >Chasescroll.com</span></Text>
                             <Flex w={"full"} justifyContent={"end"} pt={"4"} borderTopWidth={"1px"} mt={"auto"} >
@@ -194,10 +215,10 @@ export default function SelectTicketBtn(
                                             </Flex>
                                         )
                                     })}
-                                    <Flex mt={"auto"} w={"full"} fontWeight={"500"} justifyContent={"space-between"} alignItems={"center"} >
+                                    {/* <Flex mt={"auto"} w={"full"} fontWeight={"500"} justifyContent={"space-between"} alignItems={"center"} >
                                         <Text fontSize={"lg"} fontWeight={"600"} >Total</Text>
                                         <Text fontSize={"lg"} fontWeight={"600"} >{numberFormatNaire(checkSelectedTicketTotal())}</Text>
-                                    </Flex>
+                                    </Flex> */}
                                 </Flex>
                             ) : (
                                 <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >
