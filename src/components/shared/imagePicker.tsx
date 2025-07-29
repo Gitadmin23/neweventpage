@@ -6,6 +6,7 @@ import { GallaryIcon, PictureIcon } from '@/svg';
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
+import { toaster } from '../ui/toaster';
 
 export default function ImagePicker(
     {
@@ -36,13 +37,22 @@ export default function ImagePicker(
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
+
         if (files) {
             const fileArray = Array.from(files);
-            if (single) {
-                setImage([...fileArray]);
+
+            let dataLength = fileArray?.length + image?.length
+
+            if (dataLength > 5) {
+                toaster.create({
+                    title: "Maximum Number Of Images to Upload is 5",
+                    type: "error",
+                    closable: true
+                })
             } else {
                 setImage([...image, ...fileArray]);
             }
+
         }
     };
 
@@ -130,7 +140,7 @@ export default function ImagePicker(
                     )}
                 </Flex>
             )}
-            {single && ( 
+            {single && (
                 <Flex width={"full"} flexDirection={"column"} gap={"4"} alignItems={"center"} >
                     <Flex as={"button"} width={["full", "361px"]} height={"228px"} border={"1px dashed #D0D4EB"} roundedBottom={"32px"} roundedTopLeft={"32px"} justifyContent={"center"} alignItems={"center"} >
                         {(!image[imageIndex] && preview?.length === 0) && (
@@ -152,14 +162,14 @@ export default function ImagePicker(
                         )}
                         {(image[imageIndex] || preview?.length > 0) && (
                             <label role='button' style={{ width: "100%", display: "grid", height: "228px", placeItems: "center", gap: "16px" }} >
-                                
-                                    {image[imageIndex] ? (
+
+                                {image[imageIndex] ? (
                                     <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={URL.createObjectURL(image[imageIndex])} />
-                                    ) : (
+                                ) : (
 
                                     <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={IMAGE_URL + preview[0]} />
-                                    )}
-                            
+                                )}
+
                                 {/* {(!image[imageIndex]) &&
                                     <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={"eventimage"} width={"full"} height={"228px"} src={IMAGE_URL + data[index]?.bannerImage} />} */}
                                 <input
