@@ -28,22 +28,24 @@ export default function NumberPicker(
     const [ number, setNumber ] = useState(1)
 
     const changeHandlerAdd = () => {
-        setNumber(number+1)
-        setValue(name, number+1)
+        // setNumber(number+1)
+        setValue(name, value+1)
     }
 
     const changeHandlerRomove = () => {
-        setNumber(number-1)
-        setValue(name, number-1)
+        if(value - 1 !== 0) {
+            setValue(name, value-1)
+        }
+        // setNumber(number-1)
     }
 
     console.log(value);
 
-    useEffect(() => {
-        if(value) {
-            setNumber(value)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if(value) {
+    //         setNumber(value)
+    //     }
+    // }, [])
     
 
     return (
@@ -51,7 +53,7 @@ export default function NumberPicker(
             <IconButton onClick={()=> changeHandlerRomove()} bgColor={mainBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
                 <LuMinus />
             </IconButton>
-            {number}
+            {value}
             <IconButton onClick={()=> changeHandlerAdd()} bgColor={mainBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
                 <LuPlus />
             </IconButton>  

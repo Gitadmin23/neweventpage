@@ -7,7 +7,7 @@ import { useState } from "react";
 import FunnelBtn from "./communityFunnel/funnelBtn";
 import GetCommunity from "./communityFunnel/getCommunityFunnel";
 import CollaboratorBtn from "../shared/addCollaborator";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import EarlyBirdBtn from "./ticket/earlyBirdBtn";
 
 export default function Ticket(
@@ -18,10 +18,7 @@ export default function Ticket(
         isLoading: boolean;
         formik: any
     }
-) {
-
-    console.log(formik.values);
-    // const { formik, createEventFromDraft, uploadImage } = useEvent()
+) { 
 
     const {
         secondaryBackgroundColor,
@@ -53,8 +50,7 @@ export default function Ticket(
         newList.splice(index, 1);
         formik.setFieldValue('productTypeData', newList);
     };
-
-    // console.log(formik.errors);
+ 
     const clickHandler = () => {
         formik.handleSubmit()
     }
@@ -86,7 +82,8 @@ export default function Ticket(
             ]);
             setTab(false)
         }
-    }
+    } 
+    
 
     return (
         <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} px={"4"} >
@@ -112,7 +109,7 @@ export default function Ticket(
                                 <TicketFormInput index={index} defaultData={ticket.totalNumberOfTickets} type="number" name={`totalNumberOfTickets`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Total number of tickets available to be sold for your events" value={formik.values} />
                                 <Flex flexDir={"column"} gap={"0.5"} >
                                     <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
-                                    <NumberPicker value={ticket.maxTicketBuy} name={`maxTicketBuy`} setValue={formik.setFieldValue} />
+                                    <NumberPicker value={ticket.maxTicketBuy} name={`productTypeData[${index}].maxTicketBuy`} setValue={formik.setFieldValue} />
                                 </Flex>
                             </Flex>
                             {formik.values.productTypeData.length > 1 && (

@@ -109,7 +109,7 @@ export default function EarlyBirdBtn(
                     <TicketFormInput index={0} defaultData={value?.productTypeData[0]?.totalNumberOfTickets} type="number" name={`totalNumberOfTickets`} setValue={setValue} label="Total number of tickets available to be sold for your events" value={value} />
                     <Flex flexDir={"column"} gap={"0.5"} >
                         <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
-                        <NumberPicker value={value?.productTypeData[0]?.maxTicketBuy} name={`maxTicketBuy`} setValue={setValue} />
+                        <NumberPicker value={value?.productTypeData[0]?.maxTicketBuy} name={`productTypeData[0].maxTicketBuy`} setValue={setValue} />
                     </Flex>
                     <Flex gap={"4"} flexDir={"column"} w={"full"} >
                         <CustomDatePicker label="Start *" end={value?.endDate} name={["productTypeData[0].startDate", "productTypeData[0].startTime", "productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />

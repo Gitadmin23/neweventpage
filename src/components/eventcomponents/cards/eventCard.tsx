@@ -71,7 +71,7 @@ export default function EventCard(
                     </Flex>
                 </Flex>
             </Flex> 
-            <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={["1", "1", "0px"]} >
+            <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={["1", "1", "1"]} >
                 <Flex gap={"2"} >
                     <Flex w={"fit-content"} display={["none", "none", "block"]} >
                         <Flex
@@ -119,8 +119,7 @@ export default function EventCard(
                     <InterestedUsers 
                         event={event} 
                     />
-                )}
-
+                )} 
                 <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={"14px"} >
                     <EventPrice
                         minPrice={event?.minPrice}

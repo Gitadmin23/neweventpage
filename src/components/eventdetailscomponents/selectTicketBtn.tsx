@@ -64,8 +64,7 @@ export default function SelectTicketBtn(
     // }
 
     const clickHandler = ({ item, type }: { item: IProductTypeData, type: "increase" | "reduce" }) => {
-
-
+        
         let clone = [...selectTicketType]
 
         const index = checkType(item.ticketType);
@@ -118,9 +117,16 @@ export default function SelectTicketBtn(
     }
 
 
-    const { setPaystackConfig, message, setMessage } = usePaystackStore((state) => state);
-    // const query = useSearchParams();
-    // const type = query?.get('type');
+    // const checkSelectedTicketTotal = () => {
+
+    //     let totalNumber = 0
+
+    //     selectTicketType.map((item) => { 
+    //         totalNumber =( Number(productTypeData[checkType(item.ticketType)]?.ticketPrice) * item.numberOfTickets) + totalNumber
+    //     })
+
+    //     return totalNumber
+    // }
 
     useEffect(() => {
         setSelectTicketType([] as any)
@@ -200,10 +206,10 @@ export default function SelectTicketBtn(
                             <Flex w={"350px"} >
                                 <ProductImageScroller objectFit={"cover"} images={picUrls} height={"200px"} />
                             </Flex>
-                            <Flex textAlign={"center"} flexDir={"column"} pb={"3"} borderBottomWidth={"1px"} >
+                            {/* <Flex textAlign={"center"} flexDir={"column"} pb={"3"} borderBottomWidth={"1px"} >
                                 <Text fontWeight={"600"} fontSize={"18px"} >{checkTicketTotal()}</Text>
                                 <Text>Ticket Available for this Event</Text>
-                            </Flex>
+                            </Flex> */}
                             {selectTicketType.length > 0 ? (
                                 <Flex h={"full"} px={"3"} pb={"4"} textAlign={"left"} flexDir={"column"} gap={"4"} >
                                     <Text fontWeight={"500"} fontSize={"18px"} >Order summary</Text>
@@ -215,10 +221,10 @@ export default function SelectTicketBtn(
                                             </Flex>
                                         )
                                     })}
-                                    {/* <Flex mt={"auto"} w={"full"} fontWeight={"500"} justifyContent={"space-between"} alignItems={"center"} >
+                                    <Flex mt={"auto"} w={"full"} fontWeight={"500"} justifyContent={"space-between"} alignItems={"center"} >
                                         <Text fontSize={"lg"} fontWeight={"600"} >Total</Text>
-                                        <Text fontSize={"lg"} fontWeight={"600"} >{numberFormatNaire(checkSelectedTicketTotal())}</Text>
-                                    </Flex> */}
+                                        {/* <Text fontSize={"lg"} fontWeight={"600"} >{numberFormatNaire(checkSelectedTicketTotal())}</Text> */}
+                                    </Flex>
                                 </Flex>
                             ) : (
                                 <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >

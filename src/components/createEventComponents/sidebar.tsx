@@ -63,7 +63,7 @@ export default function Sidebar() {
                     <Text fontSize={"12px"} >Streamline Attendance with Seamless Ticket Generation and Invitations</Text>
                 </Flex>
             </Flex>
-            <Flex w={"full"} fontSize={"14px"} fontWeight={"600"} px={"2"} display={["flex", "flex", "none"]} borderWidth={"1px"} h={"61px"} justifyContent={"space-between"} alignItems={"center"} >
+            <Flex w={"full"} fontSize={"14px"} fontWeight={"600"} rounded={"8px"} px={"2"} display={["flex", "flex", "none"]} borderWidth={"1px"} h={"61px"} justifyContent={"space-between"} alignItems={"center"} >
                 <Text color={primaryColor} >Theme</Text>
                 <Text color={!type ? headerTextColor : primaryColor} >Information</Text>
                 <Text color={type !== "ticket" ? headerTextColor : primaryColor} >Ticket</Text>

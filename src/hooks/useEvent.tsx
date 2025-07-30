@@ -315,7 +315,7 @@ const useEvent = () => {
                 } else if(type === "info") {
                     router.push(`${path}?type=ticket&id=${id}`)
                 } else {
-                    updateUserEvent.mutate(data)
+                    updateUserEvent.mutate({...data, id: id})
                 }
             } else if (image.length > 0 && !id) {
                 const fd = new FormData();
