@@ -38,8 +38,8 @@ function useInfiniteScroller(props: Props) {
   const cleanedParams = useMemo(() => cleanup({ ...paramsObj, search }), [paramsObj, search]);
 
   const queryKey = useMemo(
-    () => (name ? [name, url, cleanedParams, size+""] : [url, cleanedParams, size+""]),
-    [name, url, cleanedParams, size]
+    () => (name ? [name, url, cleanedParams, size+"", search] : [url, cleanedParams, size+"", search]),
+    [name, url, cleanedParams, size, search]
   );
 
   const { data, isLoading, isError, refetch } = useFetchData<any>({
@@ -82,13 +82,11 @@ function useInfiniteScroller(props: Props) {
   }, [inView, hasNextPage, limit]);
 
   useEffect(() => {
-
-    console.log(size);
-
-
+ 
     const dataContent = array ? data : data?.content || [];
 
     if (dataContent?.length > 0) {
+
       const mergedData = size !== limit ? [...results, ...dataContent] : dataContent;
 
       const uniqueData = lodash.uniqBy(mergedData, filter);

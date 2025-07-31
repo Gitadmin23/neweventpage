@@ -102,9 +102,9 @@ export default function DetailsPage(
                                     <OrganizeBtn {...props} />
                                 )}
                             </Flex>
-                            {/* {isOrganizer && (
+                            {isOrganizer && (
                                 <VolunteerBtn {...props} />
-                            )} */}
+                            )}
                             {(!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && (
                                 <Flex w={"fit-content"} >
                                     <PrBtn data={props} />

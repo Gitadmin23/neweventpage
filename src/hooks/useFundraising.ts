@@ -3,6 +3,7 @@ import { toaster } from "@/components/ui/toaster";
 import { IDonation } from "@/helpers/models/fundraising";
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
+import useDonationStore from "@/helpers/store/useDonationState";
 import { useImage } from "@/helpers/store/useImagePicker";
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { validationSchemaFundraising, validationSchemaTheme, validationSchemaTicket } from "@/helpers/validation/event";
@@ -16,12 +17,13 @@ const useFundraising = () => {
 
 
     const { userId } = useDetails((state) => state);
-    const { image, setImage } = useImage((state) => state); 
+    const { image } = useImage((state) => state); 
 
     const pathname = usePathname()
     const query = useSearchParams(); 
     const id = query?.get('id');
     const [open, setOpen] = useState(false)
+    const { data: newdata } = useDonationStore((state) => state)
 
 
     // const path = "/product/create/events" + (pathname?.includes("edit") ? "/edit" : "/draft")
@@ -36,7 +38,7 @@ const useFundraising = () => {
             }),
         onError: (error: AxiosError<any, any>) => {
             toaster.create({
-                title: error?.response?.data?.message,
+                title: error?.response?.data?.message ?? "Error Occurred",
                 type: "error",
                 closable: true
             })
@@ -48,7 +50,7 @@ const useFundraising = () => {
             let clone = [...formik.values.data]
 
             clone.map((item, index) => {
-                clone[index] = {...item,  bannerImage: fileArray[index]+"", creatorID: userId }
+                clone[index] = {...item,  bannerImage: fileArray[index]+"", creatorID: userId, collaborators: newdata[index].collaborators}
             })
 
             let newGroup = {creatorID: formik.values.data[0]?.creatorID, name: formik.values.data[0]?.name,bannerImage: fileArray[0],description: formik.values.data[0].description, expirationDate: Number(formik.values.data[0].endDate)}
@@ -157,7 +159,7 @@ const useFundraising = () => {
                     image.forEach((file) => {
                         fd.append("files[]", file);
                     });
-                    uploadImage?.mutate(fd)
+                    uploadImage.mutate(fd)
                 } else {
                     updateFundraising.mutate(data.data[0])
                 }
@@ -166,7 +168,7 @@ const useFundraising = () => {
                 image.forEach((file) => {
                     fd.append("files[]", file);
                 });
-                uploadImage?.mutate(fd)
+                uploadImage.mutate(fd)
             } 
         },
     });

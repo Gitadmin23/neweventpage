@@ -1,11 +1,11 @@
-import React, { useState } from 'react' 
+import React from 'react' 
 import { usePathname } from 'next/navigation'
 import { Box, Flex } from '@chakra-ui/react' 
 import useCustomTheme from '@/hooks/useTheme' 
-import { IEventType } from '@/helpers/models/event'
-import CollaboratorBtn from '../shared/addCollaborator'
+import { IEventType } from '@/helpers/models/event' 
 import { UserImage } from '../shared'
 import { formatNumberWithK } from '@/helpers/utils/formatNumberWithK'
+import UpdateCollaborator from './updateCollaborators'
 
 export default function VolunteerBtn(props: IEventType) {
 
@@ -16,8 +16,7 @@ export default function VolunteerBtn(props: IEventType) {
         acceptedCollaborators, 
     } = props
 
-    const pathname = usePathname();
-    const [open, setOpen] = useState(false)
+    const pathname = usePathname(); 
 
     const { mainBackgroundColor, borderColor } = useCustomTheme()
 
@@ -27,7 +26,7 @@ export default function VolunteerBtn(props: IEventType) {
             {((collaborators || admins) && !pathname?.includes("pastdetails")) && (
                 <Flex w={"fit-content"} bgColor={mainBackgroundColor} rounded={"16px"} p={"3"} gap={"4"} borderWidth={"1px"} borderColor={borderColor} alignItems={"center"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
 
-                    <CollaboratorBtn update={true} collaborate={acceptedCollaborators?.length !== 0 || acceptedAdmins?.length !== 0} btn={true} data={props} />
+                    <UpdateCollaborator update={true} collaborate={acceptedCollaborators?.length !== 0 || acceptedAdmins?.length !== 0} btn={true} data={props} />
                     <Flex alignItems={"center"} >
                         {acceptedAdmins?.map((item, index) => {
                             if (index <= 3) {

@@ -24,19 +24,20 @@ export default function ProductTab(
 
     const pathname = usePathname()
     const query = useSearchParams();
-    const type = query?.get('type');
+    const type = query?.get('type'); 
+    const frame = query?.get('frame');
     const router = useRouter() 
 
     const token = Cookies.get("chase_token")
     
     const clickHandler = (item: string) => {
         if (item === "donation") {
-            router.push("/product/fundraising")
+            router.push(`/product/fundraising${frame ? "?frame=true" : ""}`)
         } else if (item === "event") {
-            router.push("/product/events")
+            router.push(`/product/events${frame ? "?frame=true" : ""}`)
         } else {
 
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk?type=${item}&token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk${!frame ? `?type=${item}&token=${token}` : "&frame=true"}`;
             // /dashboard/product/kiosk?type=service
         }
     }

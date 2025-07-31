@@ -12,6 +12,8 @@ import { CustomButton, ModalLayout } from '../shared'
 import ListDonation from './donationcomponents/listDonation'
 import ListProduct from './productcomponents/listProduct'
 import { IEventType } from '@/helpers/models/event'
+import ListService from './serviceList'
+import ListRental from './rentalList'
 
 export default function PrBtn({ data, donation, product }: { data: IEventType, donation?: boolean, product?: boolean }) {
 
@@ -19,9 +21,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
         mainBackgroundColor,
         primaryColor,
         secondaryBackgroundColor
-    } = useCustomTheme()
- 
-    const router = useRouter()
+    } = useCustomTheme() 
 
     const [tab, setTab] = useState(false)
     const [index, setIndex] = useState(product ? 2 : 1)
@@ -30,9 +30,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
     const [lengthDonation, setLengthDonation] = useState(0)
     const [lengthProduct, setLengthProduct] = useState(0)
 
-    const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([])
-    const [selectService, setSelectService] = useState<Array<ITag>>([])
-    const [selectRental, setSelectRental] = useState<Array<ITag>>([])
+    const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([]) 
     const [selectDonation, setSelectDonation] = useState("")
     const [selectDonationInitial, setSelectDonationInitial] = useState("")
     const param = useParams();
@@ -52,69 +50,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
 
     useEffect(() => {
         setTab((donation || product) ? true : false)
-    }, [open])
-
-    const submitHandler = () => {
-        if (index === 2) {
-            if (lengthProduct === 0) {
-                router?.push(`/dashboard/kisok/create?event=${data?.id}`)
-            } else if (selectProduct?.length > 0) {
-                pinProduct?.mutate({ pinnedItems: selectProduct })
-                setOpen(false)
-                setTab(false)
-            } else {
-                // toast({
-                //     status: "warning",
-                //     title: "Added a product",
-                //     isClosable: true,
-                //     duration: 5000,
-                //     position: "top-right",
-                // })
-            }
-        } else if (index === 3) {
-            tagServiceAndRental?.mutate({
-                serviceCategories: [],
-                rentalCategories: selectRental,
-                eventID: data?.id,
-                state: data?.location?.placeIds ? data?.location?.placeIds : "Rivers"
-            })
-        } else if (index === 4) {
-            tagServiceAndRental?.mutate({
-                serviceCategories: selectService,
-                rentalCategories: [],
-                eventID: data?.id,
-                state: data?.location?.placeIds ? data?.location?.placeIds : "Rivers"
-            })
-        } else if (index === 1) {
-            if (lengthProduct === 0) {
-                router?.push(`/dashboard/donation/create?event=${data?.id}`)
-            } else if (!selectDonation) {
-                // toast({
-                //     status: "warning",
-                //     title: "Select a Fundraising",
-                //     isClosable: true,
-                //     duration: 5000,
-                //     position: "top-right",
-                // })
-            } else if (selectDonation === selectDonationInitial) {
-                // toast({
-                //     status: "warning",
-                //     title: "This Fundraising is Pinned",
-                //     isClosable: true,
-                //     duration: 5000,
-                //     position: "top-right",
-                // })
-            } else {
-                if (selectDonation) {
-                    createFundraising?.mutate({
-                        fundRaiserID: selectDonation,
-                        eventID: data?.id,
-                        userID: data?.createdBy?.userId
-                    })
-                }
-            }
-        }
-    }
+    }, [open]) 
 
     useEffect(() => {
         if (data?.affiliates?.length > 0) {
@@ -148,7 +84,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
         <>
             {(data?.isOrganizer && !donation && !product) && (
                 <Flex pos={["relative"]} w={"full"} bgColor={data?.isOrganizer ? primaryColor : data?.prStatus === "ACTIVE" ? primaryColor : data?.prStatus === "PENDING" ? "#FF9500" : "#EEEEFF"} color={data?.prStatus ? "white" : !data?.isOrganizer ? primaryColor : "white"} flexDir={"column"} roundedTop={data?.isOrganizer ? ["0px"] : "32px"} roundedBottomRight={data?.isOrganizer ? ["0px", "0px", "12px"] : "32px"} roundedBottomLeft={data?.isOrganizer ? "12px" : "32px"} gap={"3"} >
-                    <Flex onClick={() => setOpen(true)} as={"button"} w={"full"} gap={"2"} h={"55px"} px={"1"} alignItems={"center"} justifyContent={"center"} >
+                    <Flex onClick={() => setOpen(true)} w={"full"} gap={"2"} h={"55px"} px={"1"} alignItems={"center"} justifyContent={"center"} >
                         <Text fontSize={"14px"} fontWeight={"500"} >My Support Center</Text>
                         {/* <IoIosArrowDown size={"20px"} /> */}
                     </Flex>
@@ -156,12 +92,12 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
             )}
 
             {(donation && data?.isOrganizer) && (
-                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(1) }} as={"button"} justifyContent={"center"} alignItems={"center"} h={"102px"} rounded={"16px"} w={"full"} bgColor={secondaryBackgroundColor} >
+                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(1) }} justifyContent={"center"} alignItems={"center"} h={"102px"} rounded={"16px"} w={"full"} bgColor={secondaryBackgroundColor} >
                     <Text fontWeight={"500"} fontSize={"14px"} color={primaryColor} >+ Add Fundraising</Text>
                 </Flex>
             )}
             {(product && data?.isOrganizer) && (
-                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} as={"button"} justifyContent={"center"} alignItems={"center"} h={["170px","170px","219px"]} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
+                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} justifyContent={"center"} alignItems={"center"} h={["170px","170px","219px"]} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
                     <Text fontWeight={"500"} fontSize={"14px"} color={primaryColor} >+ Add a product</Text>
                 </Flex>
             )}
@@ -205,7 +141,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                 <Flex flexDir={"column"} gap={"4"} w={"full"} px={"4"} mb={"4"} >
                     <Flex gap={"2"} alignItems={"center"} pt={"4"} >
                         {tab && (
-                            <Flex as={"button"} onClick={() => setTab(false)} >
+                            <Flex onClick={() => setTab(false)} >
                                 <IoIosArrowBack size={"20px"} />
                             </Flex>
                         )}
@@ -237,16 +173,16 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                             </Flex>
                             {data?.isOrganizer && (
                                 <Flex flexDirection={"column"} >
-                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(1) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(1) }} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Add fundraising </Text>
                                     </Flex>
-                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(2) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(2) }} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Add kiosk</Text>
                                     </Flex>
-                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(3) }} as={"button"} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(4) }} justifyContent={"space-between"} borderBottomWidth={"1px"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Request Service - Photographer, makeup Artist...</Text>
                                     </Flex>
-                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(4) }} as={"button"} justifyContent={"space-between"} h={"50px"} px={"3"} alignItems={"center"} >
+                                    <Flex w={"full"} cursor={"pointer"} onClick={() => { setTab(true), setIndex(3) }} justifyContent={"space-between"} h={"50px"} px={"3"} alignItems={"center"} >
                                         <Text fontSize={["10px", "14px", "14px"]}  >Rent an item(s)</Text>
                                     </Flex>
                                 </Flex>
@@ -276,17 +212,12 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                                 {index === 2 && (
                                     <ListProduct length={setLengthProduct} setOpen={setOpen} setTab={setTab} selectProduct={selectProduct} setSelectProduct={setSelectProduct} data={data} />
                                 )}
-                                {/* {index === 3 && (
-                                    <ListRental item={data} rental={selectRental} updateRental={setSelectRental} />
+                                {index === 3 && (
+                                    <ListRental data={data} setOpen={setOpen} />
                                 )}
                                 {index === 4 && (
-                                    <ListService service={selectService} selectService={setSelectService} />
-                                )} */}
-                                {(index !== 1 && index !== 2) && (
-                                    <Flex w={"full"} py={"1"} bgColor={(index === 1 || index === 2) ? "white" : "white"} position={"sticky"} bottom={"-4px"} >
-                                        <CustomButton onClick={submitHandler} isLoading={pinProduct?.isPending || createFundraising?.isPending || tagServiceAndRental?.isPending} text={index === 2 ? "Add to product" : "Add"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
-                                    </Flex>
-                                )}
+                                    <ListService data={data} setOpen={setOpen} />
+                                )} 
                             </Flex>
                         </Flex>
                     )}
