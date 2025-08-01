@@ -39,7 +39,7 @@ export default function EventCard(
         <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
             <Flex w={"full"} pos={"relative"} onClick={() => clickHandler()} >
                 <ProductImageScroller images={event.picUrls.length > 0 ? event.picUrls : [event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
-                {/* <Flex w={"40px"} cursor={"pointer"} pos={"absolute"} display={["none", "none", "flex"]} bottom={"4"} right={"4"} h={"40px"} rounded={"full"} bgColor={mainBackgroundColor} justifyContent={"center"} alignItems={"center"} > */}
+                {!frame && (
                     <ShareLink
                         data={event}
                         type="EVENT"
@@ -47,6 +47,7 @@ export default function EventCard(
                         showText={false}
                         id={event?.id}
                     /> 
+                )}
 
                 <Flex  onClick={() => clickHandler()} w={"fit-content"} pos={"absolute"} bottom={"4"} left={"2"} display={["block", "block", "none"]} >
                     <Flex

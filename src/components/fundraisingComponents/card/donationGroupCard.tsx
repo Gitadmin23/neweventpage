@@ -33,8 +33,8 @@ export default function DonationGroupCard(
     const frame = query?.get('frame');
 
     const clickHandler = (item: IDonationGroup, index: string) => {
-        if (frame) { 
-            window.location.href = `${SHARE_URL}/fundraiser?id=${item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id}`; 
+        if (frame) {
+            window.location.href = `${SHARE_URL}/fundraiser?id=${item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id}`;
         } else {
             router?.push("/product/details/fundraising/" + item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)
         }
@@ -45,13 +45,15 @@ export default function DonationGroupCard(
         <Flex flexDir={"column"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
             <Flex onClick={() => clickHandler(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} cursor={"pointer"} w={"full"} h={"fit-content"} pos={"relative"} >
                 <ProductImageScroller images={[item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.bannerImage]} createdDate={moment(item?.createdDate)?.fromNow()} userData={item?.user} />
-                <ShareLink
-                    data={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]}
-                    type="DONATION"
-                    // size="18px"
-                    showText={false}
-                    id={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id}
-                />
+                {!frame && (
+                    <ShareLink
+                        data={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]}
+                        type="DONATION"
+                        // size="18px"
+                        showText={false}
+                        id={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id}
+                    />
+                )}
             </Flex>
             <Flex onClick={() => clickHandler(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} cursor={"pointer"} w={"full"} flexDir={"column"} px={["2", "2", "3"]} pt={["2", "2", "3"]} gap={"2"} pb={["2", "2", userId !== item?.user?.userId ? "0px" : "3"]} >
                 <Flex w={"full"} >
