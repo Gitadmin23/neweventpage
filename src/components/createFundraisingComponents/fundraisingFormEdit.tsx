@@ -9,7 +9,7 @@ import httpService from "@/helpers/services/httpService";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query"; 
 
-export default function FundraisingForm() {
+export default function FundraisingFormEdit() {
 
     const query = useSearchParams(); 
     const id = query?.get('id');

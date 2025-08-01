@@ -12,40 +12,40 @@ import DonationCollaborator from "./donationCollaborator";
 export default function FundraisingForm() {
 
     const { formik, uploadImage, createFundraising, createFundraisingGroup, updateFundraising, open, setOpen } = useFundraising()
-    const { userId } = useDetails((state) => state)
+    // const { userId } = useDetails((state) => state)
 
-    const {
-        secondaryBackgroundColor
-    } = useCustomTheme()
+    // const {
+    //     secondaryBackgroundColor
+    // } = useCustomTheme()
 
     const onSwitchHandler = (name: string, value: any) => {
         formik.setFieldValue(name, value ? "PRIVATE" : "PUBLIC")
     }
 
-    const clickHandler = () => {
+    // const clickHandler = () => {
 
-        let clone = [...formik.values.data, {
-            "visibility": "PUBLIC",
-            creatorID: userId,
-            name: "",
-            bannerImage: "",
-            description: "",
-            endDate: "",
-            goal: "",
-            purpose: "",
-            collaborators: []
-        }]
+    //     let clone = [...formik.values.data, {
+    //         "visibility": "PUBLIC",
+    //         creatorID: userId,
+    //         name: "",
+    //         bannerImage: "",
+    //         description: "",
+    //         endDate: "",
+    //         goal: "",
+    //         purpose: "",
+    //         collaborators: []
+    //     }]
 
-        formik.setFieldValue('data', clone);
-    }
+    //     formik.setFieldValue('data', clone);
+    // }
 
-    const handleRemove = (index: number) => {
-        const newList = [...formik.values.data];
-        newList.splice(index, 1);
-        formik.setFieldValue('data', newList);
-    };
+    // const handleRemove = (index: number) => {
+    //     const newList = [...formik.values.data];
+    //     newList.splice(index, 1);
+    //     formik.setFieldValue('data', newList);
+    // };
 
-    const pathname = usePathname()
+    // const pathname = usePathname()
 
     return (
         <Flex w={"full"} flexDir={"column"} alignItems={"center"} >

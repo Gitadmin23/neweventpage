@@ -26,17 +26,13 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
     const [tab, setTab] = useState(false)
     const [index, setIndex] = useState(product ? 2 : 1)
     const [prCheck, setPrCheck] = useState(false)
-    const [percent, setPercentage] = useState("")
-    const [lengthDonation, setLengthDonation] = useState(0)
-    const [lengthProduct, setLengthProduct] = useState(0)
+    const [percent, setPercentage] = useState("") 
 
     const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([]) 
     const [selectDonation, setSelectDonation] = useState("")
     const [selectDonationInitial, setSelectDonationInitial] = useState("")
-    const param = useParams();
-    const id = param?.slug 
 
-    const { createPr, tagServiceAndRental, createFundraising, open, setOpen, updateEvent, pinProduct } = usePr()
+    const { createPr, open, setOpen, updateEvent } = usePr()
 
     // const toast = useToast()
 
@@ -207,10 +203,10 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                             </Flex>
                             <Flex w={"full"} pb={"4"} gap={"4"} bgColor={(index === 1 || index === 2) ? "transparent" : "transparent"} rounded={"16px"} flexDir={"column"} >
                                 {index === 1 && (
-                                    <ListDonation length={setLengthDonation} setOpen={setOpen} item={data} setSelectInitialDonation={setSelectDonationInitial} initialDonation={selectDonationInitial} selectDonation={selectDonation} setSelectDonation={setSelectDonation} />
+                                    <ListDonation setOpen={setOpen} item={data} setSelectInitialDonation={setSelectDonationInitial} initialDonation={selectDonationInitial} selectDonation={selectDonation} setSelectDonation={setSelectDonation} />
                                 )}
                                 {index === 2 && (
-                                    <ListProduct length={setLengthProduct} setOpen={setOpen} setTab={setTab} selectProduct={selectProduct} setSelectProduct={setSelectProduct} data={data} />
+                                    <ListProduct setOpen={setOpen} setTab={setTab} selectProduct={selectProduct} setSelectProduct={setSelectProduct} data={data} />
                                 )}
                                 {index === 3 && (
                                     <ListRental data={data} setOpen={setOpen} />

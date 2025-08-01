@@ -9,20 +9,21 @@ import { IEventType } from '@/helpers/models/event';
 import { toaster } from '@/components/ui/toaster';
 import { Flex, Image, Text } from '@chakra-ui/react';
 import { CustomButton, LoadingAnimation } from '@/components/shared';
-import { IMAGE_URL } from '@/helpers/services/urls';
+import { DASHBOARDPAGE_URL, IMAGE_URL } from '@/helpers/services/urls';
 import { textLimit } from '@/helpers/utils/textlimit';
 import { numberFormatNaire } from '@/helpers/utils/formatNumberWithK';
 import useGetUser from '@/hooks/useGetUser';
 import { useDetails } from '@/helpers/store/useUserDetails';
+import Cookies from 'js-cookie';
  
 
-export default function ListProduct({ setOpen, selectProduct, setSelectProduct, data, setTab }: { setOpen?: any, selectProduct: Array<IPinned>, setSelectProduct: any, data?: IEventType, length: any, setTab?: any }) {
+export default function ListProduct({ setOpen, selectProduct, setSelectProduct, data, setTab }: { setOpen?: any, selectProduct: Array<IPinned>, setSelectProduct: any, data?: IEventType, setTab?: any }) {
 
     
     const { userId } = useDetails()
 
     const { primaryColor } = useCustomTheme()
-    const router = useRouter()
+    const token = Cookies.get("chase_token")
 
     const { pinProduct } = usePr() 
 
@@ -50,13 +51,14 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
     const clickHander = () => {
 
         if (results?.length === 0) {
-            router?.push(`/dashboard/kisok/create?event=${data?.id}`)
+
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/create?event=${data?.id}&token=${token}`;
+            // router?.push(`/dashboard/kisok/create?event=${data?.id}`)
         } else if (selectProduct?.length > 0) {
             pinProduct?.mutate({ pinnedItems: selectProduct })
             setOpen(false)
             setTab(false)
-        } else {
-
+        } else { 
             toaster.create({
                 title: "Added a product", 
                 type: "info",
@@ -123,7 +125,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
                 </Flex>
             </LoadingAnimation>
             <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
-                <CustomButton onClick={clickHander} isLoading={pinProduct?.isPending} text={"Add to product"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
+                <CustomButton onClick={clickHander} isLoading={pinProduct?.isPending} text={results?.length > 0 ? "Add" : "Add to product"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
             </Flex>
         </Flex>
     )

@@ -23,11 +23,16 @@ export default function SuccessModal(
     const pathname = usePathname()
     const router = useRouter()
 
-    const query = useSearchParams();
-
-    console.log(open);
+    const query = useSearchParams();   
+    const event = query?.get('event');
     
-    const id = query?.get('id');
+    const clickHandler = () => {
+        if(event) {
+            router.push(`/product/details/events/${event}`)
+        } else {
+            router.push(`/product/fundraising?type=my_fundraising`)
+        }
+    }
 
     return (
         <ModalLayout open={open} size="sm" trigger={true} close={() => setOpen(true)} >
@@ -37,7 +42,7 @@ export default function SuccessModal(
                 <Text fontSize={"22px"} color={headerTextColor} lineHeight={"26.4px"} textAlign={"center"} fontWeight={"700"} mt={"4"} >Fundraising {pathname?.includes("edit") ? "Updated" : "Created"} Successfully</Text>
                 <Text fontSize={"14px"} color={bodyTextColor} fontWeight={"500"} maxW={"300px"} textAlign={"center"} mt={"2"} mb={"6"} lineHeight={"16.8px"} >Your fundraising is now live. You may proceed to My fundraising to view it.</Text>
                 <CustomButton borderWidth={"0px"}
-                    onClick={() => router.push(`/product/fundraising?type=my_fundraising`)} 
+                    onClick={clickHandler} 
                     color={"white"} text='Proceed to My Fundraising' w={"full"} borderRadius={"999px"} />
             </Flex>
            </Flex>

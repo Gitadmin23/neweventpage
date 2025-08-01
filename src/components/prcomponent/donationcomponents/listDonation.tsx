@@ -12,7 +12,7 @@ import httpService from '@/helpers/services/httpService'
 import { useMutation } from '@tanstack/react-query'
 import { IEventType } from '@/helpers/models/event'
 
-export default function ListDonation({ item, length, setOpen }: { setSelectDonation: any, setSelectInitialDonation: any, selectDonation: string, initialDonation: string, item: IEventType, length: any, setOpen: any }) {
+export default function ListDonation({ item, setOpen }: { setSelectDonation: any, setSelectInitialDonation: any, selectDonation: string, initialDonation: string, item: IEventType, setOpen: any }) {
 
 
     const search = ""
@@ -50,15 +50,11 @@ export default function ListDonation({ item, length, setOpen }: { setSelectDonat
         fetchData();
     }, [])
 
-    useEffect(() => {
-        length(results?.length)
-    }, [loadingList])
-
     const clickHander = () => {
 
         if (results?.length === 0) {
-            router?.push(`/dashboard/donation/create?event=${item?.id}`)
-        } else if (!selectDonation) { 
+            router?.push(`/product/create/fundraising?event=${item?.id}`)
+        } else if (!selectDonation) {
 
             toaster.create({
                 title: "Select a Fundraising",
@@ -66,7 +62,7 @@ export default function ListDonation({ item, length, setOpen }: { setSelectDonat
                 closable: true
             })
         } else if (selectDonation === selectDonationInitial) {
-            
+
             toaster.create({
                 title: "This Fundraising is Pinned",
                 type: "info",
@@ -98,11 +94,9 @@ export default function ListDonation({ item, length, setOpen }: { setSelectDonat
                     })}
                 </Flex>
             </LoadingAnimation>
-            {results?.length > 0 && (
-                <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
-                    <CustomButton onClick={clickHander} isLoading={createFundraising?.isPending} text={"Add"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
-                </Flex>
-            )}
+            <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
+                <CustomButton onClick={clickHander} isLoading={createFundraising?.isPending} text={results?.length > 0 ? "Add" : "Create Fundraising"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
+            </Flex>
         </Flex>
     )
 }

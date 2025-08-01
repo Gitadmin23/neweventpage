@@ -2,8 +2,8 @@
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { usePathname } from 'next/navigation';
-import React, { useState } from 'react' 
-import { IoClose } from 'react-icons/io5'; 
+import React, { useState } from 'react'
+import { IoClose } from 'react-icons/io5';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import ModalLayout from './modalLayout';
@@ -12,6 +12,7 @@ import { URLS } from '@/helpers/services/urls';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import CustomButton from './customButton';
 import useCustomTheme from '@/hooks/useTheme';
+import { toaster } from '../ui/toaster';
 
 interface Props {
     isOrganizer: boolean,
@@ -31,7 +32,7 @@ function DeleteBtn(props: Props) {
         isOrganizer,
         isProduct,
         isRental,
-        isServices, 
+        isServices,
         draft,
         isEvent,
         name,
@@ -41,7 +42,7 @@ function DeleteBtn(props: Props) {
     const pathname = usePathname()
     // const toast = useToast()
     const queryClient = useQueryClient()
-    const { userId: user_index } = useDetails((state) => state); 
+    const { userId: user_index } = useDetails((state) => state);
 
     const {
         primaryColor
@@ -49,7 +50,7 @@ function DeleteBtn(props: Props) {
 
     // detete event
     const deleteEvent = useMutation({
-        mutationFn: () => httpService.delete((draft ? `/events/delete-draft/${id}` : donation ? `/fund-raiser/${id}?id=${id}` : isEvent  ? `/events/delete-event/${id}` : isServices ?  `/business-service/delete/${id}` : isRental ? `/rental/delete/${id}` : isProduct ? `/products/${id}` : "")),
+        mutationFn: () => httpService.delete((draft ? `/events/delete-draft/${id}` : donation ? `/fund-raiser/${id}?id=${id}` : isEvent ? `/events/delete-event/${id}` : isServices ? `/business-service/delete/${id}` : isRental ? `/rental/delete/${id}` : isProduct ? `/products/${id}` : "")),
         onError: (error: AxiosError<any, any>) => {
             // toast({
             //     title: 'Error',
@@ -70,20 +71,54 @@ function DeleteBtn(props: Props) {
                 //     duration: 5000,
                 //     position: 'top-right',
                 // });
-            } else {
-
-                // toast({
-                //     title: 'Success',
-                //     description: "Fundraiser Deleted",
-                //     status: 'success',
-                //     isClosable: true,
-                //     duration: 5000,
-                //     position: 'top-right',
-                // });
+                toaster.create({
+                    title: "Event can't be deleted, someone has registered for this event.",
+                    type: "error",
+                    closable: true
+                })
+            } else { 
+                if (donation) {
+                    toaster.create({
+                        title: "Fundraiser Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                } else if (isEvent) {
+                    toaster.create({
+                        title: "Event Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                } else if (isServices) {
+                    toaster.create({
+                        title: "Business Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                } else if (isProduct) {     
+                    toaster.create({
+                        title: "Product Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                } else if (isRental) {
+                    toaster.create({
+                        title: "Rental Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                } else if (draft){
+                    toaster.create({
+                        title: "Draft Deleted",
+                        type: "success",
+                        closable: true
+                    })
+                }
             }
 
-            queryClient.refetchQueries({ queryKey: ["myevent"]}) 
-            
+            queryClient.refetchQueries({ queryKey: ["myevent"] })
+            queryClient.refetchQueries({ queryKey: ["mydonationlist"] })
+
 
             // queryClient.refetchQueries({ queryKey: [URLS.JOINED_EVENT + user_index]})
             setOpen(false)
@@ -110,7 +145,7 @@ function DeleteBtn(props: Props) {
                     <IoClose size={"14px"} />
                 </Flex>
             )}
-            <ModalLayout open={open} trigger={true} close={()=> setOpen(false)} size={"xs"} >
+            <ModalLayout open={open} trigger={true} close={() => setOpen(false)} size={"xs"} >
                 <Flex flexDirection={"row"} flexDir={"column"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>
                     <Image alt='delete' src='/images/deleteaccount.svg' />
                     <Text fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Delete {pathname?.includes("mydonation") ? "Fundraising" : isServices ? "Business" : isProduct ? "Product" : isRental ? "Rental" : "Event"}</Text>

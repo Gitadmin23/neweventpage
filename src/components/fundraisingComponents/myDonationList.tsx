@@ -23,10 +23,7 @@ export default function MyDonationList(
         paramsObj: {
             name: search.toLowerCase()
         }
-    })
-
-    console.log(results);
-
+    }) 
 
     return (
         <LoadingAnimation loading={loadingList} refeching={refetchingList} length={results?.length} >

@@ -2,7 +2,7 @@ import useCustomTheme from '@/hooks/useTheme'
 import { Button, Flex, Image, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { IoClose } from 'react-icons/io5'
+import { IoChevronBack, IoChevronForward, IoClose } from 'react-icons/io5'
 import { IPinned, IProduct } from '@/helpers/models/product'
 import { IEventType } from '@/helpers/models/event'
 import usePr from '@/hooks/usePr'
@@ -13,7 +13,7 @@ import { textLimit } from '@/helpers/utils/textlimit'
 import { DASHBOARDPAGE_URL, IMAGE_URL } from '@/helpers/services/urls'
 import PrBtn from '../prcomponent/prBtn'
 import Cookies from "js-cookie"
-import { useFetchData } from '@/hooks/useFetchData' 
+import { useFetchData } from '@/hooks/useFetchData'
 
 interface IProps {
     "id": string,
@@ -34,7 +34,12 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const { mainBackgroundColor, secondaryBackgroundColor, primaryColor } = useCustomTheme()
 
-    const { push } = useRouter()
+
+    const ref: any = React.useRef(null);
+
+    const scroll = (scrolloffset: number) => {
+        ref.current.scrollLeft += scrolloffset
+    };
 
     const [newData, setNewData] = useState([] as any)
 
@@ -43,11 +48,13 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
-    const { data: eventData, isLoading } = useFetchData<Array<IProps>>({name: "all-events-mesh", endpoint: `/pin-item/search`, id: data?.id, params: {
-        typeId: data?.id
-    }});
+    const { data: eventData = [], isLoading } = useFetchData<Array<IProps>>({
+        name: "all-events-mesh", endpoint: `/pin-item/search`, id: data?.id, params: {
+            typeId: data?.id
+        }
+    });
 
-    useEffect(()=> {
+    useEffect(() => {
         setNewData(eventData)
     }, [isLoading])
 
@@ -71,13 +78,13 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
 
     const routeHandler = (item?: string) => {
 
-        if(item) {
+        if (item) {
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details/${item}?token=${token}`;
         } else {
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${data?.createdBy?.userId}/kiosk?token=${token}`;
         }
-        
-    } 
+
+    }
 
     return (
         <Flex position={"relative"} display={(newData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
@@ -94,8 +101,8 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
             <Flex w={"full"} height={"180px"} pos={"relative"} />
 
             <LoadingAnimation loading={isLoading} >
-                <Flex position={"absolute"} top={["14", "10", "12"]} maxW={"full"} overflowX={"auto"} className='hide-scrollbar' >
-                    <Flex w={"fit-content"} gap={"2"} pos={"relative"} >
+                <Flex ref={ref} position={"absolute"} top={["14", "10", "12"]} maxW={"full"} overflowX={"auto"} className='hide-scrollbar' >
+                    <Flex position={"relative"} w={"fit-content"} gap={"2"} pos={"relative"} >
                         <PrBtn data={data} product={true} />
                         {eventData?.map((item, index) => {
                             return (
@@ -129,7 +136,16 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                     </Flex>
                 </Flex>
             </LoadingAnimation>
-
+            {eventData?.length > 3 && (
+                <>
+                    <Flex zIndex={"10"} cursor={"pointer"} justifyContent={"center"} alignItems={"center"} position={"absolute"} top={"50%"} left={"0px"} bgColor={"white"} borderWidth={"1px"} onClick={() => scroll(-400)} as="button" w={"40px"} h={"40px"} rounded={"full"} >
+                        <IoChevronBack size={"20px"} color='grey' />
+                    </Flex>
+                    <Flex zIndex={"10"} cursor={"pointer"} justifyContent={"center"} alignItems={"center"} position={"absolute"} top={"50%"} right={"0px"} bgColor={"white"} borderWidth={"1px"} onClick={() => scroll(400)} as="button" w={"40px"} h={"40px"} rounded={"full"} >
+                        <IoChevronForward size={"20px"} color='grey' />
+                    </Flex>
+                </>
+            )}
         </Flex>
     )
 }

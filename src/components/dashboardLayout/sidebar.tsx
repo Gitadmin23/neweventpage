@@ -75,14 +75,13 @@ export default function SideBar() {
     }
 
     const token = Cookies.get("chase_token")
-    
+
     const routeHandler = (item: string) => { 
-        
-            if(item === "/product/events") {
-                router.push("/product/events")
-            } else {
-                window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
-            }
+        if (item === "/product/events") {
+            router.push("/product/events")
+        } else {
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
+        }
     }
 
     const ToolTip = ({ content }: { content: string }) => {
@@ -147,14 +146,14 @@ export default function SideBar() {
                         </Box>
                         <ToolTip content={"darkmode"} />
                     </Flex>
-                    <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} > 
-                            <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
-                                {isLoading ? (
-                                    <Spinner color={primaryColor} />
-                                ) : (
-                                    <UserImage user={user} size="sm" />
-                                )}
-                            </Flex> 
+                    <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
+                        <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
+                            {isLoading ? (
+                                <Spinner color={primaryColor} />
+                            ) : (
+                                <UserImage user={user} size="sm" />
+                            )}
+                        </Flex>
                         <ToolTip content={"profile"} />
                     </Flex>
 
