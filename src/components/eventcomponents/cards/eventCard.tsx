@@ -30,12 +30,8 @@ export default function EventCard(
     const clickHandler = () => {
         if (frame) {
             window.location.href = `${SHARE_URL}/event?id=${event?.id}`; 
-        } else {
-            toaster.create({
-                title: "share link",
-                type: "error",
-                closable: true
-            })
+        } else { 
+            router.push("/product/details/events/" + event?.id);
         }
     }
 

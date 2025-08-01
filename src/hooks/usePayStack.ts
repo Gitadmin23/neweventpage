@@ -9,6 +9,7 @@ const PAYSTACK_KEY = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 const usePayStack = () => {
 
     const [open, setOpen] = useState(false); 
+    const [openMobile, setOpenMobile] = useState(false); 
     const queryClient = useQueryClient()
 
 
@@ -34,6 +35,7 @@ const usePayStack = () => {
             }) 
  
             setOpen(false);
+            setOpenMobile(false)
         },
         onError: () => {
             toaster.create({
@@ -66,6 +68,7 @@ const usePayStack = () => {
             }) 
  
             setOpen(false);
+            setOpenMobile(false)
         },
         onError: () => {
             toaster.create({
@@ -134,6 +137,8 @@ const usePayStack = () => {
         payForDonation,
         open,
         setOpen,
+        openMobile,
+        setOpenMobile
     };
 };
 

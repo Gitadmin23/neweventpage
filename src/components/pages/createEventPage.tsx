@@ -11,7 +11,7 @@ export default function CreateEventPage() {
     const query = useSearchParams();
     const type = query?.get('type');
 
-    const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen } = useEvent()
+    const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen, updateUserEvent } = useEvent()
 
     return (
         <Flex w={"full"} justifyContent={"center"} py={"8"} >
@@ -23,7 +23,7 @@ export default function CreateEventPage() {
                     <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />
                 )}
                 {type === "ticket" && (
-                    <Ticket formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending} />
+                    <Ticket formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
                 )}
             </Flex>
             <SuccessModal open={open} setOpen={setOpen} />

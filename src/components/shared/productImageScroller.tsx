@@ -1,8 +1,8 @@
 "use client"
-import useCustomTheme from '@/hooks/useTheme'; 
-import { Flex, HStack, Image, Text } from '@chakra-ui/react'; 
-import React from 'react' 
-import { useRouter } from 'next/navigation'; 
+import useCustomTheme from '@/hooks/useTheme';
+import { Flex, HStack, Image, Text } from '@chakra-ui/react';
+import React from 'react'
+import { useRouter, useSearchParams } from 'next/navigation';
 import { IUser } from '@/helpers/models/user';
 import { textLimit } from '@/helpers/utils/textlimit';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
@@ -14,6 +14,8 @@ export default function ProductImageScroller({ images, userData, createdDate, he
 
     const [activeImageIndex, setActiveImageIndex] = React.useState(0);
     const { push } = useRouter()
+    const query = useSearchParams();
+    const frame = query?.get('frame');
 
     const { secondaryBackgroundColor } = useCustomTheme()
 
@@ -29,17 +31,19 @@ export default function ProductImageScroller({ images, userData, createdDate, he
             }, 3000);
             return () => clearInterval(interval);
         }
-    }, []) 
+    }, [])
 
-    const clickHandler =(e: any)=> {
-        e.stopPropagation()
-        push(`/dashboard/profile/${userData?.userId}`)
-    } 
- 
+    const clickHandler = (e: any) => {
+        if (!frame) {
+            e.stopPropagation()
+            push(`/dashboard/profile/${userData?.userId}`)
+        }
+    }
+
     return (
         <Flex cursor='pointer' w='full' h={"fit-content"} bgColor={secondaryBackgroundColor} p={objectFit ? "0px" : ["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
             {createdDate && (
-                <Flex as={"button"} onClick={(e)=> clickHandler(e)}  position={"absolute"} zIndex={"10"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
+                <Flex as={"button"} onClick={(e) => clickHandler(e)} position={"absolute"} zIndex={"10"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
                     <UserImage user={userData} size={"md"} />
                     <Flex flexDir={"column"} alignItems={"start"} pr={"3"} >
                         <Text display={["none", "none", "block"]} fontSize={"12px"} fontWeight={"600"} color={"white"} >
@@ -63,7 +67,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
             )}
 
             {images?.length > 0 && (
-                <Image rounded={ rounded ?? "8px"} cursor='pointer' src={images[activeImageIndex]?.startsWith('https://') ? images[activeImageIndex] : (IMAGE_URL as string) + images[activeImageIndex]} alt="bannerimage" h={height ?? ["144px", "174px", "174px"]} w={"auto"} objectFit={objectFit ?? "contain"} />
+                <Image rounded={rounded ?? "8px"} cursor='pointer' src={images[activeImageIndex]?.startsWith('https://') ? images[activeImageIndex] : (IMAGE_URL as string) + images[activeImageIndex]} alt="bannerimage" h={height ?? ["144px", "174px", "174px"]} w={"auto"} objectFit={objectFit ?? "contain"} />
             )}
             <Flex bgColor={"#000"} opacity={"10%"} pos={"absolute"} inset={"0px"} borderTopRadius={rounded ?? '10px'} />
         </Flex>

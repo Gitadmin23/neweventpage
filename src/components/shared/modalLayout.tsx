@@ -62,7 +62,7 @@ export default function ModalLayout({
             {trigger && (
                 <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
-                    <Dialog.Positioner px={"2"} >
+                    <Dialog.Positioner p={"2"} >
                         <Dialog.Content >
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
@@ -75,8 +75,8 @@ export default function ModalLayout({
                                     )}
                                 </Dialog.Header>
                             )}
-                            <Dialog.Body >
-                                <Flex w={"full"} h={"full"} >
+                            <Dialog.Body>
+                                <Flex w={"full"} h={"auto"} overflowY={"hidden"} >
                                     {children}
                                 </Flex>
                             </Dialog.Body>

@@ -18,7 +18,7 @@ export default function DraftEventPage() {
     const type = query?.get('type');
     const id = query?.get('id');
 
-    const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen } = useEvent()
+    const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen, updateUserEvent } = useEvent()
 
     const { mutate: fetchData, isPending: isLoading } = useMutation({
         mutationKey: ['draft', id],
@@ -82,7 +82,7 @@ export default function DraftEventPage() {
                         <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />
                     )}
                     {type === "ticket" && (
-                        <Ticket formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending} />
+                        <Ticket formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
                     )}
                 </Flex>
                 <SuccessModal open={open} setOpen={setOpen} />
