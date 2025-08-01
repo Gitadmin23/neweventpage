@@ -118,7 +118,7 @@ export default function DetailsPage(
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
                     {/* <EventLocation showLink={true} data={props} /> */}
-                    <Flex w={"full"} maxW={"500px"} gap={"2"} flexDir={["column", "column", "column", "column", "row"]} >
+                    <Flex w={"full"} maxW={"500px"} gap={"2"} flexDir={["column", "column", "column", "column", "column"]} >
                         <Flex w={"full"} display={["flex", "flex", "none"]} >
                             <EventMesh data={props} />
                         </Flex>

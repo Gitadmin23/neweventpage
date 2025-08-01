@@ -76,19 +76,23 @@ export default function CollaboratorBtn(props: IProps) {
     const [show, setShow] = useState(false)
 
     const queryClient = useQueryClient()
- 
+
     console.log(eventdata);
-    
+
 
     const [search, setSearch] = React.useState('');
 
 
-    const { results, isLoading, ref } = InfiniteScrollerComponent({ url: `/user/search-users?searchText=${search}`, limit: 10, filter: "userId", name: "all-event", search: search })
+    const { results, isLoading, ref } = InfiniteScrollerComponent({
+        url: `/user/search-users`, limit: 10, filter: "userId", name: "all-event", search: search, paramsObj: {
+            searchText: search
+        }
+    })
 
     const CheckLimit = (lengthOfCollab: any, clone: any, name?: string) => {
 
 
-        const numb = lengthOfCollab ? lengthOfCollab : 0  
+        const numb = lengthOfCollab ? lengthOfCollab : 0
 
         if (numb + 1 === 11 && name === "add") {
             toaster.create({
@@ -100,7 +104,7 @@ export default function CollaboratorBtn(props: IProps) {
         } else if (numb <= 10) {
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -132,7 +136,7 @@ export default function CollaboratorBtn(props: IProps) {
             if (!value?.admins?.includes(userIndex)) {
                 setShow((prev) => !prev)
 
-                clone.admins = [...admin, userIndex]  
+                clone.admins = [...admin, userIndex]
                 CheckLimit(lengthOfCollab, clone)
                 return
             } else {
@@ -141,7 +145,7 @@ export default function CollaboratorBtn(props: IProps) {
                 clone?.admins.splice(index, 1);
             }
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -153,7 +157,7 @@ export default function CollaboratorBtn(props: IProps) {
             clone?.admins.splice(index, 1);
 
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -184,7 +188,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             if (!value?.collaborators?.includes(userIndex)) {
 
-                clone.collaborators = [...collaborators, userIndex] 
+                clone.collaborators = [...collaborators, userIndex]
                 CheckLimit(lengthOfCollab, clone)
             } else {
 
@@ -195,7 +199,7 @@ export default function CollaboratorBtn(props: IProps) {
             }
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -210,7 +214,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -240,7 +244,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             if (!value?.acceptedAdmins?.includes(userIndex)) {
 
-                clone.acceptedAdmins = [...admin, userIndex] 
+                clone.acceptedAdmins = [...admin, userIndex]
                 CheckLimit(lengthOfCollab, clone)
             } else {
 
@@ -251,7 +255,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -265,7 +269,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -292,7 +296,7 @@ export default function CollaboratorBtn(props: IProps) {
 
             if (!value?.acceptedCollaborators?.includes(userIndex)) {
 
-                clone.acceptedCollaborators = [...collaborators, userIndex] 
+                clone.acceptedCollaborators = [...collaborators, userIndex]
                 CheckLimit(lengthOfCollab, clone)
             } else {
                 const index = collaborators.indexOf(userIndex);
@@ -302,7 +306,7 @@ export default function CollaboratorBtn(props: IProps) {
             }
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -313,7 +317,7 @@ export default function CollaboratorBtn(props: IProps) {
             clone?.acceptedCollaborators.splice(index, 1);
             // updateEvent(clone)
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins);
             }
@@ -540,13 +544,13 @@ export default function CollaboratorBtn(props: IProps) {
             clone.acceptedCollaborators = acceptedCollaborators
 
             updateEvent(clone)
-            if(!update) {
+            if (!update) {
                 setValue("collaborators", clone.collaborators)
                 setValue("admins", clone.admins)
             }
         }
 
-    } 
+    }
     // const toast = useToast()
 
     // Edit Event
@@ -658,7 +662,7 @@ export default function CollaboratorBtn(props: IProps) {
                                 <Button onClick={() => changeTabHandler(false)} _hover={{ backgroundColor: !tab ? "white" : "transparent" }} borderBottom={!tab ? "1px solid #5465E0" : ""} width={"45%"} bgColor={!tab ? "white" : "transparent"} h={"36px"} color={"#5465E0"} fontWeight={"medium"} fontSize={"sm"} >Network</Button>
                                 <Button onClick={() => changeTabHandler(true)} _hover={{ backgroundColor: tab ? "white" : "transparent" }} borderBottom={tab ? "1px solid #5465E0" : ""} width={"45%"} bgColor={tab ? "white" : "transparent"} h={"36px"} color={"#5465E0"} fontWeight={"medium"} fontSize={"sm"} >Collaborators</Button>
                             </Flex>
-                        )} 
+                        )}
                         <InputGroup startElement={
                             <Flex pl={"3"} >
                                 <IoSearchOutline size={"20px"} />

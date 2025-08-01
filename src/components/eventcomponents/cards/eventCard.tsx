@@ -2,13 +2,15 @@
 import { IEventType } from "@/helpers/models/event";
 import useCustomTheme from "@/hooks/useTheme";
 import { Flex, Text } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
-import { ProductImageScroller } from "../../shared";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ProductImageScroller, ShareLink } from "../../shared";
 import moment from "moment";
 import { LocationStrokeEx } from "@/svg";
 import { textLimit } from "@/helpers/utils/textlimit";
 import InterestedUsers from "../interestedUser";
 import EventPrice from "../eventPrice";
+import { toaster } from "@/components/ui/toaster";
+import { SHARE_URL } from "@/helpers/services/urls";
 
 export default function EventCard(
     {
@@ -21,31 +23,36 @@ export default function EventCard(
     const router = useRouter()
 
     const { primaryColor, mainBackgroundColor } = useCustomTheme()
- 
+    const query = useSearchParams();
+    const frame = query?.get('frame');
+
 
     const clickHandler = () => {
-        // if (token) {
-            router.push("/product/details/events/" + event?.id);
-        // } else {
-        //     router.push("/event/" + event?.id);
-        // }
+        if (frame) {
+            window.location.href = `${SHARE_URL}/event?id=${event?.id}`; 
+        } else {
+            toaster.create({
+                title: "share link",
+                type: "error",
+                closable: true
+            })
+        }
     }
 
     return (
-        <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} onClick={() => clickHandler()} borderWidth={"1px"} rounded={"10px"} w={"full"} >
-            <Flex w={"full"} pos={"relative"} >
+        <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
+            <Flex w={"full"} pos={"relative"} onClick={() => clickHandler()} >
                 <ProductImageScroller images={event.picUrls.length > 0 ? event.picUrls : [event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
-                {/* <Flex w={"40px"} pos={"absolute"} display={["none", "none", "flex"]} bottom={"4"} right={"4"} h={"40px"} rounded={"full"} bgColor={mainBackgroundColor} justifyContent={"center"} alignItems={"center"} > */}
-                {/* <ShareEvent
+                {/* <Flex w={"40px"} cursor={"pointer"} pos={"absolute"} display={["none", "none", "flex"]} bottom={"4"} right={"4"} h={"40px"} rounded={"full"} bgColor={mainBackgroundColor} justifyContent={"center"} alignItems={"center"} > */}
+                    <ShareLink
                         data={event}
                         type="EVENT"
                         // size="18px"
                         showText={false}
                         id={event?.id}
-                    /> */}
-                {/* </Flex> */}
+                    /> 
 
-                <Flex w={"fit-content"} pos={"absolute"} bottom={"4"} left={"2"} display={["block", "block", "none"]} >
+                <Flex  onClick={() => clickHandler()} w={"fit-content"} pos={"absolute"} bottom={"4"} left={"2"} display={["block", "block", "none"]} >
                     <Flex
                         width={"40px"}
                         flexDir={"column"}
@@ -70,7 +77,7 @@ export default function EventCard(
                         </Text>
                     </Flex>
                 </Flex>
-            </Flex> 
+            </Flex>
             <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={["1", "1", "1"]} >
                 <Flex gap={"2"} >
                     <Flex w={"fit-content"} display={["none", "none", "block"]} >
@@ -116,10 +123,10 @@ export default function EventCard(
 
             <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
                 {event?.attendeesVisibility && (
-                    <InterestedUsers 
-                        event={event} 
+                    <InterestedUsers
+                        event={event}
                     />
-                )} 
+                )}
                 <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={"14px"} >
                     <EventPrice
                         minPrice={event?.minPrice}

@@ -27,9 +27,6 @@ export default function ListService(
 
     const { data: serviceData, isLoading } = useFetchData<Array<any>>({ name: "all-services", endpoint: `/business-service/categories` });
 
-
-    console.log(serviceData);
-
     const [selectedItem, setSelectedItem] = useState("")
     const { mainBackgroundColor, primaryColor, secondaryBackgroundColor } = useCustomTheme()
     const [search, setSearch] = useState("")

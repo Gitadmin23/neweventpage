@@ -1,4 +1,4 @@
-import { ProductImageScroller, CircularProgressBar, DeleteBtn } from "@/components/shared";
+import { ProductImageScroller, CircularProgressBar, DeleteBtn, ShareLink } from "@/components/shared";
 import DonationBtn from "@/components/shared/donationBtn";
 import { IDonationList } from "@/helpers/models/fundraising";
 import { useDetails } from "@/helpers/store/useUserDetails";
@@ -41,6 +41,13 @@ export default function DonationCard(
             )}
             <Flex onClick={() => clickHander(item?.id)} cursor={"pointer"} w={"full"} h={"fit-content"} pos={"relative"} >
                 <ProductImageScroller images={[item?.bannerImage]} createdDate={moment(item?.createdDate)?.fromNow()} userData={item?.createdBy} />
+                <ShareLink
+                    data={item}
+                    type="DONATION"
+                    // size="18px"
+                    showText={false}
+                    id={item?.id}
+                />
             </Flex>
             <Flex w={"full"} flexDir={"column"} px={["2", "2", "3"]} pt={["2", "2", "3"]} gap={"2"} pb={["2", "2", userId !== item?.createdBy?.userId && !pasted ? "0px" : "3"]} >
                 <Flex w={"full"} >

@@ -66,8 +66,6 @@ export default function UpdateCollaborator(props: IProps) {
 
     const [search, setSearch] = React.useState('');
 
-    console.log(eventdata);
-
     const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/user/search-users?searchText=${search}`, limit: 10, filter: "userId", name: "all-event", search: search })
 
     const CheckLimit = (lengthOfCollab: any, clone: any, name?: string) => {
@@ -112,9 +110,7 @@ export default function UpdateCollaborator(props: IProps) {
             if (!eventdata?.admins?.includes(userIndex)) {
                 setShow((prev) => !prev)
 
-                clone.admins = [...admin, userIndex]
-                console.log("test");
-
+                clone.admins = [...admin, userIndex] 
                 CheckLimit(lengthOfCollab, clone)
                 return
             } else {
@@ -158,9 +154,7 @@ export default function UpdateCollaborator(props: IProps) {
 
             if (!eventdata?.collaborators?.includes(userIndex)) {
 
-                clone.collaborators = [...collaborators, userIndex]
-                console.log("test");
-
+                clone.collaborators = [...collaborators, userIndex] 
                 CheckLimit(lengthOfCollab, clone)
             } else {
 
@@ -206,9 +200,7 @@ export default function UpdateCollaborator(props: IProps) {
 
             if (!eventdata?.acceptedAdmins?.includes(userIndex)) {
 
-                clone.acceptedAdmins = [...admin, userIndex]
-                console.log("test");
-
+                clone.acceptedAdmins = [...admin, userIndex] 
                 CheckLimit(lengthOfCollab, clone)
             } else {
 
@@ -250,9 +242,7 @@ export default function UpdateCollaborator(props: IProps) {
 
             if (!eventdata?.acceptedCollaborators?.includes(userIndex)) {
 
-                clone.acceptedCollaborators = [...collaborators, userIndex]
-                console.log("test");
-
+                clone.acceptedCollaborators = [...collaborators, userIndex] 
                 CheckLimit(lengthOfCollab, clone)
             } else {
                 const index = collaborators.indexOf(userIndex);

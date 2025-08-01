@@ -21,8 +21,7 @@ export default function VolunteerBtn(props: IEventType) {
     const { mainBackgroundColor, borderColor } = useCustomTheme()
 
     return (
-        <>
-
+        <> 
             {((collaborators || admins) && !pathname?.includes("pastdetails")) && (
                 <Flex w={"fit-content"} bgColor={mainBackgroundColor} rounded={"16px"} p={"3"} gap={"4"} borderWidth={"1px"} borderColor={borderColor} alignItems={"center"} style={{ boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
 

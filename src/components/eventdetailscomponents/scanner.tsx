@@ -50,9 +50,7 @@ export default function Scanner({
     })
 
     const handleScanner = (str: any) => {
-        setShow(false);
-        console.log(str);
-
+        setShow(false); 
         // mutate(str);
     }
 
@@ -82,7 +80,7 @@ export default function Scanner({
                         <Box width={'100%'} height={'100%'}> 
                             <QrcodeScanner
                                 onScan={(result) => handleScanner(result)}
-                                onError={(err) => console.log(err)}
+                                // onError={(err) => console.log(err)}
                                 constraints={{ facingMode: 'environment' }}
                             />
                         </Box>

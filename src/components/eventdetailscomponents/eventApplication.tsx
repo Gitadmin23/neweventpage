@@ -1,7 +1,7 @@
 import { Flex, Text } from '@chakra-ui/react'
-import React from 'react' 
-import moment from 'moment' 
-import { useRouter } from 'next/navigation' 
+import React from 'react'
+import moment from 'moment'
+import { useRouter } from 'next/navigation'
 import { IRental, IService } from '@/helpers/models/product';
 import { IUser } from '@/helpers/models/user';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
@@ -10,6 +10,7 @@ import { textLimit } from '@/helpers/utils/textlimit';
 import useCustomTheme from '@/hooks/useTheme';
 import { LoadingAnimation, UserImage, CustomButton, StarRating } from '../shared';
 import useApplication from '@/hooks/useApplication';
+import { DASHBOARDPAGE_URL } from '@/helpers/services/urls';
 
 interface IApplication {
     id: string,
@@ -44,10 +45,14 @@ export default function EventApplication({ results, loading, type }: { type?: "S
             markAsViewed?.mutate(data?.id)
         }
         if (type === "SERVICE") {
-            push(`/dashboard/kisok/service/${item}`)
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/service/${item}`;
         } else {
-            push(`/dashboard/kisok/details-rental/${item}`)
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/details-rental/${item}`;
         }
+    }
+
+    const openProfile = (item: string) => { 
+        window.location.href = `${DASHBOARDPAGE_URL}${item}`;
     }
 
     return (
@@ -58,35 +63,31 @@ export default function EventApplication({ results, loading, type }: { type?: "S
                         {results?.map((item: IApplication, index: number) => {
                             return (
                                 <Flex key={index} flexDir={"column"} gap={"1"} >
-                                    <Flex w={"full"} alignItems={"center"} justifyContent={"space-between"} >
-                                        <Flex as={"button"} onClick={() => push(`/dashboard/profile/${item?.vendor?.userId}`)} gap={"2"} alignItems={"center"} >
-                                            <UserImage user={item?.vendor} />
-                                            <Text color={primaryColor} fontSize={"14px"} fontWeight={"600"} >{capitalizeFLetter(item?.vendor?.firstName + " " + item?.vendor?.lastName)}</Text>
-                                        </Flex>
-                                        <Flex gap={"2"} display={["none", "none", "flex"]} flexDir={"row"} alignItems={"center"} >
-                                            <Text fontSize={"12px"} fontWeight={"700"} >Location: <span style={{ color: primaryColor, fontWeight: "700", fontSize: "14px" }} >{capitalizeFLetter(item?.service?.state)}</span></Text>
-                                        </Flex>
-                                        <Flex alignContent={"center"} gap={"2"} >
-                                            <Text fontSize={"14px"} mb={"2px"} fontWeight={"700"} >{item?.service?.rating}</Text>
-                                            <StarRating rate={Number(item?.service?.rating)} />
-                                        </Flex>
-                                    </Flex>
-                                    <Flex gap={"2"} display={["flex", "flex", "none"]} flexDir={"row"} alignItems={"center"} >
-                                        <Text fontSize={"12px"} fontWeight={"700"} >Location: <span style={{ color: primaryColor, fontWeight: "700", fontSize: "12px" }} >{capitalizeFLetter(item?.service?.state)}</span></Text>
-                                    </Flex>
                                     <Flex w={"full"} pl={"3"} bgColor={primaryColor} rounded={"16px"} h={"fit-content"} borderWidth={"1px"} borderColor={borderColor} >
-                                        <Flex w={"full"} bgColor={mainBackgroundColor} justifyContent={"space-between"} h={"117px"} alignItems={"center"} px={"5"} gap={"2"} roundedLeft={"0px"} roundedRight={"16px"} >
-                                            <Flex flexDir={"column"} fontSize={"14px"} >
-                                                <Text fontWeight={"600"} >{capitalizeFLetter(item?.service?.name)}</Text>
+                                        <Flex w={"full"} bgColor={mainBackgroundColor} justifyContent={"space-between"} h={"fit-content"} py={"3"} alignItems={"center"} px={"5"} gap={"2"} roundedLeft={"0px"} roundedRight={"16px"} >
+                                            <Flex flexDir={"column"} fontSize={"14px"} > 
+                                                <Flex cursor={"pointer"} onClick={() => openProfile(`/dashboard/profile/${item?.vendor?.userId}`)} gap={"2"} alignItems={"center"} >
+                                                    <UserImage user={item?.vendor} />
+                                                    <Flex flexDir={"column"} alignItems={"start"} >
+                                                        <Text color={primaryColor} fontSize={"14px"} fontWeight={"600"} >{capitalizeFLetter(item?.vendor?.firstName + " " + item?.vendor?.lastName)}</Text>
+                                                        <Text color={primaryColor} fontSize={"12px"} >{item?.vendor?.username}</Text>
+                                                    </Flex>
+                                                </Flex>
+                                                <Text fontWeight={"600"} mt={"3"} >{capitalizeFLetter(item?.service?.name)}</Text>
                                                 <Text fontSize={"12px"} >{textLimit(item?.service?.category?.replaceAll("_", " "), 30)}</Text>
                                                 <Text fontSize={"10px"} >{moment(item?.createdDate)?.fromNow()}</Text>
                                                 <Text fontSize={"14px"} fontWeight={"600"} >{formatNumber(item?.service?.price)}</Text>
+                                                <Text fontSize={"12px"} fontWeight={"700"} >Location: <span style={{ color: primaryColor, fontWeight: "700", fontSize: "14px" }} >{capitalizeFLetter(item?.service?.state)}</span></Text>
                                             </Flex>
-                                            <Flex h={"full"} justifyContent={"center"} alignItems={"center"} pos={"relative"} >
+                                            <Flex h={"full"} justifyContent={"center"} pt={"4"} flexDir={"column"} gap={"2"} alignItems={"center"} pos={"relative"} >
                                                 {item?.hasViewed && (
-                                                    <Text pos={"absolute"} color={"red"} top={"2"} right={"2"} fontWeight={"700"} fontSize={"12px"} >Viewed</Text>
+                                                    <Text color={"green"} top={"2"} right={"2"} fontWeight={"700"} fontSize={"12px"} >Viewed</Text>
                                                 )}
                                                 <CustomButton text={"Book Now"} onClick={() => clickHandler(item?.service?.id, item)} width={"120px"} borderRadius={"32px"} borderWidth={"1px"} fontSize={"14px"} borderColor={borderColor} height={"40px"} color={headerTextColor} backgroundColor={mainBackgroundColor} />
+                                                <Flex alignContent={"center"} gap={"2"} >
+                                                    <Text fontSize={"14px"} mb={"2px"} fontWeight={"700"} >{item?.service?.rating}</Text>
+                                                    <StarRating rate={Number(item?.service?.rating)} />
+                                                </Flex>
                                             </Flex>
                                         </Flex>
                                     </Flex>
@@ -97,7 +98,7 @@ export default function EventApplication({ results, loading, type }: { type?: "S
                 )}
                 {type === "RENTAL" && (
                     <Flex flexDir={"column"} w={"full"} gap={"4"} >
-                        {results?.filter((item: IApplication)=> item?.rental)?.map((item: IApplication, index: number) => {
+                        {results?.filter((item: IApplication) => item?.rental)?.map((item: IApplication, index: number) => {
                             return (
                                 <Flex key={index} flexDir={"column"} gap={"1"} >
                                     <Flex w={"full"} alignItems={"center"} justifyContent={"space-between"} >

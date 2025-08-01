@@ -45,9 +45,11 @@ export default function DashboardLayout(
                         {children}
                     </Flex>
                 </Flex>
-                <Flex w={"full"} h={"fit-content"} >
-                    <BottomBar />
-                </Flex>
+                {!frame && (
+                    <Flex w={"full"} h={"fit-content"} >
+                        <BottomBar />
+                    </Flex>
+                )}
             </Flex>
         </Flex>
     )

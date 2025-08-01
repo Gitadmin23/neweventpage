@@ -29,12 +29,7 @@ function UsersDonation(props: Props) {
             size: 10,
             page: 0,
         }
-    });
-
-    console.log(data);
-
-
-
+    }); 
 
     return (
         <LoadingAnimation loading={isLoading} >

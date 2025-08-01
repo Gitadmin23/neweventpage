@@ -64,12 +64,8 @@ export default function EventDonation({ checkbox, item }: { checkbox?: boolean, 
         name: "all-donation", endpoint: `/pinned-fundraisers/get-pinned-event-fundraising/${item?.id}`, id: item?.id, params: {
             id: item?.id
         }
-    });
-
-    console.log(data);
-
-
-
+    }); 
+ 
     const removeHandler = () => {
         deleteFundraising?.mutate(data[0]?.id + "")
     }

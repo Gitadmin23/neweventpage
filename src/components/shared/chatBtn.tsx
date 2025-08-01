@@ -2,7 +2,7 @@
 
 import { Chat } from "@/helpers/models/chat";
 import httpService from "@/helpers/services/httpService";
-import { WEBSITE_URL } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, WEBSITE_URL } from "@/helpers/services/urls";
 import useCustomTheme from "@/hooks/useTheme"; 
 import { MessageIcon } from "@/svg";
 import { Button } from "@chakra-ui/react";
@@ -23,7 +23,7 @@ function ChatBtn(props: Props) {
     mainBackgroundColor
   } = useCustomTheme(); 
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const { isPending: chatCreationLoading, mutate } = useMutation({
     mutationFn: () =>
@@ -38,7 +38,9 @@ function ChatBtn(props: Props) {
         message: `${WEBSITE_URL}/share?type=ONE_TO_ONE&typeID=${userId}`,
         chatID: chat?.id,
       };
-      router.push(`/dashboard/chats?activeID=${obj?.chatID}`);
+ 
+      window.location.href = `${DASHBOARDPAGE_URL}/dashboard/chats?activeID=${obj?.chatID}`;
+      // router.push(`/dashboard/chats?activeID=${obj?.chatID}`);
       // sendMessage.mutate(obj)
     },
   });
