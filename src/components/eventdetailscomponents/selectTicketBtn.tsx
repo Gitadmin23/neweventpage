@@ -304,7 +304,7 @@ export default function SelectTicketBtn(
                             <Flex flexDir={"column"} h={"full"} w={"full"} overflowY={"auto"} pr={"4"} >
                                 <Flex flexDir={"column"} h={"auto"} gap={"3"} >
                                     {productTypeData?.map((item, index) => {
-                                        if (new Date(Number(item?.startDate)) > new Date() && item.ticketType === "Early Bird") {
+                                        if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
                                                 <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
                                                     <Flex flexDir={"column"} gap={"2"} >
