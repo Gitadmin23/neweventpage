@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { IEventType, IProductTypeData } from "@/helpers/models/event";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
 import { formatNumberWithK, numberFormatNaire } from "@/helpers/utils/formatNumberWithK";
-import useCustomTheme from "@/hooks/useTheme";
-import usePaystackStore from "@/helpers/store/usePaystack";
+import useCustomTheme from "@/hooks/useTheme"; 
 import usePayStack from "@/hooks/usePayStack";
 import { ShoppingCart } from "iconsax-react";
 import { toaster } from "../ui/toaster";
@@ -54,8 +53,7 @@ export default function SelectTicketBtn(
 
         let clone = [...selectTicketType]
 
-        const index = checkType(item.ticketType);
-        console.log(new Date(Number(item?.startDate)) > new Date());
+        const index = checkType(item.ticketType); 
 
         if (selectTicketType?.length > 0) {
             if (index > -1) {
@@ -128,6 +126,10 @@ export default function SelectTicketBtn(
         )
     }, [payForTicket])
 
+    useEffect(()=> {
+        setTotalPrice(0)
+    }, [open, openMobile])
+
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Text fontWeight={"500"} >See ticket available for this event</Text>
@@ -151,7 +153,7 @@ export default function SelectTicketBtn(
                             <Flex flexDir={"column"} w={"full"} >
                                 <Flex flexDir={"column"} h={"auto"} gap={"3"} >
                                     {productTypeData?.map((item, index) => {
-                                        if (new Date(Number(item?.startDate)) > new Date() && item.ticketType === "Early Bird") {
+                                        if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
                                                 <Flex flexDir={["column", "column", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} py={"4"} >
                                                     <Flex flexDir={"column"} gap={"2"} >

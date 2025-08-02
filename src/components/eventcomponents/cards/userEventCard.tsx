@@ -3,7 +3,7 @@ import React from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import useCustomTheme from '@/hooks/useTheme'
 import moment from 'moment'
-import { DeleteBtn, ProductImageScroller } from '@/components/shared'
+import { DeleteBtn, ProductImageScroller, ShareLink } from '@/components/shared'
 import { IEventType } from '@/helpers/models/event'
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter'
 import { textLimit } from '@/helpers/utils/textlimit'
@@ -41,7 +41,18 @@ export default function UserEventCard(props: IEventType) {
             {(type !== "past_event") && (
                 <DeleteBtn id={props?.id} name={props?.eventName + " Event"} isEvent={pathname?.includes("draft") ? false : true} draft={pathname?.includes("draft") ? true : false} isOrganizer={props?.isOrganizer} />
             )}
-            <ProductImageScroller images={props.picUrls.length > 0 ? props.picUrls : [props?.currentPicUrl]} rounded='16px' createdDate={moment(props?.createdDate)?.fromNow()} userData={props?.createdBy} />
+            <Flex w={"full"} pos={"relative"} >
+                <ProductImageScroller images={props.picUrls.length > 0 ? props.picUrls : [props?.currentPicUrl]} rounded='16px' createdDate={moment(props?.createdDate)?.fromNow()} userData={props?.createdBy} />
+                {(type !== "past_event" && type !== "draft") && (
+                    <ShareLink
+                        data={props}
+                        type="EVENT"
+                        // size="18px"
+                        showText={false}
+                        id={props?.id}
+                    />
+                )}
+            </Flex>
             <Flex w={"full"} flexDir={"column"} px={"2"} >
                 <Flex w={"full"} alignItems={"center"} gap={"2"} py={"2"} >
                     {props?.startDate && (
@@ -75,7 +86,7 @@ export default function UserEventCard(props: IEventType) {
                         <Flex flexDirection={"column"} justifyContent={"start"} alignItems={"start"} >
                             <Text fontWeight={"600"} fontSize={"14px"} >{textLimit(capitalizeFLetter(props?.eventName), 20)}</Text>
                             {/* <Text fontSize={"14px"}> */}
-                                {/* <EventLocationDetail
+                            {/* <EventLocationDetail
                                     landingcolor={true}
                                     iconsize={"13px"}
                                     fontWeight={"medium"}
@@ -87,7 +98,7 @@ export default function UserEventCard(props: IEventType) {
                                     length={20}
                                 /> */}
 
-                                <EventLocation limit={20} showLink={false}  fontSize='12px' data={props} />
+                            <EventLocation limit={20} showLink={false} fontSize='12px' data={props} />
                             {/* </Text> */}
                         </Flex>
                         <Text fontSize={"14px"} fontWeight={"600"} >
