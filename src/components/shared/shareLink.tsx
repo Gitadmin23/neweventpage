@@ -128,8 +128,9 @@ function ShareEvent(props: Props) {
                   alignItems={"center"}
                   flexDir={"column"}
                   bgColor={mainBackgroundColor}
-                  p={"3"}
-                  rounded={"full"} 
+                  p={"1"}
+                  rounded={"md"} 
+                  zIndex={"20"}
                   pos={"absolute"} bottom={"4"}
                   right={"4"}
                 >
