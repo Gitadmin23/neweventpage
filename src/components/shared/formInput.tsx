@@ -61,8 +61,7 @@ export default function FormInput(
         } else {
             setNewValue(defaultData)
         }
-    }, [defaultData, value[name]])
- 
+    }, [defaultData, value[name]]) 
 
     return (
         <Flex w={"full"} flexDir={"column"} gap={"0.5"} >

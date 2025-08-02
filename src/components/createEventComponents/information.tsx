@@ -66,7 +66,7 @@ export default function Information(
             {formik.values.affiliates && (
                 <> 
                     {formik.values.affiliates[0].affiliateType === "pr" && (
-                        <CustomInput type="number" name={"affiliates[0].percent"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Add Percentage" value={formik.values} />
+                        <CustomInput type="number" defaultData={formik?.values?.affiliates[0]?.percent} name={"affiliates[0].percent"} setValue={formik.setFieldValue} label="Add Percentage" value={formik.values} />
                     )}
                 </>
             )}
