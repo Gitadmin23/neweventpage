@@ -60,7 +60,7 @@ export default function ModalLayout({
                 </Dialog.Root>
             )}
             {trigger && (
-                <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
+                <Dialog.Root  placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner p={"2"} >
                         <Dialog.Content >

@@ -98,6 +98,7 @@ export default function CustomDatePicker(
                         minDate={start ? dayjs(start) : dayjs()}
                         defaultValue={dayjs(value)}
                         format="MM/DD/YYYY hh:mm a"
+                        closeOnSelect={false}
                         onChange={(item) => changeHandler(item)}
                         slotProps={{
                             openPickerIcon: { fontSize: "small" },
@@ -105,8 +106,9 @@ export default function CustomDatePicker(
                                 focused: false,
                                 style: { color: "white", backgroundColor: "white", borderRadius: "999px" }
                             },
-                            popper: {
-                                disablePortal: true,
+                        
+                            popper: { 
+                                disablePortal: true
                             }
                         }}
                     />

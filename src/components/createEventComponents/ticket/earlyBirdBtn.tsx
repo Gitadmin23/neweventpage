@@ -98,7 +98,7 @@ export default function EarlyBirdBtn(
                     </Flex>
                 }
             </Flex>
-            <ModalLayout open={open} size="sm" trigger={true} close={removeHandler} closeBtn={true} >
+            <ModalLayout open={open} size="lg" trigger={true} close={removeHandler} closeBtn={true} >
                 <Flex pos={"relative"} w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
                     <Flex flexDir={"column"} gap={"2"} >
                         <Text fontSize={"22px"} fontWeight={"600"} >Early Bird Ticket</Text>
