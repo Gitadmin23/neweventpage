@@ -21,6 +21,13 @@ export const LandOneIcon = () => (
   </svg>
 )
 
+export const Login = () => (
+  <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="68" height="68" rx="34" fill="#FFEDDF" />
+    <path d="M47.3332 34.0013C47.3332 41.3613 41.3598 47.3346 33.9998 47.3346C26.6398 47.3346 20.6665 41.3613 20.6665 34.0013C20.6665 26.6413 26.6398 20.668 33.9998 20.668C41.3598 20.668 47.3332 26.6413 47.3332 34.0013Z" stroke="#E9925F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M38.9468 38.2384L34.8135 35.7717C34.0935 35.3451 33.5068 34.3184 33.5068 33.4784V28.0117" stroke="#E9925F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+)
 
 export const LandTwoIcon = () => (
   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">

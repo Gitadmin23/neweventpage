@@ -11,6 +11,7 @@ import useGetUser from "@/hooks/useGetUser";
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import useNotificationHook from "@/hooks/useNotificationHook";
+import { Login } from "@/svg";
 
 export default function SideBar() {
 
@@ -23,7 +24,7 @@ export default function SideBar() {
 
     const router = useRouter()
 
-    const { isLoading, user } = useGetUser()
+    const { isLoading, user, show } = useGetUser()
     const { count } = useNotificationHook()
 
     const [open, setOpen] = useState(false)
@@ -72,6 +73,10 @@ export default function SideBar() {
 
     const clickHandler = () => {
         window.location.href = `${LANDINGPAGE_URL}/logout`;
+    }
+
+    const login = () => {
+        window.location.href = `${LANDINGPAGE_URL}/auth`;
     }
 
     const token = Cookies.get("chase_token")
@@ -224,6 +229,52 @@ export default function SideBar() {
                     </Flex>
                 </Flex>
             </ModalLayout>
+
+            <ModalLayout size={"xs"} trigger={true} open={show} close={()=> console.log("logout")} >
+                <Flex
+                    width={"100%"}
+                    height={"100%"}
+                    justifyContent={"center"}
+                    gap={1}
+                    rounded={"lg"}
+                    flexDirection={"column"}
+                    bgColor={mainBackgroundColor}
+                    p={"6"}
+                    alignItems={"center"}
+                >
+                    <Flex
+                        width="60px"
+                        height={"60px"}
+                        borderRadius={"full"}
+                        justifyContent={"center"}
+                        bg="#df26263b"
+                        alignItems={"center"}
+                    >
+                        <Login />
+                    </Flex>
+                    <Text fontSize={"24px"} mt={"4"} fontWeight={"600"} >
+                        Session Expired
+                    </Text>
+                    <Text fontSize={"sm"} textAlign={"center"} >Your session has expired. please log in again to continue</Text>
+                    <Flex justifyContent={"center"} mt={4} roundedBottom={"lg"} gap={"3"} width={"100%"}>
+                        <Button
+                            borderColor={primaryColor}
+                            borderWidth={"1px"}
+                            rounded={"full"}
+                            _hover={{ backgroundColor: primaryColor }}
+                            bg={primaryColor}
+                            width="60%"
+                            fontWeight={"600"}
+                            height={"45px"}
+                            color="white"
+                            onClick={login}
+                        >
+                            Login
+                        </Button> 
+                    </Flex>
+                </Flex>
+            </ModalLayout>
+            
         </Flex>
     )
 }

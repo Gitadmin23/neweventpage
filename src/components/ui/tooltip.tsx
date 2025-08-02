@@ -1,3 +1,4 @@
+import useCustomTheme from "@/hooks/useTheme"
 import { Tooltip as ChakraTooltip, Portal } from "@chakra-ui/react"
 import * as React from "react"
 
@@ -25,12 +26,16 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
 
     if (disabled) return children
 
+    const {
+        mainBackgroundColor
+    } = useCustomTheme()
+
     return (
       <ChakraTooltip.Root {...rest}>
         <ChakraTooltip.Trigger asChild>{children}</ChakraTooltip.Trigger>
         <Portal disabled={!portalled} container={portalRef}>
           <ChakraTooltip.Positioner>
-            <ChakraTooltip.Content px={"2"} ref={ref} {...contentProps}>
+            <ChakraTooltip.Content bgColor={mainBackgroundColor} px={"2"} ref={ref} {...contentProps}>
               {showArrow && (
                 <ChakraTooltip.Arrow>
                   <ChakraTooltip.ArrowTip />
