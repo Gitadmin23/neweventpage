@@ -6,8 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { IUser } from '@/helpers/models/user';
 import { textLimit } from '@/helpers/utils/textlimit';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
-import { IMAGE_URL } from '@/helpers/services/urls';
+import { DASHBOARDPAGE_URL, IMAGE_URL } from '@/helpers/services/urls';
 import UserImage from './userImage';
+import Cookies from "js-cookie"
 
 export default function ProductImageScroller({ images, userData, createdDate, height, rounded, objectFit }: { images: Array<string>, userData?: IUser, createdDate?: string, height?: any, rounded?: string, objectFit?: string }) {
 
@@ -31,19 +32,20 @@ export default function ProductImageScroller({ images, userData, createdDate, he
             }, 3000);
             return () => clearInterval(interval);
         }
-    }, [])
+    }, []) 
+    const token = Cookies.get("chase_token") 
 
     const clickHandler = (e: any) => {
         if (!frame) {
-            e.stopPropagation()
-            push(`/dashboard/profile/${userData?.userId}`)
+            e.stopPropagation() 
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}`; 
         }
     }
 
     return (
         <Flex cursor='pointer' w='full' h={"fit-content"} bgColor={secondaryBackgroundColor} p={objectFit ? "0px" : ["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
             {createdDate && (
-                <Flex as={"button"} onClick={(e) => clickHandler(e)} position={"absolute"} zIndex={"10"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
+                <Flex as={"button"} onClick={(e) => clickHandler(e)} zIndex={"5"} position={"absolute"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
                     <UserImage user={userData} size={"md"} />
                     <Flex flexDir={"column"} alignItems={"start"} pr={"3"} >
                         <Text display={["none", "none", "block"]} fontSize={"12px"} fontWeight={"600"} color={"white"} >

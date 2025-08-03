@@ -3,12 +3,15 @@ import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import { LoadingAnimation } from "../shared"; 
 import UserEventCard from "./cards/userEventCard";
 import { useDetails } from "@/helpers/store/useUserDetails";
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function SavedEvent() {
-
-
+ 
+    const { search } = useSearchStore((state) => state)
     const { userId: user_index } = useDetails((state) => state); 
-    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/get-saved-events?typeID=${user_index}`, limit: 20, filter: "id", name: "myevent" })
+    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/get-saved-events?typeID=${user_index}`, limit: 20, filter: "id", name: "myevent", paramsObj: {
+        searchText: search.toLowerCase()
+    }})
  
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >

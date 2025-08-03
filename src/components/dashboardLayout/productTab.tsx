@@ -1,6 +1,6 @@
 "use client"
 import { GlassIcon, NewEventIcon, ServiceIcon, RentalIcon, StoreIcon, NewDonationIcon } from "@/svg";
-import { Flex, Text, useTooltip } from "@chakra-ui/react";
+import { Flex, Input, InputGroup, Text, useTooltip } from "@chakra-ui/react";
 import { Tooltip } from "@/components/ui/tooltip"
 import { SelectEventOption, SelectEventType } from "../eventcomponents";
 import { CustomButton, ProductTooltip } from "../shared";
@@ -10,6 +10,8 @@ import { SelectDonationOption } from "../fundraisingComponents";
 import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import { useEffect, useState } from "react";
+import { IoSearchOutline } from "react-icons/io5";
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function ProductTab(
     {
@@ -21,7 +23,8 @@ export default function ProductTab(
         secondaryBackgroundColor,
         headerTextColor,
         primaryColor,
-        borderColor
+        borderColor,
+        mainBackgroundColor
     } = useCustomTheme()
 
     const [open, setOpen] = useState(false)
@@ -32,6 +35,7 @@ export default function ProductTab(
     const frame = query?.get('frame');
     const type = query?.get('type');
     const router = useRouter()
+    const { search, setSearchValue } = useSearchStore((state) => state)
 
     const token = Cookies.get("chase_token")
 
@@ -42,7 +46,7 @@ export default function ProductTab(
         } else if (item === "event") {
             router.push(`/product/events${frame ? "?frame=true" : ""}`)
             setOpen(true)
-        } else { 
+        } else {
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk${!frame ? `?type=${item}&token=${token}` : `?type=${item}&frame=true`}`;
             // /dashboard/product/kiosk?type=service
         }
@@ -70,14 +74,14 @@ export default function ProductTab(
                         }
                         open={open}
                     > */}
-                        <CustomButton onClick={() => clickHandler("event")} text={
-                            <Flex alignItems={"center"} gap={"2"} >
-                                <Flex display={["none", "none", "flex"]} >
-                                    <NewEventIcon color={pathname === "/product/events" ? "white" : headerTextColor} />
-                                </Flex>
-                                <Text fontSize={["10px", "12px", "14px"]} >Event</Text>
+                    <CustomButton onClick={() => clickHandler("event")} text={
+                        <Flex alignItems={"center"} gap={"2"} >
+                            <Flex display={["none", "none", "flex"]} >
+                                <NewEventIcon color={pathname === "/product/events" ? "white" : headerTextColor} />
                             </Flex>
-                        } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname === "/product/events" ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname === "/product/events" ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname === "/product/events" ? "white" : headerTextColor} width={["fit-content", "107px", "175px"]} />
+                            <Text fontSize={["10px", "12px", "14px"]} >Event</Text>
+                        </Flex>
+                    } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname === "/product/events" ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname === "/product/events" ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname === "/product/events" ? "white" : headerTextColor} width={["fit-content", "107px", "175px"]} />
                     {/* </Tooltip> */}
                     <CustomButton onClick={() => clickHandler("service")} text={
                         <Flex alignItems={"center"} gap={"2"} >
@@ -110,16 +114,25 @@ export default function ProductTab(
                             }
                             open={show}
                         > */}
-                            <CustomButton onClick={() => clickHandler("donation")} text={
-                                <Flex alignItems={"center"} gap={"2"} >
-                                    <Flex display={["none", "none", "flex"]} >
-                                        <NewDonationIcon color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} />
-                                    </Flex>
-                                    <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
+                        <CustomButton onClick={() => clickHandler("donation")} text={
+                            <Flex alignItems={"center"} gap={"2"} >
+                                <Flex display={["none", "none", "flex"]} >
+                                    <NewDonationIcon color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} />
                                 </Flex>
-                            } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname?.includes("/product/fundraising") ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname?.includes("/product/fundraising") ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} width={["80px", "107px", "175px"]} />
+                                <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
+                            </Flex>
+                        } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname?.includes("/product/fundraising") ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname?.includes("/product/fundraising") ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} width={["80px", "107px", "175px"]} />
                         {/* </Tooltip> */}
                     </Flex>
+                </Flex>
+                <Flex maxW={"500px"} mt={"4"} w={"full"} > 
+                    <InputGroup startElement={
+                        <Flex pl={"3"} >
+                            <IoSearchOutline size={"20px"} />
+                        </Flex>
+                    }>
+                        <Input value={search} onChange={(e) => setSearchValue(e.target.value)} type="search" h={"45px"} rounded={"full"} bgColor={mainBackgroundColor} placeholder={`Search for ${pathname.includes("event") ? "event" : "fundraising"}`} />
+                    </InputGroup>
                 </Flex>
                 {pathname.includes("event") && (
                     <Flex pt={["2", "2", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={["2", "2", "4"]} alignItems={["start", "start", "center"]} flexDirection={["column", "column", "row"]} >

@@ -5,10 +5,11 @@ import { LoadingAnimation } from "../shared";
 import DonationGroupCard from "./card/donationGroupCard";
 import { IDonationGroup } from "@/helpers/models/fundraising";
 import DonationCard from "./card/donationCard";
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function AllDonationList() {
 
-    const search = ""
+    const { search } = useSearchStore((state) => state)
 
 
     const { results, isLoading: loadingList, ref, isRefetching: refetchingList } = useInfiniteScroller({

@@ -4,6 +4,7 @@ import { LoadingAnimation } from "../shared";
 import DonationCard from "./card/donationCard";
 import { Flex, Grid } from "@chakra-ui/react";
 import { IDonationList } from "@/helpers/models/fundraising";
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function MyDonationList(
     {
@@ -13,7 +14,7 @@ export default function MyDonationList(
     }
 ) {
 
-    const search = ""
+    const { search } = useSearchStore((state) => state)
 
     const query = useSearchParams();
     const id = query?.get('id');

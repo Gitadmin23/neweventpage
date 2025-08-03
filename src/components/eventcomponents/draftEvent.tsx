@@ -2,10 +2,14 @@ import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
 import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import { LoadingAnimation } from "../shared"; 
 import UserEventCard from "./cards/userEventCard"; 
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function DraftEvent() {
 
-    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/drafts`, limit: 20, filter: "id", name: "draftevent" })
+    const { search } = useSearchStore((state) => state)
+    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/drafts`, limit: 20, filter: "id", name: "draftevent", paramsObj: {
+        searchText: search.toLowerCase()
+    }})
  
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >

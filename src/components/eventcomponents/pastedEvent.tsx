@@ -2,10 +2,15 @@ import useInfiniteScroller from "@/hooks/infiniteScrollerComponent";
 import { Flex, Grid, GridItem } from "@chakra-ui/react";
 import { LoadingAnimation } from "../shared"; 
 import UserEventCard from "./cards/userEventCard"; 
+import useSearchStore from "@/helpers/store/useSearchData";
 
 export default function PastedEvent() {
 
-    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/get-past-events`, limit: 20, filter: "id", name: "pastevent" })
+    const { search } = useSearchStore((state) => state)
+
+    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/get-past-events`, limit: 20, filter: "id", name: "pastevent", paramsObj: {
+        searchText: search.toLowerCase()
+    }})
  
     return (
         <Flex justifyContent={"center"} gap={["4", "4", "6"]} w={"full"} pt={["4", "4", "8"]} h={"full"} flexDirection={"column"} >
