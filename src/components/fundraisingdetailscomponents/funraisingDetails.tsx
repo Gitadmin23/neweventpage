@@ -11,7 +11,7 @@ import { CalendarIcon, DashboardEditIcon, DashboardOrganizerIcon, WalletIcon } f
 import { isDateInPast } from "@/helpers/utils/isPast";
 import DonationPayment from "./donationPayment";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import DonationCollaborator from "../createFundraisingComponents/donationCollaborator";
@@ -35,12 +35,14 @@ export default function FundraisingDetails(
     const router = useRouter()
 
     const token = Cookies.get("chase_token")
+    const query = useSearchParams();
+    const theme = query?.get('theme');
 
     const routeHandler = (type: "dashboard" | "wallet") => {
         if (type === "dashboard") {
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${item?.id}/donate?token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${item?.id}/donate?token=${token}&theme=${theme}`;
         } else {
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}&theme=${theme}`;
         }
     }
 

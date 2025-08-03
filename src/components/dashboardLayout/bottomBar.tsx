@@ -7,11 +7,13 @@ import { UserImage } from "../shared";
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
+import { useColorMode } from "../ui/color-mode";
 
 export default function BottomBar() {
 
 
     const pathname = usePathname()
+    const { colorMode } = useColorMode();
 
     const {
         mainBackgroundColor,
@@ -30,7 +32,7 @@ export default function BottomBar() {
         if (item === "/product/events") {
             router.push("/product/events")
         } else {
-            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
     }
 

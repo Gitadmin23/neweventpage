@@ -15,6 +15,7 @@ import { numberFormatNaire } from '@/helpers/utils/formatNumberWithK';
 import useGetUser from '@/hooks/useGetUser';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import Cookies from 'js-cookie';
+import { useColorMode } from '@/components/ui/color-mode';
  
 
 export default function ListProduct({ setOpen, selectProduct, setSelectProduct, data, setTab }: { setOpen?: any, selectProduct: Array<IPinned>, setSelectProduct: any, data?: IEventType, setTab?: any }) {
@@ -24,6 +25,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
 
     const { primaryColor } = useCustomTheme()
     const token = Cookies.get("chase_token")
+    const { colorMode } = useColorMode();
 
     const { pinProduct } = usePr() 
 
@@ -52,7 +54,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
 
         if (results?.length === 0) {
 
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/create?event=${data?.id}&token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/kisok/create?event=${data?.id}&token=${token}&theme=${colorMode}`;
             // router?.push(`/dashboard/kisok/create?event=${data?.id}`)
         } else if (selectProduct?.length > 0) {
             pinProduct?.mutate({ pinnedItems: selectProduct })

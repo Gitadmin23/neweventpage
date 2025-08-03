@@ -9,11 +9,14 @@ import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import { DASHBOARDPAGE_URL, IMAGE_URL } from '@/helpers/services/urls';
 import UserImage from './userImage';
 import Cookies from "js-cookie"
+import { useColorMode } from '../ui/color-mode';
 
 export default function ProductImageScroller({ images, userData, createdDate, height, rounded, objectFit }: { images: Array<string>, userData?: IUser, createdDate?: string, height?: any, rounded?: string, objectFit?: string }) {
 
 
     const [activeImageIndex, setActiveImageIndex] = React.useState(0);
+    const { colorMode } = useColorMode();
+
     const { push } = useRouter()
     const query = useSearchParams();
     const frame = query?.get('frame');
@@ -38,7 +41,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
     const clickHandler = (e: any) => {
         if (!frame) {
             e.stopPropagation() 
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}`; 
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}&theme=${colorMode}`; 
         }
     }
 

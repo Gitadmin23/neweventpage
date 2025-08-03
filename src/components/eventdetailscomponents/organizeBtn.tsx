@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { FiAlertCircle } from "react-icons/fi";
 import useCustomTheme from "@/hooks/useTheme";
 import { DashboardEditIcon, DashboardOrganizerIcon, DashboardScannerIcon } from '@/svg';
@@ -33,6 +33,8 @@ function OrganizeBtn(props: IEventType) {
     const [listOfClicks, setListOfClicks] = useState(0)
     const [open, setOpen] = useState(false)
     const pathname = usePathname()
+    const query = useSearchParams();
+    const theme = query?.get('theme');
 
     const clickHandler = () => {
         if (props?.ticketBought) {
@@ -50,7 +52,7 @@ function OrganizeBtn(props: IEventType) {
     }, [])
 
     const routeHandler = () => {
-        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${id}?token=${token}`;
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${id}?token=${token}&theme=${theme}`;
     } 
 
     return (

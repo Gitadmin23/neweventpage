@@ -12,6 +12,7 @@ import Cookies from "js-cookie"
 import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import useSearchStore from "@/helpers/store/useSearchData";
+import { useColorMode } from "../ui/color-mode";
 
 export default function ProductTab(
     {
@@ -36,6 +37,7 @@ export default function ProductTab(
     const type = query?.get('type');
     const router = useRouter()
     const { search, setSearchValue } = useSearchStore((state) => state)
+    const { colorMode } = useColorMode();
 
     const token = Cookies.get("chase_token")
 
@@ -47,7 +49,7 @@ export default function ProductTab(
             router.push(`/product/events${frame ? "?frame=true" : ""}`)
             setOpen(true)
         } else {
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk${!frame ? `?type=${item}&token=${token}` : `?type=${item}&frame=true`}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk${!frame ? `?type=${item}&token=${token}&theme=${colorMode}` : `?type=${item}&frame=true&theme=${colorMode}`}`;
             // /dashboard/product/kiosk?type=service
         }
     }

@@ -10,7 +10,7 @@ import { CustomButton, LoadingAnimation } from '@/components/shared'
 import { IDonationList } from '@/helpers/models/fundraising'
 import httpService from '@/helpers/services/httpService'
 import { useMutation } from '@tanstack/react-query'
-import { IEventType } from '@/helpers/models/event'
+import { IEventType } from '@/helpers/models/event' 
 
 export default function ListDonation({ item, setOpen }: { setSelectDonation: any, setSelectInitialDonation: any, selectDonation: string, initialDonation: string, item: IEventType, setOpen: any }) {
 
@@ -20,7 +20,6 @@ export default function ListDonation({ item, setOpen }: { setSelectDonation: any
     const router = useRouter()
     const [selectDonation, setSelectDonation] = useState("")
     const [selectDonationInitial, setSelectDonationInitial] = useState("")
-
     const { createFundraising } = usePr()
     const { results, isLoading: loadingList, ref, } = InfiniteScrollerComponent({ url: `/fund-raiser/user-fund-raisers${search ? `?name=${search}` : ``}`, limit: 20, filter: "id", name: "donationlist", search: search })
 

@@ -85,7 +85,7 @@ export default function SideBar() {
         if (item === "/product/events") {
             router.push("/product/events")
         } else {
-            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
     }
 

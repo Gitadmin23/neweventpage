@@ -32,7 +32,7 @@ export default function DashboardMenuBtn( ) {
             setShow(true)
         } else {
 
-            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
             // router?.push(item)
         }
 
