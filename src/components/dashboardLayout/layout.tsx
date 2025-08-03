@@ -7,6 +7,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import BottomBar from "./bottomBar";
 import { useImage } from "@/helpers/store/useImagePicker";
+import useSearchStore from "@/helpers/store/useSearchData";
 
 interface IProps {
     children: React.ReactNode
@@ -19,6 +20,8 @@ export default function DashboardLayout(
 ) {
 
     const { mainBackgroundColor, headerTextColor } = useCustomTheme()
+
+    const { setSearchValue } = useSearchStore((state)=> state)
     const pathname = usePathname()
     const query = useSearchParams();
     const frame = query?.get('frame');
@@ -27,6 +30,7 @@ export default function DashboardLayout(
 
     useEffect(() => {
         setImage([])
+        setSearchValue("")
     }, [pathname])
 
     return (
