@@ -76,7 +76,7 @@ export default function SideBar() {
     }
 
     const login = () => {
-        window.location.href = `${LANDINGPAGE_URL}/auth`;
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
     const token = Cookies.get("chase_token")

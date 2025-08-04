@@ -1,30 +1,32 @@
 import useCustomTheme from "@/hooks/useTheme";
-import { HomeIcon, UsersIcon } from "@/svg";
+import { HomeIcon, Login, UsersIcon } from "@/svg";
 import { KisokIcon, SidebarWalletIcon } from "@/svg/sidebarIcons";
-import { Flex, Link } from "@chakra-ui/react";
+import { Button, Flex, Link, Text } from "@chakra-ui/react";
 import { usePathname, useRouter } from "next/navigation";
-import { UserImage } from "../shared";
+import { ModalLayout, UserImage } from "../shared";
 import { useDetails } from "@/helpers/store/useUserDetails";
-import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import { useColorMode } from "../ui/color-mode";
+import useGetUser from "@/hooks/useGetUser";
 
 export default function BottomBar() {
 
 
     const pathname = usePathname()
     const { colorMode } = useColorMode();
+    const { user, show } = useGetUser()
 
     const {
         mainBackgroundColor,
         borderColor,
         secondaryBackgroundColor,
         bodyTextColor,
+        primaryColor
     } = useCustomTheme()
 
     const router = useRouter()
-
-    const { user, userId } = useDetails()
+ 
     const token = Cookies.get("chase_token")
 
     const routeHandler = (item: string) => {
@@ -35,6 +37,11 @@ export default function BottomBar() {
             window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
     }
+    
+    const login = () => {
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
+    }
+
 
     return (
         <Flex paddingX='20px' zIndex={"20"} position={"sticky"} bottom={"0px"} alignItems={"center"} justifyContent={'space-evenly'} width='100%' height='70px' bg={mainBackgroundColor} borderTopWidth={1} borderTopColor={borderColor} display={['flex', 'flex', 'flex', 'none', 'none']}>
@@ -51,9 +58,53 @@ export default function BottomBar() {
                 {/* <People size='20px' /> */}
                 <UsersIcon />
             </Flex>
-            <Flex onClick={() => routeHandler(`dashboard/profile/${userId}`)} cursor={"pointer"} >
+            <Flex onClick={() => routeHandler(`dashboard/profile/${user?.userId}`)} cursor={"pointer"} >
                 <UserImage user={user} />
             </Flex>
+            <ModalLayout size={"xs"} trigger={true} open={show} close={()=> console.log("logout")} >
+                <Flex
+                    width={"100%"}
+                    height={"100%"}
+                    justifyContent={"center"}
+                    gap={1}
+                    rounded={"lg"}
+                    flexDirection={"column"}
+                    bgColor={mainBackgroundColor}
+                    p={"6"}
+                    alignItems={"center"}
+                >
+                    <Flex
+                        width="60px"
+                        height={"60px"}
+                        borderRadius={"full"}
+                        justifyContent={"center"}
+                        bg="#df26263b"
+                        alignItems={"center"}
+                    >
+                        <Login />
+                    </Flex>
+                    <Text fontSize={"24px"} mt={"4"} fontWeight={"600"} >
+                        Session Expired
+                    </Text>
+                    <Text fontSize={"sm"} textAlign={"center"} >Your session has expired. please log in again to continue</Text>
+                    <Flex justifyContent={"center"} mt={4} roundedBottom={"lg"} gap={"3"} width={"100%"}>
+                        <Button
+                            borderColor={primaryColor}
+                            borderWidth={"1px"}
+                            rounded={"full"}
+                            _hover={{ backgroundColor: primaryColor }}
+                            bg={primaryColor}
+                            width="60%"
+                            fontWeight={"600"}
+                            height={"45px"}
+                            color="white"
+                            onClick={login}
+                        >
+                            Login
+                        </Button> 
+                    </Flex>
+                </Flex>
+            </ModalLayout>
         </Flex>
     )
 }

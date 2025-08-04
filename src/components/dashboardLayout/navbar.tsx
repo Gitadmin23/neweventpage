@@ -14,6 +14,7 @@ export default function Navbar() {
     const pathname = usePathname()
     const query = useSearchParams();
     const theme = query?.get('theme');
+    const frame = query?.get('frame');
 
     const { setColorMode } = useColorMode(); 
 
@@ -27,6 +28,12 @@ export default function Navbar() {
             window.history.replaceState(null, "", url.toString());
         }
     }, [theme]);
+
+    useEffect(() => {
+        if (frame && newtheme !== "light") {
+            setColorMode("light") 
+        }
+    }, [frame]);
 
     return (
         <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['sticky', 'sticky', 'sticky', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"10"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >

@@ -1,16 +1,14 @@
-
-import { IUser } from "@/helpers/models/user";
+ 
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { useMutation } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useGetUser = () => {
-
-
-    const [user, setUser] = React.useState<IUser | null>(null);
-    const { setAll, email } = useDetails((state) => state);
+ 
+    // const [user, setUser] = React.useState<IUser | null>(null);
+    const { setAll, email, user } = useDetails((state) => state);
     const [show, setShow] = useState(false)
 
     const { mutate: fetchData, isPending: isLoading } = useMutation({
@@ -19,7 +17,7 @@ const useGetUser = () => {
             httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`),
         onSuccess: (data: any) => {
 
-            setUser(data.data);
+            // setUser(data.data);
 
             setAll({
                 user: data?.data,
@@ -40,19 +38,7 @@ const useGetUser = () => {
         if (!email) {
             fetchData();
         }
-    }, [email])
-
-    useEffect(() => {
-        setAll({
-            user: user,
-            userId: user?.userId,
-            firstName: user?.firstName,
-            lastName: user?.lastName,
-            email: user?.email,
-            dob: user?.dob,
-            username: user?.username,
-        });
-    }, [user])
+    }, [email]) 
 
     return {
         user,
