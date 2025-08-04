@@ -14,7 +14,7 @@ export default function Navbar() {
     const pathname = usePathname()
     const query = useSearchParams();
     const theme = query?.get('theme');
-    const frame = query?.get('frame');
+    // const frame = query?.get('frame');
 
     const { setColorMode } = useColorMode(); 
 
@@ -23,22 +23,19 @@ export default function Navbar() {
     useEffect(() => {
         if (newtheme !== theme) {
             setColorMode(newtheme === "light" ? "dark" : "light")
-            const url = new URL(window.location.href); 
-
-            console.log("teste");
-            
+            const url = new URL(window.location.href);  
             url.searchParams.delete("theme");
             window.history.replaceState(null, "", url.toString());
         }
     }, [theme]); 
 
 
-    useEffect(() => {
-        if (frame) {
-            setColorMode("light") 
-            localStorage.clear()
-        }
-    }, [frame]); 
+    // useEffect(() => {
+    //     if (frame) {
+    //         setColorMode("light") 
+    //         localStorage.clear()
+    //     }
+    // }, [frame]); 
 
      
 

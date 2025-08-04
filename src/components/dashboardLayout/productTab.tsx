@@ -60,8 +60,7 @@ export default function ProductTab(
                 setShow(false)
             }, 3000); // 3 seconds
             return () => clearTimeout(timeout);
-        }
-        // Cleanup to avoid memory leak
+        } 
     }, [open, show]);
 
     return (

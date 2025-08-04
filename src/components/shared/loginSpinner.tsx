@@ -30,10 +30,7 @@ export default function LogInSpinner() {
                 router.replace("/product/events")
             }, 2000);
 
-            return () => clearTimeout(timer);
-
-            // Optional: remove token from URL
-            // window.history.replaceState(null, "/", window.location.pathname);
+            return () => clearTimeout(timer); 
 
         }
     }, [token]);
