@@ -16,9 +16,6 @@ export default function FundraisingDetails (
 
     const { data, isLoading } = useFetchData<IDonationList>({name: "all-donation-details", endpoint: `/fund-raiser/single/${id}`, id: id }); 
 
-    console.log(data);
-    
-
     return (
         <LoadingAnimation loading={isLoading} >
             <Flex w={"full"} >
