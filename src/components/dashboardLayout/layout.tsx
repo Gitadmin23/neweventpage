@@ -26,7 +26,7 @@ export default function DashboardLayout(
     const pathname = usePathname()
     const query = useSearchParams();
     const frame = query?.get('frame'); 
-    const theme : any= query?.get('theme'); 
+    const theme : any = query?.get('theme'); 
 
     const { setImage } = useImage((state: any) => state)
 
