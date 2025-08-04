@@ -24,16 +24,23 @@ export default function Navbar() {
         if (newtheme !== theme) {
             setColorMode(newtheme === "light" ? "dark" : "light")
             const url = new URL(window.location.href); 
+
+            console.log("teste");
+            
             url.searchParams.delete("theme");
             window.history.replaceState(null, "", url.toString());
         }
-    }, [theme]);
+    }, [theme]); 
+
 
     useEffect(() => {
-        if (frame && newtheme !== "light") {
+        if (frame) {
             setColorMode("light") 
+            localStorage.clear()
         }
-    }, [frame]);
+    }, [frame]); 
+
+     
 
     return (
         <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['sticky', 'sticky', 'sticky', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"10"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >
