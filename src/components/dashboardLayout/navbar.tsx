@@ -2,42 +2,14 @@
 import useCustomTheme from "@/hooks/useTheme";
 import { FundraisingIcon } from "@/svg";
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import DashboardMenuBtn from "./dashboardMenuBtn";
-import { useColorMode } from "../ui/color-mode";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import DashboardMenuBtn from "./dashboardMenuBtn"; 
 
 export default function Navbar() {
 
     const { mainBackgroundColor, borderColor, headerTextColor, primaryColor } = useCustomTheme()
     const router = useRouter()
-    const pathname = usePathname()
-    const query = useSearchParams();
-    const theme = query?.get('theme');
-    // const frame = query?.get('frame');
-
-    const { setColorMode } = useColorMode(); 
-
-    const newtheme = localStorage.getItem("theme") as string
-
-    useEffect(() => {
-        if (newtheme !== theme) {
-            setColorMode(newtheme === "light" ? "dark" : "light")
-            const url = new URL(window.location.href);  
-            url.searchParams.delete("theme");
-            window.history.replaceState(null, "", url.toString());
-        }
-    }, [theme]); 
-
-
-    // useEffect(() => {
-    //     if (frame) {
-    //         setColorMode("light") 
-    //         localStorage.clear()
-    //     }
-    // }, [frame]); 
-
-     
+    const pathname = usePathname() 
 
     return (
         <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['sticky', 'sticky', 'sticky', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"10"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import BottomBar from "./bottomBar";
 import { useImage } from "@/helpers/store/useImagePicker";
 import useSearchStore from "@/helpers/store/useSearchData";
+import { useColorMode } from "../ui/color-mode";
 
 interface IProps {
     children: React.ReactNode
@@ -24,9 +25,20 @@ export default function DashboardLayout(
     const { setSearchValue } = useSearchStore((state)=> state)
     const pathname = usePathname()
     const query = useSearchParams();
-    const frame = query?.get('frame');
+    const frame = query?.get('frame'); 
+    const theme : any= query?.get('theme'); 
 
     const { setImage } = useImage((state: any) => state)
+
+    const { setColorMode } = useColorMode();  
+   
+    useEffect(() => { 
+        if(theme) {
+            setColorMode(theme) 
+        } else {
+            setColorMode("light") 
+        }
+    }, [theme]);  
 
     useEffect(() => {
         setImage([])
