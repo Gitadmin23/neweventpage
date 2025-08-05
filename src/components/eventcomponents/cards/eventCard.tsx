@@ -124,7 +124,7 @@ export default function EventCard(
                         event={event}
                     />
                 )}
-                <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={"14px"} >
+                <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={["10px", "10px", "14px"]} >
                     <EventPrice
                         minPrice={event?.minPrice}
                         maxPrice={event?.maxPrice}
