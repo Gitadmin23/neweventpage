@@ -28,7 +28,7 @@ function InterestedUsers(props: Props) {
                         }
                     })}
                     {event?.memberCount >= 4 &&
-                        <Avatar.Root rounded={"full"} roundedTopRight={"0px"} variant="solid">
+                        <Avatar.Root size={size ?? "xs"}  rounded={"full"} roundedTopRight={"0px"} variant="solid">
                             <Avatar.Fallback>{"+" + formatNumberWithK(event?.memberCount - 3)}</Avatar.Fallback>
                         </Avatar.Root>
                     }

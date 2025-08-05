@@ -1,4 +1,5 @@
 import { IUser } from "@/helpers/models/user";
+import { IMAGE_URL } from "@/helpers/services/urls";
 import { Avatar } from "@chakra-ui/react";
 
 interface IProps {
@@ -13,12 +14,15 @@ export default function UserImage(
     } :IProps
 ) {
 
+    console.log(user);
+    
+
     return (
         <Avatar.Root size={size ?? "md"} rounded={"full"} roundedTopRight={"0px"} >
             <Avatar.Fallback rounded={"full"} roundedTopRight={"0px"} name={user?.firstName+" "+user?.lastName} />
             <Avatar.Image
                 rounded={"full"} roundedTopRight={"0px"}
-                src={user?.data?.imgMain?.value} 
+                src={IMAGE_URL+user?.data?.imgMain?.value} 
             />
         </Avatar.Root>
     )
