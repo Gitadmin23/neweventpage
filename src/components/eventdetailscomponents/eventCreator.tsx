@@ -1,7 +1,7 @@
 "use client"
 import { Box, Flex, Text } from '@chakra-ui/react'
 import React, { useState } from 'react' 
-import { usePathname, useRouter } from 'next/navigation' 
+import { usePathname, useRouter, useSearchParams } from 'next/navigation' 
 import useCustomTheme from '@/hooks/useTheme' 
 import InterestedUsers from '../eventcomponents/interestedUser' 
 import { ChatBtn, AddAndRemoveUser, UserImage } from '../shared'
@@ -9,6 +9,9 @@ import { IEventType } from '@/helpers/models/event'
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter'
 import { textLimit } from '@/helpers/utils/textlimit'
 import { useDetails } from '@/helpers/store/useUserDetails'
+import { DASHBOARDPAGE_URL } from '@/helpers/services/urls'
+import { useColorMode } from '../ui/color-mode'
+import Cookies from "js-cookie"
 
 export default function EventCreator(props: IEventType) {
 
@@ -21,19 +24,21 @@ export default function EventCreator(props: IEventType) {
 
     const [open, setOpen] = useState(false)
 
-    const router = useRouter()
+    const pathname = usePathname()
+    const query = useSearchParams();
+    const frame = query?.get('frame');
+    const type = query?.get('type');
+    const router = useRouter() 
+    const { colorMode } = useColorMode();
 
-    const pathname = usePathname();
+    const token = Cookies.get("chase_token")
 
     const isAdmin = props?.isOrganizer || props?.eventMemberRole === "ADMIN" || props?.eventMemberRole === "COLLABORATOR"
     const { userId: user_index } = useDetails((state) => state);
 
-    const clickHandler = () => {
-        if (!user_index) {
-            router.push("/share/auth/login?type=EVENT&typeID=" + id)
-        } else {
-            router.push("/dashboard/profile/" + createdBy?.userId)
-        }
+    const clickHandler = () => { 
+        // router.push("/dashboard/profile/" + createdBy?.userId) 
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${createdBy?.userId}?token=${token}&theme=${colorMode}}`;
     }
 
     const { 
