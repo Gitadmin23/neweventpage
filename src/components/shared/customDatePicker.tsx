@@ -1,11 +1,15 @@
 
-import { DateTimePicker } from '@mui/x-date-pickers';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
+// import { DateTimePicker } from '@mui/x-date-pickers';
+// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import dayjs from 'dayjs';
 import { Flex, Text } from "@chakra-ui/react";
 import { toaster } from '../ui/toaster';
 import useCustomTheme from '@/hooks/useTheme';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { dateFormat, timeFormat } from '@/helpers/utils/dateFormat';
+import { CalendarIcon } from '@/svg';
 
 interface IProps {
     name: Array<string>;
@@ -89,11 +93,25 @@ export default function CustomDatePicker(
         }
     }
 
+    console.log(value);
+    
+
+    const CustomInput = ({ value: item, onClick }: any) => {
+        return (
+            <Flex onClick={onClick} as={"button"} w={"full"} alignItems={"center"} px={"3"} gap={"2"} border={"1px solid #E2E8F0"} rounded={"full"} fontSize={"12px"} h={"50px"}  >
+                <CalendarIcon />
+                {value ? dateFormat(value) : "Click to select a date"}
+                {" "}
+                {value ? timeFormat(value) : ""}
+            </Flex>
+        )
+    }
+
     return (
         <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} color={headerTextColor} gap={"1"} rounded={"full"} >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateTimePicker
                         minDate={start ? dayjs(start) : dayjs()}
                         defaultValue={dayjs(value)}
@@ -112,7 +130,16 @@ export default function CustomDatePicker(
                             }
                         }}
                     />
-                </LocalizationProvider>
+                </LocalizationProvider> */}
+
+                <DatePicker 
+                placeholderText="Click to select a date"
+                    selected={value ? new Date(value) : new Date()}
+                    showTimeSelect
+                    minDate={start ? new Date(start) : new Date()}
+                    onChange={changeHandler}
+                    customInput={<CustomInput />}
+                />
                 {touched && (
                     <>
                         {(touched[name[0]] && errors[name[0]]) &&

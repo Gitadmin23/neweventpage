@@ -46,6 +46,8 @@ export default function FundraisingDetails(
         }
     }
 
+    console.log(item);
+
 
     return (
         <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >

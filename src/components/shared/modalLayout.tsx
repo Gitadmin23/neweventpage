@@ -1,5 +1,5 @@
 "use client"
-import { CloseButton, Dialog, Flex } from "@chakra-ui/react";
+import { CloseButton, Dialog, Flex, Text } from "@chakra-ui/react";
 
 interface IProps {
     children: React.ReactNode;
@@ -67,7 +67,9 @@ export default function ModalLayout({
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
                                 <Dialog.Header pl={"4"} textAlign={"center"} >
-                                    <Dialog.Title >{title}</Dialog.Title>
+                                    <Dialog.Title >
+                                        <Text fontWeight={"semibold"} >{title}</Text>
+                                    </Dialog.Title>
                                     {closeBtn && (
                                         <Dialog.CloseTrigger zIndex={"30"} asChild>
                                             <CloseButton size="sm" />

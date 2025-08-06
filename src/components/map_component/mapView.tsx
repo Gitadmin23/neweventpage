@@ -23,7 +23,8 @@ interface Props {
   setMyLocat?: any,
   marker?: any,
   setMarker?: any,
-  setAddress?: any
+  setAddress?: any,
+  setState?: any
 }
 
 
@@ -37,7 +38,8 @@ function MapView(props: Props) {
     setMyLocat,
     marker,
     setMarker,
-    setAddress
+    setAddress,
+    setState
   } = props
 
 
@@ -93,6 +95,8 @@ function MapView(props: Props) {
             let address = results[0].formatted_address
             let newState = results[0]?.address_components[results[0]?.address_components?.length - 1]?.types[0] === "country" ? results[0]?.address_components[results[0]?.address_components?.length - 2]?.long_name : results[0]?.address_components[results[0]?.address_components?.length - 3]?.long_name
 
+            setState(newState);
+            
             setAddress(address)
           } else {
             console.error('Error fetching address:', status);
@@ -148,26 +152,7 @@ function MapView(props: Props) {
         }
       }
     );
-  }, [])
-
-  // const clickHandler = () => { 
-  //     toast({
-  //       title: 'Error',
-  //       description: "Add the Location of your event",
-  //       status: 'error',
-  //       isClosable: true,
-  //       duration: 3000,
-  //       position: 'top-right',
-  //     });
-
-  //     toaster.create({
-  //       title: `Success`,
-  //       description: "Login Successful",
-  //       type: "success",
-  //       closable: true
-  //   })
-  //   }
-  // }
+  }, []) 
 
   const {
     mainBackgroundColor,
@@ -186,7 +171,7 @@ function MapView(props: Props) {
           onClick={onMapClick}>
           {/* <UserLocation panTo={panTo}/>   */}
           {!hidesearch && (
-            <MapSearch setMarker={setMarker} center={center} panTo={panTo} />
+            <MapSearch setState={setState} setMarker={setMarker} setAddress={setAddress} center={center} panTo={panTo} />
           )}
           {directionsResponse && (
             <DirectionsRenderer directions={directionsResponse} />
@@ -200,7 +185,7 @@ function MapView(props: Props) {
       </LoadingAnimation>
       {!view && (
         <Flex w={"fit"} pos={"absolute"} bottom={"3"} right={"3"} >
-          <CustomButton borderRadius={"999px"} onClick={() => setOpen(false)} width={"80px"} height={"40px"} fontSize={"14px"} text={"Close"} />
+          <CustomButton borderRadius={"999px"} onClick={() => setOpen(false)} width={"80px"} height={"40px"} fontSize={"14px"} text={"Done"} />
         </Flex>
       )}
     </Box>

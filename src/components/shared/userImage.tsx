@@ -12,10 +12,7 @@ export default function UserImage(
         size, 
         user
     } :IProps
-) {
-
-    console.log(user);
-    
+) { 
 
     return (
         <Avatar.Root size={size ?? "md"} rounded={"full"} roundedTopRight={"0px"} >

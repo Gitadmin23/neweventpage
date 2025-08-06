@@ -41,8 +41,11 @@ export default function DonationGroupCard(
         // }
     }
 
+    console.log(item);
+    
+
     return (
-        <Flex flexDir={"column"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
+        <Flex flexDir={"column"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"full"} >
             <Flex onClick={() => clickHandler(item, item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.id)} cursor={"pointer"} w={"full"} h={"fit-content"} pos={"relative"} >
                 <ProductImageScroller images={[item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.bannerImage]} createdDate={moment(item?.createdDate)?.fromNow()} userData={item?.user} />
                 {!frame && (

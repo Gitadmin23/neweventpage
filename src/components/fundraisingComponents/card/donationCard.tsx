@@ -42,7 +42,7 @@ export default function DonationCard(
     }
 
     return (
-        <Flex flexDir={"column"} pos={"relative"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"fit-content"} >
+        <Flex flexDir={"column"} pos={"relative"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} h={"full"} >
             {(item?.user?.userId === userId && item?.total === 0) && (
                 <DeleteBtn donation={true} id={item?.id} isOrganizer={item?.user?.userId === userId} name={item?.name} />
             )}

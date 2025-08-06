@@ -41,8 +41,7 @@ export default function Information(
         } else {
             formik.handleSubmit()
         }
-    } 
-
+    }  
 
     return (
         <Flex w={"full"} h={"full"} flexDir={"column"} px={"4"} gap={"4"} >

@@ -15,19 +15,29 @@ export default function Sidebar() {
 
     const query = useSearchParams();
     const type = query?.get('type');
+    const id = query?.get('id');
     const pathname = usePathname()
-
     const router = useRouter()
 
     return (
-        <Flex bgColor={[mainBackgroundColor, mainBackgroundColor ,secondaryBackgroundColor]} flexDir={"column"} p={5} w={["full", "full", "344px"]}  >
-            <Flex w={"full"} gap={"3"} pb={["2", "2" , "0px"]} position={"relative"} justifyContent={"center"} alignItems={"center"} >
-                <Flex onClick={()=> router.back()} pos={"absolute"} insetX={"auto"} left={"0px"}  cursor={"pointer"}  >
-                    <IoArrowBack size={"25px"} />
-                </Flex>
+        <Flex bgColor={[mainBackgroundColor, mainBackgroundColor, secondaryBackgroundColor]} flexDir={"column"} p={5} w={["full", "full", "344px"]}  >
+            <Flex w={"full"} gap={"3"} pb={["2", "2", "0px"]} position={"relative"} justifyContent={"center"} alignItems={"center"} >
+                {type === "info" ? (
+                    <Flex onClick={() => router.push("/product/create/events" + (pathname?.includes("edit") ? `/edit?id=${id}` : `/draft?id=${id}`))} pos={"absolute"} insetX={"auto"} left={"0px"} cursor={"pointer"}  >
+                        <IoArrowBack size={"25px"} />
+                    </Flex>
+                ): !type ? (
+                    <Flex onClick={() => router.push("/product/events")} pos={"absolute"} insetX={"auto"} left={"0px"} cursor={"pointer"}  >
+                        <IoArrowBack size={"25px"} />
+                    </Flex>
+                ):(
+                    <Flex onClick={() => router.back()} pos={"absolute"} insetX={"auto"} left={"0px"} cursor={"pointer"}  >
+                        <IoArrowBack size={"25px"} />
+                    </Flex>
+                )}
                 <Text textAlign={"center"} fontWeight={"600"} >{pathname?.includes("draft") ? "Draft" : pathname?.includes("edit") ? "Edit" : "Create"} Event</Text>
             </Flex>
-            <Flex  display={["none", "none", "flex"]} w={"full"} flexDir={"column"} gap={"4"} mt={"6"} >
+            <Flex display={["none", "none", "flex"]} w={"full"} flexDir={"column"} gap={"4"} mt={"6"} >
                 <Flex w={"full"} flexDir={"column"} gap={"2"} rounded={"lg"} bgColor={mainBackgroundColor} p={"3"}  >
                     <Flex gap={"2"} alignItems={"center"} >
                         <Flex w={"20px"} h={"20px"} borderWidth={"1.5px"} p={"4px"} borderColor={primaryColor} rounded={"full"} >
