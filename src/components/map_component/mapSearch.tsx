@@ -62,7 +62,7 @@ function MapSearch(props: Props) {
     };
 
     const handleSelect = async (address: any) => {
-        setValue(address, false);
+        setValue(address);
         setShow(false)
         clearSuggestions();
         try {
@@ -112,7 +112,7 @@ function MapSearch(props: Props) {
                     </InputGroup> */}
 
                     <InputGroup startElement={<IoSearchOutline size={"25px"} style={{ marginLeft: "8px" }} color='#5D70F9' />}>
-                        <Input placeholder="Search your location" fontSize={"14px"} h={"45px"} rounded={"full"} onChange={handleInput} />
+                        <Input placeholder="Search your location" fontSize={"14px"} h={"45px"} value={value} rounded={"full"} onChange={handleInput} />
                     </InputGroup>
                     {show && (
                         <Box width={"full"} bgColor={mainBackgroundColor} maxH={"250px"} overflowY={"auto"} zIndex={"20"} px={"4"} display={"flex"} flexDir={"column"} alignItems={"start"} py={"2"} rounded={"md"} position={"absolute"} mt={"2"} >
