@@ -22,7 +22,7 @@ interface Props {
   type?: ShareType;
   eventName?: string;
   data?: any;
-  affiliateID: string
+  affiliateID: any
 }
 
 function SendMessage(props: Props) {

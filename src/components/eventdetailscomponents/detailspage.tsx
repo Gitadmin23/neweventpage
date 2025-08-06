@@ -30,15 +30,15 @@ export default function DetailsPage(
         eventDescription,
         attendeesVisibility,
         location,
-        id
+        id,
     } = props
 
     const { mainBackgroundColor } = useCustomTheme()
 
     const isAdmin = isOrganizer || eventMemberRole === "ADMIN" || eventMemberRole === "COLLABORATOR"
 
-    const pathname = usePathname()
-
+    const pathname = usePathname() 
+    
     return (
         <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
             <BreadCrumbs {...props} />
@@ -50,6 +50,7 @@ export default function DetailsPage(
                         data={props}
                         type="EVENT"
                         // size="18px"
+                        affiliateID={props?.affiliateID}
                         showText={false}
                         id={id}
                     /> 

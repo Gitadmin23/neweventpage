@@ -40,7 +40,7 @@ function SendMesageModal({ onClose, id, isprofile, type, affiliateID }: {
     id: string,
     isprofile?: boolean,
     type: ShareType
-    affiliateID: string
+    affiliateID: any
 }) {
 
     const [search, setSearch] = React.useState('');

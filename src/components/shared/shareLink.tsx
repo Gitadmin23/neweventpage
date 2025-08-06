@@ -59,10 +59,7 @@ function ShareEvent(props: Props) {
   const CloseModal = () => {
     setOpen(false);
     setTab(1);
-  };
-
-  console.log(affiliateID);
-  
+  };  
 
   const clickHandler = (event: any) => {
     event.stopPropagation();
@@ -195,7 +192,7 @@ function ShareEvent(props: Props) {
               id={id}
               click={setTab}
               eventName={eventName}
-              affiliateID={affiliateID+""}
+              affiliateID={affiliateID}
             />
           )}
           {tab === 2 && (
@@ -204,14 +201,14 @@ function ShareEvent(props: Props) {
               isprofile={isprofile}
               id={id}
               onClose={CloseModal}
-              affiliateID={affiliateID+""}
+              affiliateID={affiliateID}
             />
           )}
-          {tab === 3 && <Qr_code affiliateID={affiliateID+""} type={props?.type} data={data} close={CloseModal} id={id} />}
+          {tab === 3 && <Qr_code affiliateID={affiliateID} type={props?.type} data={data} close={CloseModal} id={id} />}
         </Flex>
       </ModalLayout>
     </Flex>
   );
-}
+} 
 
 export default ShareEvent;

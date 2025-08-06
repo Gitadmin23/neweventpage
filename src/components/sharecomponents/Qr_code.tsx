@@ -20,7 +20,7 @@ interface Props {
   data?: any;
   name?: string;
   type?: ShareType
-  affiliateID: string
+  affiliateID: any
 }
 
 function Qr_code(props: Props) {
