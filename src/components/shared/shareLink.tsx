@@ -25,6 +25,7 @@ interface Props {
   color?: string;
   newbtn?: boolean,
   name?: string
+  affiliateID?: string
 }
 
 function ShareEvent(props: Props) {
@@ -41,6 +42,7 @@ function ShareEvent(props: Props) {
     community,
     color,
     newbtn,
+    affiliateID
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -58,6 +60,9 @@ function ShareEvent(props: Props) {
     setOpen(false);
     setTab(1);
   };
+
+  console.log(affiliateID);
+  
 
   const clickHandler = (event: any) => {
     event.stopPropagation();
@@ -190,6 +195,7 @@ function ShareEvent(props: Props) {
               id={id}
               click={setTab}
               eventName={eventName}
+              affiliateID={affiliateID+""}
             />
           )}
           {tab === 2 && (
@@ -198,9 +204,10 @@ function ShareEvent(props: Props) {
               isprofile={isprofile}
               id={id}
               onClose={CloseModal}
+              affiliateID={affiliateID+""}
             />
           )}
-          {tab === 3 && <Qr_code type={props?.type} data={data} close={CloseModal} id={id} />}
+          {tab === 3 && <Qr_code affiliateID={affiliateID+""} type={props?.type} data={data} close={CloseModal} id={id} />}
         </Flex>
       </ModalLayout>
     </Flex>

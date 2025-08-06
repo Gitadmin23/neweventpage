@@ -20,10 +20,11 @@ interface Props {
   data?: any;
   name?: string;
   type?: ShareType
+  affiliateID: string
 }
 
 function Qr_code(props: Props) {
-  const { id, close, data, type, name } = props;
+  const { id, close, data, type, name, affiliateID } = props;
 
   const {
     bodyTextColor, 
@@ -45,7 +46,7 @@ function Qr_code(props: Props) {
 
   const url_link =
     type === "EVENT"
-      ? `${SHARE_URL}${"/event?id="}${id}` :
+      ? `${SHARE_URL}${"/event?id="}${id}${affiliateID ? `&affiliateID=${affiliateID}` : ``}` :
         type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}`:
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}`:
         type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}`:

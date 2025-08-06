@@ -35,11 +35,12 @@ const UserCard = (props: IUser & { checked: boolean, handleCheck: (e: string) =>
     )
 }
 
-function SendMesageModal({ onClose, id, isprofile, type }: {
+function SendMesageModal({ onClose, id, isprofile, type, affiliateID }: {
     onClose: () => void,
     id: string,
     isprofile?: boolean,
     type: ShareType
+    affiliateID: string
 }) {
 
     const [search, setSearch] = React.useState('');
@@ -78,7 +79,7 @@ function SendMesageModal({ onClose, id, isprofile, type }: {
             const obj = {
                 message:
                     type === "EVENT"
-                        ? `${SHARE_URL}${"/event?id="}${id}` :
+                        ? `${SHARE_URL}${"/event?id="}${id}${affiliateID ? `&affiliateID=${affiliateID}` : ``}` :
                         type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}` :
                             type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}` :
                                 type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}` :

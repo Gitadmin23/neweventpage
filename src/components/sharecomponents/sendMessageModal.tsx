@@ -22,10 +22,11 @@ interface Props {
   type?: ShareType;
   eventName?: string;
   data?: any;
+  affiliateID: string
 }
 
 function SendMessage(props: Props) {
-  const { id, click, isprofile, type, data } = props;
+  const { id, click, isprofile, type, data, affiliateID } = props;
 
   const {
     bodyTextColor,
@@ -35,7 +36,7 @@ function SendMessage(props: Props) {
 
   const url_link =
     type === "EVENT"
-      ? `${SHARE_URL}${"/event?id="}${id}` :
+      ? `${SHARE_URL}${"/event?id="}${id}${affiliateID ? `&affiliateID=${affiliateID}` : ``}` :
       type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}` :
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}` :
           type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}` :
@@ -44,7 +45,7 @@ function SendMessage(props: Props) {
 
   const getUrl = () => {
     if (type === "EVENT") {
-      return `${SHARE_URL}${"/event?id="}${id}`;
+      return `${SHARE_URL}${"/event?id="}${id}${affiliateID ? `&affiliateID=${affiliateID}` : ``}`;
     } else if (type === "DONATION") {
       return `${SHARE_URL}${"/fundraiser?id="}${id}`;
     } else if (type === "RENTAL") {

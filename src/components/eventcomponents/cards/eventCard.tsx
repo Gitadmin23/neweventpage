@@ -44,6 +44,7 @@ export default function EventCard(
                         data={event}
                         type="EVENT"
                         // size="18px"
+                        affiliateID={event?.affiliateID}
                         showText={false}
                         id={event?.id}
                     /> 

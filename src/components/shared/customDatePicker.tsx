@@ -1,8 +1,4 @@
-
-// import { DateTimePicker } from '@mui/x-date-pickers';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import dayjs from 'dayjs';
+"use client" 
 import { Flex, Text } from "@chakra-ui/react";
 import { toaster } from '../ui/toaster';
 import useCustomTheme from '@/hooks/useTheme';
