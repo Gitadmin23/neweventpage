@@ -133,7 +133,7 @@ export default function SelectTicketBtn(
 
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
-            <Text fontWeight={"500"} >See ticket available for this event</Text>
+            <Text fontWeight={"500"} fontSize={["xs", "xs", "sm"]} >See ticket available for this event</Text>
             <Flex w={"full"} justifyContent={"end"} display={["none", "none", "flex"]} >
                 <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
             </Flex>
