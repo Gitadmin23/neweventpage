@@ -73,7 +73,7 @@ function MapSearch(props: Props) {
             let newState = results[0]?.address_components[results[0]?.address_components?.length - 1]?.types[0] === "country" ? results[0]?.address_components[results[0]?.address_components?.length - 2]?.long_name : results[0]?.address_components[results[0]?.address_components?.length - 3]?.long_name
 
             setState(newState);
-            setAddress(results[0]?.address_components[0]?.long_name)
+            setAddress(address)
             setMarker({
                 lat: Number(lat),
                 lng: Number(lng),

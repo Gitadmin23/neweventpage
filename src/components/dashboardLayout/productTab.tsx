@@ -54,11 +54,11 @@ export default function ProductTab(
         }
     }
     useEffect(() => {
-        if (open) {
+        if (open || show) {
             const timeout = setTimeout(() => {
                 setOpen(false)
                 setShow(false)
-            }, 3000); // 3 seconds
+            }, 2000); // 3 seconds
             return () => clearTimeout(timeout);
         } 
     }, [open, show]);
@@ -69,12 +69,12 @@ export default function ProductTab(
                 <Flex fontSize={["20px", "20px", "56px"]} alignItems={"end"} display={["flex", "flex", "none"]} fontWeight={"700"} >what are you l<Flex mb={"1"} ><GlassIcon size='17' /></Flex>king for?</Flex>
                 <Flex fontSize={["16px", "16px", "56px"]} alignItems={"end"} display={["none", "none", "flex"]} fontWeight={"700"} >what are you l<Flex mb={"3"} ><GlassIcon size='45' /></Flex>king for?</Flex>
                 <Flex w={["full", "fit-content", "fit-content"]} gap={"0px"} justifyContent={"space-between"} alignItems={"center"} bgColor={secondaryBackgroundColor} p={"6px"} rounded={"full"} >
-                    {/* <Tooltip
+                    <Tooltip
                         content={
                             <ProductTooltip title="Welcome Chasescroll Event" details="Event System: Add or Get Free & paid event tickets in this section ONLY." setIsOpen={setOpen} />
                         }
                         open={open}
-                    > */}
+                    >
                     <CustomButton onClick={() => clickHandler("event")} text={
                         <Flex alignItems={"center"} gap={"2"} >
                             <Flex display={["none", "none", "flex"]} >
@@ -83,7 +83,7 @@ export default function ProductTab(
                             <Text fontSize={["10px", "12px", "14px"]} >Event</Text>
                         </Flex>
                     } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname === "/product/events" ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname === "/product/events" ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname === "/product/events" ? "white" : headerTextColor} width={["fit-content", "107px", "175px"]} />
-                    {/* </Tooltip> */}
+                    </Tooltip>
                     <CustomButton onClick={() => clickHandler("service")} text={
                         <Flex alignItems={"center"} gap={"2"} >
                             <Flex display={["none", "none", "flex"]} >
@@ -109,12 +109,12 @@ export default function ProductTab(
                         </Flex>
                     } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={(type === "kiosk" || type === "mykiosk" || type === "myorder" || type === "mysales") ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={(type === "kiosk" || type === "mykiosk" || type === "myorder" || type === "mysales") ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={(type === "kiosk" || type === "mykiosk" || type === "myorder" || type === "mysales") ? "white" : headerTextColor} width={["fit-content", "107px", "175px"]} />
                     <Flex w="fit-content" >
-                        {/* <Tooltip
+                        <Tooltip
                             content={
                                 <ProductTooltip title="Welcome to Fundraising section" details="Donate or Create event-base fundraising ONLY in this section. Eg, campaigns, schools, non-profits, clubs, churches, youth groups or urgent causes etc." setIsOpen={setOpen} />
                             }
                             open={show}
-                        > */}
+                        >
                         <CustomButton onClick={() => clickHandler("donation")} text={
                             <Flex alignItems={"center"} gap={"2"} >
                                 <Flex display={["none", "none", "flex"]} >
@@ -123,7 +123,7 @@ export default function ProductTab(
                                 <Text fontSize={["10px", "12px", "14px"]} >Fundraising</Text>
                             </Flex>
                         } height={["30px", "38px", "48px"]} px={"4"} fontSize={"sm"} backgroundColor={pathname?.includes("/product/fundraising") ? primaryColor : secondaryBackgroundColor} border={"0px"} borderColor={pathname?.includes("/product/fundraising") ? "transparent" : borderColor} borderRadius={"32px"} fontWeight={"600"} color={pathname?.includes("/product/fundraising") ? "white" : headerTextColor} width={["80px", "107px", "175px"]} />
-                        {/* </Tooltip> */}
+                        </Tooltip>
                     </Flex>
                 </Flex>
                 <Flex maxW={"500px"} mt={"4"} w={"full"} > 
