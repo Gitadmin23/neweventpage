@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { IEventType, IProductTypeData } from "@/helpers/models/event";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
 import { formatNumberWithK, numberFormatNaire } from "@/helpers/utils/formatNumberWithK";
-import useCustomTheme from "@/hooks/useTheme"; 
+import useCustomTheme from "@/hooks/useTheme";
 import usePayStack from "@/hooks/usePayStack";
 import { ShoppingCart } from "iconsax-react";
 import { toaster } from "../ui/toaster";
@@ -54,7 +54,7 @@ export default function SelectTicketBtn(
 
         let clone = [...selectTicketType]
 
-        const index = checkType(item.ticketType); 
+        const index = checkType(item.ticketType);
 
         if (selectTicketType?.length > 0) {
             if (index > -1) {
@@ -127,21 +127,18 @@ export default function SelectTicketBtn(
         )
     }, [payForTicket])
 
-    useEffect(()=> {
+    useEffect(() => {
         setTotalPrice(0)
     }, [open, openMobile])
 
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Text fontWeight={"500"} fontSize={["xs", "xs", "sm"]} >See ticket available for this event</Text>
-            <Flex w={"full"} justifyContent={"end"} display={["none", "none", "flex"]} >
+            <Flex w={"full"} justifyContent={"end"} >
                 <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
-            </Flex>
-            <Flex w={"full"} justifyContent={"end"} display={["flex", "flex", "none"]} >
-                <CustomButton onClick={() => setOpenMobile(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
-            </Flex>
-            <ModalLayout size="full" closeBtn={true} open={openMobile} close={() => setOpenMobile(false)} trigger={true} >
-                <Flex w={"full"} maxH={"100vh"} h={"full"} overflowY={"auto"} >
+            </Flex> 
+            <ModalLayout size={["full", "full", "xl"]} closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
+                <Flex w={"full"} maxH={"100vh"} display={["flex", "flex", "none"]} h={"full"} overflowY={"auto"} >
                     <Flex flexDir={"column"} h={"full"} py={"6"} w={"full"}>
                         <Flex flexDir={"column"} h={"fit-content"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
@@ -289,15 +286,12 @@ export default function SelectTicketBtn(
                                 </Flex>
                             )}
                         </Flex>
-                        <Flex w={"full"} justifyContent={"end"} pt={"4"} borderTopWidth={"1px"} mt={"auto"} >
+                        <Flex w={"full"} justifyContent={"end"} pt={"4"} px={"4"} borderTopWidth={"1px"} mt={"auto"} >
                             <CustomButton height={"35px"} fontSize={"14px"} loading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
                         </Flex>
                     </Flex>
                 </Flex>
-            </ModalLayout>
-
-            <ModalLayout size="xl" closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
-                <Flex w={"full"} h={"70vh"} justifyContent={"center"} alignItems={"center"} >
+                <Flex w={"full"} h={"70vh"} display={["none", "none", "flex"]} justifyContent={"center"} alignItems={"center"} >
                     <Flex p={"5"} h={"full"} borderWidth={"1px"} rounded={"2xl"} gap={"4"} w={"full"} maxW={"1032px"} >
                         <Flex flexDir={"column"} alignItems={"center"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
@@ -450,7 +444,7 @@ export default function SelectTicketBtn(
                         </Flex>
                     </Flex>
                 </Flex>
-            </ModalLayout>
+            </ModalLayout> 
         </Flex>
     )
 }

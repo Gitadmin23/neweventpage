@@ -1,6 +1,5 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
 
-
 export default function useCustomTheme() {
     const mainBackgroundColor = useColorModeValue( 'white', '#18191A');
     const secondaryBackgroundColor = useColorModeValue('whitesmoke', '#242526');

@@ -63,7 +63,7 @@ export default function ModalLayout({
                 <Dialog.Root  placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner p={"2"} >
-                        <Dialog.Content minH={["fit-content", "fit-content", "fit-content"]} >
+                        <Dialog.Content rounded={"2xl"} minH={["fit-content", "fit-content", "fit-content"]} >
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
                                 <Dialog.Header pl={"4"} textAlign={"center"} >
