@@ -66,7 +66,7 @@ export default function DonationCard(
                     </Flex>
                     <Flex w={"full"} alignItems={"end"} flexDir={"column"} >
                         <Text fontSize={"12px"} color={bodyTextColor} >Target </Text>
-                        <Text fontWeight={"700"} fontSize={"14px"} >{formatNumberWithK(item?.goal)}</Text>
+                        <Text fontWeight={"700"} fontSize={"14px"} >{formatNumberWithK(item?.goal, true)}</Text>
                     </Flex>
                 </Flex>
                 <Flex w={"full"} >

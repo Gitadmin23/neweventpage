@@ -5,6 +5,7 @@ import { IDonationGroup } from "@/helpers/models/fundraising";
 import { SHARE_URL } from "@/helpers/services/urls";
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
+import { formatNumberWithK } from "@/helpers/utils/formatNumberWithK";
 import { isDateInPast } from "@/helpers/utils/isPast";
 import { formatNumber } from "@/helpers/utils/numberFormat";
 import { textLimit } from "@/helpers/utils/textlimit";
@@ -66,7 +67,7 @@ export default function DonationGroupCard(
                     </Flex>
                     <Flex w={"full"} alignItems={"end"} flexDir={"column"} >
                         <Text fontSize={"12px"} color={bodyTextColor} >Target </Text>
-                        <Text fontWeight={"700"} fontSize={"14px"} >{formatNumber(item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.goal)}</Text>
+                        <Text fontWeight={"700"} fontSize={"14px"} >{formatNumberWithK(item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]?.goal, true)}</Text>
                     </Flex>
                 </Flex>
                 <Flex w={"full"} >

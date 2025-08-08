@@ -92,7 +92,7 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
                 {data?.isOrganizer ? (
                     <Text fontWeight={"500"} >Add  Product to enable your Audience connect to your event</Text>
                 ) : (
-                    <Text fontSize={["14px", "14px", "20px"]} fontWeight={"bold"} >Shop the ${data?.eventName} kiosk</Text>
+                    <Text fontSize={["14px", "14px", "20px"]} fontWeight={"bold"} >Shop the {capitalizeFLetter(data?.eventName)} kiosk</Text>
                 )}
                 {!data?.isOrganizer && (
                     <Text fontSize={"12px"} fontWeight={"600"} onClick={() => routeHandler()} color={primaryColor} as={"button"} >See all</Text>
