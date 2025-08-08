@@ -30,10 +30,8 @@ export default function DashboardMenuBtn( ) {
     const handleClick = (item: string) => {
         if (item === "logout") {
             setShow(true)
-        } else {
-
-            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
-            // router?.push(item)
+        } else { 
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`; 
         }
 
         setOpen(false)
@@ -43,8 +41,9 @@ export default function DashboardMenuBtn( ) {
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
-    const clickHandler = () => {
-        router.push("/dashboard/notification")
+    const clickHandler = () => { 
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`; 
+        // router.push("/dashboard/notification")
         setOpen(false)
     }
 

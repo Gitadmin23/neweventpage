@@ -96,8 +96,8 @@ export default function ViewTicket(
             )}
             <ModalLayout size={"cover"} trigger={true} open={open} close={() => setOpen(false)} >
                 <LoadingAnimation loading={isLoading} >
-                    <Flex p={"4"} position={"relative"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
-                        <Flex bg={mainBackgroundColor} w={"full"} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
+                    <Flex p={"4"} position={"relative"} h={"100vh"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
+                        <Flex bg={mainBackgroundColor} w={"full"} h={"50px"} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
 
                             <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} cursor={"pointer"} >
                                 <IoClose size={"25px"} />
@@ -112,10 +112,10 @@ export default function ViewTicket(
                         <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={() => setOpen(false)} cursor={"pointer"} >
                             <IoClose size={"25px"} />
                         </Box>
-                        <Box w={"full"} bg={mainBackgroundColor} h={"full"} display={["none", "none", "block"]} >
-                            <Flex ref={contentRef} width={"full"} h={"full"} overflowY={"auto"} flexDirection={"column"} gap={"4"} px={["4", "4", "0px"]} >
+                        <Box w={"full"} bg={mainBackgroundColor} h={"full"} pos={"relative"} flex={"1"} display={["none", "none", "flex"]} >
+                            <Flex ref={contentRef} width={"full"} position={"absolute"} inset={"0px"} flex={"1"} overflowY={"auto"} flexDirection={"column"} gap={"4"} px={["4", "4", "0px"]} >
                                 {/* {eventData.length > 0 && ( */}
-                                    <Flex w={"full"} h={"fit-content"} flexDir={"column"} justifyContent={"center"} alignItems={"center"} gap={"4"} >
+                                    <Flex w={"full"} h={"fit-content"} flexDir={"column"} alignItems={"center"} gap={"4"} >
                                         {eventData?.content?.map((item, index: number) => {
                                             return (
                                                 <Flex key={index} maxW={"750px"} w={"full"} flexDir={["row"]} rounded={"16px"} pb={"4"} p={["4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["center"]} justifyContent={"center"} gap={"4"} >
@@ -129,7 +129,7 @@ export default function ViewTicket(
                                                             <>
                                                                 {(checkEventDay(item?.scanTimeStamp)) && (
                                                                     <Box width={'fit-content'} height={'fit-content'} position={'absolute'} bottom={'50px'} right={"0"} bg={'transparent'}>
-                                                                        <Image src={'/assets/approved.svg'} alt={'approved'} width={'100px'} height={'100px'} objectFit={'cover'} />
+                                                                        <Image src={'/images/approved.svg'} alt={'approved'} width={'100px'} height={'100px'} objectFit={'cover'} />
                                                                     </Box>
                                                                 )}
                                                             </>
