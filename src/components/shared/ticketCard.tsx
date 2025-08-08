@@ -37,7 +37,7 @@ export default function Ticket({ ticket, showStatus = false, approved, close }: 
                     <Flex alignItems={"center"} gap={"4"} py={"2"} px={"2"} borderBottom={"1px solid #E2E8F0"}  >
                         <Box w={"fit-content"} >
                             <Flex width={"140px"} height={"110px"} >
-                                <EventImage {...ticket?.event} />
+                                <EventImage data={ticket?.event} />
                             </Flex>
                         </Box>
                         <Box>
@@ -47,7 +47,7 @@ export default function Ticket({ ticket, showStatus = false, approved, close }: 
                     </Flex>
                     <Flex width={"full"} pos={"relative"} pb={"2"} justifyContent={"center"} borderBottom={"1px solid #E2E8F0"}  >
                         <Box width={'fit-content'} height={'fit-content'} position={'absolute'} bottom={'10px'} right={"6"} bg={'transparent'}>
-                            <Image src={approved ? '/assets/approved.svg' : '/assets/denied.svg'} alt={'approved'} width={'150px'} height={'150px'} objectFit={'cover'} />
+                            <Image src={approved ? '/images/approved.svg' : '/images/denied.svg'} alt={'approved'} width={'150px'} height={'150px'} objectFit={'cover'} />
                         </Box>
                         <Flex p={"2"} width={"full"} flexDirection={"column"} gap={"4"} fontSize={"xs"} >
                             <Flex flexDirection={"column"} gap={"2"} >

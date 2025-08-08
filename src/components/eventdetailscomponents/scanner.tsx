@@ -49,9 +49,8 @@ export default function Scanner({
         }
     })
 
-    const handleScanner = (str: any) => {
-        setShow(false); 
-        // mutate(str);
+    const handleScanner = (str: any) => { 
+        mutate(str[0]?.rawValue); 
     }
 
     const retry = () => {
@@ -87,13 +86,13 @@ export default function Scanner({
                     </Box>
                 )}
                 {isPending && (
-                    <VStack justifyContent={'center'} w={'100%'} h={'100%'}>
+                    <VStack justifyContent={'center'} w={'100%'} py={"6"} h={'100%'}>
                         <Spinner />
                         <Text>Verifing Ticket...</Text>
                     </VStack>
                 )}
             </ModalLayout>
-            <ModalLayout size={"full"} open={open} close={() => setOpen(false)} >
+            <ModalLayout size={"full"} trigger={true} open={open} close={() => setOpen(false)} >
                 {(!isPending && isError) && (
                     <Box flex={1}>
                         <Text fontSize={'18px'} textAlign={'center'}>An error occured while scanning the ticket</Text>
