@@ -75,10 +75,7 @@ export default function CollaboratorBtn(props: IProps) {
     const { updateEvent, eventdata } = useEventStore((state) => state);
     const [show, setShow] = useState(false)
 
-    const queryClient = useQueryClient()
-
-    console.log(eventdata);
-
+    const queryClient = useQueryClient() 
 
     const [search, setSearch] = React.useState('');
 

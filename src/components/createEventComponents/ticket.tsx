@@ -57,6 +57,8 @@ export default function Ticket(
 
     const router = useRouter()
 
+    console.log(formik.errors); 
+
 
     const tabHandler = (item: string) => {
         if (item === "free") {

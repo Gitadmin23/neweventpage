@@ -39,13 +39,22 @@ export const validationSchemaTicket = Yup.object().shape({
         ticketPrice: Yup.number()
           .typeError("Ticket price must be a number")
           .required("Ticket price is required")
-          .when("ticketType", {
-            is: (val: string) => val?.toLowerCase() === "free",
-            then: (schema) =>
-              schema.oneOf([0], "Ticket price must be 0 when type is Free"),
-            otherwise: (schema) =>
-              schema.min(1, "Ticket price must be greater than 0"),
-          }),
+          .test(
+            "price-validation-based-on-type",
+            "Ticket price must be 0 for Free, at least 0 for Early Bird, and greater than 0 for others",
+            function (value) {
+              const { ticketType } = this.parent;
+              const type = ticketType?.toLowerCase();
+
+              if (type === "free") {
+                return value === 0;
+              } else if (type === "early bird") {
+                return value >= 0;
+              } else {
+                return value > 0;
+              }
+            }
+          ),
         ticketType: Yup.string().required("Ticket type is required"),
         minTicketBuy: Yup.number()
           .typeError("Minimum tickets must be a number")
