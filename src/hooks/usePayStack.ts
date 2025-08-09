@@ -17,8 +17,25 @@ const usePayStack = () => {
         mutationFn: (data: any) => httpService.post("/events/create-multi-ticket", data),
         onSuccess: (res: any) => {
             const payload = res?.data?.content;
+            if(payload?.orderTotal === 0){ 
 
-            if (!payload?.email || !payload?.orderTotal || !payload?.orderCode) {
+                queryClient.invalidateQueries({ queryKey: ['all-events-details']}) 
+                queryClient.invalidateQueries({ queryKey: ['donation-user']})  
+                queryClient.invalidateQueries({ queryKey: ['all-donation-details']})  
+                queryClient.invalidateQueries({ queryKey: ['donationlist']})  
+                queryClient.invalidateQueries({ queryKey: ['mydonationlist']})  
+                queryClient.invalidateQueries({ queryKey: ["event-ticket"]}) 
+                queryClient.invalidateQueries({ queryKey: ["all-donation"]}) 
+                
+                toaster.create({
+                    title: "Registration verified",
+                    type: "success",
+                    closable: true
+                })
+                setOpen(false);
+                setOpenMobile(false)
+
+            } else if (!payload?.email || !payload?.orderTotal || !payload?.orderCode) {
                 toaster.create({
                     title: "Invalid response from server",
                     type: "error",

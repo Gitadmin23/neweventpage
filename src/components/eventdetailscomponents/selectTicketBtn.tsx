@@ -21,7 +21,8 @@ export default function SelectTicketBtn(
         eventName,
         startDate,
         productTypeData,
-        id
+        id,
+        isBought
     }: IEventType
 ) {
 
@@ -142,7 +143,7 @@ export default function SelectTicketBtn(
                     <Flex flexDir={"column"} h={"full"} py={"6"} w={"full"}>
                         <Flex flexDir={"column"} h={"fit-content"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
-                                <Text fontWeight={"700"} fontSize={"25px"} >{eventName}</Text>
+                                <Text fontWeight={"700"} fontSize={"25px"} >{capitalizeFLetter(eventName)}</Text>
                                 <Text fontSize={"14px"} >{dateFormat(startDate)}</Text>
                             </Flex>
                             <Flex w={"full"}>
@@ -287,7 +288,7 @@ export default function SelectTicketBtn(
                             )}
                         </Flex>
                         <Flex w={"full"} justifyContent={"end"} pt={"4"} px={"4"} borderTopWidth={"1px"} mt={"auto"} >
-                            <CustomButton height={"35px"} fontSize={"14px"} loading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
+                            <CustomButton height={"35px"} fontSize={"14px"} isLoading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
                         </Flex>
                     </Flex>
                 </Flex>
@@ -295,7 +296,7 @@ export default function SelectTicketBtn(
                     <Flex p={"5"} h={"full"} borderWidth={"1px"} rounded={"2xl"} gap={"4"} w={"full"} maxW={"1032px"} >
                         <Flex flexDir={"column"} alignItems={"center"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
-                                <Text fontWeight={"700"} fontSize={"25px"} >{eventName}</Text>
+                                <Text fontWeight={"700"} fontSize={"25px"} >{capitalizeFLetter(eventName)}</Text>
                                 <Text fontSize={"14px"} >{dateFormat(startDate)}</Text>
                             </Flex>
                             <Flex flexDir={"column"} h={"full"} w={"full"} overflowY={"auto"} pr={"4"} >
@@ -396,7 +397,7 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
                                                         </IconButton>
                                                         {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
+                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date()) || (item?.ticketType === "Free" && isBought)} onClick={() => clickHandler({
                                                             item: item,
                                                             type: "increase"
                                                         })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
@@ -413,7 +414,7 @@ export default function SelectTicketBtn(
                             </Flex>
                             <Text fontWeight={"medium"} mr={"auto"} >Powered by <span style={{ color: primaryColor, fontStyle: "italic" }} >Chasescroll.com</span></Text>
                             <Flex w={"full"} justifyContent={"end"} pt={"4"} borderTopWidth={"1px"} mt={"auto"} >
-                                <CustomButton height={"35px"} fontSize={"14px"} loading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
+                                <CustomButton height={"35px"} fontSize={"14px"} isLoading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
                             </Flex>
                         </Flex>
                         <Flex bgColor={secondaryBackgroundColor} rounded={"8px"} w={"fit-content"} flexDir={"column"} gap={"4"} >
