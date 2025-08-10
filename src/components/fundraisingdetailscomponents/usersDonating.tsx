@@ -47,7 +47,7 @@ function UsersDonation(props: Props) {
                     }, index: number) => {
                         if (index <= 2) {
                             return (
-                                <UserImage size={"xs"} user={item} />
+                                <UserImage size={"xs"} user={item?.buyer} />
                             )
                         }
                     })}
