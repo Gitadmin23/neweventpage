@@ -2,7 +2,7 @@
 import useCustomTheme from '@/hooks/useTheme'
 import { Flex, Input, Text } from '@chakra-ui/react'
 
-import React, { useState } from 'react' 
+import React from 'react' 
 import usePayStack from '@/hooks/usePayStack'
 import { IDonationList } from '@/helpers/models/fundraising'
 import { CustomButton } from '../shared'
@@ -10,10 +10,10 @@ import DonationTermAndCondition from '../shared/donationTermAndCondition'
 
 export default function DonationPayment({ data, fullWidth }: { data?: IDonationList, fullWidth?: boolean }) {
 
-    const [value, setValue] = useState("")
+    // const [value, setValue] = useState("")
     // const { googlesign ,setGoogle } = useModalStore((state) => state);
 
-    const { payForDonation } = usePayStack()
+    const { payForDonation, setValue, value } = usePayStack()
 
     const {
         primaryColor,

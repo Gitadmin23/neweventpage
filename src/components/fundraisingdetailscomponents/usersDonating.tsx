@@ -29,7 +29,7 @@ function UsersDonation(props: Props) {
             size: 10,
             page: 0,
         }
-    }); 
+    });  
 
     return (
         <LoadingAnimation loading={isLoading} >
@@ -51,9 +51,9 @@ function UsersDonation(props: Props) {
                             )
                         }
                     })}
-                    {data?.totalElements >= 3 &&
+                    {data?.totalElements > 3 &&
                         <Avatar.Root rounded={"full"} roundedTopRight={"0px"} variant="solid">
-                            <Avatar.Fallback>{"+" + formatNumberWithK(event?.memberCount - 3)}</Avatar.Fallback>
+                            <Avatar.Fallback>{"+" + formatNumberWithK(data?.totalElements - 3)}</Avatar.Fallback>
                         </Avatar.Root>
                     }
                 </AvatarGroup>

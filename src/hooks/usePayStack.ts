@@ -10,7 +10,8 @@ const usePayStack = () => {
 
     const [open, setOpen] = useState(false); 
     const [openMobile, setOpenMobile] = useState(false); 
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient() 
+    const [value, setValue] = useState("")
 
 
     const payForTicket = useMutation({
@@ -131,6 +132,7 @@ const usePayStack = () => {
             queryClient.invalidateQueries({ queryKey: ['mydonationlist']})  
             queryClient.invalidateQueries({ queryKey: ["event-ticket"]}) 
             queryClient.invalidateQueries({ queryKey: ["all-donation"]}) 
+            setValue("")
             
             toaster.create({
                 title: "Payment verified",
@@ -155,7 +157,9 @@ const usePayStack = () => {
         open,
         setOpen,
         openMobile,
-        setOpenMobile
+        setOpenMobile,
+        setValue,
+        value
     };
 };
 
