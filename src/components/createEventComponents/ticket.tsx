@@ -39,13 +39,15 @@ export default function Ticket(
 
         let clone = [...formik.values.productTypeData, {
             totalNumberOfTickets: '',
-            ticketPrice: '',
+            ticketPrice: tab ? 0 : "",
             ticketType: '',
             minTicketBuy: 1,
             maxTicketBuy: 1,
+            isFree: tab
         }]
 
         formik.setFieldValue('productTypeData', clone);
+
     };
 
     const handleRemoveTicket = (index: number) => {
@@ -59,10 +61,7 @@ export default function Ticket(
     }
 
     const router = useRouter()
-
-    console.log(formik.errors);
-
-
+ 
     const tabHandler = (item: string) => {
         if (item === "free") {
             formik.setFieldValue('productTypeData', [
@@ -72,6 +71,7 @@ export default function Ticket(
                     ticketType: 'Free',
                     minTicketBuy: 1,
                     maxTicketBuy: 1,
+                    isFree: true
                 },
             ]);
             setTab(true)
@@ -83,6 +83,7 @@ export default function Ticket(
                     ticketType: '',
                     minTicketBuy: 1,
                     maxTicketBuy: 1,
+                    isFree: false
                 },
             ]);
             setTab(false)
@@ -102,14 +103,14 @@ export default function Ticket(
             </Flex>
             <EarlyBirdBtn eventData={eventData} value={formik.values} setValue={formik.setFieldValue} />
             <Text fontSize={"14px"} fontWeight={"medium"} >Other Ticket Types</Text>
-            {formik.values.productTypeData.map((ticket: any, index: number) => {
+            {formik.values?.productTypeData?.map((ticket: any, index: number) => {
                 if (ticket.ticketType !== "Early Bird") {
                     return (
                         <Flex key={index} w={"full"} flexDir={"column"} gap={"4"} >
                             <Flex w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} borderWidth={"1px"} p={"4"} >
                                 <Flex w={"full"} gap={"3"} flexDir={["column", "column", "row"]}  >
-                                    <TicketFormInput disabled={ticket.ticketType === "Free" || eventData?.ticketBought} index={index} defaultData={ticket.ticketType} name={`ticketType`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Ticket Name" value={formik.values} />
-                                    <TicketFormInput disabled={ticket.ticketType === "Free"} index={index} defaultData={ticket.ticketPrice} type="number" name={`ticketPrice`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Price" value={formik.values} />
+                                    <TicketFormInput disabled={eventData?.ticketBought} index={index} defaultData={ticket.ticketType} name={`ticketType`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Ticket Name" value={formik.values} />
+                                    <TicketFormInput disabled={ticket.isFree} index={index} defaultData={ticket.ticketPrice} type="number" name={`ticketPrice`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Price" value={formik.values} />
                                 </Flex>
                                 <TicketFormInput index={index} defaultData={ticket.totalNumberOfTickets} type="number" name={`totalNumberOfTickets`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Total number of tickets available to be sold for your events" value={formik.values} />
                                 <Flex flexDir={"column"} gap={"0.5"} >
@@ -117,14 +118,14 @@ export default function Ticket(
                                     <NumberPicker value={ticket.maxTicketBuy} name={`productTypeData[${index}].maxTicketBuy`} setValue={formik.setFieldValue} />
                                 </Flex>
                             </Flex>
-                            {(formik.values.productTypeData.length > 1 && !eventData?.ticketBought ) && (
+                            {(formik.values.productTypeData.length > 1 && !eventData?.ticketBought) && (
                                 <CustomButton ml={"auto"} onClick={() => handleRemoveTicket(index)} text={"Remove ticket type"} maxW={"200px"} color={"red"} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
                             )}
                         </Flex>
                     )
                 }
             })}
-            {!eventData?.ticketBought && (
+            {(!eventData?.ticketBought) && (
                 <CustomButton onClick={handleAddTicket} text={"Add new ticket type"} maxW={"200px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
             )}
 

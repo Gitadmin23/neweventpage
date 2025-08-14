@@ -61,7 +61,7 @@ export default function BottomBar() {
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
                     <KisokIcon size='20px' color={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? true : false} />
                 </Flex>
-                <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} >Event_hub</Text>
+                <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} >Event_Hub</Text>
             </Flex>
             <Flex onClick={() => routeHandler('dashboard/notification')} cursor={"pointer"} flexDir={"column"} alignItems={"center"} width={"full"} maxW={"50px"} color={pathname?.includes('community') ? primaryColor : bodyTextColor} justifyContent={'center'}>
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >

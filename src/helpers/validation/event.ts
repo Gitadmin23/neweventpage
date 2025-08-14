@@ -43,10 +43,10 @@ export const validationSchemaTicket = Yup.object().shape({
             "price-validation-based-on-type",
             "Ticket price must be 0 for Free, at least 0 for Early Bird, and greater than 0 for others",
             function (value) {
-              const { ticketType } = this.parent;
+              const { ticketType, isFree } = this.parent;
               const type = ticketType?.toLowerCase();
 
-              if (type === "free") {
+              if (isFree) {
                 return value === 0;
               } else if (type === "early bird") {
                 return value >= 0;

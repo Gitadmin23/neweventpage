@@ -35,6 +35,7 @@ export default function EarlyBirdBtn(
                 endTime: "",
                 startDate: "",
                 endDate: "",
+                isFree: false
             }
             clone.unshift(ticket)
             setValue("productTypeData", clone)
