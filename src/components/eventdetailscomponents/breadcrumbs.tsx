@@ -4,7 +4,7 @@ import { IDonationList } from "@/helpers/models/fundraising"
 import { textLimit } from "@/helpers/utils/textlimit"
 import useCustomTheme from "@/hooks/useTheme"
 import { Flex, Text } from "@chakra-ui/react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { IoIosArrowForward } from "react-icons/io"
 
 export default function BreadCrumbs(
@@ -18,6 +18,7 @@ export default function BreadCrumbs(
     const { primaryColor } = useCustomTheme()
 
     const query = useSearchParams();
+    const pathname = usePathname()
     const edit = query?.get('edit');
 
     const clickHandler = () => {
@@ -28,7 +29,11 @@ export default function BreadCrumbs(
                 push("/product/events")
             }
         } else {
-            back()
+            if(pathname?.includes("event")) {
+                push("/product/events")
+            } else {
+                back()
+            }
         }
     }
 

@@ -27,7 +27,7 @@ export default function Sidebar() {
                         <IoArrowBack size={"25px"} />
                     </Flex>
                 ): !type ? (
-                    <Flex onClick={() => router.push("/product/events")} pos={"absolute"} insetX={"auto"} left={"0px"} cursor={"pointer"}  >
+                    <Flex onClick={() => router.push(pathname?.includes("edit") ? `/product/details/events/${id}` : "/product/events")} pos={"absolute"} insetX={"auto"} left={"0px"} cursor={"pointer"}  >
                         <IoArrowBack size={"25px"} />
                     </Flex>
                 ):(

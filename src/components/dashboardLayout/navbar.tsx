@@ -12,7 +12,7 @@ export default function Navbar() {
     const pathname = usePathname() 
 
     return (
-        <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['sticky', 'sticky', 'sticky', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"10"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >
+        <Flex color={headerTextColor} w={"full"} h={"76px"} pos={['fixed', 'fixed', 'sticky', "sticky", "sticky"]} bgColor={mainBackgroundColor} zIndex={"10"} insetX={"0px"} top={"0px"} borderBottomColor={borderColor} borderBottomWidth={"1px"} alignItems={"center"} px={"6"} justifyContent={"space-between"}  >
             {pathname?.includes("event") && (
                 <Text display={["none", "none", "none", "flex", "flex"]} fontSize={"24px"} fontWeight={"700"} >Chasescroll  <span style={{ color: primaryColor, marginLeft: "2px" }} >Versax</span></Text>
             )}

@@ -1,4 +1,5 @@
 "use client"
+import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -48,10 +49,13 @@ export default function TicketFormInput(
     }: IProps) {
 
     const changeHandler = (item: string) => {
-        if(!notticket){
-            setValue(`productTypeData[${index}].${name}`, item)
-        } else { 
-            setValue(`data[${index}].${name}`, item)
+
+        const Uppercased = capitalizeFLetter(item)
+
+        if (!notticket) {
+            setValue(`productTypeData[${index}].${name}`, type === "number" ? item : Uppercased)
+        } else {
+            setValue(`data[${index}].${name}`, type === "number" ? item : Uppercased)
         }
         // setNewValue(item)
     }

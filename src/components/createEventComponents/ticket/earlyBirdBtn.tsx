@@ -6,14 +6,17 @@ import { IoLogoTwitter } from "react-icons/io5";
 import { PiTrashSimpleDuotone } from "react-icons/pi";
 import NumberPicker from "./numberPicker";
 import { toaster } from "@/components/ui/toaster";
+import { IEventType } from "@/helpers/models/event";
 
 export default function EarlyBirdBtn(
     {
         value,
-        setValue
+        setValue,
+        eventData
     }: {
         value: any,
         setValue: (name: string, value: any) => void,
+        eventData?: IEventType
     }
 ) {
 
@@ -40,11 +43,13 @@ export default function EarlyBirdBtn(
     }
 
     const removeHandler = () => {
-        const clone = [...value.productTypeData]
-
-        clone?.shift()
-
-        setValue("productTypeData", clone)
+        if(!eventData?.ticketBought) {
+            const clone = [...value.productTypeData]
+    
+            clone?.shift()
+    
+            setValue("productTypeData", clone)
+        }
         setOpen(false)
     }
 
@@ -92,7 +97,7 @@ export default function EarlyBirdBtn(
                     <IoLogoTwitter size="23px" />
                     <Text fontWeight={"500"} fontSize={"14px"} >{value?.productTypeData[0]?.ticketType === "Early Bird" ? "Edit" : ""} Early Bird</Text>
                 </Flex>
-                {value?.productTypeData[0]?.ticketType === "Early Bird" &&
+                {(value?.productTypeData[0]?.ticketType === "Early Bird" && !eventData?.ticketBought) &&
                     <Flex cursor={"pointer"} onClick={() => removeHandler()} _disabled={{ opacity: "0.2", cursor: "not-allowed" }} _hover={{ backgroundColor: "transparent" }} color={"red"} flexDir={"column"} justifyContent={"end"} mt={"7"} bg={"transparent"} h={"fit-content"} >
                         <PiTrashSimpleDuotone size={"15px"} />
                     </Flex>

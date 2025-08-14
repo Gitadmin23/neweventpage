@@ -1,4 +1,5 @@
 "use client"
+import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -45,8 +46,11 @@ export default function FormInput(
     }: IProps) {
 
     const changeHandler = (item: string) => {
-        setValue(name, item)
-        // setNewValue(item)?
+
+        const Uppercased = item ? capitalizeFLetter(item) : item
+
+        setValue(name,  type === "number" ? item : Uppercased)
+        setNewValue(type === "number" ? item : Uppercased)
     }
 
     const [newValue, setNewValue] = useState("") 
@@ -56,7 +60,7 @@ export default function FormInput(
     } = useCustomTheme() 
 
     useEffect(() => {
-        if (value[name]) {
+        if (value[name] && !newValue) {
             setNewValue(value[name] ?? "")
         } else {
             setNewValue(defaultData)

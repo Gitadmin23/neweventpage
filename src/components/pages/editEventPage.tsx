@@ -1,6 +1,7 @@
 "use client"
 import { Information, SuccessModal, Theme, Ticket } from "@/components/createEventComponents";
 import { LoadingAnimation } from "@/components/shared"; 
+import { IEventType } from "@/helpers/models/event";
 import { PaginatedResponse } from "@/helpers/models/PaginatedResponse";
 import { IUser } from "@/helpers/models/user";
 import httpService from "@/helpers/services/httpService";
@@ -9,13 +10,14 @@ import useEvent from "@/hooks/useEvent";
 import { Flex } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function EditEventPage() {
 
     const query = useSearchParams();
     const type = query?.get('type');
     const id = query?.get('id');
+    const [eventData, setEventData] = useState({} as IEventType)
 
     const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen, updateUserEvent } = useEvent()
 
@@ -39,6 +41,7 @@ export default function EditEventPage() {
                     return collaborator.push(item?.userId)
                 })
 
+                setEventData(item.content[0])
                 // setData(item.content[0]); 
                 formik.setValues({
                     picUrls: item.content[0].picUrls,
@@ -82,7 +85,7 @@ export default function EditEventPage() {
                         <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />
                     )}
                     {type === "ticket" && (
-                        <Ticket formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
+                        <Ticket eventData={eventData} formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
                     )}
                 </Flex>
                 <SuccessModal open={open} setOpen={setOpen} />
