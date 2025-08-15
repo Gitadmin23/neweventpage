@@ -9,6 +9,7 @@ import BottomBar from "./bottomBar";
 import { useImage } from "@/helpers/store/useImagePicker";
 import useSearchStore from "@/helpers/store/useSearchData";
 import { useColorMode } from "../ui/color-mode";
+import useNotificationHook from "@/hooks/useNotificationHook";
 
 interface IProps {
     children: React.ReactNode
@@ -44,11 +45,12 @@ export default function DashboardLayout(
         setImage([])
         setSearchValue("")
     }, [pathname])
+    const { count } = useNotificationHook()
 
     return (
         <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
-                <SideBar />
+                <SideBar count={count} />
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
@@ -63,7 +65,7 @@ export default function DashboardLayout(
                 </Flex>
                 {!frame && (
                     <Flex w={"full"} h={"fit-content"} >
-                        <BottomBar />
+                        <BottomBar count={count} />
                     </Flex>
                 )}
             </Flex>

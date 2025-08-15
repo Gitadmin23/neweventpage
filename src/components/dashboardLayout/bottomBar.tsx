@@ -10,7 +10,7 @@ import Cookies from "js-cookie"
 import { useColorMode } from "../ui/color-mode";
 import useGetUser from "@/hooks/useGetUser";
 
-export default function BottomBar() {
+export default function BottomBar({count} : {count: string}) {
 
 
     const pathname = usePathname()
@@ -51,8 +51,8 @@ export default function BottomBar() {
                 </Flex>
                 <Text fontSize={"10px"} fontWeight={"medium"} >Home</Text>
             </Flex>
-            <Flex onClick={() => routeHandler("dashboard/settings/payment/details")} flexDir={"column"} cursor={"pointer"} width={"full"} maxW={"50px"} color={pathname?.includes('explore') ? primaryColor : bodyTextColor} justifyContent={'center'} alignItems={'center'}>
-                <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
+            <Flex onClick={() => routeHandler("dashboard/settings/payment/details")} flexDir={"column"} cursor={"pointer"} width={"full"} maxW={"50px"} color={pathname?.includes('payment/details') ? primaryColor : bodyTextColor} justifyContent={'center'} alignItems={'center'}>
+                <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} pos={"relative"} >
                     <SidebarWalletIcon mobile={true} size={"20px"} color={pathname === "/dashboard/settings/payment/details" ? true : false} />
                 </Flex>
                 <Text fontSize={"10px"} fontWeight={"medium"} >Wallet</Text>
@@ -61,11 +61,17 @@ export default function BottomBar() {
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
                     <KisokIcon size='20px' color={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? true : false} />
                 </Flex>
-                <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} >Event_Hub</Text>
+                <Flex h={"14px"} > 
+                    <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} color={"white"} >Event_Hub</Text>
+                    <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} pos={"absolute"} >Event Hub</Text>
+                </Flex>
             </Flex>
             <Flex onClick={() => routeHandler('dashboard/notification')} cursor={"pointer"} flexDir={"column"} alignItems={"center"} width={"full"} maxW={"50px"} color={pathname?.includes('community') ? primaryColor : bodyTextColor} justifyContent={'center'}>
-                <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
+                <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} pos={"relative"} >
                     <NotificationIcon size="20px" />
+                    <Flex w={"5"} h={"5"} pos={"absolute"} rounded={"full"} bg={primaryColor} top={"-1"} right={"-10px"} zIndex={"20"} color={"white"} justifyContent={"center"} alignItems={"center"} pb={"2px"} fontWeight={"semibold"} fontSize={"12px"}  >
+                        {count}
+                    </Flex>
                 </Flex>
                 <Text fontSize={"10px"} fontWeight={"medium"} >Notification</Text>
             </Flex>

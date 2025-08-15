@@ -13,7 +13,7 @@ import Cookies from "js-cookie"
 import useNotificationHook from "@/hooks/useNotificationHook";
 import { Login } from "@/svg";
 
-export default function SideBar() {
+export default function SideBar({count}: {count: string}) {
 
 
     type IRoute = {
@@ -25,7 +25,7 @@ export default function SideBar() {
     const router = useRouter()
 
     const { isLoading, user, show } = useGetUser()
-    const { count } = useNotificationHook()
+    // const { count } = useNotificationHook()
 
     const [open, setOpen] = useState(false)
     const [activeBar, setActiveBar] = useState("")
