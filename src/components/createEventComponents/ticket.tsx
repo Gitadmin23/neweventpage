@@ -101,7 +101,9 @@ export default function Ticket(
                 <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("ticket")} width={"50%"} height={"40px"} text={"Paid"} backgroundColor={tab ? mainBackgroundColor : secondaryBackgroundColor} color={tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
                 <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("free")} width={"50%"} height={"40px"} text={"Free"} backgroundColor={!tab ? mainBackgroundColor : secondaryBackgroundColor} color={!tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
             </Flex>
-            <EarlyBirdBtn eventData={eventData} value={formik.values} setValue={formik.setFieldValue} />
+            {!tab && ( 
+                <EarlyBirdBtn eventData={eventData} value={formik.values} setValue={formik.setFieldValue} />
+            )}
             <Text fontSize={"14px"} fontWeight={"medium"} >Other Ticket Types</Text>
             {formik.values?.productTypeData?.map((ticket: any, index: number) => {
                 if (ticket.ticketType !== "Early Bird") {
