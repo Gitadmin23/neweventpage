@@ -4,6 +4,10 @@ export function dateFormat(date: any) {
   return moment(date).format("ddd, MMMM Do YYYY")
 } 
 
+export function dateTimeFormat(date: any) {
+  return moment(date).format("Do MMM YYYY h:mm A")
+} 
+
 export function dateFormatDashboad(date: any) {
   return moment(date).format("ddd, MM/DD/YY")
 }
