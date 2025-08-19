@@ -47,7 +47,7 @@ export default function SideBar({count}: {count: string}) {
         {
             route: '/product/events',
             icon: <KisokIcon color={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? true : false} />,
-            text: 'Versax'
+            text: 'Event Hub'
         },
         {
             route: '/dashboard/chats',

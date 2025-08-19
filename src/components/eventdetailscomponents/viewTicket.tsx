@@ -56,6 +56,7 @@ export default function ViewTicket(
         ticketBackgroundColor,
         headerTextColor
     } = useCustomTheme();
+    
     const { colorMode } = useColorMode(); 
 
     const contentRef = useRef<HTMLDivElement>(null); 
