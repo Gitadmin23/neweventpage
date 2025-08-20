@@ -2,7 +2,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { toaster } from '../ui/toaster';
 import useCustomTheme from '@/hooks/useTheme';
-import { CalendarIcon, DateCalendar, MultiSectionDigitalClock } from '@mui/x-date-pickers';
+import { CalendarIcon, ClockIcon, DateCalendar, MultiSectionDigitalClock, TimeClock } from '@mui/x-date-pickers';
 import { DigitalClock } from '@mui/x-date-pickers/DigitalClock';
 import { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,7 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import ModalLayout from "./modalLayout";
 import CustomButton from "./customButton";
-import { dateFormat, dateTimeFormat } from "@/helpers/utils/dateFormat";
+import { dateFormat, dateTimeFormat, timeFormat } from "@/helpers/utils/dateFormat";
 
 interface IProps {
     name: Array<string>;
@@ -41,6 +41,7 @@ export default function CustomDatePicker(
         headerTextColor
     } = useCustomTheme()
     const [open, setOpen] = useState(false)
+    const [time, setTime] = useState(false)
     const [currentView, setCurrentView] = useState<"year" | "month" | "day">("year");
     const [tempDate, setTempDate] = useState<Dayjs | null>();
 
@@ -116,7 +117,7 @@ export default function CustomDatePicker(
                     <ModalLayout open={open} width="fit" close={() => setOpen(false)} trigger >
                         <Flex flexDir={"column"} w={"full"} pb={"2"} >
                             <Flex w={"full"} >
-                                <Flex w={"fit"} borderBottomWidth={"1px"} >
+                                <Flex borderBottomWidth={"1px"} >
                                     <DateCalendar
                                         minDate={start ? dayjs(start) : dayjs()}
                                         value={dayjs(tempDate)}
@@ -134,7 +135,7 @@ export default function CustomDatePicker(
                                         }}
                                     />
                                 </Flex>
-                                <Flex w={"fit"} h={"full"} >
+                                <Flex h={"full"} display={["none", "none", "flex"]}  >
                                     <MultiSectionDigitalClock
                                         value={dayjs(tempDate)}
                                         onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
@@ -155,10 +156,37 @@ export default function CustomDatePicker(
                             </Flex>
                         </Flex>
                     </ModalLayout>
+
+                    <ModalLayout open={time} width="fit" close={() => setTime(false)} trigger >
+                        <Flex flexDir={"column"} w={"full"} pb={"2"} >
+                            <Flex w={"full"} > 
+                                <Flex h={"full"} >
+                                    <TimeClock
+                                        value={dayjs(tempDate)}
+                                        onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
+                                        ampmInClock
+                                    />
+                                </Flex>
+                            </Flex>
+                            <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
+                                <CustomButton onClick={() => setTime(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
+                            </Flex>
+                        </Flex>
+                    </ModalLayout>
                 </LocalizationProvider>
-                <Flex rounded={"full"} cursor={"pointer"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
-                    {!value ? "Select Date" : dateTimeFormat(value)}
+                <Flex rounded={"full"} display={["none", "none", "flex"]} cursor={"pointer"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
+                    {!value ? "Select Date And Time" : dateTimeFormat(value)}
                     <CalendarIcon />
+                </Flex>
+                <Flex display={["flex", "flex", "none"]} gap={"3"} > 
+                    <Flex rounded={"full"} cursor={"pointer"} w={"full"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
+                        {!value ? "Select Date" : dateFormat(value)}
+                        <CalendarIcon />
+                    </Flex> 
+                    <Flex rounded={"full"} gap={"2"} w={"full"} maxW={"150px"} cursor={"pointer"} onClick={() => setTime(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
+                        {!value ? "00:00" : timeFormat(value)}
+                        <ClockIcon />
+                    </Flex>
                 </Flex>
                 {touched && (
                     <>
