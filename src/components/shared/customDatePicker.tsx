@@ -178,7 +178,7 @@ export default function CustomDatePicker(
                     {!value ? "Select Date And Time" : dateTimeFormat(value)}
                     <CalendarIcon />
                 </Flex>
-                <Flex display={["flex", "flex", "none"]} gap={"3"} > 
+                <Flex position={"relative"} zIndex={"0"} display={["flex", "flex", "none"]} gap={"3"} > 
                     <Flex rounded={"full"} cursor={"pointer"} w={"full"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
                         {!value ? "Select Date" : dateFormatDashboad(value)}
                         <CalendarIcon />
