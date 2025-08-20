@@ -10,7 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import ModalLayout from "./modalLayout";
 import CustomButton from "./customButton";
-import { dateFormat, dateTimeFormat, timeFormat } from "@/helpers/utils/dateFormat";
+import { dateFormat, dateFormatDashboad, dateTimeFormat, timeFormat } from "@/helpers/utils/dateFormat";
 
 interface IProps {
     name: Array<string>;
@@ -180,10 +180,10 @@ export default function CustomDatePicker(
                 </Flex>
                 <Flex display={["flex", "flex", "none"]} gap={"3"} > 
                     <Flex rounded={"full"} cursor={"pointer"} w={"full"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
-                        {!value ? "Select Date" : dateFormat(value)}
+                        {!value ? "Select Date" : dateFormatDashboad(value)}
                         <CalendarIcon />
                     </Flex> 
-                    <Flex rounded={"full"} gap={"2"} w={"full"} maxW={"150px"} cursor={"pointer"} onClick={() => setTime(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
+                    <Flex rounded={"full"} gap={"2"} w={"full"} maxW={"120px"} cursor={"pointer"} onClick={() => setTime(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
                         {!value ? "00:00" : timeFormat(value)}
                         <ClockIcon />
                     </Flex>
