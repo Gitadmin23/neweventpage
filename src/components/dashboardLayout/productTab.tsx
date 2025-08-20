@@ -7,12 +7,13 @@ import { CustomButton, ProductTooltip } from "../shared";
 import useCustomTheme from "@/hooks/useTheme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { SelectDonationOption } from "../fundraisingComponents";
-import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
+import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import { useEffect, useState } from "react";
 import { IoSearchOutline } from "react-icons/io5";
 import useSearchStore from "@/helpers/store/useSearchData";
 import { useColorMode } from "../ui/color-mode";
+import { IoIosArrowBack } from "react-icons/io";
 
 export default function ProductTab(
     {
@@ -60,11 +61,21 @@ export default function ProductTab(
                 setShow(false)
             }, 2000); // 3 seconds
             return () => clearTimeout(timeout);
-        } 
+        }
     }, [open, show]);
 
+    const backHandler = () => {
+        window.open(LANDINGPAGE_URL)
+    }
+
     return (
-        <Flex w={"full"} px={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["2", "2", "6"]} pt={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
+        <Flex pos={"relative"} w={"full"} px={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["2", "2", "6"]} pt={(pathname?.includes("create") || pathname?.includes("details")) ? "0px" : ["6", "6", "12", "12"]} pb={pathname?.includes("create") ? "0px" : "12"} flexDir={"column"} overflowY={"auto"} >
+            {frame && (
+                <Flex onClick={backHandler} cursor={"pointer"} color={primaryColor} gap={"2"} alignItems={"center"} >
+                    <IoIosArrowBack size={"20px"} />
+                    <Text fontWeight={"semibold"} fontSize={"14px"} >Back To Home</Text>
+                </Flex>
+            )}
             <Flex w={"full"} display={(!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"} alignItems={"center"} flexDirection={"column"} gap={"3"} >
                 <Flex fontSize={["20px", "20px", "56px"]} alignItems={"end"} display={["flex", "flex", "none"]} fontWeight={"700"} >what are you l<Flex mb={"1"} ><GlassIcon size='17' /></Flex>king for?</Flex>
                 <Flex fontSize={["16px", "16px", "56px"]} alignItems={"end"} display={["none", "none", "flex"]} fontWeight={"700"} >what are you l<Flex mb={"3"} ><GlassIcon size='45' /></Flex>king for?</Flex>
@@ -126,7 +137,7 @@ export default function ProductTab(
                         {/* </Tooltip> */}
                     </Flex>
                 </Flex>
-                <Flex maxW={"500px"} mt={"4"} w={"full"} > 
+                <Flex maxW={"500px"} mt={"4"} w={"full"} >
                     <InputGroup startElement={
                         <Flex pl={"3"} >
                             <IoSearchOutline size={"20px"} />

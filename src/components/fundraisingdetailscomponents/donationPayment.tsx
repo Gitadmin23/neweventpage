@@ -10,9 +10,6 @@ import DonationTermAndCondition from '../shared/donationTermAndCondition'
 
 export default function DonationPayment({ data, fullWidth }: { data?: IDonationList, fullWidth?: boolean }) {
 
-    // const [value, setValue] = useState("")
-    // const { googlesign ,setGoogle } = useModalStore((state) => state);
-
     const { payForDonation, setValue, value } = usePayStack()
 
     const {
@@ -23,11 +20,11 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
     } = useCustomTheme()
 
     const donate = [
-        "NGN 5000",
-        "NGN 15000",
-        "NGN 25000",
-        "NGN 35000",
-        "NGN 50000",
+        "₦5000",
+        "₦15000",
+        "₦25000",
+        "₦35000",
+        "₦50000",
     ] 
 
     const clickHandler = () => {
@@ -47,9 +44,9 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
             <Text fontSize={"18px"} fontWeight={"600"} >Enter the Amount</Text>
             {/* <Text fontSize={"14px"} >Enter the amount you wish to donate </Text> */}
 
-            <Flex w={"fit-content"} flexWrap={"wrap"} gap={"2"}>
+            <Flex w={"fit-content"} flexWrap={"wrap"} gap={"1"}>
                 {donate?.map((item) => (
-                    <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("NGN ", ""))} rounded={"32px"} h={"25px"} w={"80px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("NGN ", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >
+                    <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("NGN ", ""))} rounded={"32px"} h={"25px"} w={"65px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("NGN ", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >
                         {item}
                     </Flex>
                 ))}

@@ -44,11 +44,8 @@ export default function FundraisingDetails(
         } else {
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}&theme=${theme}`;
         }
-    }
-
-    console.log(item);
-
-
+    } 
+    
     return (
         <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
             <BreadCrumbs {...item} />

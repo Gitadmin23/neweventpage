@@ -1,6 +1,7 @@
 "use client"
 import { IEventType } from "@/helpers/models/event"
 import { IDonationList } from "@/helpers/models/fundraising"
+import { capitalizeFLetter } from "@/helpers/utils/capitalLetter"
 import { textLimit } from "@/helpers/utils/textlimit"
 import useCustomTheme from "@/hooks/useTheme"
 import { Flex, Text } from "@chakra-ui/react"
@@ -43,7 +44,7 @@ export default function BreadCrumbs(
             <IoIosArrowForward />
             <Text fontSize={"14px"} fontWeight={"500"} >{name ? "Fundraising" : "Event"} details</Text>
             <IoIosArrowForward />
-            <Text fontSize={"14px"} fontWeight={"500"} >{textLimit(name ? name : eventName, 20)}</Text>
+            <Text fontSize={"14px"} fontWeight={"500"} >{capitalizeFLetter(textLimit(name ? name : eventName, 20))}</Text>
         </Flex>
     )
 }
