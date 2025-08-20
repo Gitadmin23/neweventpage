@@ -2,7 +2,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { toaster } from '../ui/toaster';
 import useCustomTheme from '@/hooks/useTheme';
-import { CalendarIcon, ClockIcon, DateCalendar, MultiSectionDigitalClock, TimeClock } from '@mui/x-date-pickers';
+import { ClockIcon, DateCalendar, MultiSectionDigitalClock, TimeClock } from '@mui/x-date-pickers';
 import { DigitalClock } from '@mui/x-date-pickers/DigitalClock';
 import { useEffect, useState } from "react";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,6 +11,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import ModalLayout from "./modalLayout";
 import CustomButton from "./customButton";
 import { dateFormat, dateFormatDashboad, dateTimeFormat, timeFormat } from "@/helpers/utils/dateFormat";
+import { CalendarIcon } from "@/svg";
 
 interface IProps {
     name: Array<string>;
@@ -161,10 +162,19 @@ export default function CustomDatePicker(
                         <Flex flexDir={"column"} w={"full"} pb={"2"} >
                             <Flex w={"full"} > 
                                 <Flex h={"full"} >
-                                    <TimeClock
+                                    <MultiSectionDigitalClock
                                         value={dayjs(tempDate)}
                                         onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
-                                        ampmInClock
+                                        // ampmInClock 
+                                        sx={{
+                                            height: 400, // ⬅️ increase total clock height
+                                            "& .MuiMultiSectionDigitalClockSection-root": {
+                                                maxHeight: 400, // ⬅️ let each scrollable column expand
+                                            },
+                                            "& .MuiMultiSectionDigitalClock-root": {
+                                                height: 400,
+                                            },
+                                        }}
                                     />
                                 </Flex>
                             </Flex>
