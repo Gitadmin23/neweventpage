@@ -38,7 +38,7 @@ export default function UserEventCard(props: IEventType) {
 
     return (
         <Flex as={"button"} onClick={clickHandler} w={"full"} pos={"relative"} flexDir={"column"} bg={mainBackgroundColor} rounded={"16px"} shadow={"xl"} >
-            {(type !== "past_event" && type !== "saved_event" && !props?.isOrganizer) && (
+            {(type !== "past_event" && type !== "saved_event" && props?.isOrganizer) && (
                 <DeleteBtn id={props?.id} name={props?.eventName + " Event"} isEvent={type === "draft" ? false : true} draft={type === "draft" ? true : false} isOrganizer={props?.isOrganizer} />
             )}
             <Flex w={"full"} pos={"relative"} >
