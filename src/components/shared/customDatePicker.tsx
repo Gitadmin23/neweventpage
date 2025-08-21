@@ -114,7 +114,7 @@ export default function CustomDatePicker(
     }, [])
 
     return (
-        <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
+        <Flex pos={"relative"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} color={colorMode === "light" ? "black" : "white"} gap={"1"} rounded={"full"} >
                 <Flex pos={"relative"} zIndex={"30"} >
