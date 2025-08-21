@@ -44,10 +44,10 @@ export default function ProductTab(
 
     const clickHandler = (item: string) => {
         if (item === "donation") {
-            router.push(`/product/fundraising${frame ? "?frame=true" : ""}`)
+            router.push(`/product/fundraising${frame ? `?frame=true&theme=${colorMode}` : `?theme=${colorMode}`}`)
             setShow(true)
         } else if (item === "event") {
-            router.push(`/product/events${frame ? "?frame=true" : ""}`)
+            router.push(`/product/events${frame ? `?frame=true&theme=${colorMode}` : `?theme=${colorMode}`}`)
             setOpen(true)
         } else {
             window.location.href = `${DASHBOARDPAGE_URL}/dashboard/product/kiosk${!frame ? `?type=${item}&token=${token}&theme=${colorMode}` : `?type=${item}&frame=true&theme=${colorMode}`}`;

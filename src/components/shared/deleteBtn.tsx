@@ -47,6 +47,10 @@ function DeleteBtn(props: Props) {
     const {
         primaryColor
     } = useCustomTheme()
+    
+    console.log(draft);
+    console.log(isEvent);
+    
 
     // detete event
     const deleteEvent = useMutation({
@@ -118,8 +122,9 @@ function DeleteBtn(props: Props) {
 
             queryClient.refetchQueries({ queryKey: ["myevent"] })
             queryClient.refetchQueries({ queryKey: ["mydonationlist"] })
+            queryClient.refetchQueries({ queryKey: ["draftevent"] })
 
-
+            
             // queryClient.refetchQueries({ queryKey: [URLS.JOINED_EVENT + user_index]})
             setOpen(false)
         }
@@ -137,16 +142,20 @@ function DeleteBtn(props: Props) {
         setOpen(true)
     }
 
+    const handler = (event: any) => {
+        event.stopPropagation(); 
+      };
+    
 
     return (
         <>
-            {((isOrganizer && !pathname?.includes("past")) || pathname?.includes("draft") || pathname?.includes("mydonation")) && (
+            {/* {(isOrganizer || pathname?.includes("draft") || pathname?.includes("mydonation")) && ( */}
                 <Flex w={"6"} h={"6"} onClick={openHandler} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"-14px"} right={"-8px"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
                     <IoClose size={"14px"} />
                 </Flex>
-            )}
+            {/* )} */}
             <ModalLayout open={open} trigger={true} close={() => setOpen(false)} size={"xs"} >
-                <Flex flexDirection={"row"} flexDir={"column"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>
+                <Flex onClick={handler} flexDirection={"row"} flexDir={"column"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>
                     <Image alt='delete' src='/images/deleteaccount.svg' />
                     <Text fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Delete {pathname?.includes("mydonation") ? "Fundraising" : isServices ? "Business" : isProduct ? "Product" : isRental ? "Rental" : "Event"}</Text>
                     <Text textAlign={'center'} fontSize={'14px'} >Are you sure you want to delete <span style={{ fontWeight: "bold" }} >{capitalizeFLetter(name)}</span>, this action cannot be undone.</Text>

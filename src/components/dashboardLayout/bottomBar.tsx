@@ -62,7 +62,7 @@ export default function BottomBar({count} : {count: string}) {
                     <KisokIcon size='20px' color={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? true : false} />
                 </Flex>
                 <Flex h={"14px"} > 
-                    <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} color={"white"} >Event_Hub</Text>
+                    <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} color={"transparent"} >Event_Hub</Text>
                     <Text fontSize={"10px"} fontWeight={(pathname?.includes('product') || pathname?.includes('kiosk') || pathname?.includes('donation') || pathname?.includes('event')) ? "bold" : "medium"} pos={"absolute"} >Event Hub</Text>
                 </Flex>
             </Flex>

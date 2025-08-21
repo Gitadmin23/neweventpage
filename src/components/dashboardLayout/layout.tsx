@@ -36,8 +36,6 @@ export default function DashboardLayout(
     useEffect(() => { 
         if(theme) {
             setColorMode(theme) 
-        } else {
-            setColorMode("light") 
         }
     }, [theme]);  
 
