@@ -117,139 +117,141 @@ export default function CustomDatePicker(
         <Flex pos={"relative"} zIndex={"50"} w={"full"} flexDir={"column"} gap={"0.5"} >
             <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "16px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
             <Flex flexDir={"column"} color={colorMode === "light" ? "black" : "white"} gap={"1"} rounded={"full"} >
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <ModalLayout open={open} width="fit" close={() => setOpen(false)} trigger >
-                        <Flex pos={"relative"} zIndex={"50"} flexDir={"column"} w={"full"} pb={"2"} >
-                            <Flex w={"full"} >
-                                <Flex borderBottomWidth={"1px"} >
-                                    <DateCalendar
-                                        minDate={start ? dayjs(start) : dayjs()}
-                                        value={dayjs(tempDate)}
-                                        onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
-                                        reduceAnimations
-                                        sx={{
-                                            color: headerTextColor,
-                                            "& .MuiDayCalendar-weekDayLabel": {
-                                                color: headerTextColor,       // weekday header text color
-                                                fontWeight: "semibold"
-                                            },
-                                            // disabled days
-                                            "& .MuiPickersDay-root.Mui-disabled": {
-                                                color: "gray", // custom disabled text color
-                                                opacity: 1,    // override default faded look
-                                            },
-                                            "& .MuiPickersArrowSwitcher-button": {
-                                                color: headerTextColor, // changes the arrow icon color
-                                            },
-                                            "& .MuiPickersArrowSwitcher-button:disabled": {
-                                                color: "gray", // custom disabled text color
-                                                opacity: 1,    // override default faded look
-                                            },
-                                            // optional: hover effect
-                                            // "& .MuiPickersArrowSwitcher-button:hover": {
-                                            //     backgroundColor: headerTextColor,
-                                            // },
-                                            "& .MuiPickersCalendarHeader-switchViewIcon": {
-                                                color:headerTextColor,   // your custom color
-                                                fontSize: "1.5rem" // optional: resize
-                                            },
-                                        }}                // ✅ smoother on mobile
-                                        slotProps={{
-                                            switchViewButton: {
-                                                // ✅ make sure header (year/month) is clickable
-                                                sx: {
-                                                    "& .MuiPickersCalendarHeader-switchViewButton": {
-                                                        pointerEvents: "auto",
+                <Flex pos={"relative"} zIndex={"30"} >
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <ModalLayout open={open} width="fit" close={() => setOpen(false)} trigger >
+                            <Flex pos={"relative"} zIndex={"50"} flexDir={"column"} w={"full"} pb={"2"} >
+                                <Flex w={"full"} >
+                                    <Flex borderBottomWidth={"1px"} >
+                                        <DateCalendar
+                                            minDate={start ? dayjs(start) : dayjs()}
+                                            value={dayjs(tempDate)}
+                                            onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
+                                            reduceAnimations
+                                            sx={{
+                                                color: headerTextColor,
+                                                "& .MuiDayCalendar-weekDayLabel": {
+                                                    color: headerTextColor,       // weekday header text color
+                                                    fontWeight: "semibold"
+                                                },
+                                                // disabled days
+                                                "& .MuiPickersDay-root.Mui-disabled": {
+                                                    color: "gray", // custom disabled text color
+                                                    opacity: 1,    // override default faded look
+                                                },
+                                                "& .MuiPickersArrowSwitcher-button": {
+                                                    color: headerTextColor, // changes the arrow icon color
+                                                },
+                                                "& .MuiPickersArrowSwitcher-button:disabled": {
+                                                    color: "gray", // custom disabled text color
+                                                    opacity: 1,    // override default faded look
+                                                },
+                                                // optional: hover effect
+                                                // "& .MuiPickersArrowSwitcher-button:hover": {
+                                                //     backgroundColor: headerTextColor,
+                                                // },
+                                                "& .MuiPickersCalendarHeader-switchViewIcon": {
+                                                    color: headerTextColor,   // your custom color
+                                                    fontSize: "1.5rem" // optional: resize
+                                                },
+                                            }}                // ✅ smoother on mobile
+                                            slotProps={{
+                                                switchViewButton: {
+                                                    // ✅ make sure header (year/month) is clickable
+                                                    sx: {
+                                                        "& .MuiPickersCalendarHeader-switchViewButton": {
+                                                            pointerEvents: "auto",
+                                                        },
                                                     },
                                                 },
-                                            },
 
-                                            day: {
-                                                sx: {
-                                                    color: headerTextColor, // change default day text color
-                                                    "&.Mui-selected": {
-                                                        color: "white", // selected day text color
-                                                    },
-                                                    "&.Mui-disabled": {
-                                                        color: "red", // disabled day text color
-                                                    },
-                                                    // "&:hover": {
-                                                    //   backgroundColor: "rgba(0,0,255,0.1)",
-                                                    // },
-                                                },
-                                            },
-                                            monthButton: {
-                                                sx: {
-                                                    color: headerTextColor,
-                                                    "&.Mui-selected": {
-                                                        color: "white",
+                                                day: {
+                                                    sx: {
+                                                        color: headerTextColor, // change default day text color
+                                                        "&.Mui-selected": {
+                                                            color: "white", // selected day text color
+                                                        },
+                                                        "&.Mui-disabled": {
+                                                            color: "red", // disabled day text color
+                                                        },
+                                                        // "&:hover": {
+                                                        //   backgroundColor: "rgba(0,0,255,0.1)",
+                                                        // },
                                                     },
                                                 },
-                                            },
-                                            yearButton: {
-                                                sx: {
-                                                    color: headerTextColor,
-                                                    "&.Mui-selected": {
-                                                        color: "white",
+                                                monthButton: {
+                                                    sx: {
+                                                        color: headerTextColor,
+                                                        "&.Mui-selected": {
+                                                            color: "white",
+                                                        },
                                                     },
                                                 },
-                                            },
-                                        }}
-                                    />
+                                                yearButton: {
+                                                    sx: {
+                                                        color: headerTextColor,
+                                                        "&.Mui-selected": {
+                                                            color: "white",
+                                                        },
+                                                    },
+                                                },
+                                            }}
+                                        />
+                                    </Flex>
+                                    <Flex h={"full"} display={["none", "none", "flex"]}  >
+                                        <MultiSectionDigitalClock
+                                            value={dayjs(tempDate)}
+                                            onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
+                                            sx={{
+                                                height: 400, // ⬅️ increase total clock height
+                                                "& .MuiMultiSectionDigitalClockSection-root": {
+                                                    maxHeight: 400, // ⬅️ let each scrollable column expand
+                                                },
+                                                "& .MuiMultiSectionDigitalClock-root": {
+                                                    height: 400,
+                                                },
+                                            }}
+                                        />
+                                    </Flex>
                                 </Flex>
-                                <Flex h={"full"} display={["none", "none", "flex"]}  >
-                                    <MultiSectionDigitalClock
-                                        value={dayjs(tempDate)}
-                                        onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
-                                        sx={{
-                                            height: 400, // ⬅️ increase total clock height
-                                            "& .MuiMultiSectionDigitalClockSection-root": {
-                                                maxHeight: 400, // ⬅️ let each scrollable column expand
-                                            },
-                                            "& .MuiMultiSectionDigitalClock-root": {
-                                                height: 400,
-                                            },
-                                        }}
-                                    />
+                                <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
+                                    <CustomButton onClick={() => setOpen(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
                                 </Flex>
                             </Flex>
-                            <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
-                                <CustomButton onClick={() => setOpen(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
-                            </Flex>
-                        </Flex>
-                    </ModalLayout>
+                        </ModalLayout>
 
-                    <ModalLayout open={time} width="fit" close={() => setTime(false)} trigger >
-                        <Flex flexDir={"column"} w={"full"} pb={"2"} >
-                            <Flex w={"full"} >
-                                <Flex h={"full"} >
-                                    <MultiSectionDigitalClock
-                                        value={dayjs(tempDate)}
-                                        onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
-                                        // ampmInClock 
-                                        sx={{
-                                            height: 400, // ⬅️ increase total clock height
-                                            "& .MuiMultiSectionDigitalClockSection-root": {
-                                                maxHeight: 400, // ⬅️ let each scrollable column expand
-                                            },
-                                            "& .MuiMultiSectionDigitalClock-root": {
-                                                height: 400,
-                                            },
-                                        }}
-                                    />
+                        <ModalLayout open={time} width="fit" close={() => setTime(false)} trigger >
+                            <Flex flexDir={"column"} w={"full"} pb={"2"} >
+                                <Flex w={"full"} >
+                                    <Flex h={"full"} >
+                                        <MultiSectionDigitalClock
+                                            value={dayjs(tempDate)}
+                                            onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
+                                            // ampmInClock 
+                                            sx={{
+                                                height: 400, // ⬅️ increase total clock height
+                                                "& .MuiMultiSectionDigitalClockSection-root": {
+                                                    maxHeight: 400, // ⬅️ let each scrollable column expand
+                                                },
+                                                "& .MuiMultiSectionDigitalClock-root": {
+                                                    height: 400,
+                                                },
+                                            }}
+                                        />
+                                    </Flex>
+                                </Flex>
+                                <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
+                                    <CustomButton onClick={() => setTime(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
                                 </Flex>
                             </Flex>
-                            <Flex w={"full"} justifyContent={"end"} pt={"2"} pr={"2"} >
-                                <CustomButton onClick={() => setTime(false)} fontSize={"xs"} px={"4"} height={"35px"} width={"fit-content"} borderRadius={"full"} text={"Done"} />
-                            </Flex>
-                        </Flex>
-                    </ModalLayout>
-                </LocalizationProvider>
+                        </ModalLayout>
+                    </LocalizationProvider>
+                </Flex>
                 <Flex rounded={"full"} display={["none", "none", "flex"]} cursor={"pointer"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
                     {!value ? "Select Date And Time" : dateTimeFormat(value)}
                     <CalendarIcon />
                 </Flex>
-                <Flex position={"relative"} zIndex={"0"} display={["flex", "flex", "none"]} gap={"3"} >
+                <Flex display={["flex", "flex", "none"]} gap={"3"} >
                     <Flex rounded={"full"} cursor={"pointer"} w={"full"} onClick={() => setOpen(true)} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} px={"3"} fontSize={"14px"} h={"45px"} >
                         {!value ? "Select Date" : dateFormatDashboad(value)}
                         <CalendarIcon />
