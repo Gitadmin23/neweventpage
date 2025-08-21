@@ -28,7 +28,7 @@ export default function LogInSpinner() {
             });
 
             const timer = setTimeout(() => {
-                if(eventId) {
+                if(eventId && eventId !== null) {
                     router.replace(`/product/details/events/${eventId}`)
                 } else {
                     router.replace("/product/events")
