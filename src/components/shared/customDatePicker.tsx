@@ -146,6 +146,9 @@ export default function CustomDatePicker(
                                                     color: "gray", // custom disabled text color
                                                     opacity: 1,    // override default faded look
                                                 },
+                                                "&.Mui-disabled": {
+                                                    color: "red", // disabled day text color
+                                                },
                                                 // optional: hover effect
                                                 // "& .MuiPickersArrowSwitcher-button:hover": {
                                                 //     backgroundColor: headerTextColor,
@@ -202,22 +205,27 @@ export default function CustomDatePicker(
                                         <MultiSectionDigitalClock
                                             value={dayjs(tempDate)}
                                             onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
+
                                             sx={{
-                                                height: 400, // ⬅️ increase total clock height
-                                                // "& .MuiMultiSectionDigitalClockSection-root": {
-                                                //     maxHeight: 400, // ⬅️ let each scrollable column expand
-                                                // },
-                                                "& .MuiMultiSectionDigitalClock-root": {
-                                                    height: 400,
+                                                height: 400,
+                                                "& .MuiMultiSectionDigitalClockSection-root": {
+                                                    maxHeight: 400, // keep scroll for hours/minutes
                                                 },
-                                                "& .MuiMultiSectionDigitalClockSection-root[data-type='meridiem']": {
-                                                    maxHeight: "none",     // remove scroll restriction
-                                                    overflow: "visible",   // no scroll
-                                                    display: "flex",       // stack AM/PM vertically
-                                                    alignItems: "center",  
-                                                    justifyContent: "center",
-                                                  },
+
+                                                // ⬇️ AM/PM column (last section): no scroll
+                                                "&& .MuiMultiSectionDigitalClockSection-root:last-of-type": {
+                                                    maxHeight: "none",
+                                                    height: "auto",
+                                                    overflowY: "visible",
+                                                },
+
+                                                // (defensive) some versions put overflow on the inner list
+                                                "&& .MuiMultiSectionDigitalClockSection-root:last-of-type ul": {
+                                                    maxHeight: "none",
+                                                    overflow: "visible",
+                                                },
                                             }}
+
                                         />
                                     </Flex>
                                 </Flex>
@@ -234,23 +242,27 @@ export default function CustomDatePicker(
                                         <MultiSectionDigitalClock
                                             value={dayjs(tempDate)}
                                             onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
-                                            // ampmInClock 
+                                            // ampmInClock
                                             sx={{
-                                                height: "full", // ⬅️ increase total clock height
+                                                height: 400,
                                                 "& .MuiMultiSectionDigitalClockSection-root": {
-                                                    maxHeight: "full", // ⬅️ let each scrollable column expand
+                                                    maxHeight: 400, // keep scroll for hours/minutes
                                                 },
-                                                "& .MuiMultiSectionDigitalClock-root": {
-                                                    height: "full",
-                                                }, 
-                                                "& .MuiMultiSectionDigitalClockSection-root[data-type='meridiem']": {
-                                                    maxHeight: "none",     // remove scroll restriction
-                                                    overflow: "visible",   // no scroll
-                                                    display: "flex",       // stack AM/PM vertically
-                                                    alignItems: "center",  
-                                                    justifyContent: "center",
-                                                  },
+
+                                                // ⬇️ AM/PM column (last section): no scroll
+                                                "&& .MuiMultiSectionDigitalClockSection-root:last-of-type": {
+                                                    maxHeight: "none",
+                                                    height: "auto",
+                                                    overflowY: "visible",
+                                                },
+
+                                                // (defensive) some versions put overflow on the inner list
+                                                "&& .MuiMultiSectionDigitalClockSection-root:last-of-type ul": {
+                                                    maxHeight: "none",
+                                                    overflow: "visible",
+                                                },
                                             }}
+
                                         />
                                     </Flex>
                                 </Flex>
