@@ -204,12 +204,19 @@ export default function CustomDatePicker(
                                             onChange={(item) => changeHandler(item)} // ✅ optional: start with year view
                                             sx={{
                                                 height: 400, // ⬅️ increase total clock height
-                                                "& .MuiMultiSectionDigitalClockSection-root": {
-                                                    maxHeight: 400, // ⬅️ let each scrollable column expand
-                                                },
+                                                // "& .MuiMultiSectionDigitalClockSection-root": {
+                                                //     maxHeight: 400, // ⬅️ let each scrollable column expand
+                                                // },
                                                 "& .MuiMultiSectionDigitalClock-root": {
                                                     height: 400,
                                                 },
+                                                "& .MuiMultiSectionDigitalClockSection-root[data-type='meridiem']": {
+                                                    maxHeight: "none",     // remove scroll restriction
+                                                    overflow: "visible",   // no scroll
+                                                    display: "flex",       // stack AM/PM vertically
+                                                    alignItems: "center",  
+                                                    justifyContent: "center",
+                                                  },
                                             }}
                                         />
                                     </Flex>
@@ -229,13 +236,20 @@ export default function CustomDatePicker(
                                             onChange={(item) => changeHandler(item)} // ✅ optional: start with year view 
                                             // ampmInClock 
                                             sx={{
-                                                height: 400, // ⬅️ increase total clock height
+                                                height: "full", // ⬅️ increase total clock height
                                                 "& .MuiMultiSectionDigitalClockSection-root": {
-                                                    maxHeight: 400, // ⬅️ let each scrollable column expand
+                                                    maxHeight: "full", // ⬅️ let each scrollable column expand
                                                 },
                                                 "& .MuiMultiSectionDigitalClock-root": {
-                                                    height: 400,
-                                                },
+                                                    height: "full",
+                                                }, 
+                                                "& .MuiMultiSectionDigitalClockSection-root[data-type='meridiem']": {
+                                                    maxHeight: "none",     // remove scroll restriction
+                                                    overflow: "visible",   // no scroll
+                                                    display: "flex",       // stack AM/PM vertically
+                                                    alignItems: "center",  
+                                                    justifyContent: "center",
+                                                  },
                                             }}
                                         />
                                     </Flex>
