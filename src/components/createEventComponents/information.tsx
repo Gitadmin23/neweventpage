@@ -59,7 +59,7 @@ export default function Information(
             {((formik.values.locationType === "online" || formik.values.locationType === "hybrid") && !formik.values.location.toBeAnnounced) && (
                 <CustomInput name={"location.link"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Online Url" value={formik.values} />
             )}
-            <CustomInput defaultData={formik.values?.location?.address} name={"location.address"} textarea={true} errors={formik?.errors?.location?.address} touched={formik?.touched?.location?.address} setValue={formik.setFieldValue} label="Event Address" value={formik.values} />
+            <CustomInput defaultData={formik.values?.location?.address} name={"location.address"} textarea={true} errors={formik?.errors?.location?.address} touched={formik?.touched?.location?.address} setValue={formik.setFieldValue} label="Venue details" value={formik.values} />
 
             <CustomEventSwitch title="Do you wish to accept PR requests for your event?" setValue={formik.setFieldValue} value={formik.values.affiliates ? formik.values.affiliates[0].affiliateType === "pr" ? true : false : false} name="affiliates[0].affiliateType" />
             {formik.values.affiliates && (
