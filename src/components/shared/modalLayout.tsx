@@ -11,6 +11,7 @@ interface IProps {
     placement?: "top" | "center" | "bottom"
     closeBtn?: boolean;
     width?: string;
+    maxW?: string;
     close?: () => void;
     size?: "xs" | "sm" | "md" | "lg" | "xl" | "cover" | "full" | Array<"xs" | "sm" | "md" | "lg" | "xl" | "cover" | "full">
 }
@@ -25,6 +26,7 @@ export default function ModalLayout({
     close,
     closeBtn,
     width,
+    maxW,
     placement = "center",
     size
 }: IProps) {
@@ -65,7 +67,7 @@ export default function ModalLayout({
                 <Dialog.Root  placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
                     <Dialog.Positioner p={"2"}  overflow={"hidden"} >
-                        <Dialog.Content w={width ? width : "full"} rounded={"2xl"} overflow={"hidden"} minH={["fit-content", "fit-content", "fit-content"]} >
+                        <Dialog.Content w={width ? width : "full"} maxW={maxW ? maxW : "auto"} rounded={"2xl"} overflow={"hidden"} minH={["fit-content", "fit-content", "fit-content"]} >
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
                                 <Dialog.Header pl={"4"} textAlign={"center"} >

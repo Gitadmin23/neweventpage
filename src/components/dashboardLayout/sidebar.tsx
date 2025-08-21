@@ -11,7 +11,7 @@ import useGetUser from "@/hooks/useGetUser";
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import useNotificationHook from "@/hooks/useNotificationHook";
-import { Login } from "@/svg";
+import { Login, LoginTwo } from "@/svg";
 
 export default function SideBar({count}: {count: string}) {
 
@@ -172,7 +172,7 @@ export default function SideBar({count}: {count: string}) {
             </Flex>
             <ModalLayout size={"xs"} trigger={true} open={open} close={() => setOpen(false)} >
                 <Flex
-                    width={"100%"}
+                    width={"100%"} 
                     height={"100%"}
                     justifyContent={"center"}
                     gap={6}
@@ -182,25 +182,24 @@ export default function SideBar({count}: {count: string}) {
                     p={"6"}
                     alignItems={"center"}
                 >
-                    <Flex
-                        width="60px"
-                        height={"60px"}
+                    <Flex 
                         borderRadius={"full"}
                         justifyContent={"center"}
                         bg="#df26263b"
                         alignItems={"center"}
                     >
-                        <Warning2 color="red" size="30px" variant="Outline" />
+                        {/* <Warning2 color="red" size="30px" variant="Outline" /> */}
+                        <LoginTwo />
                     </Flex>
-                    <Text fontSize={"18px"} fontWeight={"600"} >
+                    <Text fontWeight={"600"} >
                         Are you sure you want to logout?
                     </Text>
-                    <Flex justifyContent={"center"} roundedBottom={"lg"} gap={"3"} width={"100%"}>
+                    <Flex justifyContent={"center"} flexDirection={"column-reverse"} roundedBottom={"lg"} gap={"3"} width={"100%"}>
                         <Button
                             // outlineColor={"brand.chasescrollButtonBlue"}
                             borderColor={primaryColor}
                             borderWidth={"1px"}
-                            width="45%"
+                            width="full"
                             fontWeight={"600"}
                             outline={"none"}
                             _hover={{ backgroundColor: "white" }}
@@ -218,7 +217,7 @@ export default function SideBar({count}: {count: string}) {
                             rounded={"full"}
                             _hover={{ backgroundColor: "red" }}
                             bg="red"
-                            width="45%"
+                            width="full"
                             fontWeight={"600"}
                             height={"45px"}
                             color="white"

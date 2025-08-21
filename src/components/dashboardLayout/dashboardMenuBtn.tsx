@@ -2,17 +2,17 @@
 import useCustomTheme from '@/hooks/useTheme'
 import { Box, Button, Flex, Switch, Text } from '@chakra-ui/react'
 import { LogoutCurve, SearchNormal1, Setting, Warning2 } from 'iconsax-react'
-import { useRouter } from 'next/navigation' 
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import Cookies from "js-cookie"
 import { useColorMode } from '../ui/color-mode'
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from '@/helpers/services/urls'
-import { DashboardMenuIcon } from '@/svg'
+import { DashboardMenuIcon, LoginTwo } from '@/svg'
 import { NewChatIcon, NotificationIcon } from '@/svg/sidebarIcons'
 import { ModalLayout } from '../shared'
 import useNotificationHook from '@/hooks/useNotificationHook'
 
-export default function DashboardMenuBtn( ) {
+export default function DashboardMenuBtn() {
     const [open, setOpen] = useState(false)
     const [show, setShow] = useState(false)
 
@@ -22,15 +22,15 @@ export default function DashboardMenuBtn( ) {
         mainBackgroundColor
     } = useCustomTheme()
 
-    const router = useRouter() 
+    const router = useRouter()
     const { colorMode, toggleColorMode } = useColorMode();
     const token = Cookies.get("chase_token")
 
     const handleClick = (item: string) => {
         if (item === "logout") {
             setShow(true)
-        } else { 
-            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`; 
+        } else {
+            window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
 
         setOpen(false)
@@ -40,8 +40,8 @@ export default function DashboardMenuBtn( ) {
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
-    const clickHandler = () => { 
-        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`; 
+    const clickHandler = () => {
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`;
         // router.push("/dashboard/notification")
         setOpen(false)
     }
@@ -176,24 +176,24 @@ export default function DashboardMenuBtn( ) {
                     alignItems={"center"}
                 >
                     <Flex
-                        width="60px"
-                        height={"60px"}
                         borderRadius={"full"}
                         justifyContent={"center"}
                         bg="#df26263b"
                         alignItems={"center"}
                     >
-                        <Warning2 color="red" size="30px" variant="Outline" />
+                        {/* <Warning2 color="red" size="30px" variant="Outline" /> */}
+                        <LoginTwo />
                     </Flex>
-                    <Text fontSize={"18px"} fontWeight={"600"} >
+                    <Text fontWeight={"600"} >
                         Are you sure you want to logout?
                     </Text>
-                    <Flex justifyContent={"center"} roundedBottom={"lg"} gap={"3"} width={"100%"}>
+                    <Flex justifyContent={"center"} flexDirection={"column-reverse"} roundedBottom={"lg"} gap={"3"} width={"100%"}>
                         <Button
                             // outlineColor={"brand.chasescrollButtonBlue"}
                             borderColor={primaryColor}
                             borderWidth={"1px"}
-                            width="45%"
+                            width="full"
+                            maxW={"370px"}
                             fontWeight={"600"}
                             outline={"none"}
                             _hover={{ backgroundColor: "white" }}
@@ -201,7 +201,7 @@ export default function DashboardMenuBtn( ) {
                             rounded={"full"}
                             height={"45px"}
                             color={primaryColor}
-                            onClick={() => setOpen(false)}
+                            onClick={() => setShow(false)}
                         >
                             Cancel
                         </Button>
@@ -211,11 +211,12 @@ export default function DashboardMenuBtn( ) {
                             rounded={"full"}
                             _hover={{ backgroundColor: "red" }}
                             bg="red"
-                            width="45%"
+                            width="full"
+                            maxW={"370px"}
                             fontWeight={"600"}
                             height={"45px"}
                             color="white"
-                            onClick={logout}
+                            onClick={clickHandler}
                         >
                             Log out
                         </Button>
