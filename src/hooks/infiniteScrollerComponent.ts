@@ -42,7 +42,7 @@ function useInfiniteScroller(props: Props) {
     [name, url, cleanedParams, size, search]
   );
 
-  const { data, isLoading, isError, refetch } = useFetchData<any>({
+  const { data, isLoading, isError, refetch, isFetching } = useFetchData<any>({
     queryKey,
     endpoint: url,
     params: {
@@ -53,9 +53,6 @@ function useInfiniteScroller(props: Props) {
 
   const ref = useCallback((node: HTMLElement | null) => {
     if (isLoading) return;
-
-    console.log(hasNextPage);
-
 
     if (intObserver.current) intObserver.current.disconnect();
 
@@ -71,10 +68,7 @@ function useInfiniteScroller(props: Props) {
   }, [isLoading, hasNextPage]);
 
   useEffect(() => {
-    if (inView && hasNextPage) {
-
-      console.log("working");
-
+    if (inView && hasNextPage) { 
 
       setSize(prev => prev + limit);
       refetch()
@@ -103,7 +97,7 @@ function useInfiniteScroller(props: Props) {
         window.scrollTo(0, 0);
       }
     }
-  }, [data, size, filter, array]);
+  }, [data, size, filter, array, isFetching]);
 
   useEffect(()=> {
     if(results.length === 0 && isLoading){

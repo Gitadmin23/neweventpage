@@ -65,7 +65,6 @@ export default function ViewTicket(
 
     const reactToPrintFn = useReactToPrint({ contentRef }); 
 
-
     const { data: eventData, isLoading } = useFetchData<PaginatedResponse<IProps | any>>({
         name: "event-ticket", endpoint: "/events/get-users-tickets", id: data?.id, params: {
             userID: user_index,
@@ -77,8 +76,7 @@ export default function ViewTicket(
         return (new Date(item[item?.length - 1])?.getDate() >= new Date(eventData?.content[0]?.event?.startDate)?.getDate()) && (new Date(item[item?.length - 1])?.getDate() <= new Date(eventData?.content[0]?.event?.endDate)?.getDate())
     } 
 
-    const isToDay = (item: any) => {
-
+    const isToDay = (item: any) => { 
         return (new Date()?.getDate() === new Date(item)?.getDate() || new Date(eventData?.content[0]?.event?.endDate)?.getDate() === new Date(item)?.getDate())
     }
 
@@ -199,11 +197,11 @@ export default function ViewTicket(
                             </Flex>
                         )}
 
-                        <Flex ref={ref} position={"relative"} width={"full"} display={["flex", "flex", "none"]} className="hide-scrollbar" flexDirection={"row"} overflowX={"auto"} alignItems={"center"} gap={"4"} px={["1", "1", "0px"]} >
+                        <Flex ref={ref} position={"relative"} width={"full"} h={"full"} display={["flex", "flex", "none"]} scrollBehavior={"smooth"} className="hide-scrollbar" flexDirection={"row"} overflowX={"auto"} alignItems={"center"} gap={"4"} pl={["2", "1", "0px"]} >
                             <Flex width={"full"} gap={"6"} >
                                 {eventData?.content?.map((item, index: number) => {
                                     return (
-                                        <Flex key={index} minW={"80vw"} flexDir={["column", "column", "row"]} rounded={"16px"} pb={"4"} pt={["4"]} p={["0px", "0px", "4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["start", "start", "center"]} justifyContent={"center"} >
+                                        <Flex key={index} minW={"90vw"} flexDir={["column", "column", "row"]} rounded={"16px"} pb={"4"} pt={["4"]} p={["0px", "0px", "4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["start", "start", "center"]} justifyContent={"center"} >
                                             <Flex width={"full"} justifyContent={"space-between"} pos={"relative"} px={"4"} pt={"4"} >
                                                 <Flex pos={"absolute"} width={"full"} pr={"6"} justifyContent={"center"} >
                                                     <Text fontSize={"16px"} fontWeight={"bold"} textAlign={"center"} >Ticket Details</Text>

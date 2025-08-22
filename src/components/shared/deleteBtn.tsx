@@ -1,5 +1,5 @@
 "use client"
-import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
+import { Flex, Image, Text } from '@chakra-ui/react';
 import { AxiosError, AxiosResponse } from 'axios';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react'
@@ -7,8 +7,7 @@ import { IoClose } from 'react-icons/io5';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import ModalLayout from './modalLayout';
-import httpService from '@/helpers/services/httpService';
-import { URLS } from '@/helpers/services/urls';
+import httpService from '@/helpers/services/httpService'; 
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import CustomButton from './customButton';
 import useCustomTheme from '@/hooks/useTheme';
@@ -41,8 +40,7 @@ function DeleteBtn(props: Props) {
 
     const pathname = usePathname()
     // const toast = useToast()
-    const queryClient = useQueryClient()
-    const { userId: user_index } = useDetails((state) => state);
+    const queryClient = useQueryClient() 
 
     const {
         primaryColor
@@ -66,6 +64,12 @@ function DeleteBtn(props: Props) {
             // });
         },
         onSuccess: (data: AxiosResponse<any>) => {
+            
+            queryClient.invalidateQueries({ queryKey: ["myevent"]})
+            queryClient.invalidateQueries({ queryKey: ["mydonationlist"]})
+            queryClient.invalidateQueries({ queryKey: ["draftevent"]}) 
+            queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
+
             if (data?.data?.message === "Could not delete event") {
                 // toast({
                 //     title: 'Error',
@@ -119,12 +123,6 @@ function DeleteBtn(props: Props) {
                     })
                 }
             }
-
-            queryClient.refetchQueries({ queryKey: ["myevent"] })
-            queryClient.refetchQueries({ queryKey: ["mydonationlist"] })
-            queryClient.refetchQueries({ queryKey: ["draftevent"] })
-
-            
             // queryClient.refetchQueries({ queryKey: [URLS.JOINED_EVENT + user_index]})
             setOpen(false)
         }
