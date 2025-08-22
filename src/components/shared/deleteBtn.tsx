@@ -64,11 +64,13 @@ function DeleteBtn(props: Props) {
             // });
         },
         onSuccess: (data: AxiosResponse<any>) => {
-            
+
             queryClient.invalidateQueries({ queryKey: ["myevent"]})
             queryClient.invalidateQueries({ queryKey: ["mydonationlist"]})
             queryClient.invalidateQueries({ queryKey: ["draftevent"]}) 
+            queryClient.invalidateQueries({ queryKey: [`/events/drafts`]}) 
             queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
+            
 
             if (data?.data?.message === "Could not delete event") {
                 // toast({
