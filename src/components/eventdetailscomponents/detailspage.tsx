@@ -96,7 +96,9 @@ export default function DetailsPage(
                             </Flex>
                         </Flex>
                     </Flex>
-                    <EventLocation showLink={true} data={props} />
+                    <Flex w={"full"} display={["flex", "flex", "none"]} >
+                        <EventLocation showLink={true} data={props} />
+                    </Flex>
                     <EventDate {...props} />
                     <Flex w={"full"} justifyContent={"space-between"} gap={"4"} >
                         <Flex display={["none", "none", "flex"]} w={"full"} flexDir={"column"} gap={"6"} >

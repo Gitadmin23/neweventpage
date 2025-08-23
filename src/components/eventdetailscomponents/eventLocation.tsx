@@ -23,9 +23,9 @@ export default function EventLocation(
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Flex maxW={showLink ? "400px" : "full"} rounded={"32px"} py={"2"} px={showLink? "3" : "0px"} bgColor={showLink ? secondaryBackgroundColor : "transparent"} w={"full"} gap={showLink ? "2" : "1"}>
                 <Flex w={"fit-content"} >
-                <LocationStroke />
+                    <LocationStroke />
                 </Flex>
-                <Text fontSize={fontSize ?? "14px"} fontWeight={"500"} whiteSpace={"none"} lineBreak={"anywhere"} >{location?.toBeAnnounced ? "To Be Announced" : textLimit(location?.locationDetails+"", limit)}</Text>
+                <Text fontSize={fontSize ?? "14px"} fontWeight={"500"} whiteSpace={"none"} lineBreak={"anywhere"} >{location?.toBeAnnounced ? "To Be Announced" : limit === 0 ? location?.locationDetails : textLimit(location?.locationDetails+"", limit)}</Text>
             </Flex>
             {(location?.link && showLink)&& (
                 <Flex maxW={["400px"]} rounded={"32px"} py={"2"} px={"3"} bgColor={secondaryBackgroundColor} w={"full"} gap={"2"} alignItems={"center"} >
