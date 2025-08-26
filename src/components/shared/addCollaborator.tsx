@@ -394,7 +394,7 @@ export default function CollaboratorBtn(props: IProps) {
                 <Flex as={"button"} onClick={() => removeHandler(user?.userId)} justifyContent={'space-between'} w={"full"} alignItems={"center"}  >
                     <Flex gap={"2"} height={"full"} alignItems={"center"} >
                         <Box w={"fit-content"} >
-                            <UserImage size="lg" user={props} />
+                            <UserImage size="lg" user={props.user} />
                         </Box>
                         {/* <Avatar src={`${CONFIG.RESOURCE_URL}${imgMain}`} size='sm' name={`${firstName} ${lastName}`} /> */}
                         <Flex alignItems={'flex-start'} flexDir={"column"} >
