@@ -46,7 +46,7 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
 
             <Flex w={"fit-content"} flexWrap={"wrap"} gap={"1"}>
                 {donate?.map((item) => (
-                    <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("NGN ", ""))} rounded={"32px"} h={"25px"} w={"65px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("NGN ", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >
+                    <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("₦", ""))} rounded={"32px"} h={"25px"} w={"65px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("₦", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >
                         {item}
                     </Flex>
                 ))}
