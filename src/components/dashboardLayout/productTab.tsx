@@ -65,7 +65,23 @@ export default function ProductTab(
     }, [open, show]);
 
     const backHandler = () => {
-        window.open(LANDINGPAGE_URL)
+        (window as any).top.location.href = (LANDINGPAGE_URL)
+    }
+
+    const createEvent = () => {
+        if (frame) {
+            (window as any).top.location.href = (LANDINGPAGE_URL + "/auth?create=event")
+        } else {
+            router.push("/product/create/events")
+        }
+    }
+
+    const createDonation = () => {
+        if (frame) {
+            (window as any).top.location.href = (LANDINGPAGE_URL + "/auth?create=fundraiser")
+        } else {
+            router.push("/product/create/fundraising")
+        }
     }
 
     return (
@@ -151,18 +167,18 @@ export default function ProductTab(
                         {!type && (
                             <SelectEventType />
                         )}
-                        {!frame && (
-                            <Flex gap={["2", "2", "4"]}  >
+                        <Flex gap={["2", "2", "4"]}  >
+                            {!frame && (
                                 <SelectEventOption />
-                                <CustomButton onClick={() => router.push("/product/create/events")} text={"Create Event"} width={["100px", "110px", "150px"]} height={["40px", "40px", "45px"]} fontSize={["12px", "12px", "14px"]} borderRadius={"full"} />
-                            </Flex>
-                        )}
+                            )}
+                            <CustomButton onClick={createEvent} text={"Create Event"} width={["100px", "110px", "150px"]} height={["40px", "40px", "45px"]} fontSize={["12px", "12px", "14px"]} borderRadius={"full"} />
+                        </Flex>
                     </Flex>
                 )}
-                {(pathname.includes("fundraising") && !frame) && (
+                {(pathname.includes("fundraising")) && (
                     <Flex pt={["2", "2", "6"]} pb={["0px", "6", "6"]} maxWidth={"745px"} position={"relative"} width={"full"} gap={"4"} flexDir={["row"]} alignItems={["start", "start", "center"]} flexDirection={["row"]} >
                         <SelectDonationOption />
-                        <CustomButton onClick={() => router.push("/product/create/fundraising")} text={"Create Fundraising"} width={"150px"} height={["40px", "40px", "45px"]} fontSize={["12px", "12px", "14px"]} borderRadius={"full"} />
+                        <CustomButton onClick={createDonation} text={"Create Fundraising"} width={"150px"} height={["40px", "40px", "45px"]} fontSize={["12px", "12px", "14px"]} borderRadius={"full"} />
                     </Flex>
                 )}
             </Flex>

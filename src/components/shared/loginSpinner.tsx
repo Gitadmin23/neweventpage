@@ -14,6 +14,7 @@ export default function LogInSpinner() {
     const query = useSearchParams();
     const token = query?.get('token');  
     const eventId = query?.get('eventId');
+    const create = query?.get('create');
 
     const router = useRouter()
     const { primaryColor, } = useCustomTheme()
@@ -30,6 +31,8 @@ export default function LogInSpinner() {
             const timer = setTimeout(() => {
                 if(eventId && eventId !== null && eventId !== "null") {
                     router.replace(`/product/details/events/${eventId}`)
+                } else if(create === "event") {
+                    router.replace(`/product/create/events`)
                 } else {
                     router.replace("/product/events")
                 }
