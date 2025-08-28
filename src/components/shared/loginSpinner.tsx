@@ -33,6 +33,8 @@ export default function LogInSpinner() {
                     router.replace(`/product/details/events/${eventId}`)
                 } else if(create === "event") {
                     router.replace(`/product/create/events`)
+                } else if(create === "fundraiser") {
+                    router.replace(`/product/create/fundraising`)
                 } else {
                     router.replace("/product/events")
                 }
