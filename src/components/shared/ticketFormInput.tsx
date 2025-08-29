@@ -153,6 +153,7 @@ export default function TicketFormInput(
                         bgColor={"white"}
                         borderRadius={"3xl"}
                         border={"1px solid #EAEBED"}
+                        backgroundColor={mainBackgroundColor}
                         _placeholder={{ color: "gray.500" }}
                         placeholder={placeholder}
                     />
