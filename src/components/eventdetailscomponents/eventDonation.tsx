@@ -79,7 +79,6 @@ export default function EventDonation({ checkbox, item }: { checkbox?: boolean, 
         router?.push("/product/details/fundraising/" + item)
     }
 
-
     return (
         <LoadingAnimation loading={isLoading} >
             {data?.length > 0 && (
