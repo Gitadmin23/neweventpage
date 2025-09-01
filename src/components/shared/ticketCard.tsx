@@ -9,6 +9,7 @@ import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
 import { EventPrice } from "../eventcomponents";
 import UserImage from "./userImage"; 
 import { ITicket } from "@/helpers/models/ticket";
+import useCustomTheme from "@/hooks/useTheme";
 
 
 interface ITicketprops {
@@ -21,8 +22,11 @@ interface ITicketprops {
 
 export default function Ticket({ ticket, showStatus = false, approved, close }: ITicketprops) {
     // const { id, event } = ticket; 
+
+    const { mainBackgroundColor } = useCustomTheme()
+
     return (
-        <Flex p={"4"} shadow={"lg"} flexDirection={"column"} bg={"white"} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} gap={"2"} >
+        <Flex p={"4"} shadow={"lg"} bgColor={mainBackgroundColor} flexDirection={"column"} bg={"white"} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} gap={"2"} >
             <Flex gap={"4"} width={"full"} alignItems={"center"} justifyContent={"space-between"} >
 
                 <Text fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} >Ticket Details</Text>
