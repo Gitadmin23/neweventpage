@@ -53,12 +53,12 @@ export default function DashboardLayout(
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
-                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} pos={"relative"} zIndex={"20"} >
+                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} pos={"relative"} zIndex={"10"} >
                         <Navbar />
                     </Flex>
                 )}
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["0px", "0px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
                         {children}
                     </Flex> 
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} w={"full"} h={"full"} overflow={"hidden"} >
@@ -77,7 +77,7 @@ export default function DashboardLayout(
                     </Grid>
                 </Flex>
                 {!frame && (
-                    <Flex w={"full"} h={"fit-content"} >
+                    <Flex w={"full"} bottom={"0px"}  >
                         <BottomBar count={count} />
                     </Flex>
                 )}

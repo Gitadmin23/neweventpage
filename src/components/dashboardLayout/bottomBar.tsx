@@ -44,7 +44,7 @@ export default function BottomBar({count} : {count: string}) {
 
 
     return (
-        <Flex zIndex={"20"} px={"3"} bgColor={mainBackgroundColor} position={"fixed"} bottom={"0px"} alignItems={"center"} justifyContent={"space-between"} width='100%' height='70px' borderTopWidth={1} borderTopColor={borderColor} display={['flex', 'flex', 'flex', 'none', 'none']}>
+        <Flex px={"3"} bgColor={mainBackgroundColor} alignItems={"center"} justifyContent={"space-between"} width='100%' height='70px' borderTopWidth={1} borderTopColor={borderColor} display={['flex', 'flex', 'flex', 'none', 'none']}>
             <Flex onClick={() => routeHandler("dashboard")} cursor={"pointer"} flexDir={"column"} width={"full"} maxW={"50px"} color={pathname === "/dashboard" ? primaryColor : bodyTextColor} justifyContent={'center'} alignItems={'center'}>
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
                     <HomeIcon />
@@ -69,7 +69,7 @@ export default function BottomBar({count} : {count: string}) {
             <Flex onClick={() => routeHandler('dashboard/notification')} cursor={"pointer"} flexDir={"column"} alignItems={"center"} width={"full"} maxW={"50px"} color={pathname?.includes('community') ? primaryColor : bodyTextColor} justifyContent={'center'}>
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} pos={"relative"} >
                     <NotificationIcon size="20px" />
-                    <Flex w={"5"} h={"5"} pos={"absolute"} rounded={"full"} bg={primaryColor} top={"-1"} right={"-10px"} zIndex={"20"} color={"white"} justifyContent={"center"} alignItems={"center"} pb={"2px"} fontWeight={"semibold"} fontSize={"12px"}  >
+                    <Flex w={"5"} h={"5"} pos={"absolute"} rounded={"full"} bg={primaryColor} top={"-1"} right={"-10px"} color={"white"} justifyContent={"center"} alignItems={"center"} pb={"2px"} fontWeight={"semibold"} fontSize={"12px"}  >
                         {count}
                     </Flex>
                 </Flex>

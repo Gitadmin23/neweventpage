@@ -64,9 +64,9 @@ export default function ModalLayout({
                 </Dialog.Root>
             )}
             {trigger && (
-                <Dialog.Root  placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
+                <Dialog.Root placement={placement ?? "center"} size={size ?? "md"} open={open} onOpenChange={close} >
                     <Dialog.Backdrop />
-                    <Dialog.Positioner p={"2"}  overflow={"hidden"} >
+                    <Dialog.Positioner zIndex={"5000"} p={"2"} overflow={"hidden"} >
                         <Dialog.Content w={width ? width : "full"} maxW={maxW ? maxW : "auto"} rounded={"2xl"} overflow={"hidden"} minH={["fit-content", "fit-content", "fit-content"]} >
                             <Dialog.CloseTrigger /> 
                             {title || closeBtn && ( 
@@ -82,8 +82,10 @@ export default function ModalLayout({
                                 </Dialog.Header>
                             )}
                             <Dialog.Body >
-                                <Flex w={"full"} h={"auto"} overflowY={"hidden"} >
-                                    {children}
+                                <Flex w={"full"} overflowY={"hidden"} >
+                                    {/* <Flex w={"full"}   >  */}
+                                        {children} 
+                                    {/* </Flex> */}
                                 </Flex>
                             </Dialog.Body>
                             <Dialog.Footer>
