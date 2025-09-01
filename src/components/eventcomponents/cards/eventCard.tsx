@@ -12,6 +12,7 @@ import EventPrice from "../eventPrice";
 import { toaster } from "@/components/ui/toaster";
 import { SHARE_URL } from "@/helpers/services/urls";
 import { useFetchData } from "@/hooks/useFetchData";
+import { useEffect, useState } from "react";
 
 export default function EventCard(
     {
@@ -27,6 +28,9 @@ export default function EventCard(
     const query = useSearchParams();
     const frame = query?.get('frame');
 
+    const [ newDonationData, setDonation ] = useState([] as any)
+    const [ checked, setChecked ] = useState(true)
+
 
     const { data: meshData = [] } = useFetchData<Array<any>>({
         name: "all-events-mesh", endpoint: `/pin-item/search`, id: event?.id, params: {
@@ -34,10 +38,11 @@ export default function EventCard(
         }
     });
 
-    const { data: donationData } = useFetchData<any>({
+    const { data: donationData, isLoading: loadingdonation } = useFetchData<any>({
         name: "all-donation", endpoint: `/pinned-fundraisers/get-pinned-event-fundraising/${event?.id}`, id: event?.id, params: {
             id: event?.id
-        }
+        },
+        enable: checked
     });
 
     const clickHandler = () => {
@@ -46,7 +51,17 @@ export default function EventCard(
         } else {
             router.push("/product/details/events/" + event?.id);
         }
-    }
+    } 
+
+    useEffect(()=> {
+        if(!loadingdonation) {
+            setDonation(donationData)
+            setChecked(false)
+        }
+    }, [loadingdonation])
+    
+    console.log(newDonationData?.length);
+    
 
     return (
         <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
@@ -116,7 +131,7 @@ export default function EventCard(
                 </Flex>
             </Flex>
             {event?.interestedUsers?.length > 0 && (
-                <Flex borderTopWidth={(meshData?.length > 0 || donationData?.length > 0 || event?.affiliates?.length > 0 ) ? "0px" : "1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
+                <Flex borderTopWidth={(meshData?.length > 0 || newDonationData?.length > 0 || event?.affiliates?.length > 0 ) ? "0px" : "1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
                     {event?.attendeesVisibility && (
                         <InterestedUsers
                             event={event}
@@ -124,9 +139,9 @@ export default function EventCard(
                     )}
                 </Flex>
             )}
-            {meshData?.length > 0 || donationData?.length > 0 || event?.affiliates?.length > 0 && (
+            {meshData?.length > 0 || newDonationData?.length > 0 || event?.affiliates?.length > 0 && (
                 <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} gap={"2"} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
-                    {meshData?.length > 0 && (
+                    {newDonationData?.length > 0 && (
                         <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} color={"#233DF3"} bgColor={"#F2F4FF"} >
                             <Text>Fundraiser</Text>
                         </Flex>

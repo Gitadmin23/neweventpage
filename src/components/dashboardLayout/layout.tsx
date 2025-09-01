@@ -53,7 +53,7 @@ export default function DashboardLayout(
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
-                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} >
+                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} pos={"relative"} zIndex={"20"} >
                         <Navbar />
                     </Flex>
                 )}
