@@ -36,7 +36,7 @@ export default function Ticket({ ticket, showStatus = false, approved, close }: 
             </Flex>
             <Flex width={"full"} flexDirection={"column"} alignItems={"center"} >
 
-                <Flex width={"fit-content"} flexDirection={"column"} bg={"white"} alignItems={"center"} justifyContent={"center"} gap={"2"} >
+                <Flex width={"fit-content"} flexDirection={"column"} bg={mainBackgroundColor} alignItems={"center"} justifyContent={"center"} gap={"2"} >
 
                     <Flex alignItems={"center"} gap={"4"} py={"2"} px={"2"} borderBottom={"1px solid #E2E8F0"}  >
                         <Box w={"fit-content"} >
