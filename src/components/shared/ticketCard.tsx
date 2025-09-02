@@ -26,7 +26,7 @@ export default function Ticket({ ticket, showStatus = false, approved, close }: 
     const { mainBackgroundColor } = useCustomTheme()
 
     return (
-        <Flex p={"4"} shadow={"lg"} bgColor={mainBackgroundColor} flexDirection={"column"} bg={"white"} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} gap={"2"} >
+        <Flex p={"4"} shadow={"lg"} bgColor={mainBackgroundColor} flexDirection={"column"} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} gap={"2"} >
             <Flex gap={"4"} width={"full"} alignItems={"center"} justifyContent={"space-between"} >
 
                 <Text fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} >Ticket Details</Text>
