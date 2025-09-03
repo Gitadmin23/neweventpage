@@ -8,11 +8,11 @@ import moment from "moment";
 import { LocationStrokeEx } from "@/svg";
 import { textLimit } from "@/helpers/utils/textlimit";
 import InterestedUsers from "../interestedUser";
-import EventPrice from "../eventPrice";
-import { toaster } from "@/components/ui/toaster";
-import { SHARE_URL } from "@/helpers/services/urls";
-import { useFetchData } from "@/hooks/useFetchData";
+import EventPrice from "../eventPrice"; 
+import { SHARE_URL } from "@/helpers/services/urls"; 
 import { useEffect, useState } from "react";
+import httpService from "@/helpers/services/httpService";
+import { useMutation } from "@tanstack/react-query";
 
 export default function EventCard(
     {
@@ -27,23 +27,32 @@ export default function EventCard(
     const { primaryColor, mainBackgroundColor } = useCustomTheme()
     const query = useSearchParams();
     const frame = query?.get('frame');
+ 
+    const [ hasPinnedItem, setHasPinnedItem ] = useState(false)
+    const [ hasPinnedFundraiser, setHasPinnedFundraiser ] = useState(false) 
 
-    const [ newDonationData, setDonation ] = useState([] as any)
-    const [ checked, setChecked ] = useState(true)
-
-
-    const { data: meshData = [] } = useFetchData<Array<any>>({
-        name: "all-events-mesh", endpoint: `/pin-item/search`, id: event?.id, params: {
-            typeId: event?.id
-        }
-    });
-
-    const { data: donationData, isLoading: loadingdonation } = useFetchData<any>({
-        name: "all-donation", endpoint: `/pinned-fundraisers/get-pinned-event-fundraising/${event?.id}`, id: event?.id, params: {
-            id: event?.id
+    const { mutate: hasPinnedItems, isPending: hasPinnedItemsPending } = useMutation({
+        mutationFn: () => httpService.get(`/pin-item/hasPinnedItems/${event?.id}`),
+        onError: (error: any) => {
+            console.log(error); 
         },
-        enable: checked
+        onSuccess: (data: any) => { 
+            setHasPinnedItem(data?.data)
+        },
     });
+
+
+    const { mutate: hasPinnedFundraisers, isPending: hasPinnedFundraisersPending } = useMutation({
+        mutationFn: () => httpService.get(`/pinned-fundraisers/has-pinned/${event?.id}`),
+        onError: (error: any) => {
+            console.log(error); 
+        },
+        onSuccess: (data: any) => { 
+            setHasPinnedFundraiser(data?.data)
+        },
+    });
+
+    // /pinned-fundraisers/has-pinned/{eventID}
 
     const clickHandler = () => {
         if (frame) {
@@ -51,17 +60,14 @@ export default function EventCard(
         } else {
             router.push("/product/details/events/" + event?.id);
         }
-    } 
-
+    }  
+    
     useEffect(()=> {
-        if(!loadingdonation) {
-            setDonation(donationData)
-            setChecked(false)
-        }
-    }, [loadingdonation])
-    
-    console.log(newDonationData?.length);
-    
+        hasPinnedItems()
+        hasPinnedFundraisers()
+    }, [event?.id])
+
+    console.log(hasPinnedFundraiser);
 
     return (
         <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
@@ -131,7 +137,7 @@ export default function EventCard(
                 </Flex>
             </Flex>
             {event?.interestedUsers?.length > 0 && (
-                <Flex borderTopWidth={(meshData?.length > 0 || newDonationData?.length > 0 || event?.affiliates?.length > 0 ) ? "0px" : "1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
+                <Flex borderTopWidth={(hasPinnedItem || hasPinnedFundraiser || event?.affiliates?.length > 0 ) ? "0px" : "1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
                     {event?.attendeesVisibility && (
                         <InterestedUsers
                             event={event}
@@ -139,20 +145,20 @@ export default function EventCard(
                     )}
                 </Flex>
             )}
-            {meshData?.length > 0 || newDonationData?.length > 0 || event?.affiliates?.length > 0 && (
+            {(hasPinnedItem || hasPinnedFundraiser || event?.affiliates?.length > 0) && (
                 <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} gap={"2"} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
-                    {newDonationData?.length > 0 && (
-                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} color={"#233DF3"} bgColor={"#F2F4FF"} >
+                    {hasPinnedFundraiser && (
+                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"}  maxW={"40%"} color={"#233DF3"} bgColor={"#F2F4FF"} >
                             <Text>Fundraiser</Text>
                         </Flex>
                     )}
-                    {event?.affiliates.length > 0 && (
+                    {event?.affiliates?.length > 0 && (
                         <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#12BC42"} bgColor={"#F3FFF6"} >
                             <Text>Need a PR</Text>
                         </Flex>
                     )}
-                    {meshData?.length > 0 && (
-                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} color={"#FCD516"} bgColor={"#FFFCF3"} >
+                    {hasPinnedItem && (
+                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#FCD516"} bgColor={"#FFFCF3"} >
                             <Text>Item for sale</Text>
                         </Flex>
                     )}
