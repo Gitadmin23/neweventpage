@@ -1,5 +1,6 @@
 "use client"
 import { toaster } from "@/components/ui/toaster";
+import { convertImageToPngFile } from "@/helpers/services/convertImage";
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
 import { useImage } from "@/helpers/store/useImagePicker";
@@ -321,8 +322,9 @@ const useEvent = () => {
                 }
             } else if (image.length > 0 && !id) {
                 const fd = new FormData();
-                image.forEach((file) => {
-                    fd.append("files[]", file);
+                image.forEach(async (file) => {
+                    const pngFile = await convertImageToPngFile(file);
+                    fd.append("files[]", pngFile);
                 });
                 uploadImage?.mutate(fd)
             } else if ((type === "info" || id) && type !== "ticket") {
