@@ -1,5 +1,6 @@
+"use client"
 import axios, { AxiosError } from "axios"
-import Cookies from "js-cookie"
+import Cookies from "js-cookie" 
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const httpService = axios.create({
@@ -19,6 +20,7 @@ unsecureHttpService.interceptors.response.use((data) => {
 
 httpService.interceptors.request.use(
   function (config: any) {
+    
     const token = Cookies.get("chase_token")
     
     if (token) {

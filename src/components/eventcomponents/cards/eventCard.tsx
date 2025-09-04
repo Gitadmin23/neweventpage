@@ -8,11 +8,12 @@ import moment from "moment";
 import { LocationStrokeEx } from "@/svg";
 import { textLimit } from "@/helpers/utils/textlimit";
 import InterestedUsers from "../interestedUser";
-import EventPrice from "../eventPrice"; 
-import { SHARE_URL } from "@/helpers/services/urls"; 
+import EventPrice from "../eventPrice";
+import { SHARE_URL } from "@/helpers/services/urls";
 import { useEffect, useState } from "react";
 import httpService from "@/helpers/services/httpService";
 import { useMutation } from "@tanstack/react-query";
+import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
 
 export default function EventCard(
     {
@@ -27,16 +28,16 @@ export default function EventCard(
     const { primaryColor, mainBackgroundColor } = useCustomTheme()
     const query = useSearchParams();
     const frame = query?.get('frame');
- 
-    const [ hasPinnedItem, setHasPinnedItem ] = useState(false)
-    const [ hasPinnedFundraiser, setHasPinnedFundraiser ] = useState(false) 
+
+    const [hasPinnedItem, setHasPinnedItem] = useState(false)
+    const [hasPinnedFundraiser, setHasPinnedFundraiser] = useState(false)
 
     const { mutate: hasPinnedItems, isPending: hasPinnedItemsPending } = useMutation({
         mutationFn: () => httpService.get(`/pin-item/hasPinnedItems/${event?.id}`),
         onError: (error: any) => {
-            console.log(error); 
+            console.log(error);
         },
-        onSuccess: (data: any) => { 
+        onSuccess: (data: any) => {
             setHasPinnedItem(data?.data)
         },
     });
@@ -45,9 +46,9 @@ export default function EventCard(
     const { mutate: hasPinnedFundraisers, isPending: hasPinnedFundraisersPending } = useMutation({
         mutationFn: () => httpService.get(`/pinned-fundraisers/has-pinned/${event?.id}`),
         onError: (error: any) => {
-            console.log(error); 
+            console.log(error);
         },
-        onSuccess: (data: any) => { 
+        onSuccess: (data: any) => {
             setHasPinnedFundraiser(data?.data)
         },
     });
@@ -60,9 +61,9 @@ export default function EventCard(
         } else {
             router.push("/product/details/events/" + event?.id);
         }
-    }  
-    
-    useEffect(()=> {
+    }
+
+    useEffect(() => {
         hasPinnedItems()
         hasPinnedFundraisers()
     }, [event?.id])
@@ -70,7 +71,7 @@ export default function EventCard(
     console.log(hasPinnedFundraiser);
 
     return (
-        <Flex as={"button"} flexDir={"column"} h={"full"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
+        <Flex as={"button"} flexDir={"column"} h={"fit"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
             <Flex w={"full"} pos={"relative"} onClick={() => clickHandler()} >
                 <ProductImageScroller images={event.picUrls.length > 0 ? event.picUrls : [event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
                 {!frame && (
@@ -110,59 +111,72 @@ export default function EventCard(
                     </Flex>
                 </Flex>
             </Flex>
-            <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={["1", "1", "1"]} >
+            <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={(hasPinnedItem || hasPinnedFundraiser || event?.interestedUsers?.length > 0 || event?.affiliates?.length > 0) ? "4" : ["1", "1", "1"]} >
                 <Flex gap={"2"} w={"full"} justifyContent={"space-between"} alignItems={"center"} >
-                    <Flex flexDirection={"column"} alignItems={"start"}  >
-                        <Text fontSize={"14px"} fontWeight={"700"} >{textLimit(event?.eventName, 20)}</Text>
-                        <Flex display={["none", "none", "flex"]} w={"full"} gap={"1"} >
-                            <Flex w={"fit-content"} mt={"2px"} >
-                                <LocationStrokeEx color={primaryColor} size='17px' />
-                            </Flex>
-                            <Text color={primaryColor} textAlign={"left"} fontSize={"12px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 17)}</Text>
+                    <Flex w={"full"} flexDirection={"column"} alignItems={"start"}  >
+                        <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
+                            <Text fontSize={"14px"} fontWeight={"700"} >{capitalizeFLetter(textLimit(event?.eventName, 20))}</Text>
+
+                            <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={["10px", "10px", "14px"]} >
+                                <EventPrice
+                                    minPrice={event?.minPrice}
+                                    maxPrice={event?.maxPrice}
+                                    currency={event?.currency}
+                                />
+                            </Text>
                         </Flex>
-                        <Flex display={["flex", "flex", "none"]} w={"full"} gap={"1"} >
-                            <Flex w={"fit-content"} mt={"2px"} >
-                                <LocationStrokeEx color={primaryColor} size='17px' />
-                            </Flex>
-                            <Text color={primaryColor} textAlign={"left"} fontSize={"12px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 17)}</Text>
+                        <Flex w={"full"} justifyContent={"space-between"} >
+                            <Flex >
+                                <Flex display={["none", "none", "flex"]} alignItems={"center"} gap={"1"} >
+                                    <Flex w={"fit-content"} mt={"2px"} >
+                                        <LocationStrokeEx color={primaryColor} size='17px' />
+                                    </Flex>
+                                    <Text color={primaryColor} textAlign={"left"} fontSize={"12px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 17)}</Text>
+                                </Flex>
+                                <Flex display={["flex", "flex", "none"]} alignItems={"center"} gap={"1"} >
+                                    <Flex w={"fit-content"} mt={"2px"} >
+                                        <LocationStrokeEx color={primaryColor} size='17px' />
+                                    </Flex>
+                                    <Text color={primaryColor} textAlign={"left"} fontSize={"10px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 15)}</Text>
+                                </Flex>
+                            </Flex> 
+                            {(event?.interestedUsers?.length > 0 ) && (
+                                <Flex alignItems={"center"} >
+                                    {event?.attendeesVisibility && (
+                                        <InterestedUsers
+                                            size={"2xs"}
+                                            event={event}
+                                        />
+                                    )}
+                                </Flex>
+                            )} 
                         </Flex>
                     </Flex>
-                    <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={["10px", "10px", "14px"]} >
-                        <EventPrice
-                            minPrice={event?.minPrice}
-                            maxPrice={event?.maxPrice}
-                            currency={event?.currency}
-                        />
-                    </Text>
                 </Flex>
             </Flex>
-            {event?.interestedUsers?.length > 0 && (
-                <Flex borderTopWidth={(hasPinnedItem || hasPinnedFundraiser || event?.affiliates?.length > 0 ) ? "0px" : "1px"} w={"full"} mt={["auto"]} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
-                    {event?.attendeesVisibility && (
-                        <InterestedUsers
-                            event={event}
-                        />
-                    )}
-                </Flex>
-            )}
-            {(hasPinnedItem || hasPinnedFundraiser || event?.affiliates?.length > 0) && (
-                <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} gap={"2"} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
-                    {hasPinnedFundraiser && (
-                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"}  maxW={"40%"} color={"#233DF3"} bgColor={"#F2F4FF"} >
-                            <Text>Fundraiser</Text>
+
+            {event?.affiliates?.length > 0 && (
+                <>
+                    {(hasPinnedItem || hasPinnedFundraiser || event?.affiliates[0]?.affiliateType) && (
+                        <Flex borderTopWidth={"1px"} w={"full"} mt={["auto"]} gap={"2"} h={["50px", "50px", "50px"]} px={["2", "2", "3"]} alignItems={"center"} >
+                            {hasPinnedFundraiser && (
+                                <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#233DF3"} bgColor={"#F2F4FF"} >
+                                    <Text>Fundraiser</Text>
+                                </Flex>
+                            )}
+                            {event?.affiliates[0]?.affiliateType && (
+                                <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#12BC42"} bgColor={"#F3FFF6"} >
+                                    <Text>Need a PR</Text>
+                                </Flex>
+                            )}
+                            {hasPinnedItem && (
+                                <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#FCD516"} bgColor={"#FFFCF3"} >
+                                    <Text>Item for sale</Text>
+                                </Flex>
+                            )}
                         </Flex>
                     )}
-                    {event?.affiliates?.length > 0 && (
-                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#12BC42"} bgColor={"#F3FFF6"} >
-                            <Text>Need a PR</Text>
-                        </Flex>
-                    )}
-                    {hasPinnedItem && (
-                        <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#FCD516"} bgColor={"#FFFCF3"} >
-                            <Text>Item for sale</Text>
-                        </Flex>
-                    )}
-                </Flex>
+                </>
             )}
         </Flex>
     )

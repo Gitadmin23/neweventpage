@@ -7,7 +7,7 @@ import { IEventType } from '@/helpers/models/event';
 
 interface Props {
     event: IEventType,
-    size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl",
+    size?: "2xs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl",
 }
 
 function InterestedUsers(props: Props) {

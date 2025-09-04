@@ -9,8 +9,7 @@ import { Warning2 } from 'iconsax-react';
 import { useColorMode } from "../ui/color-mode";
 import useGetUser from "@/hooks/useGetUser";
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
-import Cookies from "js-cookie"
-import useNotificationHook from "@/hooks/useNotificationHook";
+import Cookies from "js-cookie" 
 import { Login, LoginTwo } from "@/svg";
 
 export default function SideBar({count}: {count: string}) {
@@ -76,6 +75,7 @@ export default function SideBar({count}: {count: string}) {
     }
 
     const login = () => {
+        Cookies.remove("chase_token")
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 

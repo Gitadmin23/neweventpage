@@ -3,7 +3,7 @@ import { IMAGE_URL } from "@/helpers/services/urls";
 import { Avatar } from "@chakra-ui/react";
 
 interface IProps {
-    size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl", 
+    size?: "2xs" |"xs" | "sm" | "md" | "lg" | "xl" | "2xl", 
     user: IUser | any
 }
 
