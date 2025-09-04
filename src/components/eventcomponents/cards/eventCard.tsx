@@ -115,7 +115,7 @@ export default function EventCard(
                 <Flex gap={"2"} w={"full"} justifyContent={"space-between"} alignItems={"center"} >
                     <Flex w={"full"} flexDirection={"column"} alignItems={"start"}  >
                         <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
-                            <Text fontSize={"14px"} fontWeight={"700"} >{capitalizeFLetter(textLimit(event?.eventName, 20))}</Text>
+                            <Text fontSize={"14px"} fontWeight={"700"} mr={"auto"} >{capitalizeFLetter(textLimit(event?.eventName, 20))}</Text>
 
                             <Text color={primaryColor} display={["block"]} ml={"auto"} fontWeight={"600"} fontSize={["10px", "10px", "14px"]} >
                                 <EventPrice
