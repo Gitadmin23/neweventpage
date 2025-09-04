@@ -7,6 +7,7 @@ import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import React, { useEffect, useRef } from 'react';
 import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
 import { toaster } from '../ui/toaster';
+import { convertAndCompressToPng } from '@/helpers/services/convertImage';
 
 export default function ImagePicker(
     {
@@ -35,7 +36,7 @@ export default function ImagePicker(
         fileInputRef.current?.click();
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
 
         if (files) {
@@ -50,7 +51,19 @@ export default function ImagePicker(
                     closable: true
                 })
             } else {
-                setImage([...image, ...fileArray]);
+                try {
+                    const convertedFiles = await Promise.all(
+                      fileArray.map((file) => convertAndCompressToPng(file, 800))
+                    );
+                    setImage([...image, ...convertedFiles]);
+                  } catch (err) {
+                    toaster.create({
+                      title: "Image conversion failed",
+                      description: String(err),
+                      type: "error",
+                    });
+                  }
+                // setImage([...image, ...fileArray]);
             }
 
         }
