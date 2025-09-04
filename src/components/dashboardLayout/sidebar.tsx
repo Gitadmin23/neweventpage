@@ -71,6 +71,7 @@ export default function SideBar({count}: {count: string}) {
     ];
 
     const clickHandler = () => {
+        Cookies.remove("chase_token")
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 

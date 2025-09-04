@@ -27,18 +27,18 @@ export default function DashboardMenuBtn() {
 
     const handleClick = (item: string) => {
         if (item === "logout") {
-            setShow(true)
-        } else {
             Cookies.remove("chase_token")
+            window.location.href = `${LANDINGPAGE_URL}/logout`; 
+        } else {
             window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
 
         setOpen(false)
     }
 
-    const logout = async () => {
-        window.location.href = `${LANDINGPAGE_URL}/logout`;
-    }
+    // const logout = async () => {
+    //     window.location.href = `${LANDINGPAGE_URL}/logout`;
+    // }
 
     const clickHandler = () => {
 
