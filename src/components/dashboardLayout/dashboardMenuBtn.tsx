@@ -9,8 +9,7 @@ import { useColorMode } from '../ui/color-mode'
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from '@/helpers/services/urls'
 import { DashboardMenuIcon, LoginTwo } from '@/svg'
 import { NewChatIcon, NotificationIcon } from '@/svg/sidebarIcons'
-import { ModalLayout } from '../shared'
-import useNotificationHook from '@/hooks/useNotificationHook'
+import { ModalLayout } from '../shared' 
 
 export default function DashboardMenuBtn() {
     const [open, setOpen] = useState(false)
@@ -30,6 +29,7 @@ export default function DashboardMenuBtn() {
         if (item === "logout") {
             setShow(true)
         } else {
+            Cookies.remove("chase_token")
             window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
 
@@ -41,6 +41,8 @@ export default function DashboardMenuBtn() {
     }
 
     const clickHandler = () => {
+
+        
         window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`;
         // router.push("/dashboard/notification")
         setOpen(false)
