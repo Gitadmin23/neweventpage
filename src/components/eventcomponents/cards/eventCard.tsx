@@ -111,7 +111,7 @@ export default function EventCard(
                     </Flex>
                 </Flex>
             </Flex>
-            <Flex flexDir={"column"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={(hasPinnedItem || hasPinnedFundraiser || event?.interestedUsers?.length > 0 || event?.affiliates?.length > 0) ? "4" : ["1", "1", "1"]} >
+            <Flex flexDir={"column"} w={"full"} px={["1", "1", "3"]} pt={["2", "2", "3"]} gap={"1"} pb={(hasPinnedItem || hasPinnedFundraiser || event?.interestedUsers?.length > 0 || event?.affiliates?.length > 0) ? "4" : ["1", "1", "1"]} >
                 <Flex gap={"2"} w={"full"} justifyContent={"space-between"} alignItems={"center"} >
                     <Flex w={"full"} flexDirection={"column"} alignItems={"start"}  >
                         <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
