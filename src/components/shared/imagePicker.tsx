@@ -4,7 +4,7 @@ import { useImage } from '@/helpers/store/useImagePicker';
 import useCustomTheme from '@/hooks/useTheme';
 import { GallaryIcon, PictureIcon } from '@/svg';
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoIosCloseCircle, IoMdAdd } from 'react-icons/io';
 import { toaster } from '../ui/toaster';
 import { convertAndCompressToPng } from '@/helpers/services/convertImage';
@@ -32,6 +32,8 @@ export default function ImagePicker(
     const { image, setImage } = useImage((state) => state)
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+    const [isLoading, setIsLoading] = useState("");
+
     const handleButtonClick = () => {
         fileInputRef.current?.click();
     };
@@ -53,8 +55,13 @@ export default function ImagePicker(
             } else {
                 try {
                     const convertedFiles = await Promise.all(
-                      fileArray.map((file) => convertAndCompressToPng(file, 800))
+                      fileArray.map((file) => convertAndCompressToPng(file, 800, 1920,
+                        1080,
+                        0.9,
+                        setIsLoading
+                    ))
                     );
+                    // setIsLoading("Image conversion successful");
                     setImage([...image, ...convertedFiles]);
                   } catch (err) {
                     toaster.create({
@@ -62,11 +69,14 @@ export default function ImagePicker(
                       description: String(err),
                       type: "error",
                     });
+                    setIsLoading("Image conversion failed");
                   }
                 // setImage([...image, ...fileArray]);
             }
 
         }
+
+        // setIsLoading("");
     };
 
 
@@ -97,6 +107,11 @@ export default function ImagePicker(
         <>
             {!single && (
                 <Flex w={"full"} rounded={"12px"} borderStyle={"dashed"} borderWidth={"1px"} overflowX={"auto"} bgColor={secondaryBackgroundColor} h={"200px"} >
+                    {isLoading && (
+                        <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >
+                            <Text>{isLoading}</Text>
+                        </Flex>
+                    )}
                     <input
                         type="file"
                         multiple={single ? false : true}
@@ -105,7 +120,7 @@ export default function ImagePicker(
                         ref={fileInputRef}
                         style={{ display: 'none' }}
                     />
-                    {(image?.length === 0 && preview?.length === 0) && (
+                    {(image?.length === 0 && preview?.length === 0 && !isLoading) && (
                         <Flex onClick={handleButtonClick} cursor={"pointer"} textAlign={"center"} gap={"3"} flexDir={"column"} w={"full"} justifyContent={"center"} alignItems={"center"} h={"full"} >
                             <GallaryIcon size='35px' />
                             <Flex flexDir={"column"} gap={"1"} maxW={"176px"} >
@@ -116,7 +131,7 @@ export default function ImagePicker(
                             </Flex>
                         </Flex>
                     )}
-                    {(image?.length > 0 || preview?.length > 0) && (
+                    {(image?.length > 0 || preview?.length > 0 && !isLoading) && (
                         <Flex w={"fit"} gap={"3"} p={"4"} >
                             {preview.map((file, index) => (
                                 <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >

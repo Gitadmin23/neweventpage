@@ -25,6 +25,7 @@
     "format-number": "^3.0.0",
     "formik": "^2.4.6",
     "framer-motion": "^12.23.0",
+    "heic2any": "^0.0.4",
     "html2canvas": "^1.4.1",
     "iconsax-react": "^0.0.8",
     "js-cookie": "^3.0.5",
