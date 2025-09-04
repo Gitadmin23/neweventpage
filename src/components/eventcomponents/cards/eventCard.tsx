@@ -166,7 +166,7 @@ export default function EventCard(
                             )}
                             {event?.affiliates[0]?.affiliateType && (
                                 <Flex rounded={"5px"} fontWeight={"semibold"} fontSize={"10px"} height={"30px"} justifyContent={"center"} alignItems={"center"} w={"full"} maxW={"40%"} color={"#12BC42"} bgColor={"#F3FFF6"} >
-                                    <Text>Need a PR</Text>
+                                    <Text>Needs a PR</Text>
                                 </Flex>
                             )}
                             {hasPinnedItem && (
