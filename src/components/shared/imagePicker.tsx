@@ -60,8 +60,7 @@ export default function ImagePicker(
                         0.9,
                         setIsLoading
                     ))
-                    );
-                    // setIsLoading("Image conversion successful");
+                    ); 
                     setImage([...image, ...convertedFiles]);
                   } catch (err) {
                     toaster.create({
@@ -70,8 +69,7 @@ export default function ImagePicker(
                       type: "error",
                     });
                     setIsLoading("Image conversion failed");
-                  }
-                // setImage([...image, ...fileArray]);
+                  } 
             }
 
         }
