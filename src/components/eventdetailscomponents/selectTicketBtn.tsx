@@ -1,4 +1,4 @@
-import { Badge, Flex, IconButton, Text } from "@chakra-ui/react";
+import { Badge, Button, CloseButton, Drawer, Flex, IconButton, Kbd, Portal, Text } from "@chakra-ui/react";
 import { CustomButton, ModalLayout, ProductImageScroller } from "../shared";
 import React, { useEffect, useState } from "react";
 import { IEventType, IProductTypeData } from "@/helpers/models/event";
@@ -136,8 +136,9 @@ export default function SelectTicketBtn(
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Text fontWeight={"500"} fontSize={["xs", "xs", "sm"]} >See ticket available for this event</Text>
             <Flex w={"full"} justifyContent={"end"} >
-                <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
-            </Flex> 
+                <CustomButton display={["flex", "flex", "none"]} onClick={() => setOpenMobile(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
+                <CustomButton display={["none", "none", "flex"]} onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
+            </Flex>
             <ModalLayout size={["full", "full", "xl"]} closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
                 <Flex w={"full"} maxH={"80vh"} display={["flex", "flex", "none"]} h={"full"} overflowY={"auto"} >
                     <Flex flexDir={"column"} h={"full"} py={"6"} w={"full"}>
@@ -445,7 +446,148 @@ export default function SelectTicketBtn(
                         </Flex>
                     </Flex>
                 </Flex>
-            </ModalLayout> 
+            </ModalLayout>
+            <Drawer.Root size={"full"} placement={"bottom"} open={openMobile} onOpenChange={() => setOpenMobile(false)} >
+                <Portal>
+                    <Drawer.Backdrop />
+                    <Drawer.Positioner>
+                        <Drawer.Content color={headerTextColor} >
+                            <Drawer.Header>
+                                <Flex flexDirection={"column"} textAlign={"center"} w={"full"} py={"2"} borderBottomWidth={"1px"} gap={"1"} >
+                                    <Text fontWeight={"700"} fontSize={"16px"} >{capitalizeFLetter(eventName)}</Text>
+                                    <Text fontSize={"14px"} >{dateFormat(startDate)}</Text>
+                                </Flex>
+                            </Drawer.Header>
+                            <Drawer.Body> 
+                                <Flex flexDir={"column"} h={"full"} w={"full"} overflowY={"auto"} p={"3"} >
+                                    <Flex flexDir={"column"} h={"auto"} gap={"3"} >
+                                        {productTypeData?.map((item, index) => {
+                                            if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
+                                                return (
+                                                    <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
+                                                        <Flex flexDir={"column"} gap={"2"} >
+                                                            <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                            {item.ticketType === "Early Bird" ? (
+                                                                <>
+                                                                    {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Tickets sold out
+                                                                        </Badge>
+                                                                        :
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Sales ends on {dateFormat(item.endDate)} {timeFormat(item.endDate)}
+                                                                        </Badge>
+                                                                    }
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Tickets sold out
+                                                                        </Badge>
+                                                                        :
+                                                                        <Badge colorPalette={"blue"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        </Badge>
+                                                                    }
+                                                                </>
+                                                            )}
+                                                        </Flex>
+                                                        <Flex gap={"3"} alignItems={"center"} >
+                                                            <IconButton onClick={() => clickHandler({
+                                                                item: item,
+                                                                type: "reduce"
+                                                            })} bgColor={secondaryBackgroundColor}
+                                                                disabled={selectTicketType[checkType(item.ticketType)]?.numberOfTickets === 0 || !selectTicketType[checkType(item.ticketType)]?.numberOfTickets}
+                                                                color={headerTextColor} rounded={"full"} size="sm">
+                                                                {/* <LuMinus /> */}
+                                                                <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
+                                                            </IconButton>
+                                                            {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
+                                                            <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
+                                                                item: item,
+                                                                type: "increase"
+                                                            })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
+                                                                {/* <LuPlus /> */}
+
+                                                                <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
+                                                            </IconButton>
+                                                        </Flex>
+                                                    </Flex>
+                                                )
+                                            } else if (item.ticketType !== "Early Bird") {
+                                                return (
+                                                    <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
+                                                        <Flex flexDir={"column"} gap={"2"} >
+                                                            <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                            {item.ticketType === "Early Bird" ? (
+                                                                <>
+                                                                    {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Tickets sold out
+                                                                        </Badge>
+                                                                        :
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Sales ends on {dateFormat(item.endDate)} {timeFormat(item.endDate)}
+                                                                        </Badge>
+                                                                    }
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                        <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Tickets sold out
+                                                                        </Badge>
+                                                                        :
+                                                                        <Badge colorPalette={"blue"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                            Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        </Badge>
+                                                                    }
+                                                                </>
+                                                            )}
+                                                        </Flex>
+                                                        <Flex gap={"3"} alignItems={"center"} >
+                                                            <IconButton onClick={() => clickHandler({
+                                                                item: item,
+                                                                type: "reduce"
+                                                            })} bgColor={secondaryBackgroundColor}
+                                                                disabled={selectTicketType[checkType(item.ticketType)]?.numberOfTickets === 0 || !selectTicketType[checkType(item.ticketType)]?.numberOfTickets}
+                                                                color={headerTextColor} rounded={"full"} size="sm">
+                                                                {/* <LuMinus /> */}
+                                                                <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
+                                                            </IconButton>
+                                                            {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
+                                                            <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date()) || (item?.ticketType === "Free" && isBought)} onClick={() => clickHandler({
+                                                                item: item,
+                                                                type: "increase"
+                                                            })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
+                                                                {/* <LuPlus /> */}
+
+                                                                <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
+                                                            </IconButton>
+                                                        </Flex>
+                                                    </Flex>
+                                                )
+                                            }
+                                        })}
+                                    </Flex>
+                                </Flex>
+                            </Drawer.Body>
+                            <Drawer.Footer>
+                                <Flex flexDir={"column"} py={"2"} w={"full"} >
+                                    <Text fontWeight={"medium"} mr={"auto"} >Powered by <span style={{ color: primaryColor, fontStyle: "italic" }} >Chasescroll.com</span></Text>
+                                    <Flex w={"full"} justifyContent={"end"} pt={"4"} px={"3"} borderTopWidth={"1px"} mt={"auto"} >
+                                        <CustomButton height={"35px"} fontSize={"14px"} isLoading={payForTicket.isPending} onClick={submitHandler} disable={selectTicketType.length > 0 ? false : true} width={"fit-content"} text={"Get Ticket"} px={"6"} borderRadius={"999px"} />
+                                    </Flex>
+                                </Flex>
+                            </Drawer.Footer>
+                            <Drawer.CloseTrigger asChild>
+                                <CloseButton size="sm" />
+                            </Drawer.CloseTrigger>
+                        </Drawer.Content>
+                    </Drawer.Positioner>
+                </Portal>
+            </Drawer.Root>
         </Flex>
     )
 }
