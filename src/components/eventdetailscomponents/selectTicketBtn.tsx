@@ -296,7 +296,7 @@ export default function SelectTicketBtn(
                     <Flex p={"5"} h={"full"} borderWidth={"1px"} rounded={"2xl"} gap={"4"} w={"full"} maxW={"1032px"} >
                         <Flex flexDir={"column"} alignItems={"center"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
-                                <Text fontWeight={"700"} fontSize={"25px"} >{capitalizeFLetter(eventName)}</Text>
+                                <Text fontWeight={"700"} fontSize={"16px"} >{capitalizeFLetter(eventName)}</Text>
                                 <Text fontSize={"14px"} >{dateFormat(startDate)}</Text>
                             </Flex>
                             <Flex flexDir={"column"} h={"full"} w={"full"} overflowY={"auto"} pr={"4"} >

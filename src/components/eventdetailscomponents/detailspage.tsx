@@ -63,10 +63,10 @@ export default function DetailsPage(
                     <Text fontWeight={"700"} fontSize={["16px", "16px", "24px"]} >{capitalizeFLetter(eventName)}</Text>
                     <Flex w={"full"} flexDir={["column-reverse", "column-reverse", "column"]} gap={"2"} >
                         <Flex display={["none", "none" , "flex"]} > 
-                            <DescriptionCard limit={1000} label='About This Event' description={eventDescription} />
+                            <DescriptionCard limit={1500} label='About This Event' description={eventDescription} />
                         </Flex>
                         <Flex display={["flex", "flex" , "none"]} > 
-                            <DescriptionCard limit={500} label='About This Event' description={eventDescription} />
+                            <DescriptionCard limit={1500} label='About This Event' description={eventDescription} />
                         </Flex>
                         <Flex flexDir={isAdmin ? "column" : "row"} gap={"2"} w={"full"} >
                             <Flex w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={["start", "start", "center"]} flexDir={["column", "column", "row"]} justifyContent={["start", "start", "space-between"]} gap={"3"} >

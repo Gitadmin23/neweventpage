@@ -25,12 +25,12 @@ export default function EventLocation(
                 <Flex w={"fit-content"} >
                     <LocationStroke />
                 </Flex>
-                <Text fontSize={fontSize ?? "14px"} fontWeight={"500"} whiteSpace={"none"} lineBreak={"anywhere"} >{location?.toBeAnnounced ? "To Be Announced" : limit === 0 ? location?.locationDetails : textLimit(location?.locationDetails+"", limit)}</Text>
+                <Text fontSize={fontSize ?? ["12px", "12px", "14px"]} fontWeight={"500"} whiteSpace={"none"} lineBreak={"anywhere"} >{location?.toBeAnnounced ? "To Be Announced" : limit === 0 ? location?.locationDetails : textLimit(location?.locationDetails+"", limit)}</Text>
             </Flex>
             {(location?.link && showLink)&& (
                 <Flex maxW={["400px"]} rounded={"32px"} py={"2"} px={"3"} bgColor={secondaryBackgroundColor} w={"full"} gap={"2"} alignItems={"center"} >
                     <LinkIcon />
-                    <Text fontSize={"14px"} fontWeight={"500"} ><a target="_blank" href={location?.link} >Click Me</a></Text>
+                    <Text fontSize={["12px", "12px", "14px"]} fontWeight={"500"} ><a target="_blank" href={location?.link} >Click Me</a></Text>
                 </Flex>
             )}
         </Flex>

@@ -18,7 +18,7 @@ import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
 export default function EventCard(
     {
         event
-    }: {
+    } : {
         event: IEventType
     }
 ) {
@@ -32,7 +32,7 @@ export default function EventCard(
     const [hasPinnedItem, setHasPinnedItem] = useState(false)
     const [hasPinnedFundraiser, setHasPinnedFundraiser] = useState(false)
 
-    const { mutate: hasPinnedItems, isPending: hasPinnedItemsPending } = useMutation({
+    const { mutate: hasPinnedItems } = useMutation({
         mutationFn: () => httpService.get(`/pin-item/hasPinnedItems/${event?.id}`),
         onError: (error: any) => {
             console.log(error);
@@ -43,7 +43,7 @@ export default function EventCard(
     });
 
 
-    const { mutate: hasPinnedFundraisers, isPending: hasPinnedFundraisersPending } = useMutation({
+    const { mutate: hasPinnedFundraisers } = useMutation({
         mutationFn: () => httpService.get(`/pinned-fundraisers/has-pinned/${event?.id}`),
         onError: (error: any) => {
             console.log(error);
