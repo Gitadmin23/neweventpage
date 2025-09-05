@@ -47,7 +47,7 @@ export default function DashboardLayout(
     const { colorMode } = useColorMode();
 
     return (
-        <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
+        <Flex w={"100vw"} h={"full"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
                 <SideBar count={count} />
             )}
@@ -58,7 +58,7 @@ export default function DashboardLayout(
                     </Flex>
                 )}
                 <Flex w={"full"} pos={"relative"} h={"full"} >
-                    <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["0px", "0px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "0px", "0px", "0px"]}  insetX={"0px"} >
                         {children}
                     </Flex> 
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} w={"full"} h={"full"} overflow={"hidden"} >
