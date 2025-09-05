@@ -65,10 +65,10 @@ function DeleteBtn(props: Props) {
         },
         onSuccess: (data: AxiosResponse<any>) => {
 
-            queryClient.invalidateQueries({ queryKey: ["myevent"]})
-            queryClient.invalidateQueries({ queryKey: ["mydonationlist"]})
-            queryClient.invalidateQueries({ queryKey: ["draftevent"]}) 
-            queryClient.invalidateQueries({ queryKey: [`/events/drafts`]}) 
+            queryClient.refetchQueries({ queryKey: ["myevent"]})
+            queryClient.refetchQueries({ queryKey: ["mydonationlist"]})
+            queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
+            queryClient.refetchQueries({ queryKey: [`/events/drafts`]}) 
             queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
             
 
