@@ -22,6 +22,7 @@ export default function DashboardLayout(
 ) {
 
     const { mainBackgroundColor, headerTextColor } = useCustomTheme()
+
     const { setSearchValue } = useSearchStore((state)=> state)
     const pathname = usePathname()
     const query = useSearchParams();
@@ -46,21 +47,21 @@ export default function DashboardLayout(
     const { colorMode } = useColorMode();
 
     return (
-        <Flex w={"100vw"} h={"full"} color={headerTextColor} bgColor={mainBackgroundColor} >
+        <Flex w={"100vw"} h={"100vh"} pos={"fixed"} inset={"0px"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
                 <SideBar count={count} />
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
-                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} zIndex={"10"} >
+                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} pos={"relative"} zIndex={"10"} >
                         <Navbar />
                     </Flex>
                 )}
-                <Flex w={"full"} h={"full"} pos={"relative"} >
-                    <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "0px", "0px", "0px"]}  insetX={"0px"} >
+                <Flex w={"full"} h={"full"} >
+                    <Flex w={"full"} pos={"absolute"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
                         {children}
                     </Flex> 
-                    <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} w={"full"} h={"full"} overflow={"hidden"} >
+                    <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} zIndex={"-5"} w={"full"} h={"full"} overflow={"hidden"} >
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />

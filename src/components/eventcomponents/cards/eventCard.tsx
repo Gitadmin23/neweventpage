@@ -72,7 +72,7 @@ export default function EventCard(
 
     return (
         <Flex as={"button"} flexDir={"column"} h={"fit"} bgColor={mainBackgroundColor} borderWidth={"1px"} rounded={"10px"} w={"full"} >
-            <Flex w={"full"} pos={"relative"} onClick={() => clickHandler()} >
+            <Flex w={"full"} pos={"relative"} zIndex={"0"} onClick={() => clickHandler()} >
                 <ProductImageScroller images={event.picUrls.length > 0 ? event.picUrls : [event?.currentPicUrl]} createdDate={moment(event?.createdDate)?.fromNow()} userData={event?.createdBy} />
                 {!frame && (
                     <ShareLink

@@ -48,7 +48,7 @@ export default function ProductImageScroller({ images, userData, createdDate, he
     return (
         <Flex cursor='pointer' w='full' h={"fit-content"} bgColor={secondaryBackgroundColor} p={objectFit ? "0px" : ["3px", "3px", "2"]} borderTopRadius={rounded ?? '10px'} borderBottomRadius={rounded ?? "0px"} overflow={'hidden'} justifyContent={"center"} alignItems={"center"} position={'relative'} >
             {createdDate && (
-                <Flex as={"button"} onClick={(e) => clickHandler(e)} zIndex={"5"} position={"absolute"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
+                <Flex cursor={"pointer"} onClick={(e) => clickHandler(e)} zIndex={1} position={"absolute"} left={"2"} top={"2"} bgColor={"#C4C4C499"} p={"1"} rounded={"full"} w={"fit-content"} alignItems={"center"} gap={2} >
                     <UserImage user={userData} size={"xs"} />
                     <Flex flexDir={"column"} alignItems={"start"} pr={"3"} >
                         <Text display={["none", "none", "block"]} fontSize={"10px"} fontWeight={"600"} color={"white"} >
