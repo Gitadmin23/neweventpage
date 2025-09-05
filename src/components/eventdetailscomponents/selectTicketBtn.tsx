@@ -139,7 +139,7 @@ export default function SelectTicketBtn(
                 <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
             </Flex> 
             <ModalLayout size={["full", "full", "xl"]} closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
-                <Flex w={"full"} maxH={"100vh"} display={["flex", "flex", "none"]} h={"full"} overflowY={"auto"} >
+                <Flex w={"full"} maxH={"80vh"} display={["flex", "flex", "none"]} h={"full"} overflowY={"auto"} >
                     <Flex flexDir={"column"} h={"full"} py={"6"} w={"full"}>
                         <Flex flexDir={"column"} h={"fit-content"} gap={"7"} px={"3"} w={"full"} >
                             <Flex flexDirection={"column"} textAlign={"center"} w={"full"} pb={"2"} borderBottomWidth={"1px"} gap={"1"} >
