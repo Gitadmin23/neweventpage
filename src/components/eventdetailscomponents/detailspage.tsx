@@ -62,7 +62,12 @@ export default function DetailsPage(
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >
                     <Text fontWeight={"700"} fontSize={["16px", "16px", "24px"]} >{capitalizeFLetter(eventName)}</Text>
                     <Flex w={"full"} flexDir={["column-reverse", "column-reverse", "column"]} gap={"2"} >
-                        <DescriptionCard limit={200} label='Event Details' description={eventDescription} />
+                        <Flex display={["none", "none" , "flex"]} > 
+                            <DescriptionCard limit={1000} label='About This Event' description={eventDescription} />
+                        </Flex>
+                        <Flex display={["flex", "flex" , "none"]} > 
+                            <DescriptionCard limit={500} label='About This Event' description={eventDescription} />
+                        </Flex>
                         <Flex flexDir={isAdmin ? "column" : "row"} gap={"2"} w={"full"} >
                             <Flex w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={["start", "start", "center"]} flexDir={["column", "column", "row"]} justifyContent={["start", "start", "space-between"]} gap={"3"} >
                                 <Flex gap={"3"} w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={[isAdmin ? "center" : "start", isAdmin ? "center" : "start", "center"]} flexDir={[isAdmin ? "row" : "column", isAdmin ? "row" : "column", "row"]} justifyContent={[isAdmin ? "space-between" : "start", isAdmin ? "space-between" : "start", "space-between"]}  >

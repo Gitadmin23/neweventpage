@@ -21,7 +21,7 @@ export default function EventLocation(
 
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
-            <Flex maxW={showLink ? "400px" : "full"} rounded={"32px"} py={"2"} px={showLink? "3" : "0px"} bgColor={showLink ? secondaryBackgroundColor : "transparent"} w={"full"} gap={showLink ? "2" : "1"}>
+            <Flex maxW={showLink ? "600px" : "full"} rounded={"32px"} py={"2"} px={showLink? "3" : "0px"} bgColor={showLink ? secondaryBackgroundColor : "transparent"} w={"full"} gap={showLink ? "2" : "1"}>
                 <Flex w={"fit-content"} >
                     <LocationStroke />
                 </Flex>
