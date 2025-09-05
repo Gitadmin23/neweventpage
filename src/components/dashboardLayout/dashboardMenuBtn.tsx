@@ -1,6 +1,6 @@
 "use client"
 import useCustomTheme from '@/hooks/useTheme'
-import { Box, Button, Flex, Switch, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Portal, Switch, Text, Menu } from '@chakra-ui/react'
 import { LogoutCurve, SearchNormal1, Setting, Warning2 } from 'iconsax-react'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
@@ -9,7 +9,8 @@ import { useColorMode } from '../ui/color-mode'
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from '@/helpers/services/urls'
 import { DashboardMenuIcon, LoginTwo } from '@/svg'
 import { NewChatIcon, NotificationIcon } from '@/svg/sidebarIcons'
-import { ModalLayout } from '../shared' 
+import { ModalLayout } from '../shared'
+import { IoClose } from 'react-icons/io5'
 
 export default function DashboardMenuBtn() {
     const [open, setOpen] = useState(false)
@@ -28,7 +29,7 @@ export default function DashboardMenuBtn() {
     const handleClick = (item: string) => {
         if (item === "logout") {
             Cookies.remove("chase_token")
-            window.location.href = `${LANDINGPAGE_URL}/logout`; 
+            window.location.href = `${LANDINGPAGE_URL}/logout`;
         } else {
             window.location.href = `${DASHBOARDPAGE_URL}/${item}?token=${token}&theme=${colorMode}`;
         }
@@ -42,7 +43,7 @@ export default function DashboardMenuBtn() {
 
     const clickHandler = () => {
 
-        
+
         window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`;
         // router.push("/dashboard/notification")
         setOpen(false)
@@ -50,10 +51,10 @@ export default function DashboardMenuBtn() {
 
     return (
         <Box w={"fit-content"} h={"fit-content"} >
-            <Box as='button' mt={"8px"} onClick={() => setOpen(true)} >
+            {/* <Box as='button' mt={"8px"} onClick={() => setOpen(true)} >
                 <DashboardMenuIcon color={bodyTextColor} />
-            </Box>
-            {open && (
+            </Box> */}
+            {/* {open && (
                 <Flex zIndex={"1300"} position={"fixed"} top={"70px"} flexDir={"column"} right={"2"} maxW={"170px"} w={"full"} py={"4"} px={"4"} bg={mainBackgroundColor} rounded={'8px'} >
                     <Flex zIndex={20} flexDir={"column"} gap={"3"}  >
 
@@ -69,16 +70,6 @@ export default function DashboardMenuBtn() {
                             </Flex>
                             <Text fontSize={"12px"} >Explore</Text>
                         </Flex>
-                        {/* <Flex onClick={() => clickHandler()} h={"20px"} gap={"2"} alignItems={"center"} as='button' >
-                            <Flex justifyContent={"center"} w={"20px"} >
-                                <NotificationIcon />
-                            </Flex>
-                            <Text fontSize={"12px"} >Notification</Text>
-
-                            <Flex w={"5"} h={"5"} rounded={"full"} bg={primaryColor} ml={"auto"} color={"white"} justifyContent={"center"} alignItems={"center"} pb={"2px"} fontWeight={"semibold"} fontSize={"12px"}  >
-                                {count}
-                            </Flex>
-                        </Flex> */}
 
                         <Flex w={"full"} h={"20px"} gap={"2"} alignItems={"center"} >
                             <Box>
@@ -108,10 +99,67 @@ export default function DashboardMenuBtn() {
                         </Flex>
                     </Flex>
                 </Flex>
-            )}
-            {open && (
+            )} */}
+            {/* {open && (
                 <Box position={"fixed"} onClick={() => setOpen(false)} inset={'0px'} zIndex={"20"} bg={"black"} opacity={"50%"} />
-            )}
+            )} */}
+            <Menu.Root open={open} >
+                <Menu.Trigger asChild>
+                    <Box cursor={"pointer"} mt={"8px"} onClick={() => setOpen((prev)=> !prev)} >
+                        {open ? 
+                            <Flex w={"40px"} justifyContent={"center"} >
+                                <IoClose size={"25px"} color={bodyTextColor} />
+                            </Flex> :
+                            <DashboardMenuIcon color={bodyTextColor} />
+                        }
+                    </Box>
+                </Menu.Trigger>
+                <Portal>
+                    <Menu.Positioner>
+                        <Menu.Content>
+                            <Menu.Item onClick={() => handleClick("/dashboard/chats")} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='message' >
+                                {/* <Flex  as='button' > */}
+                                <Flex justifyContent={"center"} w={"20px"} >
+                                    <NewChatIcon />
+                                </Flex>
+                                <Text fontSize={"12px"} >Message</Text>
+                                {/* </Flex> */}
+                            </Menu.Item>
+                            <Menu.Item onClick={() => handleClick("/dashboard/explore")} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='explore' >
+                                <Flex justifyContent={"center"} w={"20px"} >
+                                    <SearchNormal1 color={bodyTextColor} size={"20px"} />
+                                </Flex>
+                                <Text fontSize={"12px"} >Explore</Text>
+                            </Menu.Item>
+                            <Menu.Item px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='dark' >
+                                <Box>
+                                    <Switch.Root
+                                        size={"lg"}
+                                        checked={colorMode === 'dark'}
+                                        onCheckedChange={() => toggleColorMode()}
+                                    >
+                                        <Switch.HiddenInput />
+                                        <Switch.Control />
+                                    </Switch.Root>
+                                </Box>
+                                <Text fontSize={"12px"} >Dark Mode</Text>
+                            </Menu.Item>
+                            <Menu.Item onClick={() => handleClick("/dashboard/settings")} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='setting' >
+                                <Flex justifyContent={"center"} w={"20px"} >
+                                    <Setting color={bodyTextColor} size={"20px"} />
+                                </Flex>
+                                <Text fontSize={"12px"} >Settings</Text>
+                            </Menu.Item>
+                            <Menu.Item onClick={() => handleClick("logout")} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='logout' >
+                                <Flex justifyContent={"center"} w={"20px"} >
+                                    <LogoutCurve color='red' size={'20px'} variant='Outline' />
+                                </Flex>
+                                <Text fontSize={"12px"} >Log Out</Text>
+                            </Menu.Item>
+                        </Menu.Content>
+                    </Menu.Positioner>
+                </Portal>
+            </Menu.Root>
 
             {/* <ModalLayout size={"sm"} open={show} close={setShow} >
                 <VStack

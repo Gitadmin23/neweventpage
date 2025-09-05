@@ -53,11 +53,11 @@ export default function DashboardLayout(
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
-                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} pos={"relative"} zIndex={"20"} >
+                    <Flex w={"full"} display={["flex", "flex", (!pathname?.includes("create") && !pathname?.includes("details")) ? "flex" : "none"]} zIndex={"10"} >
                         <Navbar />
                     </Flex>
                 )}
-                <Flex w={"full"} pos={"relative"} h={"full"} >
+                <Flex w={"full"} h={"full"} >
                     <Flex w={"full"} pos={"absolute"} zIndex={"10"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "0px", "0px", "0px"]}  insetX={"0px"} >
                         {children}
                     </Flex> 
