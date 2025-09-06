@@ -57,7 +57,7 @@ export default function DashboardLayout(
                         <Navbar />
                     </Flex>
                 )}
-                <Flex w={"full"} h={"full"} >
+                <Flex w={"full"} h={"full"} pos={"relative"} >
                     <Flex w={"full"} pos={"absolute"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
                         {children}
                     </Flex> 
