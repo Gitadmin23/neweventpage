@@ -150,7 +150,7 @@ export default function DashboardMenuBtn() {
                                 </Flex>
                                 <Text fontSize={"12px"} >Settings</Text>
                             </Menu.Item>
-                            <Menu.Item onClick={() => handleClick("logout")} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='logout' >
+                            <Menu.Item onClick={() => {setShow(true), setOpen(false)}} px={"2"} py={"1"} gap={"1"} alignItems={"center"} display={"flex"} value='logout' >
                                 <Flex justifyContent={"center"} w={"20px"} >
                                     <LogoutCurve color='red' size={'20px'} variant='Outline' />
                                 </Flex>
