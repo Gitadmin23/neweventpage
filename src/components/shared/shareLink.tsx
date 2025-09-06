@@ -76,7 +76,7 @@ function ShareEvent(props: Props) {
       {!community && (
         <Box 
           width={"fit-content"}
-          zIndex={"5"}
+          zIndex={"8"}
           mt={size === "18px" ? "10px" : "0px"}
         >
           {isprofile && !istext && (
