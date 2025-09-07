@@ -103,7 +103,7 @@ export default function SideBar({count}: {count: string}) {
     }
 
     return (
-        <Flex w={"fit-content"} h={"screen"} bgColor={mainBackgroundColor} pos={"relative"} zIndex={"20"} display={["none", "none", "none", "flex", "flex"]} >
+        <Flex w={"fit-content"} h={"screen"} bgColor={mainBackgroundColor} display={["none", "none", "none", "flex", "flex"]} >
             <Flex w={"110px"} h={"screen"} gap={"4"} overflowY={"auto"} flexDir={"column"} py={"4"} alignItems={"center"} justifyContent={"space-between"} borderRightColor={borderColor} borderRightWidth={"1px"} >
                 <Box as='button' onClick={() => router?.push("/")} >
                     <Image alt='logo' src='/images/logo.png' w={"50px"} />

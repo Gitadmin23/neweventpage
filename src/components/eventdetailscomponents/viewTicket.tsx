@@ -95,7 +95,7 @@ export default function ViewTicket(
             )}
             <ModalLayout size={"cover"} trigger={true} open={open} close={() => setOpen(false)} >
                 <LoadingAnimation loading={isLoading} >
-                    <Flex p={"4"} position={"relative"} h={"100vh"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
+                    <Flex p={"4"} position={"relative"} h={"90vh"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} px={"2"} gap={"2"} >
                         <Flex bg={mainBackgroundColor} w={"full"} h={"50px"} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
 
                             <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} cursor={"pointer"} >
