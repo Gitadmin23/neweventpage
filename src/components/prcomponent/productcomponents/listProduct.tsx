@@ -127,7 +127,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
                 </Flex>
             </LoadingAnimation>
             <Flex w={"full"} py={"1"} position={"sticky"} bottom={"-4px"} >
-                <CustomButton onClick={clickHander} isLoading={pinProduct?.isPending} text={results?.length > 0 ? "Add" : "Add to product"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
+                <CustomButton onClick={clickHander} isLoading={pinProduct?.isPending} text={results?.length > 0 ? "Add" : "Add Product"} width={"150px"} height={"40px"} fontSize={"14px"} borderRadius={"999px"} />
             </Flex>
         </Flex>
     )
