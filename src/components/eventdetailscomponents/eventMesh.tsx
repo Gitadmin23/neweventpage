@@ -87,23 +87,103 @@ export default function EventMesh({ data }: { data: IEventType, setMeshSize?: an
     }
 
     return (
-        <Flex position={"relative"} display={(newData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} flexDir={"column"} w={"full"} mb={["0px", "0px", "6"]} gap={"3"} >
+        <Flex position={"relative"} display={(newData?.length > 0 || data?.isOrganizer) ? "flex" : "none"} w={"full"} flexDir={"column"} mb={["0px", "0px", "6"]} gap={"3"} >
             <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
                 {data?.isOrganizer ? (
                     <Text fontWeight={"500"} >Add  Product to enable your Audience connect to your event</Text>
                 ) : (
-                    <Text fontSize={["14px", "14px", "20px"]} fontWeight={"bold"} >Shop the {capitalizeFLetter(data?.eventName)}</Text>
+                    <Text fontSize={["14px", "14px", "16px"]} fontWeight={"bold"} >Shop the {capitalizeFLetter(data?.eventName)}</Text>
                 )}
                 {!data?.isOrganizer && (
-                    <Text fontSize={"12px"} fontWeight={"600"} onClick={() => routeHandler()} color={primaryColor} as={"button"} >See all</Text>
+                    <Text fontSize={"12px"} fontWeight={"600"} width={"50px"} onClick={() => routeHandler()} color={primaryColor} as={"button"} >See all</Text>
                 )}
             </Flex>
-            <Flex w={"full"} height={"180px"} pos={"relative"} />
+            {/* <Flex w={"full"} height={"180px"} pos={"relative"} /> */}
 
             <LoadingAnimation loading={isLoading} >
-                <Flex ref={ref} position={"absolute"} top={["14", "10", "12"]} maxW={"full"} overflowX={"auto"} className='hide-scrollbar' >
+                <Flex ref={ref} w={"auto"} pos={"relative"} overflowX={"auto"} className='hide-scrollbar' >
                     <Flex position={"relative"} w={"fit-content"} gap={"2"} pos={"relative"} >
                         <PrBtn data={data} product={true} />
+                        {eventData?.map((item, index) => {
+                            return (
+                                <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+
+                                    {data?.isOrganizer && (
+                                        <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                                            <IoClose size={"14px"} />
+                                        </Flex>
+                                    )}
+                                    <Flex w={"full"} h={["101px", "101px", "150px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
+                                        <Image alt="logo" height={"full"} w={"auto"} objectFit={"contain"} rounded={"8px"} src={IMAGE_URL + item?.returnProductDto?.images[0]} />
+                                    </Flex>
+                                    <Flex flexDir={"column"} >
+                                        <Text fontSize={"14px"} fontWeight={"700"} >{formatNumber(item?.returnProductDto?.price)}</Text>
+                                        <Text fontSize={["12px", "12px", "14px"]} >{capitalizeFLetter(textLimit(item?.returnProductDto?.name, 20))}</Text>
+                                    </Flex>
+
+                                </Flex>
+                            )
+                        })}
+                        {eventData?.map((item, index) => {
+                            return (
+                                <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+
+                                    {data?.isOrganizer && (
+                                        <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                                            <IoClose size={"14px"} />
+                                        </Flex>
+                                    )}
+                                    <Flex w={"full"} h={["101px", "101px", "150px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
+                                        <Image alt="logo" height={"full"} w={"auto"} objectFit={"contain"} rounded={"8px"} src={IMAGE_URL + item?.returnProductDto?.images[0]} />
+                                    </Flex>
+                                    <Flex flexDir={"column"} >
+                                        <Text fontSize={"14px"} fontWeight={"700"} >{formatNumber(item?.returnProductDto?.price)}</Text>
+                                        <Text fontSize={["12px", "12px", "14px"]} >{capitalizeFLetter(textLimit(item?.returnProductDto?.name, 20))}</Text>
+                                    </Flex>
+
+                                </Flex>
+                            )
+                        })}
+                        {eventData?.map((item, index) => {
+                            return (
+                                <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+
+                                    {data?.isOrganizer && (
+                                        <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                                            <IoClose size={"14px"} />
+                                        </Flex>
+                                    )}
+                                    <Flex w={"full"} h={["101px", "101px", "150px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
+                                        <Image alt="logo" height={"full"} w={"auto"} objectFit={"contain"} rounded={"8px"} src={IMAGE_URL + item?.returnProductDto?.images[0]} />
+                                    </Flex>
+                                    <Flex flexDir={"column"} >
+                                        <Text fontSize={"14px"} fontWeight={"700"} >{formatNumber(item?.returnProductDto?.price)}</Text>
+                                        <Text fontSize={["12px", "12px", "14px"]} >{capitalizeFLetter(textLimit(item?.returnProductDto?.name, 20))}</Text>
+                                    </Flex>
+
+                                </Flex>
+                            )
+                        })}
+                        {eventData?.map((item, index) => {
+                            return (
+                                <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+
+                                    {data?.isOrganizer && (
+                                        <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                                            <IoClose size={"14px"} />
+                                        </Flex>
+                                    )}
+                                    <Flex w={"full"} h={["101px", "101px", "150px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
+                                        <Image alt="logo" height={"full"} w={"auto"} objectFit={"contain"} rounded={"8px"} src={IMAGE_URL + item?.returnProductDto?.images[0]} />
+                                    </Flex>
+                                    <Flex flexDir={"column"} >
+                                        <Text fontSize={"14px"} fontWeight={"700"} >{formatNumber(item?.returnProductDto?.price)}</Text>
+                                        <Text fontSize={["12px", "12px", "14px"]} >{capitalizeFLetter(textLimit(item?.returnProductDto?.name, 20))}</Text>
+                                    </Flex>
+
+                                </Flex>
+                            )
+                        })}
                         {eventData?.map((item, index) => {
                             return (
                                 <Flex cursor={"pointer"} pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => routeHandler(item?.returnProductDto?.id)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >

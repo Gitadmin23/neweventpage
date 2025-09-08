@@ -157,7 +157,7 @@ export default function DetailsPage(
                         )}
                     </Flex>
                 </Flex>
-                <Flex w={"full"} display={["none", "none", "flex"]} flexDir={"column"} >
+                <Flex maxW={"50%"} w={"full"} display={["none", "none", "flex"]} flexDir={"column"} >
                     <EventMesh data={props} />
                     <Flex w={"full"} h={"8"} />
                 </Flex>
