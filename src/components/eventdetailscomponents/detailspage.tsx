@@ -73,9 +73,9 @@ export default function DetailsPage(
                                 <Flex gap={"3"} w={[isAdmin ? "full" : "fit-content", isAdmin ? "full" : "full", "full"]} alignItems={[isAdmin ? "center" : "start", isAdmin ? "center" : "start", "center"]} flexDir={[isAdmin ? "row" : "column", isAdmin ? "row" : "column", "row"]} justifyContent={[isAdmin ? "space-between" : "start", isAdmin ? "space-between" : "start", "space-between"]}  >
                                     <EventCreator {...props} />
                                     <Flex display={["flex", "flex", "none"]} w={"full"} flexDir={"column"} gap={"2"} mr={isAdmin ? "auto" : "0px"} >
-                                        {attendeesVisibility && (
+                                        {/* {attendeesVisibility && ( */}
                                             <InterestedUsers event={props} />
-                                        )}
+                                        {/* )} */}
 
                                         {(!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && (
                                             <PrBtn data={props} />
