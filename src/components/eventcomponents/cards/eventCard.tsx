@@ -140,20 +140,20 @@ export default function EventCard(
                                     <Text color={primaryColor} textAlign={"left"} fontSize={"10px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 15)}</Text>
                                 </Flex>
                             </Flex> 
-                            {(event?.interestedUsers?.length > 0 ) && (
+                            {(event?.interestedUsers?.length > 0) && (
                                 <Flex alignItems={"center"} >
-                                    {(event?.attendeesVisibility && !event?.eventName?.includes("evolving beyond the narrative") && !event?.eventName?.includes("Drip vibes fest")) && (
+                                    {/* {(event?.attendeesVisibility && !event?.eventName?.includes("evolving beyond the narrative") && !event?.eventName?.includes("Drip vibes fest")) && ( */}
                                         <InterestedUsers
                                             size={"2xs"}
                                             event={event}
                                         />
-                                    )}
-                                    {event?.eventName?.includes("evolving beyond the narrative") || event?.eventName?.includes("Drip vibes fest") && (
+                                    {/* )} */}
+                                    {/* {event?.eventName?.includes("evolving beyond the narrative") || event?.eventName?.includes("Drip vibes fest") && (
                                         <InterestedUsers
                                             size={"2xs"}
                                             event={event}
                                         />
-                                    )}
+                                    )} */}
                                 </Flex>
                             )} 
                         </Flex>
