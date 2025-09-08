@@ -73,9 +73,9 @@ export default function EventCreator(props: IEventType) {
                         </Flex>
                     )}
                 </Flex>
-                {props?.attendeesVisibility && (
+                {/* {props?.attendeesVisibility && ( */}
                     <InterestedUsers event={props} />
-                )}
+                {/* )} */}
             </Flex> 
         </Flex>
     )
