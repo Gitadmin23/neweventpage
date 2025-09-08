@@ -142,7 +142,13 @@ export default function EventCard(
                             </Flex> 
                             {(event?.interestedUsers?.length > 0 ) && (
                                 <Flex alignItems={"center"} >
-                                    {event?.attendeesVisibility && (
+                                    {(event?.attendeesVisibility && !event?.eventName?.includes("evolving beyond the narrative") && !event?.eventName?.includes("Drip vibes fest")) && (
+                                        <InterestedUsers
+                                            size={"2xs"}
+                                            event={event}
+                                        />
+                                    )}
+                                    {event?.eventName?.includes("evolving beyond the narrative") || event?.eventName?.includes("Drip vibes fest") && (
                                         <InterestedUsers
                                             size={"2xs"}
                                             event={event}

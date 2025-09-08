@@ -273,7 +273,7 @@ const useEvent = () => {
             isPublic: true,
             currentPicUrl: "",
             eventFunnelGroupID: "",
-            attendeesVisibility: false,
+            attendeesVisibility: true,
             startTime: "",
             endTime: "",
             startDate: "",
