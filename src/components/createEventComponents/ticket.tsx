@@ -127,9 +127,9 @@ export default function Ticket(
                     )
                 }
             })}
-            {(!eventData?.ticketBought) && (
+            {/* {(!eventData?.ticketBought) && ( */}
                 <CustomButton onClick={handleAddTicket} text={"Add new ticket type"} maxW={"200px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
-            )}
+            {/* )} */}
 
             <CustomInput disabled={true} name={`currency`} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Currency" value={formik.values} />
             <GetCommunity value={formik.values.eventFunnelGroupID} setValue={formik.setFieldValue} />
