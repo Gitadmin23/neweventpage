@@ -29,12 +29,9 @@ export default function FunnelBtn(
     const { userId } = useDetails((state) => state)
 
 
-    const { results, isLoading, ref } = useInfiniteScroller({ url: `/group/group?creatorID=${userId}`, limit: 10, filter: "id" })
+    const { results, isLoading, ref } = useInfiniteScroller({ url: `/group/group?creatorID=${userId}`, limit: 10, filter: "id", name: "group" })
 
-
-    console.log(results);
-
-
+ 
     const clickHandler = (item: any) => { 
         setValue("eventFunnelGroupID", item)
         setOpen(false)

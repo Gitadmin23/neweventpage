@@ -37,15 +37,7 @@ export default function NumberPicker(
             setValue(name, value-1)
         }
         // setNumber(number-1)
-    }
-
-    console.log(value);
-
-    // useEffect(() => {
-    //     if(value) {
-    //         setNumber(value)
-    //     }
-    // }, [])
+    } 
     
 
     return (

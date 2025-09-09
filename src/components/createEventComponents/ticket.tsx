@@ -7,7 +7,7 @@ import { useState } from "react";
 import FunnelBtn from "./communityFunnel/funnelBtn";
 import GetCommunity from "./communityFunnel/getCommunityFunnel";
 import CollaboratorBtn from "../shared/addCollaborator";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import EarlyBirdBtn from "./ticket/earlyBirdBtn";
 import { IEventType } from "@/helpers/models/event";
 
@@ -35,6 +35,7 @@ export default function Ticket(
     // const query = useSearchParams(); 
     // const id = query?.get('id');
 
+    const pathname = usePathname()
     const handleAddTicket = () => {
 
         let clone = [...formik.values.productTypeData, {
@@ -61,6 +62,8 @@ export default function Ticket(
     }
 
     const router = useRouter()
+
+    const length = eventData?.productTypeData?.length ?? 0
  
     const tabHandler = (item: string) => {
         if (item === "free") {
@@ -88,9 +91,9 @@ export default function Ticket(
             ]);
             setTab(false)
         }
-    }
+    } 
 
-
+    
     return (
         <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} px={"4"} >
             <Flex w={"full"} flexDir={"column"} >
@@ -106,12 +109,12 @@ export default function Ticket(
             )}
             <Text fontSize={"14px"} fontWeight={"medium"} >Other Ticket Types</Text>
             {formik.values?.productTypeData?.map((ticket: any, index: number) => {
-                if (ticket.ticketType !== "Early Bird") {
+                if (ticket.ticketType !== "Early Bird") {  
                     return (
                         <Flex key={index} w={"full"} flexDir={"column"} gap={"4"} >
                             <Flex w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} borderWidth={"1px"} p={"4"} >
                                 <Flex w={"full"} gap={"3"} flexDir={["column", "column", "row"]}  >
-                                    <TicketFormInput disabled={eventData?.ticketBought} index={index} defaultData={ticket.ticketType} name={`ticketType`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Ticket Name" value={formik.values} />
+                                    <TicketFormInput disabled={eventData?.ticketBought && length >= index+1 && !pathname.includes("draft")} index={index} defaultData={ticket.ticketType} name={`ticketType`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Ticket Name" value={formik.values} />
                                     <TicketFormInput disabled={ticket.isFree} index={index} defaultData={ticket.ticketPrice} type="number" name={`ticketPrice`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Price" value={formik.values} />
                                 </Flex>
                                 <TicketFormInput index={index} defaultData={ticket.totalNumberOfTickets} type="number" name={`totalNumberOfTickets`} errors={formik?.errors.productTypeData} touched={formik?.touched} setValue={formik.setFieldValue} label="Total number of tickets available to be sold for your events" value={formik.values} />
