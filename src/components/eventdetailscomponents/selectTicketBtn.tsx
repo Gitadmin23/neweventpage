@@ -9,6 +9,7 @@ import usePayStack from "@/hooks/usePayStack";
 import { ShoppingCart } from "iconsax-react";
 import { toaster } from "../ui/toaster";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
+import { formatNumber } from "@/helpers/utils/numberFormat";
 
 interface ITicket {
     "ticketType": string,
@@ -156,7 +157,7 @@ export default function SelectTicketBtn(
                                             return (
                                                 <Flex flexDir={["column", "column", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} py={"4"} >
                                                     <Flex flexDir={"column"} gap={"2"} >
-                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
                                                                 {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
@@ -209,7 +210,7 @@ export default function SelectTicketBtn(
                                             return (
                                                 <Flex flexDir={["column", "column", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} py={"4"} >
                                                     <Flex flexDir={"column"} gap={"2"} >
-                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
                                                                 {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
@@ -306,7 +307,7 @@ export default function SelectTicketBtn(
                                             return (
                                                 <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
                                                     <Flex flexDir={"column"} gap={"2"} >
-                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
                                                                 {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
@@ -359,7 +360,7 @@ export default function SelectTicketBtn(
                                             return (
                                                 <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
                                                     <Flex flexDir={"column"} gap={"2"} >
-                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} {formatNumberWithK(item?.ticketPrice, false)}</Text>
+                                                        <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
                                                                 {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
