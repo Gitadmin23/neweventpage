@@ -45,7 +45,7 @@ export default function DetailsPage(
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
                 <Flex flexDir={"column"} w={"full"} gap={"4"} >
                     <Flex w={"full"} pos={"relative"} >
-                    <ProductImageScroller rounded={"8px"} height={["340px", "340px", "520px"]} images={props.picUrls.length > 0 ? props.picUrls : [props.currentPicUrl]} />
+                    <ProductImageScroller rounded={"8px"} height={["340px", "340px", "520px"]} images={props?.picUrls?.length > 0 ? props?.picUrls : [props?.currentPicUrl]} />
                     <ShareLink
                         data={props}
                         type="EVENT"

@@ -103,7 +103,6 @@ export default function Ticket(
 
 
     return (
-        <FormikProvider value={formik}>
             <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} px={"4"} >
                 <Flex w={"full"} flexDir={"column"} >
                     <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Set your ticket Prices and customize it</Text>
@@ -149,7 +148,7 @@ export default function Ticket(
                 <CustomButton onClick={handleAddTicket} text={"Add new ticket type"} maxW={"200px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
                 {/* )} */}
 
-                <CustomInput disabled={true} name={`currency`} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Currency" value={formik.values} />
+                <CustomInput disabled={true} name={`currency`} label="Currency" />
                 <GetCommunity value={formik.values.eventFunnelGroupID} setValue={formik.setFieldValue} />
                 <Flex w={"full"} flexDir={["column", "column", "row"]} gap={"3"} justifyContent={"space-between"} >
                     <FunnelBtn setValue={formik?.setFieldValue} value={formik.values.eventFunnelGroupID} />
@@ -159,7 +158,6 @@ export default function Ticket(
                     <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={mainBackgroundColor} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
                     <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
                 </Flex>
-            </Flex>
-        </FormikProvider>
+            </Flex> 
     )
 }

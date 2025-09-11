@@ -51,21 +51,21 @@ export default function Information(
             </Flex>
             <CustomEventSwitch title="To Be Announced" setValue={formik.setFieldValue} value={formik.values.location.toBeAnnounced} name="location.toBeAnnounced" />
             {!formik.values.location.toBeAnnounced && (
-                <SelectLocationType value={formik.values.locationType} setValue={formik.setFieldValue} />
+                <SelectLocationType />
             )}
             {((formik.values.locationType === "physical" || formik.values.locationType === "hybrid") && !formik.values.location.toBeAnnounced) && (
                 <SelectMapLocation value={formik.values.location.locationDetails} setValue={formik.setFieldValue} latlng={formik.values.location.latlng} />
             )}
             {((formik.values.locationType === "online" || formik.values.locationType === "hybrid") && !formik.values.location.toBeAnnounced) && (
-                <CustomInput name={"location.link"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Enter Online Url" value={formik.values} />
+                <CustomInput name={"location.link"} label="Enter Online Url" />
             )}
-            <CustomInput defaultData={formik.values?.location?.address} name={"location.address"} textarea={true} errors={formik?.errors?.location?.address} touched={formik?.touched?.location?.address} setValue={formik.setFieldValue} label="Venue details" value={formik.values} />
+            <CustomInput name={"location.address"} textarea={true} label="Venue details" />
 
             <CustomEventSwitch title="Do you wish to accept PR requests for your event?" setValue={formik.setFieldValue} value={formik.values.affiliates ? formik.values.affiliates[0].affiliateType === "pr" ? true : false : false} name="affiliates[0].affiliateType" />
             {formik.values.affiliates && (
                 <> 
                     {formik.values.affiliates[0].affiliateType === "pr" && (
-                        <CustomInput type="number" defaultData={formik?.values?.affiliates[0]?.percent} name={"affiliates[0].percent"} setValue={formik.setFieldValue} label="Add Percentage" value={formik.values} />
+                        <CustomInput type="number" name={"affiliates[0].percent"} label="Add Percentage" />
                     )}
                 </>
             )}

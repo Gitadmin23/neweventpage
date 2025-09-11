@@ -1,17 +1,7 @@
 import CustomSelect from "@/components/shared/customSelect";
 import { Flex } from "@chakra-ui/react";
 
-export default function SelectLocationType(
-    {
-        setValue, 
-        value
-    }: {
-        value: string
-        setValue: (name: string, value: any) => void,
-        errors?: any,
-        touched?: any,
-    }
-) {
+export default function SelectLocationType() {
 
     const data = [
         {
@@ -26,15 +16,11 @@ export default function SelectLocationType(
             label: "Hybrid Location",
             value: "hybrid"
         }, 
-    ]
-
-    const changeHandler = (item: any) => {
-        setValue("locationType", item)
-    } 
+    ] 
 
     return (
         <Flex w={"full"} >
-            <CustomSelect value={value+""} label="Location Type" size="lg" setValue={changeHandler} data={data} placeholder={"Select Location type"} />
+            <CustomSelect name="locationType" label="Location Type" size="lg" data={data} placeholder={"Select Location type"} />
         </Flex>
     )
 }

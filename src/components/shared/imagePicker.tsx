@@ -55,21 +55,21 @@ export default function ImagePicker(
             } else {
                 try {
                     const convertedFiles = await Promise.all(
-                      fileArray.map((file) => convertAndCompressToPng(file, 800, 1920,
-                        1080,
-                        0.9,
-                        setIsLoading
-                    ))
-                    ); 
+                        fileArray.map((file) => convertAndCompressToPng(file, 800, 1920,
+                            1080,
+                            0.9,
+                            setIsLoading
+                        ))
+                    );
                     setImage([...image, ...convertedFiles]);
-                  } catch (err) {
+                } catch (err) {
                     toaster.create({
-                      title: "Image conversion failed",
-                      description: String(err),
-                      type: "error",
+                        title: "Image conversion failed",
+                        description: String(err),
+                        type: "error",
                     });
                     setIsLoading("Image conversion failed");
-                  } 
+                }
             }
 
         }
@@ -79,15 +79,23 @@ export default function ImagePicker(
 
 
 
-    const handleSingleImage = (e: any) => {
-
+    const handleSingleImage = async (e: any) => { 
         const selected = e.target.files[0];
 
         const TYPES = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
-        if (selected && TYPES.includes(selected.type)) {
-            const clone = [...image]
-            clone[imageIndex ? imageIndex : 0] = selected
-            setImage(clone)
+
+        const convertedFiles = await Promise.all(
+            [selected].map((file) => convertAndCompressToPng(file, 800, 1920,
+                1080,
+                0.9,
+                setIsLoading
+            ))
+        );
+
+        console.log(convertedFiles);
+        
+        if (selected && TYPES.includes(selected.type)) { 
+            setImage(convertedFiles)
         }
     }
 
@@ -100,6 +108,9 @@ export default function ImagePicker(
         const clone = preview.filter((_, index) => index !== indexToRemove)
         setValue("picUrls", clone);
     };
+
+    console.log(image);
+
 
     return (
         <>
@@ -132,7 +143,7 @@ export default function ImagePicker(
                     {(image?.length > 0 || preview?.length > 0 && !isLoading) && (
                         <Flex w={"fit"} gap={"3"} p={"4"} >
                             {preview.map((file, index) => (
-                                <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
+                                <Flex key={index} pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
                                     <Image
                                         w={"full"}
                                         h={"full"}
@@ -146,7 +157,7 @@ export default function ImagePicker(
                                 </Flex>
                             ))}
                             {image.map((file, index) => (
-                                <Flex pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
+                                <Flex key={index} pos={"relative"} rounded={"2xl"} shadow={"2xl"} h={"full"} w={"180px"} >
                                     <Image
                                         w={"full"}
                                         h={"full"}
@@ -169,7 +180,12 @@ export default function ImagePicker(
             {single && (
                 <Flex width={"full"} flexDirection={"column"} gap={"4"} alignItems={"center"} >
                     <Flex as={"button"} width={["full", "361px"]} height={"228px"} border={"1px dashed #D0D4EB"} roundedBottom={"32px"} roundedTopLeft={"32px"} justifyContent={"center"} alignItems={"center"} >
-                        {(!image[imageIndex] && preview?.length === 0) && (
+                        {isLoading && (
+                            <Flex w={"full"} h={"full"} justifyContent={"center"} alignItems={"center"} >
+                                <Text>{isLoading}</Text>
+                            </Flex>
+                        )}
+                        {(!image[imageIndex] && preview?.length === 0 && !isLoading) && (
                             <label role='button' style={{ width: "100%", display: "grid", height: "100%", placeItems: "center", gap: "16px" }} >
                                 <Box width={"full"} >
                                     <Text fontSize={"sm"} >Click to upload image</Text>
@@ -186,7 +202,8 @@ export default function ImagePicker(
                                 />
                             </label>
                         )}
-                        {(image[imageIndex] || preview?.length > 0) && (
+
+                        {((image[imageIndex] || preview?.length > 0) && !isLoading) && (
                             <label role='button' style={{ width: "100%", display: "grid", height: "228px", placeItems: "center", gap: "16px" }} >
 
                                 {image[imageIndex] ? (
@@ -202,7 +219,7 @@ export default function ImagePicker(
                                     type="file"
                                     id="image"
                                     style={{ display: "none" }}
-                                    onChange={handleImageChange}
+                                    onChange={handleSingleImage}
                                 />
                             </label>
                         )}

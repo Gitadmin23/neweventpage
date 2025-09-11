@@ -7,6 +7,7 @@ import EventVisibility from "./theme/eventVisibility";
 import { useImage } from "@/helpers/store/useImagePicker";
 import { toaster } from "../ui/toaster";
 import EventCategory from "./theme/eventCategory";
+import CustomEditor from "../shared/customEditor";
 
 
 export default function Theme(
@@ -34,6 +35,9 @@ export default function Theme(
         }
     }
 
+    console.log(formik?.values);
+    
+
     return (
         <Flex w={"full"} flexDir={"column"} gap={"4"} px={"4"} >
             <Flex w={"full"} flexDir={"column"} >
@@ -44,13 +48,13 @@ export default function Theme(
             <Flex w={"full"} flexDir={"column"} >
                 <Text fontSize={"20px"} fontWeight={"semibold"} >Basic Event Details</Text>
                 <Text fontSize={"14px"} mb={"2"} >This section highlights details that should attract attendees to your event</Text>
-                <CustomInput name={"eventName"} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Event Title *" value={formik.values} />
+                <CustomInput name={"eventName"} label="Event Title *" />
             </Flex>
-            <EventCategory value={formik?.values?.eventType} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} />
-            <CustomInput name={"eventDescription"} textarea={true} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} label="Description*" value={formik.values} />
+            <EventCategory value={formik?.values?.eventType} touched={formik?.touched} setValue={formik.setFieldValue} />
+            <CustomEditor name={"eventDescription"} editor={true} label="Description*" />
             <Flex gap={"3"} w={"full"}  flexDir={["column", "column", "row"]} >
                 <CustomSwitch label="Attendee Visibility" name="attendeesVisibility" value={formik.values.attendeesVisibility} setValue={formik.setFieldValue} />
-                <EventVisibility value={formik.values.isPublic+""} errors={formik?.errors} touched={formik?.touched} setValue={formik.setFieldValue} />
+                <EventVisibility />
             </Flex>
             <Text fontSize={"14px"} >Tells us when your event starts and Ends</Text>
             <Flex gap={"3"} w={"full"} flexDir={["column", "column", "row"]} >

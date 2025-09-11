@@ -1,6 +1,6 @@
 "use client"
 import { Information, SuccessModal, Theme, Ticket } from "@/components/createEventComponents";
-import { LoadingAnimation } from "@/components/shared"; 
+import { LoadingAnimation } from "@/components/shared";
 import { IEventType } from "@/helpers/models/event";
 import { PaginatedResponse } from "@/helpers/models/PaginatedResponse";
 import { IUser } from "@/helpers/models/user";
@@ -9,6 +9,7 @@ import { URLS } from "@/helpers/services/urls";
 import useEvent from "@/hooks/useEvent";
 import { Flex } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
+import { FormikProvider } from "formik";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -71,25 +72,31 @@ export default function EditEventPage() {
     });
 
     useEffect(() => {
-        fetchData();
+        if(!formik?.values?.eventName) {
+            fetchData();
+            console.log("show");
+            
+        }
     }, [])
- 
+
     return (
-        <LoadingAnimation loading={isLoading} >
-            <Flex w={"full"} justifyContent={"center"} py={"8"} >
-                <Flex maxW={"569px"} w={"full"} >
-                    {!type && (
-                        <Theme formik={formik} isLoading={uploadImage.isPending || createDraft.isPending || saveToDraft?.isPending} />
-                    )}
-                    {type === "info" && (
-                        <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />
-                    )}
-                    {type === "ticket" && (
-                        <Ticket eventData={eventData} formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
-                    )}
+        <FormikProvider value={formik}>
+            <LoadingAnimation loading={isLoading} >
+                <Flex w={"full"} justifyContent={"center"} py={"8"} >
+                    <Flex maxW={"569px"} w={"full"} >
+                        {!type && (
+                            <Theme formik={formik} isLoading={uploadImage.isPending || createDraft.isPending || saveToDraft?.isPending} />
+                        )}
+                        {type === "info" && (
+                            <Information formik={formik} isLoading={uploadImage.isPending || saveToDraft?.isPending} />
+                        )}
+                        {type === "ticket" && (
+                            <Ticket eventData={eventData} formik={formik} isLoading={uploadImage.isPending || createEventFromDraft?.isPending || updateUserEvent?.isPending} />
+                        )}
+                    </Flex>
+                    <SuccessModal open={open} setOpen={setOpen} />
                 </Flex>
-                <SuccessModal open={open} setOpen={setOpen} />
-            </Flex>
-        </LoadingAnimation>
+            </LoadingAnimation>
+        </FormikProvider>
     )
 }

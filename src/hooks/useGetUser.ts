@@ -4,6 +4,7 @@ import { URLS } from "@/helpers/services/urls";
 import { useDetails } from "@/helpers/store/useUserDetails";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie"
 
 const useGetUser = () => {
  
@@ -28,6 +29,7 @@ const useGetUser = () => {
                 dob: data?.data?.dob,
                 username: data?.data?.username,
             });
+            Cookies.set("userId", data?.data?.userId)
         }, 
         onError: () => {
             setShow(true)

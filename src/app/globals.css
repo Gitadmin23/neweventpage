@@ -61,3 +61,12 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none !important;
   margin: 0;
 }
+
+.editorClassName {
+  max-height: 100px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  overflow-y: auto;
+}

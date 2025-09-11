@@ -3,95 +3,106 @@ import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-// import { useField } from 'formik';
+import { useFormikContext, getIn } from 'formik';   
+
 
 interface IProps {
-    name: string;
+    name: string;                 // 👈 full formik path (e.g. productTypeData[0].ticketType)
     height?: string;
     placeholder?: string;
-    value?: any;
     label?: string;
-    index?: number;
-    type?: React.HTMLInputTypeAttribute,
+    type?: React.HTMLInputTypeAttribute;
     hasFrontIcon?: boolean;
-    hasBackIcon?: boolean,
-    icon?: React.ReactNode,
-    defaultData?: any;
-    iconback?: React.ReactNode
-    setValue: (name: string, value: string) => void,
-    errors?: any | null | undefined,
-    touched?: any,
-    textarea?: boolean,
-    disabled?: boolean
+    hasBackIcon?: boolean;
+    icon?: React.ReactNode;
+    iconback?: React.ReactNode;
+    textarea?: boolean;
+    disabled?: boolean;
+    editor?: boolean
 }
 
-export default function FormInput(
-    {
-        name,
-        height,
-        placeholder,
-        value, 
-        defaultData,
-        label,
-        type,
-        hasFrontIcon,
-        hasBackIcon,
-        icon,
-        iconback,
-        setValue,
-        errors,
-        touched,
-        textarea,
-        disabled
-    }: IProps) {
+export default function TicketFormInput({
+    name,
+    height,
+    placeholder,
+    label,
+    type,
+    hasFrontIcon,
+    hasBackIcon,
+    icon,
+    iconback,
+    textarea,
+    disabled
+}: IProps) {
+    const { mainBackgroundColor } = useCustomTheme();
 
-    const changeHandler = (item: string) => {
+    // 👇 Hook into Formik
+    const { values, errors, touched, setFieldValue } = useFormikContext<any>();
 
-        const Uppercased = item ? capitalizeFLetter(item) : item
+    // Safely pull value, error, touched
+    const value = getIn(values, name);
+    const error = getIn(errors, name);
+    const isTouched = getIn(touched, name);
 
-        setValue(name,  type === "number" ? item : Uppercased)
-        setNewValue(type === "number" ? item : Uppercased)
-    }
-
-    const [newValue, setNewValue] = useState("") 
-
-    const {
-        mainBackgroundColor
-    } = useCustomTheme() 
+    const [localValue, setLocalValue] = useState<string>(""); 
 
     useEffect(() => {
-        if (value[name] && !newValue) {
-            setNewValue(value[name] ?? "")
+        if (value !== undefined && value !== null) {
+            setLocalValue(value);
         } else {
-            setNewValue(defaultData)
+            setLocalValue("");
         }
-    }, [defaultData, value[name]]) 
+    }, [value]);
+
+    const changeHandler = (val: string) => {
+        const Uppercased = type === "number" ? val : capitalizeFLetter(val);
+        setLocalValue(Uppercased);
+        setFieldValue(name, Uppercased);
+    }; 
 
     return (
-        <Flex w={"full"} flexDir={"column"} gap={"0.5"} >
-            <Text fontSize={"14px"} fontWeight={"medium"} >{label?.replace("*", "")}<span style={{ color: "red", fontSize: "18px" }} >{label?.includes("*") ? "*" : ""}</span></Text>
-            <Flex flexDir={"column"} gap={"1"} >
-                {!textarea && (
-                    <Flex pos={"relative"} h={height ?? "45px"} >
+        <Flex w={"full"} flexDir={"column"} gap={"0.5"}>
+            {label && (
+                <Text fontSize={"14px"} fontWeight={"medium"}>
+                    {label}
+                </Text>
+            )}
+
+            <Flex flexDir={"column"} gap={"1"}>
+                {(!textarea) && (
+                    <Flex pos={"relative"} h={height ?? "45px"}>
                         {hasFrontIcon && (
-                            <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
+                            <Flex
+                                w={"48px"}
+                                h={height ?? "45px"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                px={"2"}
+                            >
                                 {icon}
                             </Flex>
                         )}
+
                         {hasBackIcon && (
-                            <Flex w={"48px"} h={height ?? "45px"} justifyContent={"center"} alignItems={"center"} px={"2"} >
+                            <Flex
+                                w={"48px"}
+                                h={height ?? "45px"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                px={"2"}
+                            >
                                 {iconback}
                             </Flex>
                         )}
 
-                        {type === "number" && (
+                        {type === "number" ? (
                             <Input
-                                value={newValue ?? ""}
+                                value={localValue}
                                 disabled={disabled}
                                 onChange={(e) => {
-                                    const value = e.target.value;
-                                    if (/^\d*$/.test(value)) {
-                                        changeHandler(e.target.value)
+                                    const val = e.target.value;
+                                    if (/^\d*$/.test(val)) {
+                                        changeHandler(val);
                                     }
                                 }}
                                 onKeyPress={(e) => {
@@ -110,13 +121,11 @@ export default function FormInput(
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />
-                        )}
-
-                        {type !== "number" && (
+                        ) : (
                             <Input
                                 type={type ?? "text"}
                                 disabled={disabled}
-                                value={newValue}
+                                value={localValue}
                                 onChange={(e) => changeHandler(e.target.value)}
                                 w={"full"}
                                 h={height ?? "45px"}
@@ -129,13 +138,13 @@ export default function FormInput(
                                 _placeholder={{ color: "gray.500" }}
                                 placeholder={placeholder}
                             />
-
                         )}
                     </Flex>
                 )}
-                {textarea && (
+
+                {(textarea) && (
                     <Textarea
-                        value={newValue}
+                        value={localValue}
                         disabled={disabled}
                         onChange={(e) => changeHandler(e.target.value)}
                         w={"full"}
@@ -150,42 +159,16 @@ export default function FormInput(
                         _placeholder={{ color: "gray.500" }}
                         placeholder={placeholder}
                     />
-                )} 
+                )}
 
-                {(Array.isArray(errors)) && (
+                {isTouched && error && (
                     <Flex>
-                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >
-                            {errors[name.replace("data", "") as any]}
+                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"}>
+                            {error}
                         </Text>
                     </Flex>
                 )}
-                {!defaultData &&
-                    <>
-                        {touched && (
-                            <>
-                                {(touched[name] && errors[name]) &&
-                                    <Flex>
-                                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors[name]}</Text>
-                                    </Flex>
-                                }
-                            </>
-                        )}
-                    </>
-                } 
-                {defaultData &&
-                    <>
-                        {touched && (
-                            <>
-                                {(touched && errors) &&
-                                    <Flex>
-                                        <Text fontSize={"12px"} color={"red.600"} fontWeight={"medium"} ml={"2"} >{errors}</Text>
-                                    </Flex>
-                                }
-                            </>
-                        )}
-                    </>
-                }
             </Flex>
         </Flex>
-    )
+    );
 }

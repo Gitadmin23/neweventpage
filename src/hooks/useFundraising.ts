@@ -12,11 +12,12 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useFormik } from "formik";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import Cookies from "js-cookie"
 
 const useFundraising = () => {
 
 
-    const { userId } = useDetails((state) => state);
+    const userId = Cookies.get("userId-") as string;
     const { image } = useImage((state) => state); 
 
     const pathname = usePathname()
@@ -46,6 +47,9 @@ const useFundraising = () => {
         onSuccess: (data: any) => {
 
             const fileArray = Object.values(data?.data);
+
+            console.log(userId);
+            
 
             let clone = [...formik.values.data]
 
@@ -127,6 +131,11 @@ const useFundraising = () => {
             })
         },
         onSuccess: (data: AxiosResponse<any>) => {  
+
+            console.log(data);
+
+            console.log(formik.values.data);
+            
 
             createFundraising.mutate({ items: formik.values.data }) 
         }
