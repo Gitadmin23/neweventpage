@@ -31,7 +31,7 @@ export default function TicketFormInput({
     label,
     type, 
 }: IProps) {
-    const { mainBackgroundColor } = useCustomTheme();
+    const { secondaryBackgroundColor, headerTextColor } = useCustomTheme();
 
     // 👇 Hook into Formik
     const { values, errors, touched, setFieldValue } = useFormikContext<any>();
@@ -124,6 +124,8 @@ export default function TicketFormInput({
                             alt: { present: true, mandatory: false },
                         },
                     }}
+                    toolbarStyle={{ backgroundColor: secondaryBackgroundColor, color: "black" }}
+                    editorStyle={{ backgroundColor: secondaryBackgroundColor, color: headerTextColor }}
                     editorClassName="editorClassName"
                     onEditorStateChange={onEditorStateChange} />
             </Flex>
