@@ -110,9 +110,9 @@ export default function EarlyBirdBtn(
                         <Text fontSize={"22px"} fontWeight={"600"} >Early Bird Ticket</Text>
                         <Text>Enter the ticket information</Text>
                     </Flex>
-                    <TicketFormInput disabled={true} index={0} defaultData={value?.productTypeData[0]?.ticketType} name={`ticketType`} setValue={setValue} label="Enter Ticket Name" value={value} />
-                    <TicketFormInput index={0} defaultData={value?.productTypeData[0]?.ticketPrice} type="number" name={`ticketPrice`} setValue={setValue} label="Enter Price" value={value} />
-                    <TicketFormInput index={0} defaultData={value?.productTypeData[0]?.totalNumberOfTickets} type="number" name={`totalNumberOfTickets`} setValue={setValue} label="Total number of tickets available to be sold for your events" value={value} />
+                    <TicketFormInput disabled={true} name={`productTypeData[0].ticketType`} label="Enter Ticket Name" />
+                    <TicketFormInput  type="number" name={`productTypeData[0].ticketPrice`} label="Enter Price" />
+                    <TicketFormInput type="number" name={`productTypeData[0].totalNumberOfTickets`} label="Total number of tickets available to be sold for your events" />
                     <Flex flexDir={"column"} gap={"0.5"} >
                         <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
                         <NumberPicker value={value?.productTypeData[0]?.maxTicketBuy} name={`productTypeData[0].maxTicketBuy`} setValue={setValue} />

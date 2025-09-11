@@ -14,12 +14,12 @@ export const validationSchemaTheme = Yup.object().shape({
 
 export const validationSchemaFundraising = Yup.object().shape({
   data: Yup.array().of(
-    Yup.object().shape({ 
-      name: Yup.string().required('Fundraising name is required'), 
+    Yup.object().shape({
+      name: Yup.string().required('Fundraising name is required'),
       description: Yup.string().required('Fundraising description is required'),
       goal: Yup.string().required('Fundraising goal is required'),
       purpose: Yup.string().required('Fundraising purpose is required'),
-      endDate: Yup.string().required('End date is required'), 
+      endDate: Yup.string().required('End date is required'),
     })
   ).required('Data array is required'),
 });
@@ -36,6 +36,7 @@ export const validationSchemaTicket = Yup.object().shape({
         totalNumberOfTickets: Yup.number()
           .typeError("Total tickets must be a number")
           .required("Total number of tickets is required"),
+
         ticketPrice: Yup.number()
           .typeError("Ticket price must be a number")
           .required("Ticket price is required")
@@ -46,26 +47,44 @@ export const validationSchemaTicket = Yup.object().shape({
               const { ticketType, isFree } = this.parent;
               const type = ticketType?.toLowerCase();
 
-              if (isFree) {
-                return value === 0;
-              } else if (type === "early bird") {
-                return value >= 0;
-              } else {
-                return value > 0;
-              }
+              if (isFree) return value === 0;
+              if (type === "early bird") return value >= 0;
+              return value > 0;
             }
           ),
-        ticketType: Yup.string().required("Ticket type is required"),
+
+        ticketType: Yup.string()
+          .required("Ticket type is required")
+          .test("unique", "Ticket type must be unique", function (value) {
+            if (!value) return true;
+
+            const { from } = this as any;
+            const allValues = from[1].value.productTypeData || [];
+            const currentIndex = parseInt(this?.path?.match(/\[(\d+)\]/)?.[1] ?? "-1", 10);
+
+            const normalized = value.trim().toLowerCase();
+
+            // check if another ticketType matches this one
+            const duplicates = allValues.some(
+              (item: any, idx: number) =>
+                idx !== currentIndex &&
+                item.ticketType?.trim().toLowerCase() === normalized
+            );
+
+            return !duplicates;
+          }),
+
         minTicketBuy: Yup.number()
           .typeError("Minimum tickets must be a number")
           .min(1, "Minimum ticket buy must be at least 1")
           .required("Minimum ticket buy is required"),
+
         maxTicketBuy: Yup.number()
           .typeError("Maximum tickets must be a number")
           .nullable(),
+
         rerouteURL: Yup.string().url().nullable(),
       })
     )
     .min(1, "At least one ticket type must be defined"),
-
 });
