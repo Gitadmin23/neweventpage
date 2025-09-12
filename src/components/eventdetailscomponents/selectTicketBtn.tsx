@@ -155,8 +155,8 @@ export default function SelectTicketBtn(
                                     {productTypeData?.map((item, index) => {
                                         if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
-                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} alignItems={"center"} minH={"110px"} height={"fit"} px={"4"} py={"4"} >
-                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
+                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} minH={"110px"} px={"4"} py={"4"} >
+                                                    <Flex flexDir={"column"} gap={"2"} h={"full"} justifyContent={"center"} my={"auto"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -186,15 +186,15 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
-                                                    <Flex gap={"3"} alignItems={"center"} mx={"auto"} >
+                                                    <Flex gap={"3"} alignItems={"center"} h={"fit-content"} mt={"4"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
@@ -218,8 +218,8 @@ export default function SelectTicketBtn(
                                             )
                                         } else if (item.ticketType !== "Early Bird") {
                                             return (
-                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} minH={"110px"} height={"fit"} alignItems={"center"} px={"4"} py={"4"} >
-                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
+                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} minH={"110px"} height={"full"} px={"4"} py={"4"} >
+                                                    <Flex flexDir={"column"} gap={"2"} h={"full"} justifyContent={"center"} my={"auto"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -249,15 +249,15 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
-                                                    <Flex gap={"3"} alignItems={"center"} mx={"auto"} >
+                                                    <Flex gap={"3"} alignItems={"center"} h={"fit-content"} mt={"4"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
@@ -325,8 +325,8 @@ export default function SelectTicketBtn(
                                     {productTypeData?.map((item, index) => {
                                         if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
-                                                <Flex flex={"1"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"}>
-                                                    <Flex flexDir={"column"} gap={"2"} >
+                                                <Flex flex={"1"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"}>
+                                                    <Flex flexDir={"column"} gap={"2"} h={"full"} justifyContent={"center"} my={"auto"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -356,15 +356,15 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
-                                                    <Flex gap={"3"} w={"fit"} alignItems={"center"} >
+                                                    <Flex w={"fit"} gap={"3"} alignItems={"center"} h={"fit-content"} mt={"4"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
@@ -388,8 +388,8 @@ export default function SelectTicketBtn(
                                             )
                                         } else if (item.ticketType !== "Early Bird") {
                                             return (
-                                                <Flex _hover={{ borderColor: primaryColor }} key={index} gap={"2"} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"} >
-                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
+                                                <Flex _hover={{ borderColor: primaryColor }} key={index} gap={"2"} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"} >
+                                                    <Flex flexDir={"column"} gap={"2"} h={"full"} justifyContent={"center"} my={"auto"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -419,15 +419,15 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={75} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
-                                                    <Flex w={"fit"} gap={"3"} alignItems={"center"} >
+                                                    <Flex w={"fit"} gap={"3"} alignItems={"center"} h={"fit-content"} mt={"4"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
