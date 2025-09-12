@@ -17,7 +17,7 @@ import Cookies from "js-cookie"
 const useFundraising = () => {
 
 
-    const userId = Cookies.get("userId-") as string;
+    const userId = Cookies.get("userId") as string;
     const { image } = useImage((state) => state); 
 
     const pathname = usePathname()
