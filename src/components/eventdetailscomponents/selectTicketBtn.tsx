@@ -186,10 +186,10 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
@@ -249,10 +249,10 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                                 <Flex display={["flex", "flex", "none"]} >
-                                                                    <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
@@ -356,7 +356,10 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                </Flex>
+                                                                <Flex display={["flex", "flex", "none"]} >
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
@@ -381,13 +384,6 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
                                                         </IconButton>
                                                     </Flex>
-                                                    {item?.description && (
-                                                        <>
-                                                            <Flex display={["flex", "flex", "none"]} >
-                                                                <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
-                                                            </Flex>
-                                                        </>
-                                                    )}
                                                 </Flex>
                                             )
                                         } else if (item.ticketType !== "Early Bird") {
@@ -423,7 +419,10 @@ export default function SelectTicketBtn(
                                                         {item?.description && (
                                                             <>
                                                                 <Flex display={["none", "none", "flex"]} >
-                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
+                                                                </Flex>
+                                                                <Flex display={["flex", "flex", "none"]} >
+                                                                    <DescriptionCard ticket={true} limit={250} label='' description={item?.description} />
                                                                 </Flex>
                                                             </>
                                                         )}
@@ -448,13 +447,6 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
                                                         </IconButton>
                                                     </Flex>
-                                                    {item?.description && (
-                                                        <>
-                                                            <Flex display={["flex", "flex", "none"]} >
-                                                                <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
-                                                            </Flex>
-                                                        </>
-                                                    )}
                                                 </Flex>
                                             )
                                         }
