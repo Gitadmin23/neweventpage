@@ -41,17 +41,8 @@ export default function TicketFormInput({
     const error = getIn(errors, name);
     const isTouched = getIn(touched, name);
     
-
-    const [localValue, setLocalValue] = useState<string>("");
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-    useEffect(() => {
-        if (value !== undefined && value !== null) {
-            setLocalValue(value);
-        } else {
-            setLocalValue("");
-        }
-    }, [value]);
+ 
 
 
   // Load Formik's string into the editor on mount
@@ -67,22 +58,23 @@ export default function TicketFormInput({
         setEditorState(EditorState.createWithContent(contentState));
       }
     }
-  }, []);
-
-    const changeHandler = (val: string) => {
-        const Uppercased = type === "number" ? val : capitalizeFLetter(val);
-        setLocalValue(Uppercased);
-        setFieldValue(name, Uppercased);
-    };
+  }, []); 
 
     const onEditorStateChange = (state: EditorState) => {
         setEditorState(state);
         // convert Draft.js content to HTML string
         const html = draftToHtml(convertToRaw(state.getCurrentContent()));
-        
-        setFieldValue(name, html);
 
+        let payload = html?.replace("<p></p>", "")
+        let text = payload?.replace("\n", "")
+
+        if(html !== "<p></p>") {
+            setFieldValue(name, text);
+        } 
     };
+
+    console.log(values);
+    
 
     return (
         <Flex w={"full"} flexDir={"column"} gap={"0.5"}>
@@ -91,7 +83,7 @@ export default function TicketFormInput({
                     {label}
                 </Text>
             )}
-            <Flex w={"full"} h={"200px"} >
+            <Flex w={"full"} h={"300px"} >
                 <Editor
                     editorState={editorState}
                     toolbar={{

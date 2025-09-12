@@ -43,7 +43,9 @@ interface ICreateEvent {
             "ticketType": string,
             "minTicketBuy": number | any,
             "maxTicketBuy": number | any,
-            isFree: boolean
+            isFree: boolean,
+            description: string,
+            isHidden?: boolean
         }
     ],
     collaborators: Array<any>,
@@ -296,7 +298,9 @@ const useEvent = () => {
                     "ticketType": "",
                     "minTicketBuy": 1,
                     "maxTicketBuy": 1,
-                    isFree: false
+                    isFree: false,
+                    description: "", 
+                    isHidden: false
                 }
             ],
             affiliates: [

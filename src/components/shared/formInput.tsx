@@ -7,7 +7,7 @@ import { useFormikContext, getIn } from 'formik';
 
 
 interface IProps {
-    name: string;                 // 👈 full formik path (e.g. productTypeData[0].ticketType)
+    name: string;           
     height?: string;
     placeholder?: string;
     label?: string;

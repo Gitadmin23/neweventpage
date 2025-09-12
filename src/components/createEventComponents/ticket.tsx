@@ -136,6 +136,7 @@ export default function Ticket(
                                         <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
                                         <NumberPicker value={ticket.maxTicketBuy} name={`productTypeData[${index}].maxTicketBuy`} setValue={formik.setFieldValue} />
                                     </Flex>
+                                    <TicketFormInput textarea={true} name={`productTypeData[${index}].description`} label="Enter Ticket Description" />
                                 </Flex>
                                 {(formik.values.productTypeData.length > 1 && checkticketSold(index) <= 0) && (
                                     <CustomButton ml={"auto"} onClick={() => handleRemoveTicket(index)} text={"Remove ticket type"} maxW={"200px"} color={"red"} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />

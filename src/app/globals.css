@@ -63,7 +63,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .editorClassName {
-  max-height: 100px;
+  max-height: 190px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;

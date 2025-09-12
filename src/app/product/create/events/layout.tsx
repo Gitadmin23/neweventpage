@@ -8,7 +8,6 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
     return (
         <Flex w={"full"} flexDir={["column", "column", "row"]} h={"full"} >
             <Flex w={["full", "full", "fit"]} >

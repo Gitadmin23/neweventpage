@@ -121,6 +121,7 @@ export default function EarlyBirdBtn(
                         <CustomDatePicker label="Start *" end={value?.endDate} name={["productTypeData[0].startDate", "productTypeData[0].startTime", "productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.startDate} setValue={setValue} />
                         <CustomDatePicker label="End *" start={value?.productTypeData[0]?.startDate}  end={value?.endDate} name={["productTypeData[0].endDate", "productTypeData[0].endTime"]} value={value?.productTypeData[0]?.endDate} setValue={setValue} />
                     </Flex>
+                    <TicketFormInput textarea={true} name={`productTypeData[0].description`} label="Enter Ticket Description" />
                     <Flex w={"full"} justifyContent={"end"} >
                         <CustomButton onClick={closeHandler} text={"Done"} px={"6"} width={"fit-content"} borderRadius={"999px"} />
                     </Flex>

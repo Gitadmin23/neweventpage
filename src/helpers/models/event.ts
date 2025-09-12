@@ -77,4 +77,5 @@ export interface IProductTypeData {
     endTime?: string | number,
     startDate?: string | number,
     startTime?: string | number
+    description: string
 }

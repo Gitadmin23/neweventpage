@@ -1,5 +1,5 @@
 import { Badge, Button, CloseButton, Drawer, Flex, IconButton, Kbd, Portal, Text } from "@chakra-ui/react";
-import { CustomButton, ModalLayout, ProductImageScroller } from "../shared";
+import { CustomButton, DescriptionCard, ModalLayout, ProductImageScroller } from "../shared";
 import React, { useEffect, useState } from "react";
 import { IEventType, IProductTypeData } from "@/helpers/models/event";
 import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
@@ -136,7 +136,7 @@ export default function SelectTicketBtn(
     return (
         <Flex w={"full"} gap={"2"} flexDir={"column"} >
             <Text fontWeight={"500"} fontSize={["xs", "xs", "sm"]} >See ticket{productTypeData?.length > 1 ? "s" : ""} available for this event</Text>
-            <Flex w={"full"} justifyContent={"end"} > 
+            <Flex w={"full"} justifyContent={"end"} >
                 <CustomButton onClick={() => setOpen(true)} borderRadius={"999px"} fontSize={"14px"} text={"Select Ticket here"} />
             </Flex>
             <ModalLayout size={["full", "full", "xl"]} closeBtn={true} open={open} close={() => setOpen(false)} trigger={true} >
@@ -155,8 +155,8 @@ export default function SelectTicketBtn(
                                     {productTypeData?.map((item, index) => {
                                         if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
-                                                <Flex flexDir={["column", "column", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} py={"4"} >
-                                                    <Flex flexDir={"column"} gap={"2"} >
+                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} alignItems={"center"} minH={"110px"} height={"fit"} px={"4"} py={"4"} >
+                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -181,6 +181,16 @@ export default function SelectTicketBtn(
                                                                         Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
                                                                     </Badge>
                                                                 }
+                                                            </>
+                                                        )}
+                                                        {item?.description && (
+                                                            <>
+                                                                <Flex display={["none", "none", "flex"]} >
+                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                </Flex>
+                                                                <Flex display={["flex", "flex", "none"]} >
+                                                                    <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                                </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
@@ -208,8 +218,8 @@ export default function SelectTicketBtn(
                                             )
                                         } else if (item.ticketType !== "Early Bird") {
                                             return (
-                                                <Flex flexDir={["column", "column", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} px={"4"} py={"4"} >
-                                                    <Flex flexDir={"column"} gap={"2"} >
+                                                <Flex flexDir={["row", "row", "row"]} gap={"2"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} rounded={"8px"} minH={"110px"} height={"fit"} alignItems={"center"} px={"4"} py={"4"} >
+                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
@@ -234,6 +244,16 @@ export default function SelectTicketBtn(
                                                                         Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
                                                                     </Badge>
                                                                 }
+                                                            </>
+                                                        )}
+                                                        {item?.description && (
+                                                            <>
+                                                                <Flex display={["none", "none", "flex"]} >
+                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                </Flex>
+                                                                <Flex display={["flex", "flex", "none"]} >
+                                                                    <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                                </Flex>
                                                             </>
                                                         )}
                                                     </Flex>
@@ -305,7 +325,7 @@ export default function SelectTicketBtn(
                                     {productTypeData?.map((item, index) => {
                                         if (new Date(Number(item?.startDate)) <= new Date() && item.ticketType === "Early Bird") {
                                             return (
-                                                <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
+                                                <Flex flex={"1"} _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"}>
                                                     <Flex flexDir={"column"} gap={"2"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
@@ -327,14 +347,21 @@ export default function SelectTicketBtn(
                                                                         Tickets sold out
                                                                     </Badge>
                                                                     :
-                                                                    <Badge colorPalette={"blue"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                    <Badge colorPalette={"blue"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
                                                                     </Badge>
                                                                 }
                                                             </>
                                                         )}
+                                                        {item?.description && (
+                                                            <>
+                                                                <Flex display={["none", "none", "flex"]} >
+                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                </Flex>
+                                                            </>
+                                                        )}
                                                     </Flex>
-                                                    <Flex gap={"3"} alignItems={"center"} >
+                                                    <Flex gap={"3"} w={"fit"} alignItems={"center"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
@@ -354,21 +381,28 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
                                                         </IconButton>
                                                     </Flex>
+                                                    {item?.description && (
+                                                        <>
+                                                            <Flex display={["flex", "flex", "none"]} >
+                                                                <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                            </Flex>
+                                                        </>
+                                                    )}
                                                 </Flex>
                                             )
                                         } else if (item.ticketType !== "Early Bird") {
                                             return (
-                                                <Flex _hover={{ borderColor: primaryColor }} key={index} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"110px"} >
-                                                    <Flex flexDir={"column"} gap={"2"} >
+                                                <Flex _hover={{ borderColor: primaryColor }} key={index} gap={"2"} w={"full"} borderWidth={"1px"} justifyContent={"space-between"} alignItems={"center"} rounded={"8px"} px={"4"} height={"fit"} minH={"110px"} py={"2"} >
+                                                    <Flex flex={"1"} flexDir={"column"} gap={"2"} >
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
                                                                 {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
-                                                                    <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                    <Badge colorPalette={"red"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
                                                                     :
-                                                                    <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                    <Badge colorPalette={"red"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Sales ends on {dateFormat(item.endDate)} {timeFormat(item.endDate)}
                                                                     </Badge>
                                                                 }
@@ -376,18 +410,25 @@ export default function SelectTicketBtn(
                                                         ) : (
                                                             <>
                                                                 {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
-                                                                    <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                    <Badge colorPalette={"red"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
                                                                     :
-                                                                    <Badge colorPalette={"blue"} fontSize={"sm"} px={"3"} rounded={"full"} >
+                                                                    <Badge colorPalette={"blue"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
                                                                     </Badge>
                                                                 }
                                                             </>
                                                         )}
+                                                        {item?.description && (
+                                                            <>
+                                                                <Flex display={["none", "none", "flex"]} >
+                                                                    <DescriptionCard ticket={true} limit={1000} label='' description={item?.description} />
+                                                                </Flex>
+                                                            </>
+                                                        )}
                                                     </Flex>
-                                                    <Flex gap={"3"} alignItems={"center"} >
+                                                    <Flex w={"fit"} gap={"3"} alignItems={"center"} >
                                                         <IconButton onClick={() => clickHandler({
                                                             item: item,
                                                             type: "reduce"
@@ -407,6 +448,13 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >+</Text>
                                                         </IconButton>
                                                     </Flex>
+                                                    {item?.description && (
+                                                        <>
+                                                            <Flex display={["flex", "flex", "none"]} >
+                                                                <DescriptionCard ticket={true} limit={750} label='' description={item?.description} />
+                                                            </Flex>
+                                                        </>
+                                                    )}
                                                 </Flex>
                                             )
                                         }
@@ -446,7 +494,7 @@ export default function SelectTicketBtn(
                         </Flex>
                     </Flex>
                 </Flex>
-            </ModalLayout> 
+            </ModalLayout>
         </Flex>
     )
 }
