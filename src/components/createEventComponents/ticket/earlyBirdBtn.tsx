@@ -105,7 +105,7 @@ export default function EarlyBirdBtn(
                 }
             </Flex>
             <ModalLayout open={open} size={["full", "full" , "lg"]} trigger={true} close={removeHandler} closeBtn={true} >
-                <Flex pos={"relative"} w={"full"} h={["100vh", "100vh" ,"fit-content"]} overflowY={"auto"}  flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
+                <Flex pos={"relative"} w={"full"} h={["100vh", "100vh" ,"80vh"]} overflowY={"auto"}  flexDir={"column"} rounded={"2xl"} gap={"4"} p={"4"} >
                     <Flex flexDir={"column"} gap={"2"} >
                         <Text fontSize={"22px"} fontWeight={"600"} >Early Bird Ticket</Text>
                         <Text>Enter the ticket information</Text>
