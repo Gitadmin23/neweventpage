@@ -79,3 +79,50 @@ export interface IProductTypeData {
     startTime?: string | number
     description: string
 }
+
+export interface ICreateEvent {
+    picUrls: Array<string>,
+    eventType: string,
+    eventName: string,
+    eventDescription: string,
+    isPublic: boolean,
+    currentPicUrl: string,
+    eventFunnelGroupID: string,
+    attendeesVisibility: boolean,
+    startTime: string,
+    endTime: string,
+    startDate: string,
+    endDate: string,
+    locationType: string,
+    currency: string,
+    additionalMessage: string
+    "location": {
+        "link": string,
+        "links": Array<string>,
+        "address": string,
+        "locationDetails": string,
+        "latlng": string,
+        "placeIds": string,
+        "toBeAnnounced": boolean
+    },
+    "productTypeData": [
+        {
+            "totalNumberOfTickets": number | any,
+            "ticketPrice": number | any,
+            "ticketType": string,
+            "minTicketBuy": number | any,
+            "maxTicketBuy": number | any,
+            isFree: boolean,
+            description: string,
+            isHidden?: boolean
+        }
+    ],
+    collaborators: Array<any>,
+    admins: Array<any>,
+    affiliates: [
+        {
+            affiliateType: string,
+            percent: number | any
+        }
+    ]
+}

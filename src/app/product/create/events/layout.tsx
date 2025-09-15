@@ -14,8 +14,9 @@ export default function RootLayout({
                 <CreateEventSidebar />
             </Flex>
             <Flex w={"full"} pos={"relative"} h={"full"} >
-                <Flex w={"full"} flex={"1"} pos={["absolute"]} overflowY={"auto"} inset={"0px"} >
+                <Flex w={"full"} flex={"1"} flexDirection={"column"} pos={["absolute"]} overflowY={"auto"} inset={"0px"} >
                     {children}
+                    <Flex w={"full"} h={"100px"} />
                 </Flex>
             </Flex>
         </Flex>

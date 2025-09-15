@@ -1,5 +1,6 @@
 "use client"
 import { toaster } from "@/components/ui/toaster"; 
+import { ICreateEvent } from "@/helpers/models/event";
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
 import { useImage } from "@/helpers/store/useImagePicker";
@@ -10,53 +11,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useFormik } from "formik";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-
-
-interface ICreateEvent {
-    picUrls: Array<string>,
-    eventType: string,
-    eventName: string,
-    eventDescription: string,
-    isPublic: boolean,
-    currentPicUrl: string,
-    eventFunnelGroupID: string,
-    attendeesVisibility: boolean,
-    startTime: string,
-    endTime: string,
-    startDate: string,
-    endDate: string,
-    locationType: string,
-    currency: string,
-    "location": {
-        "link": string,
-        "links": Array<string>,
-        "address": string,
-        "locationDetails": string,
-        "latlng": string,
-        "placeIds": string,
-        "toBeAnnounced": boolean
-    },
-    "productTypeData": [
-        {
-            "totalNumberOfTickets": number | any,
-            "ticketPrice": number | any,
-            "ticketType": string,
-            "minTicketBuy": number | any,
-            "maxTicketBuy": number | any,
-            isFree: boolean,
-            description: string,
-            isHidden?: boolean
-        }
-    ],
-    collaborators: Array<any>,
-    admins: Array<any>,
-    affiliates: [
-        {
-            affiliateType: string,
-            percent: number | any
-        }
-    ]
-}
 
 const useEvent = () => {
 
@@ -142,6 +96,7 @@ const useEvent = () => {
                 affiliates: data?.data.affiliates,
                 collaborators: data?.data.collaborators,
                 admins: data?.data.admins,
+                additionalMessage: data?.data.additionalMessage ?? "" 
             })
 
             if (type === "info") {
@@ -282,6 +237,7 @@ const useEvent = () => {
             endDate: "",
             locationType: "",
             currency: "NGN",
+            additionalMessage: "",
             "location": {
                 "link": "",
                 "links": [],

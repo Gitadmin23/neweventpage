@@ -45,7 +45,8 @@ const useGetUser = () => {
     return {
         user,
         isLoading,
-        show
+        show,
+        setShow
     };
 }
 

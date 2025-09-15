@@ -230,7 +230,7 @@ export default function SideBar({count}: {count: string}) {
                 </Flex>
             </ModalLayout>
 
-            <ModalLayout size={"xs"} trigger={true} open={show} close={()=> console.log("logout")} >
+            <ModalLayout size={"xs"} trigger={true} open={show} close={()=> setOpen(false)} >
                 <Flex
                     width={"100%"}
                     height={"100%"}
@@ -240,6 +240,8 @@ export default function SideBar({count}: {count: string}) {
                     flexDirection={"column"}
                     bgColor={mainBackgroundColor}
                     p={"6"}
+                    position={"relative"}
+                    zIndex={"50"}
                     alignItems={"center"}
                 >
                     <Flex
@@ -265,9 +267,10 @@ export default function SideBar({count}: {count: string}) {
                             bg={primaryColor}
                             width="60%"
                             fontWeight={"600"}
+                            cursor={"pointer"}
                             height={"45px"}
-                            color="white"
-                            onClick={login}
+                            color="white" 
+                            onClick={()=> login()} 
                         >
                             Login
                         </Button> 

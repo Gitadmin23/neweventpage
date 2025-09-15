@@ -1,6 +1,6 @@
 "use client"
-import { Flex, Text } from "@chakra-ui/react";
-import { CustomButton, CustomInput, TicketFormInput } from "../shared";
+import { Flex, Image, Text } from "@chakra-ui/react";
+import { CustomButton, CustomInput, ModalLayout, TicketFormInput } from "../shared";
 import NumberPicker from "./ticket/numberPicker";
 import useCustomTheme from "@/hooks/useTheme";
 import { useState } from "react";
@@ -9,8 +9,11 @@ import GetCommunity from "./communityFunnel/getCommunityFunnel";
 import CollaboratorBtn from "../shared/addCollaborator";
 import { usePathname, useRouter } from "next/navigation";
 import EarlyBirdBtn from "./ticket/earlyBirdBtn";
-import { IEventType } from "@/helpers/models/event";
-import { FormikProvider } from "formik";
+import { ICreateEvent, IEventType } from "@/helpers/models/event";
+import { FormikProps } from "formik";
+import { dateFormat, timeFormat } from "@/helpers/utils/dateFormat";
+import useGetUser from "@/hooks/useGetUser";
+import { useDetails } from "@/helpers/store/useUserDetails";
 
 export default function Ticket(
     {
@@ -19,7 +22,7 @@ export default function Ticket(
         eventData
     }: {
         isLoading: boolean;
-        formik: any,
+        formik: FormikProps<ICreateEvent>,
         eventData?: IEventType
     }
 ) {
@@ -33,8 +36,9 @@ export default function Ticket(
     } = useCustomTheme()
 
     const [tab, setTab] = useState(false)
-    // const query = useSearchParams(); 
-    // const id = query?.get('id');
+    const [open, setOpen] = useState(false)
+
+    const { email, user } = useDetails((state) => state);
 
     const pathname = usePathname()
     const handleAddTicket = () => {
@@ -98,67 +102,90 @@ export default function Ticket(
         return eventData?.productTypeData[index]?.ticketsSold ?? 0
     }
 
-    console.log(formik);
-
-
-
     return (
-            <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} px={"4"} >
-                <Flex w={"full"} flexDir={"column"} >
-                    <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Set your ticket Prices and customize it</Text>
-                    <Text fontSize={"14px"} mb={"2"} >Effortlessly invite Attendees with Ticket Generation</Text>
-                </Flex>
-                <Flex w={"full"} rounded={"full"} bgColor={mainBackgroundColor} p={"2"} borderWidth={"1px"} borderColor={borderColor} >
-                    <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("ticket")} width={"50%"} height={"40px"} text={"Paid"} backgroundColor={tab ? mainBackgroundColor : secondaryBackgroundColor} color={tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
-                    <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("free")} width={"50%"} height={"40px"} text={"Free"} backgroundColor={!tab ? mainBackgroundColor : secondaryBackgroundColor} color={!tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
-                </Flex>
-                {!tab && (
-                    <EarlyBirdBtn eventData={eventData} value={formik.values} setValue={formik.setFieldValue} />
-                )}
-                <Text fontSize={"14px"} fontWeight={"medium"} >Other Ticket Types</Text>
-                {formik.values?.productTypeData?.map((ticket: any, index: number) => {
-                    if (ticket.ticketType !== "Early Bird") {
-                        return (
-                            <Flex key={index} w={"full"} flexDir={"column"} gap={"4"} >
-                                <Flex w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} borderWidth={"1px"} p={"4"} >
-                                    <Flex w={"full"} gap={"3"} flexDir={["column", "column", "row"]}  >
-                                        <TicketFormInput
-                                            disabled={eventData?.ticketBought && length >= index+1 && !pathname.includes("draft")} 
-                                            key={index}
-                                            name={`productTypeData[${index}].ticketType`}
-                                            label="Ticket Type"
-                                            placeholder="Enter ticket type"
-                                        />
-                                        <TicketFormInput disabled={ticket.isFree} type="number" name={`productTypeData[${index}].ticketPrice`} label="Enter Price" />
-                                    </Flex>
-                                    <TicketFormInput type="number" name={`productTypeData[${index}].totalNumberOfTickets`} label="Total number of tickets available to be sold for your events" />
-                                    <Flex flexDir={"column"} gap={"0.5"} >
-                                        <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
-                                        <NumberPicker value={ticket.maxTicketBuy} name={`productTypeData[${index}].maxTicketBuy`} setValue={formik.setFieldValue} />
-                                    </Flex>
-                                    <TicketFormInput textarea={true} name={`productTypeData[${index}].description`} label="Enter Ticket Description" />
+        <Flex w={"full"} h={"full"} flexDir={"column"} gap={"4"} px={"4"} >
+            <Flex w={"full"} flexDir={"column"} >
+                <Text fontSize={["18px", "18px", "20px"]} fontWeight={"semibold"} >Set your ticket Prices and customize it</Text>
+                <Text fontSize={"14px"} mb={"2"} >Effortlessly invite Attendees with Ticket Generation</Text>
+            </Flex>
+            <Flex w={"full"} rounded={"full"} bgColor={mainBackgroundColor} p={"2"} borderWidth={"1px"} borderColor={borderColor} >
+                <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("ticket")} width={"50%"} height={"40px"} text={"Paid"} backgroundColor={tab ? mainBackgroundColor : secondaryBackgroundColor} color={tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
+                <CustomButton disable={eventData?.ticketBought} onClick={() => tabHandler("free")} width={"50%"} height={"40px"} text={"Free"} backgroundColor={!tab ? mainBackgroundColor : secondaryBackgroundColor} color={!tab ? headerTextColor : primaryColor} borderRadius={"999px"} />
+            </Flex>
+            {!tab && (
+                <EarlyBirdBtn eventData={eventData} value={formik.values} setValue={formik.setFieldValue} />
+            )}
+            <Text fontSize={"14px"} fontWeight={"medium"} >Other Ticket Types</Text>
+            {formik.values?.productTypeData?.map((ticket: any, index: number) => {
+                if (ticket.ticketType !== "Early Bird") {
+                    return (
+                        <Flex key={index} w={"full"} flexDir={"column"} gap={"4"} >
+                            <Flex w={"full"} flexDir={"column"} rounded={"2xl"} gap={"4"} borderWidth={"1px"} p={"4"} >
+                                <Flex w={"full"} gap={"3"} flexDir={["column", "column", "row"]}  >
+                                    <TicketFormInput
+                                        disabled={eventData?.ticketBought && length >= index + 1 && !pathname.includes("draft")}
+                                        key={index}
+                                        name={`productTypeData[${index}].ticketType`}
+                                        label="Ticket Type"
+                                        placeholder="Enter ticket type"
+                                    />
+                                    <TicketFormInput disabled={ticket.isFree} type="number" name={`productTypeData[${index}].ticketPrice`} label="Enter Price" />
                                 </Flex>
-                                {(formik.values.productTypeData.length > 1 && checkticketSold(index) <= 0) && (
-                                    <CustomButton ml={"auto"} onClick={() => handleRemoveTicket(index)} text={"Remove ticket type"} maxW={"200px"} color={"red"} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
-                                )}
+                                <TicketFormInput type="number" name={`productTypeData[${index}].totalNumberOfTickets`} label="Total number of tickets available to be sold for your events" />
+                                <Flex flexDir={"column"} gap={"0.5"} >
+                                    <Text fontSize={"14px"} fontWeight={"medium"} >Indicate the maximum number of tickets each user can purchase for your event</Text>
+                                    <NumberPicker value={ticket.maxTicketBuy} name={`productTypeData[${index}].maxTicketBuy`} setValue={formik.setFieldValue} />
+                                </Flex>
+                                <TicketFormInput textarea={true} name={`productTypeData[${index}].description`} label="Enter Ticket Description" />
                             </Flex>
-                        )
-                    }
-                })}
-                {/* {(!eventData?.ticketBought) && ( */}
-                <CustomButton onClick={handleAddTicket} text={"Add new ticket type"} maxW={"200px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
-                {/* )} */}
+                            {(formik.values.productTypeData.length > 1 && checkticketSold(index) <= 0) && (
+                                <CustomButton ml={"auto"} onClick={() => handleRemoveTicket(index)} text={"Remove ticket type"} maxW={"200px"} color={"red"} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
+                            )}
+                        </Flex>
+                    )
+                }
+            })}
+            <Flex w={"full"} justifyContent={"space-between"} gap={"4"} >
+                <CustomButton onClick={handleAddTicket} text={"Add new ticket type"} maxW={"160px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
 
-                <CustomInput disabled={true} name={`currency`} label="Currency" />
-                <GetCommunity value={formik.values.eventFunnelGroupID} setValue={formik.setFieldValue} />
-                <Flex w={"full"} flexDir={["column", "column", "row"]} gap={"3"} justifyContent={"space-between"} >
-                    <FunnelBtn setValue={formik?.setFieldValue} value={formik.values.eventFunnelGroupID} />
-                    <CollaboratorBtn value={formik.values} setValue={formik.setFieldValue} btn={true} addCollaborator={true} />
+                <CustomButton onClick={() => setOpen(true)} text={"Email Template"} maxW={"160px"} color={primaryColor} backgroundColor={secondaryBackgroundColor} borderRadius={"999px"} fontSize={"14px"} />
+            </Flex>
+
+            <CustomInput disabled={true} name={`currency`} label="Currency" />
+            <GetCommunity value={formik.values.eventFunnelGroupID} setValue={formik.setFieldValue} />
+            <Flex w={"full"} flexDir={["column", "column", "row"]} gap={"3"} justifyContent={"space-between"} >
+                <FunnelBtn setValue={formik?.setFieldValue} value={formik.values.eventFunnelGroupID} />
+                <CollaboratorBtn value={formik.values} setValue={formik.setFieldValue} btn={true} addCollaborator={true} />
+            </Flex>
+            <Flex justifyContent={"end"} py={"6"} flexDir={["column", "column", "row"]} gap={"3"} mt={"auto"} >
+                <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={mainBackgroundColor} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+                <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
+            </Flex>
+            <ModalLayout open={open} trigger={true} size={"xl"} closeBtn close={() => setOpen(false)} >
+                <Flex w={"full"} h={"80vh"} gap={"4"} p={"7"} flexDirection={"column"} >
+                    <Flex gap={"2"} alignItems={"center"} >
+                        <Image src={"/images/logo.png"} alt="logo" w={"50px"} h={"50px"} />
+                        <Text fontSize={"25px"} fontWeight={"semibold"} >Chase<span style={{ color: primaryColor }} >scroll</span></Text>
+                    </Flex>
+                    <Flex w={"full"} flexDir={"column"} gap={"4"} pt={"6"} >
+                        <Text color={primaryColor} fontSize={"20px"} pb={"6"} textAlign={"center"} fontWeight={"semibold"} >Email Template</Text>
+                        <Text>Hello {user?.firstName + " " + user?.lastName},</Text>
+                        <Text>Thank you for securing your ticket to <span style={{ color: primaryColor, fontWeight: "600" }} >{formik?.values?.eventName}</span> We're excited to have you join us for an unforgettable experience filled with connections, insights, and impact</Text>
+                        <Flex flexDir={"column"} gap={"1"} >
+                            <Text color={primaryColor} fontWeight={"600"} >Event Details</Text>
+                            <Text>Event Name: <span style={{ fontWeight: "600" }} >{formik?.values?.eventName}</span></Text>
+                            <Text>Date: <span style={{ fontWeight: "600" }} >{dateFormat(formik?.values?.startDate)}</span></Text>
+                            <Text>Venue: <span style={{ fontWeight: "600" }} >{formik?.values?.location?.toBeAnnounced ? "To Be Announced" : formik?.values?.location?.locationDetails ? formik?.values?.location?.locationDetails : formik?.values?.location?.link}</span></Text>
+                            <Text>Time: {timeFormat(formik?.values?.startDate)}</Text>
+                            <Text>Your ticket is confirmed—no need to print anything. Simply bring this email or a screenshot your digital ticket with QR code on your phone for check-in.</Text>
+                        </Flex>
+                        <Flex flexDir={"column"} >
+                            <CustomInput textarea={true} name={`additionalMessage`} label="Additional message here:" />
+                        </Flex>
+                        <CustomButton isLoading={isLoading} onClick={()=> setOpen(false)} text={"Done"} maxW={["150px"]} ml={"auto"} borderRadius={"999px"} />
+                    </Flex>
                 </Flex>
-                <Flex justifyContent={"end"} py={"6"} flexDir={["column", "column", "row"]} gap={"3"} mt={"auto"} >
-                    <CustomButton onClick={() => router.back()} text={"Back"} borderColor={primaryColor} backgroundColor={mainBackgroundColor} color={primaryColor} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
-                    <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
-                </Flex>
-            </Flex> 
+            </ModalLayout>
+        </Flex>
     )
 }

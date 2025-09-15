@@ -83,7 +83,7 @@ export default function TicketFormInput({
                     {label}
                 </Text>
             )}
-            <Flex w={"full"} h={"300px"} >
+            <Flex w={"full"} h={"320px"} >
                 <Editor
                     editorState={editorState}
                     toolbar={{
