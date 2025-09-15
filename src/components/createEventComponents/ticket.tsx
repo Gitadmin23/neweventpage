@@ -162,7 +162,7 @@ export default function Ticket(
                 <CustomButton isLoading={isLoading} onClick={clickHandler} text={"Submit"} maxW={["full", "full", "250px"]} borderRadius={"999px"} />
             </Flex>
             <ModalLayout open={open} trigger={true} size={"xl"} closeBtn close={() => setOpen(false)} >
-                <Flex w={"full"} h={"80vh"} gap={"4"} p={"7"} flexDirection={"column"} >
+                <Flex w={"full"} h={"80vh"} overflowY={"auto"} gap={"4"} p={"7"} flexDirection={"column"} >
                     <Flex gap={"2"} alignItems={"center"} >
                         <Image src={"/images/logo.png"} alt="logo" w={"50px"} h={"50px"} />
                         <Text fontSize={"25px"} fontWeight={"semibold"} >Chase<span style={{ color: primaryColor }} >scroll</span></Text>
