@@ -87,50 +87,6 @@ export default function BottomBar({count} : {count: string}) {
                 </Flex>
                 <Text fontSize={"10px"} color={bodyTextColor} fontWeight={"medium"} >Profile</Text>
             </Flex>
-            <ModalLayout size={"xs"} trigger={true} open={show} close={() => console.log("logout")} >
-                <Flex
-                    width={"100%"}
-                    height={"100%"}
-                    justifyContent={"center"}
-                    gap={1}
-                    rounded={"lg"}
-                    flexDirection={"column"}
-                    bgColor={mainBackgroundColor}
-                    p={"6"}
-                    alignItems={"center"}
-                >
-                    <Flex
-                        width="60px"
-                        height={"60px"}
-                        borderRadius={"full"}
-                        justifyContent={"center"}
-                        bg="#df26263b"
-                        alignItems={"center"}
-                    >
-                        <Login />
-                    </Flex>
-                    <Text fontSize={"24px"} mt={"4"} fontWeight={"600"} >
-                        Session Expired
-                    </Text>
-                    <Text fontSize={"sm"} textAlign={"center"} >Your session has expired. please log in again to continue</Text>
-                    <Flex justifyContent={"center"} mt={4} roundedBottom={"lg"} gap={"3"} width={"100%"}>
-                        <Button
-                            borderColor={primaryColor}
-                        
-                            rounded={"full"}
-                            _hover={{ backgroundColor: primaryColor }}
-                            bg={primaryColor}
-                            width="60%"
-                            fontWeight={"600"}
-                            height={"45px"}
-                            color="white"
-                            onClick={login}
-                        >
-                            Login
-                        </Button>
-                    </Flex>
-                </Flex>
-            </ModalLayout>
         </Flex>
     )
 }

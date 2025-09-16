@@ -59,9 +59,9 @@ export default function DashboardLayout(
     }
 
     return (
-        <Flex w={"100vw"} h={"100vh"} pos={"fixed"} inset={"0px"} color={headerTextColor} bgColor={mainBackgroundColor} >
+        <Flex w={"100vw"} pos={"absolute"} inset={"0px"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
-                <SideBar count={count} isLoading={isLoading} user={user as IUser} />
+                <SideBar isLoading={isLoading} user={user as IUser} count={count} />
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
@@ -69,9 +69,9 @@ export default function DashboardLayout(
                         <Navbar />
                     </Flex>
                 )}
-                <Flex w={"full"} h={"full"} pos={"relative"} >
-                    <Flex w={"full"} pos={"absolute"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
-                        {children}
+                <Flex w={"full"} h={"full"} pos={"relative"}  overflowY={"auto"} >
+                    <Flex w={"full"} pos={"absolute"}  bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
+                            {children} 
                     </Flex>
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} zIndex={"-5"} w={"full"} h={"full"} overflow={"hidden"} >
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
@@ -89,15 +89,11 @@ export default function DashboardLayout(
                     </Grid>
                 </Flex>
                 {!frame && (
-                    <Flex w={"full"} h={"fit-content"} display={["flex", "flex", "flex", "none", "none"]} >
-                        <Flex w={"full"} >
-                            <BottomBar count={count} />
-                        </Flex>
-                    </Flex>
+                    <BottomBar count={count} />
                 )}
             </Flex>
 
-            <ModalLayout size={"xs"} trigger={true} open={show} close={() => setShow(false)} >
+            <ModalLayout size={"xs"} trigger={true} open={false} close={() => setShow(false)} >
                 <Flex
                     width={"100%"}
                     height={"100%"}
