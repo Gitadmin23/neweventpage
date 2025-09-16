@@ -10,7 +10,7 @@ import { useImage } from "@/helpers/store/useImagePicker";
 import useSearchStore from "@/helpers/store/useSearchData";
 import { useColorMode } from "../ui/color-mode";
 import useNotificationHook from "@/hooks/useNotificationHook";
-import useGetUser from "@/hooks/useGetUser"; 
+import useGetUser from "@/hooks/useGetUser";
 import { ModalLayout } from "../shared";
 import { IUser } from "@/helpers/models/user";
 import { LANDINGPAGE_URL } from "@/helpers/services/urls";
@@ -29,21 +29,21 @@ export default function DashboardLayout(
 
     const { mainBackgroundColor, headerTextColor, primaryColor } = useCustomTheme()
 
-    const { setSearchValue } = useSearchStore((state)=> state)
+    const { setSearchValue } = useSearchStore((state) => state)
     const pathname = usePathname()
     const query = useSearchParams();
-    const frame = query?.get('frame'); 
-    const theme : any = query?.get('theme'); 
+    const frame = query?.get('frame');
+    const theme: any = query?.get('theme');
 
     const { setImage } = useImage((state: any) => state)
 
-    const { setColorMode } = useColorMode();  
-   
-    useEffect(() => { 
-        if(theme) {
-            setColorMode(theme) 
+    const { setColorMode } = useColorMode();
+
+    useEffect(() => {
+        if (theme) {
+            setColorMode(theme)
         }
-    }, [theme]);  
+    }, [theme]);
 
     useEffect(() => {
         setImage([])
@@ -70,9 +70,9 @@ export default function DashboardLayout(
                     </Flex>
                 )}
                 <Flex w={"full"} h={"full"} pos={"relative"} >
-                    <Flex w={"full"} pos={"absolute"} flexDir={"column"} overflowY={"auto"} pb={"0"} bottom={frame ? "0px" : ["0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]}  insetX={"0px"} >
+                    <Flex w={"full"} pos={"absolute"} flexDir={"column"} overflowY={"auto"} pb={"0"} bottom={frame ? "0px" : ["0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
                         {children}
-                    </Flex> 
+                    </Flex>
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} zIndex={"-5"} w={"full"} h={"full"} overflow={"hidden"} >
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
@@ -89,8 +89,10 @@ export default function DashboardLayout(
                     </Grid>
                 </Flex>
                 {!frame && (
-                    <Flex w={"full"} pos={"relative"} h={"70px"} mt={"auto"}  >
-                        <BottomBar count={count} />
+                    <Flex w={"full"} h={"fit-content"} >
+                        <Flex w={"full"} pos={"relative"} h={"70px"} >
+                            <BottomBar count={count} />
+                        </Flex>
                     </Flex>
                 )}
             </Flex>
