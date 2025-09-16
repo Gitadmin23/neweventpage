@@ -6,13 +6,13 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, Suspense, useState } from "react";
 import { ModalLayout, UserImage } from "../shared";
 import { Warning2 } from 'iconsax-react';
-import { useColorMode } from "../ui/color-mode";
-import useGetUser from "@/hooks/useGetUser";
+import { useColorMode } from "../ui/color-mode"; 
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
-import Cookies from "js-cookie" 
+import Cookies from "js-cookie"
 import { Login, LoginTwo } from "@/svg";
+import { IUser } from "@/helpers/models/user";
 
-export default function SideBar({count}: {count: string}) {
+export default function SideBar({ count, isLoading, user }: { count: string, isLoading: boolean, user: IUser }) {
 
 
     type IRoute = {
@@ -23,7 +23,6 @@ export default function SideBar({count}: {count: string}) {
 
     const router = useRouter()
 
-    const { isLoading, user, show } = useGetUser()
     // const { count } = useNotificationHook()
 
     const [open, setOpen] = useState(false)
@@ -75,14 +74,10 @@ export default function SideBar({count}: {count: string}) {
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
-    const login = () => {
-        Cookies.remove("chase_token")
-        window.location.href = `${LANDINGPAGE_URL}/logout`;
-    }
 
     const token = Cookies.get("chase_token")
 
-    const routeHandler = (item: string) => { 
+    const routeHandler = (item: string) => {
         if (item === "/product/events") {
             router.push("/product/events")
         } else {
@@ -103,77 +98,81 @@ export default function SideBar({count}: {count: string}) {
     }
 
     return (
-        <Flex w={"fit-content"} h={"screen"} bgColor={mainBackgroundColor} display={["none", "none", "none", "flex", "flex"]} >
-            <Flex w={"110px"} h={"screen"} gap={"4"} overflowY={"auto"} flexDir={"column"} py={"4"} alignItems={"center"} justifyContent={"space-between"} borderRightColor={borderColor} borderRightWidth={"1px"} >
-                <Box as='button' onClick={() => router?.push("/")} >
-                    <Image alt='logo' src='/images/logo.png' w={"50px"} />
-                </Box>
-                <Flex flexDir={"column"} alignItems={"center"} gap={"3"} >
-                    {routes?.map((item, index) => (
-                        <Flex cursor={"pointer"} key={index}>
-                            {item?.text !== "Notification" && (
-                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} pos={"relative"} cursor={"pointer"} onClick={() => routeHandler(item?.route)} key={index} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
-                                    <Box>
-                                        {item?.icon}
-                                    </Box>
-                                    <ToolTip content={item?.text} />
-                                </Flex>
-                            )}
-                            {item?.text === "Notification" && (
-                                <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} onClick={() => routeHandler(item?.route)} cursor={"pointer"} key={index} w={"75px"} h={"56px"} position={"relative"} justifyContent={"center"} alignItems={"center"} >
-                                    <Box>
-                                        {item?.icon}
-                                    </Box>
-                                    <ToolTip content={item?.text} />
-                                    {count && (
-                                        <Flex w={"5"} h={"5"} rounded={"full"} bg={primaryColor} color={"white"} justifyContent={"center"} position={"absolute"} top={"1"} right={"2"} alignItems={"center"} fontWeight={"semibold"} fontSize={"12px"}  >
-                                            {count}
-                                        </Flex>
-                                    )}
-                                </Flex>
-                            )}
+        <Flex pos={"relative"} > 
+            <Flex w={"fit-content"} h={"screen"} bgColor={mainBackgroundColor} display={["none", "none", "none", "flex", "flex"]} >
+                <Flex w={"110px"} h={"screen"} gap={"4"} overflowY={"auto"} flexDir={"column"} py={"4"} alignItems={"center"} justifyContent={"space-between"} borderRightColor={borderColor} borderRightWidth={"1px"} >
+                    <Box as='button' onClick={() => router?.push("/")} >
+                        <Image alt='logo' src='/images/logo.png' w={"50px"} />
+                    </Box>
+                    <Flex flexDir={"column"} alignItems={"center"} gap={"3"} >
+                        {routes?.map((item, index) => (
+                            <Flex cursor={"pointer"} key={index}>
+                                {item?.text !== "Notification" && (
+                                    <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} pos={"relative"} cursor={"pointer"} onClick={() => routeHandler(item?.route)} key={index} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
+                                        <Box>
+                                            {item?.icon}
+                                        </Box>
+                                        <ToolTip content={item?.text} />
+                                    </Flex>
+                                )}
+                                {item?.text === "Notification" && (
+                                    <Flex onMouseOver={() => setActiveBar(item?.text)} onMouseOut={() => setActiveBar("")} onClick={() => routeHandler(item?.route)} cursor={"pointer"} key={index} w={"75px"} h={"56px"} position={"relative"} justifyContent={"center"} alignItems={"center"} >
+                                        <Box>
+                                            {item?.icon}
+                                        </Box>
+                                        <ToolTip content={item?.text} />
+                                        {count && (
+                                            <Flex w={"5"} h={"5"} rounded={"full"} bg={primaryColor} color={"white"} justifyContent={"center"} position={"absolute"} top={"1"} right={"2"} alignItems={"center"} fontWeight={"semibold"} fontSize={"12px"}  >
+                                                {count}
+                                            </Flex>
+                                        )}
+                                    </Flex>
+                                )}
+                            </Flex>
+                        ))}
+                    </Flex>
+
+                    <Flex flexDir={"column"} alignItems={"center"} >
+
+                        <Flex position={"relative"} onMouseOver={() => setActiveBar("darkmode")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
+                            <Box>
+                                <Switch.Root
+                                    size={"lg"}
+                                    checked={colorMode === 'dark'}
+                                    onCheckedChange={() => toggleColorMode()}
+                                >
+                                    <Switch.HiddenInput />
+                                    <Switch.Control />
+                                </Switch.Root>
+                                {/* <CustomSwitch checked={colorMode === 'dark'} onChange={() => toggleColorMode()} /> */}
+                            </Box>
+                            <ToolTip content={"darkmode"} />
                         </Flex>
-                    ))}
+                        <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
+                            <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
+                                {isLoading ? (
+                                    <Spinner color={primaryColor} />
+                                ) : (
+                                    <UserImage user={user} size="sm" />
+                                )}
+                            </Flex>
+                            <ToolTip content={"profile"} />
+                        </Flex>
+
+                        <Flex cursor={"pointer"} onClick={() => setOpen(true)} position={"relative"} onMouseOver={() => setActiveBar("logout")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
+                            <Box>
+                                <SidebarLogoutIcon />
+                            </Box>
+                            <ToolTip content={"logout"} />
+                        </Flex>
+                    </Flex>
                 </Flex>
 
-                <Flex flexDir={"column"} alignItems={"center"} >
-
-                    <Flex position={"relative"} onMouseOver={() => setActiveBar("darkmode")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
-                        <Box>
-                            <Switch.Root
-                                size={"lg"}
-                                checked={colorMode === 'dark'}
-                                onCheckedChange={() => toggleColorMode()}
-                            >
-                                <Switch.HiddenInput />
-                                <Switch.Control />
-                            </Switch.Root>
-                            {/* <CustomSwitch checked={colorMode === 'dark'} onChange={() => toggleColorMode()} /> */}
-                        </Box>
-                        <ToolTip content={"darkmode"} />
-                    </Flex>
-                    <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
-                        <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
-                            {isLoading ? (
-                                <Spinner color={primaryColor} />
-                            ) : (
-                                <UserImage user={user} size="sm" />
-                            )}
-                        </Flex>
-                        <ToolTip content={"profile"} />
-                    </Flex>
-
-                    <Flex cursor={"pointer"} onClick={() => setOpen(true)} position={"relative"} onMouseOver={() => setActiveBar("logout")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"56px"} justifyContent={"center"} alignItems={"center"} >
-                        <Box>
-                            <SidebarLogoutIcon />
-                        </Box>
-                        <ToolTip content={"logout"} />
-                    </Flex>
-                </Flex>
             </Flex>
+
             <ModalLayout size={"xs"} trigger={true} open={open} close={() => setOpen(false)} >
                 <Flex
-                    width={"100%"} 
+                    width={"100%"}
                     height={"100%"}
                     justifyContent={"center"}
                     gap={6}
@@ -183,7 +182,7 @@ export default function SideBar({count}: {count: string}) {
                     p={"6"}
                     alignItems={"center"}
                 >
-                    <Flex 
+                    <Flex
                         borderRadius={"full"}
                         justifyContent={"center"}
                         bg="#df26263b"
@@ -229,55 +228,6 @@ export default function SideBar({count}: {count: string}) {
                     </Flex>
                 </Flex>
             </ModalLayout>
-
-            <ModalLayout size={"xs"} trigger={true} open={show} close={()=> setOpen(false)} >
-                <Flex
-                    width={"100%"}
-                    height={"100%"}
-                    justifyContent={"center"}
-                    gap={1}
-                    rounded={"lg"}
-                    flexDirection={"column"}
-                    bgColor={mainBackgroundColor}
-                    p={"6"}
-                    position={"relative"}
-                    zIndex={"50"}
-                    alignItems={"center"}
-                >
-                    <Flex
-                        width="60px"
-                        height={"60px"}
-                        borderRadius={"full"}
-                        justifyContent={"center"}
-                        bg="#df26263b"
-                        alignItems={"center"}
-                    >
-                        <Login />
-                    </Flex>
-                    <Text fontSize={"24px"} mt={"4"} fontWeight={"600"} >
-                        Session Expired
-                    </Text>
-                    <Text fontSize={"sm"} textAlign={"center"} >Your session has expired. please log in again to continue</Text>
-                    <Flex justifyContent={"center"} mt={4} roundedBottom={"lg"} gap={"3"} width={"100%"}>
-                        <Button
-                            borderColor={primaryColor}
-                            borderWidth={"1px"}
-                            rounded={"full"}
-                            _hover={{ backgroundColor: primaryColor }}
-                            bg={primaryColor}
-                            width="60%"
-                            fontWeight={"600"}
-                            cursor={"pointer"}
-                            height={"45px"}
-                            color="white" 
-                            onClick={()=> login()} 
-                        >
-                            Login
-                        </Button> 
-                    </Flex>
-                </Flex>
-            </ModalLayout>
-            
         </Flex>
     )
 }

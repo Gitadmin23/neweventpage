@@ -1,5 +1,5 @@
 "use client"
-import { Flex, Grid, Image } from "@chakra-ui/react";
+import { Button, Flex, Grid, Image, Text } from "@chakra-ui/react";
 import useCustomTheme from "@/hooks/useTheme";
 import SideBar from "./sidebar";
 import Navbar from "./navbar";
@@ -10,6 +10,12 @@ import { useImage } from "@/helpers/store/useImagePicker";
 import useSearchStore from "@/helpers/store/useSearchData";
 import { useColorMode } from "../ui/color-mode";
 import useNotificationHook from "@/hooks/useNotificationHook";
+import useGetUser from "@/hooks/useGetUser"; 
+import { ModalLayout } from "../shared";
+import { IUser } from "@/helpers/models/user";
+import { LANDINGPAGE_URL } from "@/helpers/services/urls";
+import Cookies from "js-cookie"
+import { Login } from "@/svg";
 
 interface IProps {
     children: React.ReactNode
@@ -21,7 +27,7 @@ export default function DashboardLayout(
     }: IProps
 ) {
 
-    const { mainBackgroundColor, headerTextColor } = useCustomTheme()
+    const { mainBackgroundColor, headerTextColor, primaryColor } = useCustomTheme()
 
     const { setSearchValue } = useSearchStore((state)=> state)
     const pathname = usePathname()
@@ -45,11 +51,17 @@ export default function DashboardLayout(
     }, [pathname])
     const { count } = useNotificationHook()
     const { colorMode } = useColorMode();
+    const { isLoading, user, show, setShow } = useGetUser()
+
+    const login = () => {
+        Cookies.remove("chase_token")
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
+    }
 
     return (
         <Flex w={"100vw"} h={"100vh"} pos={"fixed"} inset={"0px"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
-                <SideBar count={count} />
+                <SideBar count={count} isLoading={isLoading} user={user as IUser} />
             )}
             <Flex w={"full"} height={"100vh"} pos={"relative"} flexDirection={"column"} >
                 {!frame && (
@@ -82,6 +94,54 @@ export default function DashboardLayout(
                     </Flex>
                 )}
             </Flex>
+
+            <ModalLayout size={"xs"} trigger={true} open={show} close={() => setShow(false)} >
+                <Flex
+                    width={"100%"}
+                    height={"100%"}
+                    justifyContent={"center"}
+                    gap={1}
+                    rounded={"lg"}
+                    flexDirection={"column"}
+                    bgColor={mainBackgroundColor}
+                    p={"6"}
+                    position={"relative"}
+                    zIndex={"50"}
+                    alignItems={"center"}
+                >
+                    <Flex
+                        width="60px"
+                        height={"60px"}
+                        borderRadius={"full"}
+                        justifyContent={"center"}
+                        bg="#df26263b"
+                        alignItems={"center"}
+                    >
+                        <Login />
+                    </Flex>
+                    <Text fontSize={"24px"} mt={"4"} fontWeight={"600"} >
+                        Session Expired
+                    </Text>
+                    <Text fontSize={"sm"} textAlign={"center"} >Your session has expired. please log in again to continue</Text>
+                    <Flex justifyContent={"center"} mt={4} roundedBottom={"lg"} gap={"3"} width={"100%"}>
+                        <Button
+                            borderColor={primaryColor}
+                            borderWidth={"1px"}
+                            rounded={"full"}
+                            _hover={{ backgroundColor: primaryColor }}
+                            bg={primaryColor}
+                            width="60%"
+                            fontWeight={"600"}
+                            cursor={"pointer"}
+                            height={"45px"}
+                            color="white"
+                            onClick={() => login()}
+                        >
+                            Login
+                        </Button>
+                    </Flex>
+                </Flex>
+            </ModalLayout>
         </Flex>
     )
 }

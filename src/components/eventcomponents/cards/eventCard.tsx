@@ -18,7 +18,7 @@ import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
 export default function EventCard(
     {
         event
-    } : {
+    }: {
         event: IEventType
     }
 ) {
@@ -139,23 +139,17 @@ export default function EventCard(
                                     </Flex>
                                     <Text color={primaryColor} textAlign={"left"} fontSize={"10px"} fontWeight={"500"} >{event?.location?.toBeAnnounced ? "To Be Announced" : textLimit(event?.location?.locationDetails + "", 15)}</Text>
                                 </Flex>
-                            </Flex> 
-                            {(event?.interestedUsers?.length > 0) && (
-                                <Flex alignItems={"center"} >
-                                    {/* {(event?.attendeesVisibility && !event?.eventName?.includes("evolving beyond the narrative") && !event?.eventName?.includes("Drip vibes fest")) && ( */}
+                            </Flex>
+                            <Flex h={"7"}>
+                                {(event?.interestedUsers?.length > 0) && (
+                                    <Flex alignItems={"center"} >
                                         <InterestedUsers
                                             size={"2xs"}
                                             event={event}
                                         />
-                                    {/* )} */}
-                                    {/* {event?.eventName?.includes("evolving beyond the narrative") || event?.eventName?.includes("Drip vibes fest") && (
-                                        <InterestedUsers
-                                            size={"2xs"}
-                                            event={event}
-                                        />
-                                    )} */}
-                                </Flex>
-                            )} 
+                                    </Flex>
+                                )}
+                            </Flex>
                         </Flex>
                     </Flex>
                 </Flex>
