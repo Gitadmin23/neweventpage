@@ -41,9 +41,7 @@ export default function DashboardMenuBtn() {
     //     window.location.href = `${LANDINGPAGE_URL}/logout`;
     // }
 
-    const clickHandler = () => {
-
-
+    const clickHandler = () => { 
         Cookies.remove("chase_token")
         window.location.href = `${LANDINGPAGE_URL}/logout`;
         setOpen(false)

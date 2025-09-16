@@ -44,7 +44,7 @@ export default function BottomBar({count} : {count: string}) {
 
 
     return (
-        <Flex px={"3"} pos={"fixed"} zIndex={8} bottom={"0px"} bgColor={mainBackgroundColor} alignItems={"center"} justifyContent={"space-between"} width='100%' height='70px' borderTopWidth={1} borderTopColor={borderColor} display={['flex', 'flex', 'flex', 'none', 'none']}>
+        <Flex px={"3"} pos={"fixed"} zIndex={8} bottom={"0px"} insetX={"0px"} bgColor={mainBackgroundColor} alignItems={"center"} justifyContent={"space-between"} width='100%' height='70px' borderTopWidth={1} borderTopColor={borderColor} display={['flex', 'flex', 'flex', 'none', 'none']}>
             <Flex onClick={() => routeHandler("dashboard")} cursor={"pointer"} flexDir={"column"} width={"full"} maxW={"50px"} color={pathname === "/dashboard" ? primaryColor : bodyTextColor} justifyContent={'center'} alignItems={'center'}>
                 <Flex justifyContent={"center"} alignItems={"center"} h={"34px"} >
                     <HomeIcon />
