@@ -69,8 +69,8 @@ export default function DashboardLayout(
                         <Navbar />
                     </Flex>
                 )}
-                <Flex w={"full"} h={"full"} pos={"relative"}  overflowY={"auto"} >
-                    <Flex w={"full"} pos={"absolute"}  bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
+                <Flex w={"full"} h={"full"} pos={"relative"} >
+                    <Flex w={"full"} pos={"absolute"} overflowY={"auto"} bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
                         {children} 
                     </Flex>
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} zIndex={"-5"} w={"full"} h={"full"} overflow={"hidden"} >
