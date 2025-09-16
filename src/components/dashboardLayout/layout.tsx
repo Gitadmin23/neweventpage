@@ -59,7 +59,7 @@ export default function DashboardLayout(
     }
 
     return (
-        <Flex w={"100vw"} pos={"absolute"} inset={"0px"} color={headerTextColor} bgColor={mainBackgroundColor} >
+        <Flex w={"100vw"} h={"100vh"} color={headerTextColor} bgColor={mainBackgroundColor} >
             {!frame && (
                 <SideBar isLoading={isLoading} user={user as IUser} count={count} />
             )}
