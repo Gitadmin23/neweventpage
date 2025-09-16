@@ -71,7 +71,7 @@ export default function DashboardLayout(
                 )}
                 <Flex w={"full"} h={"full"} pos={"relative"}  overflowY={"auto"} >
                     <Flex w={"full"} pos={"absolute"}  bottom={frame ? "0px" : ["70px", "70px", "70px", "0px", "0px", "0px"]} top={frame ? "0px" : ["76px", "76px", "76px", "0px", "0px"]} insetX={"0px"} >
-                            {children} 
+                        {children} 
                     </Flex>
                     <Grid templateColumns={["repeat(2, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)", "repeat(4, 1fr)"]} bgColor={colorMode !== "dark" ? "transparent" : "#000"} opacity={colorMode !== "dark" ? "100%" : "15%"} pos={"absolute"} inset={"0px"} zIndex={"-5"} w={"full"} h={"full"} overflow={"hidden"} >
                         <Image src='/images/bg.png' alt='bg' w={"full"} h={"full"} objectFit={"contain"} opacity={"40%"} />
@@ -91,9 +91,8 @@ export default function DashboardLayout(
                 {!frame && (
                     <BottomBar count={count} />
                 )}
-            </Flex>
-
-            <ModalLayout size={"xs"} trigger={true} open={false} close={() => setShow(false)} >
+            </Flex> 
+            <ModalLayout size={"xs"} trigger={true} open={show} close={() => setShow(true)} >
                 <Flex
                     width={"100%"}
                     height={"100%"}
