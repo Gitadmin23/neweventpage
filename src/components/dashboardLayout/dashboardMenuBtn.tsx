@@ -44,8 +44,8 @@ export default function DashboardMenuBtn() {
     const clickHandler = () => {
 
 
-        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/notification?token=${token}&theme=${colorMode}`;
-        // router.push("/dashboard/notification")
+        Cookies.remove("chase_token")
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
         setOpen(false)
     }
 
