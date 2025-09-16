@@ -89,7 +89,7 @@ export default function DashboardLayout(
                     </Grid>
                 </Flex>
                 {!frame && (
-                    <Flex w={"full"} h={"fit-content"} >
+                    <Flex w={"full"} h={"fit-content"} display={["flex", "flex", "flex", "none", "none"]} >
                         <Flex w={"full"} pos={"relative"} h={"70px"} >
                             <BottomBar count={count} />
                         </Flex>
