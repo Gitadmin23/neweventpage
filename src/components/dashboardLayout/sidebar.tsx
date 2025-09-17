@@ -6,15 +6,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode, Suspense, useState } from "react";
 import { ModalLayout, UserImage } from "../shared";
 import { Warning2 } from 'iconsax-react';
-import { useColorMode } from "../ui/color-mode"; 
+import { useColorMode } from "../ui/color-mode";
+import useGetUser from "@/hooks/useGetUser";
 import { DASHBOARDPAGE_URL, LANDINGPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import { Login, LoginTwo } from "@/svg";
 import { IUser } from "@/helpers/models/user";
 
-export default function SideBar({ count, isLoading, user }: { count: string, 
-    isLoading: boolean, user: IUser 
-}) {
+export default function SideBar({ count, isLoading, user }: { count: string, isLoading: boolean, user: IUser }) {
 
 
     type IRoute = {
@@ -76,6 +75,10 @@ export default function SideBar({ count, isLoading, user }: { count: string,
         window.location.href = `${LANDINGPAGE_URL}/logout`;
     }
 
+    const login = () => {
+        Cookies.remove("chase_token")
+        window.location.href = `${LANDINGPAGE_URL}/logout`;
+    }
 
     const token = Cookies.get("chase_token")
 
@@ -150,7 +153,7 @@ export default function SideBar({ count, isLoading, user }: { count: string,
                             </Box>
                             <ToolTip content={"darkmode"} />
                         </Flex>
-                        <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
+                        <Flex cursor={"pointer"} onClick={() => routeHandler(`/dashboard/profile/${user?.userId}`)} position={"relative"} onMouseOver={() => setActiveBar("profile")} onMouseOut={() => setActiveBar("")} w={"75px"} h={"72px"} justifyContent={"center"} alignItems={"center"} >
                             <Flex w={"full"} h={"60px"} justifyContent={"center"} pt={"3"} >
                                 {isLoading ? (
                                     <Spinner color={primaryColor} />
