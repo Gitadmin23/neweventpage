@@ -7,11 +7,12 @@ import { IoClose } from 'react-icons/io5';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useDetails } from '@/helpers/store/useUserDetails';
 import ModalLayout from './modalLayout';
-import httpService from '@/helpers/services/httpService'; 
+import httpService from '@/helpers/services/httpService';
 import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
 import CustomButton from './customButton';
 import useCustomTheme from '@/hooks/useTheme';
 import { toaster } from '../ui/toaster';
+import { bus } from '@/helpers/services/bus';
 
 interface Props {
     isOrganizer: boolean,
@@ -40,15 +41,11 @@ function DeleteBtn(props: Props) {
 
     const pathname = usePathname()
     // const toast = useToast()
-    const queryClient = useQueryClient() 
+    const queryClient = useQueryClient()
 
     const {
         primaryColor
     } = useCustomTheme()
-    
-    console.log(draft);
-    console.log(isEvent);
-    
 
     // detete event
     const deleteEvent = useMutation({
@@ -65,28 +62,26 @@ function DeleteBtn(props: Props) {
         },
         onSuccess: (data: AxiosResponse<any>) => {
 
-            queryClient.refetchQueries({ queryKey: ["myevent"]})
-            queryClient.refetchQueries({ queryKey: ["mydonationlist"]})
-            queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
-            queryClient.refetchQueries({ queryKey: [`/events/drafts`]}) 
-            queryClient.refetchQueries({ queryKey: ["draftevent"]}) 
-            
+            // queryClient.invalidateQueries({ queryKey: ["myevent"] })
+            // queryClient.invalidateQueries({ queryKey: ["mydonationlist"] })
+            // queryClient.invalidateQueries({ queryKey: ["draftevent"] })
 
-            if (data?.data?.message === "Could not delete event") {
-                // toast({
-                //     title: 'Error',
-                //     description: "Event can't be deleted, someone has registered for this event.",
-                //     status: 'error',
-                //     isClosable: true,
-                //     duration: 5000,
-                //     position: 'top-right',
-                // });
+            // queryClient.invalidateQueries({ queryKey: ["myevent"], exact: false })
+            // queryClient.invalidateQueries({ queryKey: ["mydonationlist"], exact: false })
+            queryClient.invalidateQueries({ queryKey: ["draftevent"], exact: false }) 
+
+            bus.emit("REFRESH", "draftevent")
+            bus.emit("REFRESH", "mydonationlist")
+            bus.emit("REFRESH", "myevent")
+
+            if (data?.data?.message === "Could not delete event") { 
+
                 toaster.create({
                     title: "Event can't be deleted, someone has registered for this event.",
                     type: "error",
                     closable: true
                 })
-            } else { 
+            } else {
                 if (donation) {
                     toaster.create({
                         title: "Fundraiser Deleted",
@@ -105,7 +100,7 @@ function DeleteBtn(props: Props) {
                         type: "success",
                         closable: true
                     })
-                } else if (isProduct) {     
+                } else if (isProduct) {
                     toaster.create({
                         title: "Product Deleted",
                         type: "success",
@@ -117,7 +112,7 @@ function DeleteBtn(props: Props) {
                         type: "success",
                         closable: true
                     })
-                } else if (draft){
+                } else if (draft) {
                     toaster.create({
                         title: "Draft Deleted",
                         type: "success",
@@ -143,16 +138,16 @@ function DeleteBtn(props: Props) {
     }
 
     const handler = (event: any) => {
-        event.stopPropagation(); 
-      };
-    
+        event.stopPropagation();
+    };
+
 
     return (
         <>
             {/* {(isOrganizer || pathname?.includes("draft") || pathname?.includes("mydonation")) && ( */}
-                <Flex w={"6"} h={"6"} onClick={openHandler} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"-14px"} right={"-8px"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
-                    <IoClose size={"14px"} />
-                </Flex>
+            <Flex w={"6"} h={"6"} onClick={openHandler} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"-14px"} right={"-8px"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                <IoClose size={"14px"} />
+            </Flex>
             {/* )} */}
             <ModalLayout open={open} trigger={true} close={() => setOpen(false)} size={"xs"} >
                 <Flex onClick={handler} flexDirection={"row"} flexDir={"column"} width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} gap={3}>

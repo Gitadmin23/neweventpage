@@ -44,20 +44,20 @@ export default function TicketFormInput({
     const error = getIn(errors, name);
     const isTouched = getIn(touched, name);
 
-    const [localValue, setLocalValue] = useState<string>(""); 
+    const [localValue, setLocalValue] = useState<string>(value+""); 
 
-    useEffect(() => {
-        if (value !== undefined && value !== null) {
-            setLocalValue(value);
-        } else {
-            setLocalValue("");
-        }
-    }, [value]);
+    // useEffect(() => {
+    //     if (value !== undefined && value !== null) {
+    //         setLocalValue(value);
+    //     } else {
+    //         setLocalValue("");
+    //     }
+    // }, [value]);
 
     const changeHandler = (val: string) => {
-        const Uppercased = type === "number" ? val : capitalizeFLetter(val);
-        setLocalValue(Uppercased);
-        setFieldValue(name, Uppercased);
+        // const Uppercased = type === "number" ? val : capitalizeFLetter(val);
+        setLocalValue(val);
+        setFieldValue(name, val);
     }; 
 
     return (

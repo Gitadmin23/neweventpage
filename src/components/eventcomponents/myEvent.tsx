@@ -11,7 +11,7 @@ export default function MyEvent() {
     const { userId: user_index } = useDetails((state) => state);
     const { search } = useSearchStore((state) => state)
 
-    const { results, isLoading, ref, isRefetching } = useInfiniteScroller({ url: `/events/joined-events/${user_index}`, limit: 20, filter: "id", name: "myevent", paramsObj: {
+    const { results, isLoading, ref, isRefetching, refetch } = useInfiniteScroller({ url: `/events/joined-events/${user_index}`, limit: 20, filter: "id", name: "myevent", paramsObj: {
         searchText: search.toLowerCase()
     } })
  

@@ -20,7 +20,7 @@ export default function UserEventCard(props: IEventType) {
 
 
     const router = useRouter()
-    const pathname = usePathname()
+    // const pathname = usePathname()
     const query = useSearchParams();
     const type = query?.get('type');
 
