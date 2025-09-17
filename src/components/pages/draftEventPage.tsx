@@ -60,6 +60,7 @@ export default function DraftEventPage() {
                     affiliates: item.content[0].affiliates,
                     collaborators: collaborator,
                     admins: admin,
+                    additionalMessage: item.content[0].additionalMessage
                 })
             } catch (e) {
                 console.error('Error in onSuccess handler:', e);
