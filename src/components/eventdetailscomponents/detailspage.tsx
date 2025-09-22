@@ -27,8 +27,7 @@ export default function DetailsPage(
         isOrganizer,
         eventMemberRole,
         eventName,
-        eventDescription,
-        attendeesVisibility,
+        eventDescription, 
         location,
         id,
     } = props

@@ -90,9 +90,7 @@ export default function ImagePicker(
                 0.9,
                 setIsLoading
             ))
-        );
-
-        console.log(convertedFiles);
+        ); 
         
         if (selected && TYPES.includes(selected.type)) { 
             setImage(convertedFiles)

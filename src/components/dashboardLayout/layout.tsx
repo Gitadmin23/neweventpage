@@ -92,7 +92,7 @@ export default function DashboardLayout(
                     <BottomBar count={count} />
                 )}
             </Flex> 
-            <ModalLayout size={"xs"} trigger={true} open={show} close={() => setShow(true)} >
+            <ModalLayout size={"xs"} trigger={true} open={frame ? false : show} close={() => setShow(true)} >
                 <Flex
                     width={"100%"}
                     height={"100%"}
