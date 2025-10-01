@@ -241,7 +241,7 @@ export default function SelectTicketBtn(
                                                                     </Badge>
                                                                     :
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"blue"} fontSize={"xs"} px={"3"} rounded={"full"} >
-                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets)}
                                                                     </Badge>
                                                                 }
                                                             </>
@@ -348,7 +348,7 @@ export default function SelectTicketBtn(
                                                                     </Badge>
                                                                     :
                                                                     <Badge colorPalette={"blue"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
-                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets)}
                                                                     </Badge>
                                                                 }
                                                             </>
@@ -411,7 +411,7 @@ export default function SelectTicketBtn(
                                                                     </Badge>
                                                                     :
                                                                     <Badge colorPalette={"blue"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
-                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets)}
                                                                     </Badge>
                                                                 }
                                                             </>
