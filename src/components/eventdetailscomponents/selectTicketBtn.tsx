@@ -205,7 +205,7 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
                                                         </IconButton>
                                                         {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
+                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === 0 || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
                                                             item: item,
                                                             type: "increase"
                                                         })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
@@ -268,7 +268,7 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
                                                         </IconButton>
                                                         {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
+                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === 0 || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
                                                             item: item,
                                                             type: "increase"
                                                         })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
@@ -375,7 +375,7 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
                                                         </IconButton>
                                                         {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
+                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === 0 || (new Date(Number(item?.endDate)) < new Date())} onClick={() => clickHandler({
                                                             item: item,
                                                             type: "increase"
                                                         })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
@@ -438,7 +438,7 @@ export default function SelectTicketBtn(
                                                             <Text fontWeight={"500"} fontSize={"25px"} >-</Text>
                                                         </IconButton>
                                                         {selectTicketType[checkType(item.ticketType)]?.numberOfTickets ?? "0"}
-                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === Number(item?.ticketsSold) || (new Date(Number(item?.endDate)) < new Date()) || (item?.ticketType === "Free" && isBought)} onClick={() => clickHandler({
+                                                        <IconButton disabled={Number(item?.totalNumberOfTickets) === 0 || (new Date(Number(item?.endDate)) < new Date()) || (item?.ticketType === "Free" && isBought)} onClick={() => clickHandler({
                                                             item: item,
                                                             type: "increase"
                                                         })} bgColor={secondaryBackgroundColor} color={headerTextColor} rounded={"full"} size="sm">
