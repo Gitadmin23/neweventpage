@@ -67,7 +67,7 @@ export default function SelectTicketBtn(
                             type: "error",
                             closable: true,
                         });
-                    } else if (Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) > 0) {
+                    } else if (Number(item?.totalNumberOfTickets) > 0) {
 
                         if (clone[index].numberOfTickets >= Number(item?.maxTicketBuy)) {
                             toaster.create({
@@ -160,7 +160,7 @@ export default function SelectTicketBtn(
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
-                                                                {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                {((Number(item?.totalNumberOfTickets) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"red"} fontSize={"xs"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -172,13 +172,13 @@ export default function SelectTicketBtn(
                                                             </>
                                                         ) : (
                                                             <>
-                                                                {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                {(Number(item?.totalNumberOfTickets) === 0) ?
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"red"} fontSize={"xs"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
                                                                     :
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"blue"} fontSize={"xs"} px={"3"} rounded={"full"} >
-                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold)}
+                                                                        Total Tickets avaliable - {Number(item?.totalNumberOfTickets)}
                                                                     </Badge>
                                                                 }
                                                             </>
@@ -223,7 +223,7 @@ export default function SelectTicketBtn(
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
-                                                                {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                {((Number(item?.totalNumberOfTickets) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"red"} fontSize={"xs"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -235,7 +235,7 @@ export default function SelectTicketBtn(
                                                             </>
                                                         ) : (
                                                             <>
-                                                                {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                {(Number(item?.totalNumberOfTickets) === 0) ?
                                                                     <Badge maxW={"100%"} w={"fit-content"} colorPalette={"red"} fontSize={"xs"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -330,7 +330,7 @@ export default function SelectTicketBtn(
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
-                                                                {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                {((Number(item?.totalNumberOfTickets) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
                                                                     <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -342,7 +342,7 @@ export default function SelectTicketBtn(
                                                             </>
                                                         ) : (
                                                             <>
-                                                                {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                {(Number(item?.totalNumberOfTickets) === 0) ?
                                                                     <Badge colorPalette={"red"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -393,7 +393,7 @@ export default function SelectTicketBtn(
                                                         <Text fontWeight={"semibold"} >{capitalizeFLetter(item.ticketType)} - {formatNumber(item?.ticketPrice)}</Text>
                                                         {item.ticketType === "Early Bird" ? (
                                                             <>
-                                                                {((Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
+                                                                {((Number(item?.totalNumberOfTickets) === 0) || (new Date(Number(item?.endDate)) < new Date())) ?
                                                                     <Badge colorPalette={"red"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
@@ -405,7 +405,7 @@ export default function SelectTicketBtn(
                                                             </>
                                                         ) : (
                                                             <>
-                                                                {(Number(item?.totalNumberOfTickets) - Number(item?.ticketsSold) === 0) ?
+                                                                {(Number(item?.totalNumberOfTickets) === 0) ?
                                                                     <Badge colorPalette={"red"} w={"fit"} fontSize={"sm"} px={"3"} rounded={"full"} >
                                                                         Tickets sold out
                                                                     </Badge>
