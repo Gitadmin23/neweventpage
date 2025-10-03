@@ -10,6 +10,13 @@ import ModalLayout from './modalLayout';
 import DonationTermAndCondition from './donationTermAndCondition';
 import usePayStack from '@/hooks/usePayStack'; 
 import { useDetails } from '@/helpers/store/useUserDetails';
+import { css } from "@emotion/react";
+
+const hideScrollbar = css({
+    "&::-webkit-scrollbar": { display: "none" },
+    msOverflowStyle: "none", // IE/Edge
+    scrollbarWidth: "none",  // Firefox
+  });
 
 export default function DonationBtn(props: {
     item: IDonationList,
@@ -24,7 +31,7 @@ export default function DonationBtn(props: {
         event
     } = props
 
-    const [open, setOpen] = useState(false) 
+    const [open, setOpen] = useState(false)  
     const [value, setValue] = useState("") 
 
     const {
@@ -90,7 +97,7 @@ export default function DonationBtn(props: {
                     </Flex>
                     <Flex flexDir={"column"} w={"full"} overflowX={"hidden"} gap={"3"} pb={"5"}  >
                         <Text fontSize={"24px"} fontWeight={"600"} >Enter the Amount</Text>
-                        <Flex w={"full"} gap={"2"} overflowX={"auto"} pb={"2"} className=' hide-scroll ' >
+                        <Box w={"full"} gap={"2"} overflowX={"auto"} pb={"3"} >
                             <Flex w={"fit-content"} gap={"2"}>
                                 {donate?.map((item) => (
                                     <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("NGN ", ""))} rounded={"32px"} h={"25px"} w={"80px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("NGN ", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >
@@ -98,7 +105,7 @@ export default function DonationBtn(props: {
                                     </Flex>
                                 ))}
                             </Flex>
-                        </Flex>
+                        </Box>
                         <Flex w={"full"} h={"50px"} pos={"relative"} >
                             <Input value={value} placeholder='0' onChange={(e) => setValue(e.target.value)} w={"full"} h={"50px"} rounded={"32px"} pl={"8"} borderColor={borderColor} type='number' borderWidth={"1px"} />
                             <Flex w={"fit-content"} h={"50px"} pos={"absolute"} justifyContent={"center"} alignItems={"center"} px={"4"} >
