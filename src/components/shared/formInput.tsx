@@ -1,5 +1,4 @@
-"use client"
-import { capitalizeFLetter } from '@/helpers/utils/capitalLetter';
+"use client" 
 import useCustomTheme from '@/hooks/useTheme';
 import { Flex, Input, Text, Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
@@ -75,9 +74,12 @@ export default function TicketFormInput({
                             <Flex
                                 w={"48px"}
                                 h={height ?? "45px"}
+                                pos={"absolute"}
+                                left={"0px"}
+                                insetY={"0px"}
                                 justifyContent={"center"}
-                                alignItems={"center"}
-                                px={"2"}
+                                alignItems={"center"} 
+                                zIndex={"10"} 
                             >
                                 {icon}
                             </Flex>
@@ -97,7 +99,7 @@ export default function TicketFormInput({
 
                         {type === "number" ? (
                             <Input
-                                value={localValue}
+                                value={(localValue === null || localValue === "null") ? "" : localValue }
                                 disabled={disabled}
                                 onChange={(e) => {
                                     const val = e.target.value;
@@ -113,6 +115,7 @@ export default function TicketFormInput({
                                 w={"full"}
                                 h={height ?? "45px"}
                                 px={"4"}
+                                pl={hasFrontIcon ? "10" : "4"}
                                 outline={"none"}
                                 bgColor={"white"}
                                 borderRadius={"9999px"}

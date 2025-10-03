@@ -90,7 +90,7 @@ export default function DonationBtn(props: {
                     </Flex>
                     <Flex flexDir={"column"} w={"full"} overflowX={"hidden"} gap={"3"} pb={"5"}  >
                         <Text fontSize={"24px"} fontWeight={"600"} >Enter the Amount</Text>
-                        <Flex w={"full"} gap={"2"} overflowX={"auto"} className=' hide-scroll ' >
+                        <Flex w={"full"} gap={"2"} overflowX={"auto"} pb={"2"} className=' hide-scroll ' >
                             <Flex w={"fit-content"} gap={"2"}>
                                 {donate?.map((item) => (
                                     <Flex key={item} as={"button"} onClick={() => setValue(item?.replace("NGN ", ""))} rounded={"32px"} h={"25px"} w={"80px"} borderWidth={"2px"} justifyContent={"center"} alignItems={"center"} color={item.replace("NGN ", "") === value ? primaryColor : headerTextColor} borderColor={item.replace("NGN ", "") === value ? primaryColor : borderColor} fontSize={"12px"} fontWeight={"600"}  >

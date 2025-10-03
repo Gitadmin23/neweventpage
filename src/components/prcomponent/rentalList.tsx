@@ -87,7 +87,7 @@ export default function ListRental(
                         })?.map((item: string, index: number) => {
                             return (
                                 <Flex key={index} as={"button"} w={"full"} h={"fit-content"} gap={"2"} flexDir={"column"} borderBottomWidth={"1px"} borderColor={"#EAEBEDCC"} >
-                                    <Flex flexDir={"column"} h={item === selectedItem ? "40px" : "53px"} justifyContent={"space-between"} >
+                                    <Flex flexDir={"column"} h={item === selectedItem ? "40px" : "53px"} w={"full"} justifyContent={"space-between"} >
                                         <Flex onClick={() => selectRentalHandler(item)} w={"full"} px={"4"} pt={(item !== selectedItem && selectRental?.some((subitem: any) => subitem.category === item)) ? "2" : "0px"} h={"full"} justifyContent={"space-between"} alignItems={"center"} >
                                             <Text fontSize={"14px"} >{textLimit(item?.replaceAll("_", " "), 30)}</Text>
                                             <Flex ml={"auto"} >
@@ -101,14 +101,14 @@ export default function ListRental(
                                         </Flex>
 
                                         {(item !== selectedItem && selectRental?.some((subitem: any) => subitem.category === item)) && (
-                                            <Flex px={"4"} color={primaryColor} as={"button"} pb={"1"} fontSize={"10px"} onClick={() => setSelectedItem(item)} >View requirements</Flex>
+                                            <Flex px={"4"} color={primaryColor} as={"button"} pb={"1"} fontSize={"10px"} onClick={() => setSelectedItem(item)} >{selectRental[selectRental.findIndex((subitem: any) => subitem.category === item)]?.description.length > 0 ? "View requirements" : "Add requirements"}</Flex>
                                         )}
                                     </Flex>
                                     {item === selectedItem && (
                                         <Flex flexDir={"column"} gap={"2"} pb={"2"} justifyContent={"start"} alignItems={"start"} px={"3"} w={"full"} >
                                             <Text fontSize={"10px"} >{("please ENTER YOUR SERVICE requirements")?.toLocaleLowerCase()}</Text>
                                             <Flex w={"full"} gap={"2"} >
-                                                <Textarea value={selectRental[selectRental.findIndex((subitem: any) => subitem.category === item)]?.description} onChange={(e) => changeHandler(item, e.target?.value)} h={"55px"} bgColor={mainBackgroundColor} />
+                                                <Textarea p={"2"} value={selectRental[selectRental.findIndex((subitem: any) => subitem.category === item)]?.description} onChange={(e) => changeHandler(item, e.target?.value)} h={"55px"} bgColor={mainBackgroundColor} />
                                                 <Flex mt={"auto"} w={"fit-content"} >
                                                     <Flex px={"2"} color={primaryColor} fontSize={"12px"} h={"35px"} as={"button"} onClick={() => setSelectedItem("")} >Done</Flex>
                                                 </Flex>

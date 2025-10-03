@@ -7,6 +7,7 @@ import CustomEventSwitch from "./theme/customEventSwitch";
 import useCustomTheme from "@/hooks/useTheme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { toaster } from "../ui/toaster";
+import { MdPercent } from "react-icons/md";
 
 export default function Information(
     {
@@ -65,7 +66,9 @@ export default function Information(
             {formik.values.affiliates && (
                 <> 
                     {formik.values.affiliates[0].affiliateType === "pr" && (
-                        <CustomInput type="number" name={"affiliates[0].percent"} label="Add Percentage" />
+                        <Flex w={"150px"} > 
+                        <CustomInput hasFrontIcon={true} icon={<MdPercent color="black" />} type="number" name={"affiliates[0].percent"} label="Add Percentage" />
+                        </Flex>
                     )}
                 </>
             )}

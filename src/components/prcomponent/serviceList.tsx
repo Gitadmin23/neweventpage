@@ -89,7 +89,7 @@ export default function ListService(
                         })?.map((item: string, index: number) => {
                             return (
                                 <Flex key={index} as={"button"} w={"full"} h={"fit-content"} gap={"2"} flexDir={"column"} borderBottomWidth={"1px"} borderColor={"#EAEBEDCC"} >
-                                    <Flex flexDir={"column"} h={item === selectedItem ? "40px" : "53px"} justifyContent={"space-between"} >
+                                    <Flex flexDir={"column"} w={"full"} h={item === selectedItem ? "40px" : "53px"} justifyContent={"space-between"} >
                                         <Flex onClick={() => selectServiceHandle(item)} w={"full"} px={"4"} pt={(item !== selectedItem && selectService?.some((subitem: any) => subitem.category === item)) ? "2" : "0px"} h={"full"} justifyContent={"space-between"} alignItems={"center"} >
                                             <Text fontSize={"14px"} >{textLimit(item?.replaceAll("_", " "), 30)}</Text>
                                             <Flex ml={"auto"} >
@@ -102,7 +102,7 @@ export default function ListService(
                                         </Flex>
 
                                         {(item !== selectedItem && selectService?.some((subitem: any) => subitem.category === item)) && (
-                                            <Flex px={"4"} color={primaryColor} as={"button"} pb={"1"} fontSize={"10px"} onClick={() => setSelectedItem(item)} >View requirements</Flex>
+                                            <Flex px={"4"} color={primaryColor} as={"button"} pb={"1"} fontSize={"10px"} onClick={() => setSelectedItem(item)} >{selectService[selectService.findIndex((subitem: any) => subitem.category === item)]?.description?.length > 0 ? "View requirements"  : "Add requirements"}</Flex>
                                         )}
                                     </Flex>
                                     {item === selectedItem && (
