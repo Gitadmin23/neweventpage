@@ -1,5 +1,5 @@
 "use client"
-import { toaster } from "@/components/ui/toaster"; 
+import { toaster } from "@/components/ui/toaster";
 import { ICreateEvent } from "@/helpers/models/event";
 import httpService from "@/helpers/services/httpService";
 import { URLS } from "@/helpers/services/urls";
@@ -27,7 +27,7 @@ const useEvent = () => {
     const [open, setOpen] = useState(false)
 
 
-    const path = "/product/create/events"+(pathname?.includes("edit") ? "/edit" :  "/draft" )
+    const path = "/product/create/events" + (pathname?.includes("edit") ? "/edit" : "/draft")
 
     // Upload Image
     const uploadImage = useMutation({
@@ -44,8 +44,8 @@ const useEvent = () => {
                 closable: true
             })
         },
-        onSuccess: (data: any) => { 
-            
+        onSuccess: (data: any) => {
+
             const fileArray = Object.values(data?.data);
 
             let newObjTheme: any = { ...formik.values, picUrls: [...fileArray], currentPicUrl: fileArray[0] }
@@ -96,7 +96,7 @@ const useEvent = () => {
                 affiliates: data?.data.affiliates,
                 collaborators: data?.data.collaborators,
                 admins: data?.data.admins,
-                additionalMessage: data?.data.additionalMessage ?? "" 
+                additionalMessage: data?.data.additionalMessage ?? ""
             })
 
             if (type === "info") {
@@ -126,7 +126,7 @@ const useEvent = () => {
         onSuccess: (data: AxiosResponse<any>) => {
 
             console.log(data);
-            
+
             router.push(`${path}?type=ticket&id=${data?.data?.id}`)
             setOpen(true)
         }
@@ -255,7 +255,7 @@ const useEvent = () => {
                     "minTicketBuy": 1,
                     "maxTicketBuy": 1,
                     isFree: false,
-                    description: "", 
+                    description: "",
                     isHidden: false
                 }
             ],
@@ -274,10 +274,19 @@ const useEvent = () => {
             if (pathname?.includes("edit")) {
                 if (!type) {
                     router.push(`${path}?type=info&id=${id}`)
-                } else if(type === "info") {
+                } else if (type === "info") {
                     router.push(`${path}?type=ticket&id=${id}`)
                 } else {
-                    updateUserEvent.mutate({...data, id: id})
+                    if (image.length > 0) {
+                        const fd = new FormData();
+                        image.forEach(async (file) => {
+                            // const pngFile = await convertImageToPngFile(file);
+                            fd.append("files[]", file);
+                        });
+                        uploadImage?.mutate(fd)
+                    } else {
+                        updateUserEvent.mutate({ ...data, id: id })
+                    }
                 }
             } else if (image.length > 0 && !id) {
                 const fd = new FormData();

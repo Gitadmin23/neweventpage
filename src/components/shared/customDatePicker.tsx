@@ -96,9 +96,7 @@ export default function CustomDatePicker(
                 setValue(name[2], null)
                 setValue(name[3], null)
                 setTempDate(dayjs(item))
-            } else {
-                console.log("here");
-
+            } else { 
                 name.map((itemname) => {
                     setValue(itemname, Date.parse(new Date(item).toJSON()))
                     setTempDate(dayjs(item))

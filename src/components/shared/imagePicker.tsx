@@ -105,9 +105,7 @@ export default function ImagePicker(
     const removeImagePreview = (indexToRemove: number) => {
         const clone = preview.filter((_, index) => index !== indexToRemove)
         setValue("picUrls", clone);
-    };
-
-    console.log(image);
+    }; 
 
 
     return (
