@@ -22,8 +22,6 @@ export default function EditEventPage() {
 
     const { formik, uploadImage, createDraft, saveToDraft, createEventFromDraft, open, setOpen, updateUserEvent } = useEvent()
 
-    // console.log(formik.values);
-
     const { mutate: fetchData, isPending: isLoading } = useMutation({
         mutationKey: ['all-events-details', id],
         mutationFn: () =>
@@ -75,8 +73,6 @@ export default function EditEventPage() {
     useEffect(() => {
         if(!formik?.values?.eventName) {
             fetchData();
-            console.log("show");
-            
         }
     }, [])
 

@@ -49,7 +49,7 @@ const useEvent = () => {
             const fileArray = Object.values(data?.data);
 
             let newObjTheme: any = { ...formik.values, picUrls: [...fileArray], currentPicUrl: fileArray[0] }
-            let newObjInfo: any = { ...formik.values, picUrls: [...fileArray], currentPicUrl: fileArray[0], id: id }
+            let newObjInfo: any = { ...formik.values, picUrls: [...formik?.values?.picUrls, ...fileArray], currentPicUrl: fileArray[0], id: id }
 
             if (!type && !pathname?.includes("edit")) {
                 createDraft.mutate(newObjTheme)
