@@ -1,8 +1,6 @@
 
-import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
-import router from "next/router";
-import React from "react";
-import { IoClose } from "react-icons/io5";
+import { Box, Flex, HStack, Text } from "@chakra-ui/react"; 
+import React from "react"; 
 import QRCode from "react-qr-code";  
 import html2canvas from "html2canvas"; 
 import { ShareType } from "@/helpers/models/share";
@@ -50,7 +48,7 @@ function Qr_code(props: Props) {
         type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}`:
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}`:
         type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}`:
-        type === "DONATION" ? `${SHARE_URL}${"/fundraiser?id="}${id}`
+        type === "DONATION" ? `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`
         : `${SHARE_URL}/share/event/${id}`;
 
 

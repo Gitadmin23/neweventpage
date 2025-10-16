@@ -40,14 +40,14 @@ function SendMessage(props: Props) {
       type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}` :
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}` :
           type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}` :
-            type === "DONATION" ? `${SHARE_URL}${"/fundraiser?id="}${id}`
+            type === "DONATION" ? `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`
               : `${SHARE_URL}/share/event/${id}`;
 
   const getUrl = () => {
     if (type === "EVENT") {
       return `${SHARE_URL}${"/share/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}`;
     } else if (type === "DONATION") {
-      return `${SHARE_URL}${"/fundraiser?id="}${id}`;
+      return `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`;
     } else if (type === "RENTAL") {
       return `${SHARE_URL}${"/rental?id="}${id}`;
     } else if (type === "SERVICE") {
