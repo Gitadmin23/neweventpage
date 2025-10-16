@@ -36,18 +36,18 @@ function SendMessage(props: Props) {
 
   const url_link =
     type === "EVENT"
-      ? `${SHARE_URL}${"/share/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}` :
+      ? `${SHARE_URL}${"/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}` :
       type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}` :
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}` :
           type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}` :
-            type === "DONATION" ? `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`
-              : `${SHARE_URL}/share/event/${id}`;
+            type === "DONATION" ? `${SHARE_URL}${"/fundraiser/"}${id}/opengraph`
+              : `${SHARE_URL}/event/${id}`;
 
   const getUrl = () => {
     if (type === "EVENT") {
-      return `${SHARE_URL}${"/share/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}`;
+      return `${SHARE_URL}${"/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}`;
     } else if (type === "DONATION") {
-      return `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`;
+      return `${SHARE_URL}${"/fundraiser/"}${id}/opengraph`;
     } else if (type === "RENTAL") {
       return `${SHARE_URL}${"/rental?id="}${id}`;
     } else if (type === "SERVICE") {
@@ -55,7 +55,7 @@ function SendMessage(props: Props) {
     } else if (type === "KIOSK") {
       return `${SHARE_URL}${"/product?id="}${id}`;
     } else {
-      return `${SHARE_URL}${"/share/event/"}${id}`
+      return `${SHARE_URL}${"/event/"}${id}`
     }
   }
 

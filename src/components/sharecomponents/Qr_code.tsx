@@ -44,12 +44,12 @@ function Qr_code(props: Props) {
 
   const url_link =
     type === "EVENT"
-      ? `${SHARE_URL}${"/share/event/"}${id}${affiliateID ? `?affiliateID=${affiliateID}` : ``}` :
+      ? `${SHARE_URL}${"/event/"}${id}/opengraph${affiliateID ? `?affiliateID=${affiliateID}` : ``}` :
         type === "RENTAL" ? `${SHARE_URL}${"/rental?id="}${id}`:
         type === "SERVICE" ? `${SHARE_URL}${"/service?id="}${id}`:
         type === "KIOSK" ? `${SHARE_URL}${"/product?id="}${id}`:
-        type === "DONATION" ? `${SHARE_URL}${"/share/fundraiser/"}${id}/opengraph`
-        : `${SHARE_URL}/share/event/${id}`;
+        type === "DONATION" ? `${SHARE_URL}${"/fundraiser/"}${id}/opengraph`
+        : `${SHARE_URL}/event/${id}/opengraph`;
 
 
   return (
