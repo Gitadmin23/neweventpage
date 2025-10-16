@@ -3,10 +3,9 @@ import { Chat } from '@/helpers/models/chat';
 import httpService from '@/helpers/services/httpService';
 import { SHARE_URL } from '@/helpers/services/urls';
 import useCustomTheme from '@/hooks/useTheme';
-import { Avatar, Box, Checkbox, Flex, HStack, Heading, Input, InputGroup, Text, VStack } from '@chakra-ui/react'
+import { Box, Flex, HStack, Heading, Input, InputGroup, Text } from '@chakra-ui/react'
 import { useMutation } from '@tanstack/react-query';
-import React from 'react'
-import { FiSearch } from 'react-icons/fi';
+import React from 'react' 
 import { IoSearchOutline } from 'react-icons/io5';
 import { CustomButton, LoadingAnimation, UserImage } from '../shared';
 import { IUser } from '@/helpers/models/user';
@@ -35,7 +34,7 @@ const UserCard = (props: IUser & { checked: boolean, handleCheck: (e: string) =>
     )
 }
 
-function SendMesageModal({ onClose, id, isprofile, type, affiliateID }: {
+function SendMesageModal({ onClose, id, type, affiliateID }: {
     onClose: () => void,
     id: string,
     isprofile?: boolean,
