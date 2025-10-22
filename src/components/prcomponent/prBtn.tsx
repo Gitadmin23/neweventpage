@@ -1,11 +1,11 @@
 "use client"
 
-import useCustomTheme from '@/hooks/useTheme' 
+import useCustomTheme from '@/hooks/useTheme'
 import { Flex, Input, Text } from '@chakra-ui/react'
-import { useParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react' 
-import usePr from '@/hooks/usePr' 
-import { IoIosArrowBack } from 'react-icons/io' 
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import usePr from '@/hooks/usePr'
+import { IoIosArrowBack } from 'react-icons/io'
 import { IPinned } from '@/helpers/models/product'
 import { ITag } from '@/helpers/models/pr'
 import { CustomButton, ModalLayout } from '../shared'
@@ -14,6 +14,8 @@ import ListProduct from './productcomponents/listProduct'
 import { IEventType } from '@/helpers/models/event'
 import ListService from './serviceList'
 import ListRental from './rentalList'
+import { DASHBOARDPAGE_URL } from '@/helpers/services/urls'
+import Cookies from "js-cookie"
 
 export default function PrBtn({ data, donation, product }: { data: IEventType, donation?: boolean, product?: boolean }) {
 
@@ -21,16 +23,19 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
         mainBackgroundColor,
         primaryColor,
         secondaryBackgroundColor
-    } = useCustomTheme() 
+    } = useCustomTheme()
 
     const [tab, setTab] = useState(false)
     const [index, setIndex] = useState(product ? 2 : 1)
     const [prCheck, setPrCheck] = useState(false)
-    const [percent, setPercentage] = useState("") 
+    const [percent, setPercentage] = useState("")
 
-    const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([]) 
+    const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([])
     const [selectDonation, setSelectDonation] = useState("")
     const [selectDonationInitial, setSelectDonationInitial] = useState("")
+    const query = useSearchParams();
+    const theme = query?.get('theme');
+    const token = Cookies.get("chase_token")
 
     const { createPr, open, setOpen, updateEvent } = usePr()
 
@@ -46,7 +51,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
 
     useEffect(() => {
         setTab((donation || product) ? true : false)
-    }, [open]) 
+    }, [open])
 
     useEffect(() => {
         if (data?.affiliates?.length > 0) {
@@ -70,10 +75,14 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
         })
     }
 
-    const changeHandler = (item: string) => { 
+    const changeHandler = (item: string) => {
         if (item?.toString()?.length <= 2) {
             setPercentage(item)
         }
+    }
+
+    const routeHandler = () => {
+        window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${data?.id}?token=${token}&theme=${theme}`;
     } 
 
     return (
@@ -93,17 +102,19 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                 </Flex>
             )}
             {(product && data?.isOrganizer) && (
-                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} justifyContent={"center"} alignItems={"center"} h={["170px","170px","219px"]} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
+                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} justifyContent={"center"} alignItems={"center"} h={["170px", "170px", "219px"]} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
                     <Text fontWeight={"500"} fontSize={"14px"} color={primaryColor} >+ Add a product</Text>
                 </Flex>
             )}
 
             {(!data?.isOrganizer && data?.affiliates?.length > 0 && data?.affiliates[0]?.percent && !product) && (
                 <Flex flexDirection={"column"} gap={"1"} w={(data.eventMemberRole === "ADMIN" || data.eventMemberRole === "COLLABORATOR") ? "full" : "fit-content"}  >
-                    {data.eventMemberRole !== "ADMIN" && data.eventMemberRole !== "COLLABORATOR" && (
+                    {data.eventMemberRole !== "ADMIN" && data.eventMemberRole !== "COLLABORATOR" && data?.prStatus !== "ACTIVE" && (
                         <Text fontSize={["14px", "14px", "16px"]} fontWeight={"600"} >Apply to be a PR</Text>
                     )}
-                    {data.eventMemberRole !== "ADMIN" && data.eventMemberRole !== "COLLABORATOR" ? (
+                    {data?.prStatus === "ACTIVE" ? (
+                        <CustomButton onClick={routeHandler} backgroundColor={"#F2F4FF"} color={primaryColor} width={"fit-content"} borderRadius={"999px"} px={"4"} text={"My PR Dashboard"} />
+                    ) : data.eventMemberRole !== "ADMIN" && data.eventMemberRole !== "COLLABORATOR" ? (
                         <CustomButton
                             isLoading={createPr?.isPending} onClick={clickHander}
                             disable={(data?.prStatus === "PENDING" || data?.prStatus === "ACTIVE" || createPr?.isPending) ? true : false}
@@ -133,7 +144,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
 
                 </Flex>
             )}
-            <ModalLayout open={open} trigger={true} closeBtn={true} close={()=> setOpen(false)} size={"md"} >
+            <ModalLayout open={open} trigger={true} closeBtn={true} close={() => setOpen(false)} size={"md"} >
                 <Flex flexDir={"column"} gap={"4"} w={"full"} px={"4"} mb={"4"} >
                     <Flex gap={"2"} alignItems={"center"} pt={"4"} >
                         {tab && (
@@ -148,7 +159,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                             <Flex w={"full"} flexDirection={"column"} >
                                 <Flex w={"full"} justifyContent={"space-between"} borderBottomWidth={data?.isOrganizer ? "1px" : "0px"} h={"50px"} px={"3"} alignItems={"center"} >
                                     <Text fontSize={"14px"} >Request PR Service</Text>
-                                    <Flex gap={"2"} alignItems={"center"} > 
+                                    <Flex gap={"2"} alignItems={"center"} >
                                         {data?.affiliates?.length > 0 && (
                                             <CustomButton backgroundColor={"red"} disable={updateEvent?.isPending} isLoading={updateEvent?.isPending} onClick={() => updatePrPercent(true)} width={"80px"} height={"30px"} fontSize={"12px"} text={"Stop Pr"} rounded={"full"} />
                                         )}
@@ -213,7 +224,7 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                                 )}
                                 {index === 4 && (
                                     <ListService data={data} setOpen={setOpen} />
-                                )} 
+                                )}
                             </Flex>
                         </Flex>
                     )}
