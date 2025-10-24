@@ -21,7 +21,8 @@ export default function Information(
 
     const {
         primaryColor,
-        mainBackgroundColor
+        mainBackgroundColor,
+        headerTextColor
     } = useCustomTheme()
 
     const query = useSearchParams();
@@ -67,7 +68,7 @@ export default function Information(
                 <> 
                     {formik.values.affiliates[0].affiliateType === "pr" && (
                         <Flex w={"150px"} > 
-                        <CustomInput hasFrontIcon={true} icon={<MdPercent color="black" />} type="number" name={"affiliates[0].percent"} label="Add Percentage" />
+                        <CustomInput hasFrontIcon={true} icon={<MdPercent color={headerTextColor} />} type="number" name={"affiliates[0].percent"} label="Add Percentage" />
                         </Flex>
                     )}
                 </>
