@@ -6,7 +6,11 @@ const CustomSwitch = ({ checked, setChecked, label }: { checked?: boolean, setCh
     return (
         <Switch.Root checked={checked} onCheckedChange={({ checked }) => setChecked(checked)} >
             <Switch.HiddenInput />
-            <Switch.Control />
+            <Switch.Control
+                _checked={{
+                    bg: "green.500", // ✅ Active color
+                }}
+            />
             {label && (
                 <Switch.Label>{label}</Switch.Label>
             )}

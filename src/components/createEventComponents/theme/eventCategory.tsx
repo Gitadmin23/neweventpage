@@ -7,10 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function EventCategory(
     {
-        setValue, 
-        value,
-        touched,
-        errors
+        setValue,  
     }: { 
         value: string
         setValue: (name: string, value: string) => void,
@@ -42,14 +39,10 @@ export default function EventCategory(
         fetchData()
     }, [])
 
-    const changeHandler = (item: string) => { 
-        setValue("eventType", item)
-    }
-
     return(
         <Flex w={"full"} >
             {!isLoading ? (
-                <CustomSelect value={value} touched={touched} errors={errors} name="eventType" label="Event Type *" size="md" setValue={changeHandler} data={data} placeholder={""} />
+                <CustomSelect  name="eventType" label="Event Type *" size="md" data={data} placeholder={""} />
             ) : (
                 <Text textAlign={"center"} >Loading...</Text>
             )}
