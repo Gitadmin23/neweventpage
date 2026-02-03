@@ -1,7 +1,7 @@
 import { IDonationList } from "@/helpers/models/fundraising";
 import useCustomTheme from "@/hooks/useTheme";
 import { Button, Flex, Text } from "@chakra-ui/react";
-import { DonationGraph, ProductImageScroller } from "../shared";
+import { DonationGraph, ProductImageScroller, ShareLink } from "../shared";
 import { BreadCrumbs, DescriptionPage } from "../eventdetailscomponents";
 import { textLimit } from "@/helpers/utils/textlimit";
 import { capitalizeFLetter } from "@/helpers/utils/capitalLetter";
@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { DASHBOARDPAGE_URL } from "@/helpers/services/urls";
 import Cookies from "js-cookie"
 import DonationCollaborator from "../createFundraisingComponents/donationCollaborator";
+import { useColorMode } from "../ui/color-mode";
 
 export default function FundraisingDetails(
     {
@@ -34,15 +35,14 @@ export default function FundraisingDetails(
     const { userId } = useDetails()
     const router = useRouter()
 
-    const token = Cookies.get("chase_token")
-    const query = useSearchParams();
-    const theme = query?.get('theme');
+    const token = Cookies.get("chase_token") 
+    const { colorMode } = useColorMode();
 
     const routeHandler = (type: "dashboard" | "wallet") => {
         if (type === "dashboard") {
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${item?.id}/donate?token=${token}&theme=${theme}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/event-dashboard/${item?.id}/donate?token=${token}&theme=${colorMode}`;
         } else {
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}&theme=${theme}`;
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/settings/payment/details?token=${token}&theme=${colorMode}`;
         }
     } 
     
@@ -50,8 +50,16 @@ export default function FundraisingDetails(
         <Flex w={"full"} bgColor={mainBackgroundColor} flexDir={"column"} gap={"4"} px={["4", "4", "6"]} pb={["400px", "400px", "6"]} py={"6"} >
             <BreadCrumbs {...item} />
             <Flex w={"full"} gap={"4"} flexDir={["column", "column", "row"]} >
-                <Flex flexDir={"column"} w={"full"} gap={"4"} >
+                <Flex flexDir={"column"} w={"full"} gap={"4"} position={"relative"} >
                     <ProductImageScroller rounded={"8px"} height={["340px", "340px", "520px"]} images={[item.bannerImage]} />
+
+                    <ShareLink
+                        data={item}
+                        type="DONATION"
+                        // size="18px"
+                        showText={false}
+                        id={item?.id}
+                    />
                 </Flex>
 
                 <Flex w={"full"} flexDir={"column"} gap={"3"} >

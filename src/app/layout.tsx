@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
-import "./globals.css";
-import { Providers } from "./Provider";  
+import "./globals.css"; 
 import { Toaster } from "@/components/ui/toaster";
+import { Providers } from "@/components/provider";
 
 const raleway = Raleway({
   variable: "--font-raleway",

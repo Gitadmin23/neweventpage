@@ -9,7 +9,7 @@ type Props = {
   children: React.ReactNode,
 }
 
-export function Providers({
+export default function Providers({
   children,
 }: Props) {
 
