@@ -35,7 +35,7 @@ export default function DonationCard(
 
     const clickHander = (index: string) => {
         if (frame) {
-            window.location.href = `${SHARE_URL}/fundraiser?id=${index}`;
+            window.location.href = `${SHARE_URL}/fundraiser/${index}`;
         } else {
             router?.push("/product/details/fundraising/" + index)
         }
