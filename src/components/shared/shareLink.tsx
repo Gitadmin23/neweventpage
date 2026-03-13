@@ -131,10 +131,10 @@ function ShareEvent(props: Props) {
                   flexDir={"column"}
                   bgColor={mainBackgroundColor}
                   p={"1"}
+                  justifyContent={"center"}
+                  w={"24px"}
+                  h={"24px"}
                   rounded={"md"} 
-                  zIndex={"20"}
-                  pos={"absolute"} bottom={"4"}
-                  right={"4"}
                 >
                   {newbtn && (
                     <HiOutlineShare
