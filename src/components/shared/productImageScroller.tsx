@@ -17,7 +17,6 @@ export default function ProductImageScroller({ images, userData, createdDate, he
     const [activeImageIndex, setActiveImageIndex] = React.useState(0);
     const { colorMode } = useColorMode();
 
-    const { push } = useRouter()
     const query = useSearchParams();
     const frame = query?.get('frame');
 
@@ -35,13 +34,13 @@ export default function ProductImageScroller({ images, userData, createdDate, he
             }, 3000);
             return () => clearInterval(interval);
         }
-    }, []) 
-    const token = Cookies.get("chase_token") 
+    }, [])
+    const token = Cookies.get("chase_token")
 
     const clickHandler = (e: any) => {
         if (!frame) {
-            e.stopPropagation() 
-            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}&theme=${colorMode}`; 
+            e.stopPropagation()
+            window.location.href = `${DASHBOARDPAGE_URL}/dashboard/profile/${userData?.userId}?token=${token}&theme=${colorMode}`;
         }
     }
 
