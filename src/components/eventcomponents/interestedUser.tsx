@@ -19,19 +19,26 @@ function InterestedUsers(props: Props) {
     return (
         <>
             {event?.interestedUsers?.length > 0 && ( 
-                <AvatarGroup gap="0" spaceX="-3" size="lg"> 
-                    {event?.interestedUsers?.map((item: any, index: number) => {
-                        if (index <= 3) {
-                            return (
-                                <UserImage size={size ?? "xs"} user={item} />
-                            )
-                        }
-                    })}
-                    {event?.memberCount >= 4 &&
-                        <Avatar.Root size={size ?? "xs"}  rounded={"full"} roundedTopRight={"0px"} variant="solid">
-                            <Avatar.Fallback>{"+" + formatNumberWithK(event?.memberCount - 3)}</Avatar.Fallback>
+                <AvatarGroup gap="0" spaceX="-2.5" size={size ?? "xs"}> 
+                    {event?.interestedUsers?.slice(0, 3)?.map((item: any, index: number) => (
+                        <UserImage key={item?.userId || index} size={size ?? "xs"} user={item} />
+                    ))}
+                    {event?.memberCount > 3 && (
+                        <Avatar.Root
+                            size={size ?? "xs"}
+                            rounded={"full"}
+                            roundedTopRight={"4px"}
+                            variant="solid"
+                            bg={"#18191A"}
+                            color={"white"}
+                            borderWidth={"1.5px"}
+                            borderColor={"white"}
+                        >
+                            <Avatar.Fallback color={"white"} fontSize={"10px"} fontWeight={"700"}>
+                                {"+" + formatNumberWithK(event?.memberCount - 3)}
+                            </Avatar.Fallback>
                         </Avatar.Root>
-                    }
+                    )}
                 </AvatarGroup>
             )}
         </>

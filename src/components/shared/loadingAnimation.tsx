@@ -1,9 +1,8 @@
 "use client"
 import useCustomTheme from '@/hooks/useTheme';
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
-import { keyframes } from '@emotion/react';
-import React, { useEffect, useState } from 'react'
-import { Grid, MagnifyingGlass, RevolvingDot, ThreeDots } from 'react-loader-spinner';
+import { Box, Flex, Image, Spinner, Text } from '@chakra-ui/react'
+import React from 'react'
+import { ThreeDots } from 'react-loader-spinner';
 
 interface Props {
     loading: any,
@@ -20,59 +19,32 @@ interface Props {
 
 function LoadingAnimation(props: Props) {
 
-    let {
+    const {
         children,
         loading,
         length,
         refeching,
         fix_height,
-        // color,
         customLoader,
-        withimg,
         width,
-        // bgColor
+        bgColor
     } = props
 
     const {
         secondaryBackgroundColor,
         mainBackgroundColor,
+        bodyTextColor,
         primaryColor
     } = useCustomTheme();
 
-    const [isLoading, setLoading] = useState(true)
-    const [dataLength, setDataLength] = useState(0)
-
-    useEffect(() => {
-        // Set a 3-second timeout
-        if (!loading) {
-            const timeoutId = setTimeout(() => {
-                setLoading(false);
-            }, 500);
-            setDataLength(length)
-
-            // Cleanup: clear the timeout if the component unmounts or a new timer is set
-            return () => clearTimeout(timeoutId);
-        } else {
-            setLoading(loading)
-        }
-
-    }, [loading]) 
-
-    const rotate = keyframes`
-from { transform: rotate(0deg); }
-to { transform: rotate(360deg); }
-`;
-
     return (
         <Flex flexDir={"column"} w={"full"} h={fix_height ? "full" : "fit-content"} >
-            {(!isLoading) && (
+            {(!loading) && (
                 <Flex w={"full"} h={"full"} flexDir={"column"} >
                     {children}
                     {(refeching) && (
                         <Flex w={width ? width : "full"} minW={"100px"} bg={secondaryBackgroundColor} height={"50px"} >
-                            {/* {!customLoader && ( */}
-                            <Flex width={"full"} justifyContent={"center"} height={"full"} fontSize={"20px"}  >
-                                {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
+                            <Flex width={"full"} justifyContent={"center"} alignItems={"center"} height={"full"} fontSize={"20px"}  >
                                 <ThreeDots
                                     visible={true}
                                     height="40"
@@ -89,13 +61,8 @@ to { transform: rotate(360deg); }
                 </Flex>
             )}
 
-            {(!isLoading && !refeching) && (
+            {(!loading && !refeching) && (
                 <>
-                    {/* {(refeching && !withimg) && (
-                        <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} fontSize={"20px"} py={"4"}  >
-                            <Text>No Records Found</Text>
-                        </Flex>
-                    )} */}
                     {(length === 0) && (
                         <Flex width={"full"} flexDir={"column"} bg={mainBackgroundColor} alignItems={"center"} py={"4"}  >
                             <Image src={"/images/folder.png"} alt="folder" width={"350px"} />
@@ -104,17 +71,34 @@ to { transform: rotate(360deg); }
                     )}
                 </>
             )}
-            {(loading && !dataLength) && (
-                <Flex w={"full"} height={"auto"} >
+            {(loading) && (
+                <Flex w={"full"} height={fix_height ? "full" : "auto"} minH={fix_height ? "60vh" : "240px"} >
                     {!customLoader && (
-                        <Flex width={"full"} bg={secondaryBackgroundColor} justifyContent={"center"} height={fix_height ? "full" : "auto"} fontSize={"20px"} py={"8"}  >
-                            {/* <Spinner size={["md", "sm"]} color={color ? color : 'black'} /> */}
-                            <Box
-                                w={"50px"}
-                                h={"50px"}
-                                animation={`${rotate} 2s linear infinite`} >
-                                <Image alt='logo' src='/images/logo.png' w={"50px"} />
+                        <Flex
+                            width={"full"}
+                            bg={bgColor ?? "transparent"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                            flexDir={"column"}
+                            gap={"3"}
+                            height={fix_height ? "full" : "auto"}
+                            minH={fix_height ? "60vh" : "240px"}
+                            py={"10"}
+                        >
+                            <Box position={"relative"} w={"68px"} h={"68px"} display={"flex"} alignItems={"center"} justifyContent={"center"} >
+                                <Spinner
+                                    size={"xl"}
+                                    color={primaryColor}
+                                    borderWidth={"3px"}
+                                    w={"68px"}
+                                    h={"68px"}
+                                    position={"absolute"}
+                                />
+                                <Image alt='logo' src='/images/logo.png' w={"36px"} h={"36px"} objectFit={"contain"} />
                             </Box>
+                            <Text fontSize={"xs"} fontWeight={"500"} color={bodyTextColor} letterSpacing={"0.5px"} >
+                                Loading...
+                            </Text>
                         </Flex>
                     )}
                     {customLoader}

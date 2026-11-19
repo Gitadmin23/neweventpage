@@ -4,7 +4,7 @@ import { LoginSpinner } from "@/components/shared";
 export default function Home() {
 
   return (
-    <Flex w={"full"} h={"100vh"} bgColor={"white"} >
+    <Flex w={"full"} h={"100vh"} >
       <LoginSpinner />
     </Flex>
   );
